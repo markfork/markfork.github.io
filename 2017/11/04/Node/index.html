@@ -96,13 +96,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="鱼大坤个人博客">
-<meta property="og:url" content="http://willxue.top/archives/2017/11/index.html">
+<meta name="description" content="## node.js事件循环 *** Node.js 是单进程单线程应用程序，但是通过事件和回调支持并发，所以性能非常高。 Node.js 的每一个 API 都是异步的，并作为一个独立线程运行，使用异步函数调用，并处理并发。 Node.js 基本上所有的事件机制都是用设计模式中观察者模式实现。 Node.js 单线程类似进入一个while(true)的事件循环，直到没有事件观察者退出，每个异步事件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node.js Event-loop事件循环">
+<meta property="og:url" content="http://willxue.top/2017/11/04/Node/index.html">
 <meta property="og:site_name" content="鱼大坤个人博客">
+<meta property="og:description" content="## node.js事件循环 *** Node.js 是单进程单线程应用程序，但是通过事件和回调支持并发，所以性能非常高。 Node.js 的每一个 API 都是异步的，并作为一个独立线程运行，使用异步函数调用，并处理并发。 Node.js 基本上所有的事件机制都是用设计模式中观察者模式实现。 Node.js 单线程类似进入一个while(true)的事件循环，直到没有事件观察者退出，每个异步事件">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-04T06:28:27.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="鱼大坤个人博客">
+<meta name="twitter:title" content="Node.js Event-loop事件循环">
+<meta name="twitter:description" content="## node.js事件循环 *** Node.js 是单进程单线程应用程序，但是通过事件和回调支持并发，所以性能非常高。 Node.js 的每一个 API 都是异步的，并作为一个独立线程运行，使用异步函数调用，并处理并发。 Node.js 基本上所有的事件机制都是用设计模式中观察者模式实现。 Node.js 单线程类似进入一个while(true)的事件循环，直到没有事件观察者退出，每个异步事件">
 
 
 
@@ -131,13 +135,13 @@
 
 
 
-  <link rel="canonical" href="http://willxue.top/archives/2017/11/"/>
+  <link rel="canonical" href="http://willxue.top/2017/11/04/Node/"/>
 
 
 
 
 
-  <title>归档 | 鱼大坤个人博客</title>
+  <title>Node.js Event-loop事件循环 | 鱼大坤个人博客</title>
   
 
 
@@ -162,7 +166,7 @@
     
   
 
-  <div class="container sidebar-position-left  page-archive  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -300,148 +304,258 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://willxue.top/2017/11/04/Node/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="大坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="鱼大坤个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h2 class="post-title" itemprop="name headline">Node.js Event-loop事件循环</h2>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-04T14:28:27+08:00">
+                2017-11-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 3 篇日志。 继续努力。
-      </span>
 
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h2 class="archive-year motion-element" id="archive-year-2017">2017</h2>
-          </div>
-        
-        
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/04/Node/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/04/Node/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
 
-        
+          
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/04/Node/" itemprop="url">
-              
-                <span itemprop="name">Node.js Event-loop事件循环</span>
-              
-            </a>
-        
-      </h3>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-04T14:28:27+08:00"
-              content="2017-11-04" >
-          11-04
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+        </div>
+      </header>
+    
 
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/04/java_nio/" itemprop="url">
-              
-                <span itemprop="name">Java NIO(一)－I/O模型： 阻塞、非阻塞、I/O复用、同步、异步</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-04T12:53:49+08:00"
-              content="2017-11-04" >
-          11-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/04/kcode/" itemprop="url">
-              
-                <span itemprop="name">k码特权中关于 Redis & MySQL DB 乐观锁应用</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-04T12:52:02+08:00"
-              content="2017-11-04" >
-          11-04
-        </time>
-      </div>
-
-    </header>
-  </article>
+      
+        ## node.js事件循环
+***
+Node.js 是单进程单线程应用程序，但是通过事件和回调支持并发，所以性能非常高。
+Node.js 的每一个 API 都是异步的，并作为一个独立线程运行，使用异步函数调用，并处理并发。
+Node.js 基本上所有的事件机制都是用设计模式中观察者模式实现。
+Node.js 单线程类似进入一个while(true)的事件循环，直到没有事件观察者退出，每个异步事件都生成一个事件观察者，如果有事件发生就调用该回调函数.
+####事件驱动程序
+***
+想要理解Event Loop，就要从程序的运行模式讲起。运行以后的程序叫做["进程"](http://zh.wikipedia.org/wiki/%E8%BF%9B%E7%A8%8B)（process），一般情况下，一个进程一次只能执行一个任务。
+<a id="more"></a>
+如果有很多任务需要执行，不外乎三种解决方法。
+ **（1）排队:**因为一个进程一次只能执行一个任务，只好等前面的任务执行完了，再执行后面的任务。
+**（2）新建进程:**使用fork命令，为每个任务新建一个进程。
+**（3）新建线程:**因为进程太耗费资源，所以如今的程序往往允许一个进程包含多个线程，由线程去完成任务。（进程和线程的详细解释，请看[这里](http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html)。） 
 
 
+ 以JavaScript语言为例，它是一种单线程语言，所有任务都在一个线程上完成，即采用上面的第一种方法。一旦遇到大量任务或者遇到一个耗时的任务，网页就会出现"假死"，因为JavaScript停不下来，也就无法响应用户的行为。
+你也许会问，JavaScript为什么是单线程，难道不能实现为多线程吗？
+这跟历史有关系。JavaScript从诞生起就是单线程。原因大概是不想让浏览器变得太复杂，因为多线程需要共享资源、且有可能修改彼此的运行结果，对于一种网页脚本语言来说，这就太复杂了。后来就约定俗成，JavaScript为一种单线程语言。（Worker API可以实现多线程，但是JavaScript本身始终是单线程的。）
+如果某个任务很耗时，比如涉及很多I/O（输入/输出）操作，那么线程的运行大概是下面的样子。
+![单线程运行任务示意图](http://upload-images.jianshu.io/upload_images/2836699-a74f8a4101189f13.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+上图的绿色部分是程序的运行时间，红色部分是等待时间。可以看到，由于I/O操作很慢，所以这个线程的大部分运行时间都在空等I/O操作的返回结果。这种运行方式称为"同步模式"（synchronous I/O）或"堵塞模式"（blocking I/O）。
+如果采用多线程，同时运行多个任务，那很可能就是下面这样。
+![多线程运行任务示意图](http://upload-images.jianshu.io/upload_images/2836699-2c7ec0cb18b05cae.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+上图表明，多线程不仅占用多倍的系统资源，也闲置多倍的资源，这显然不合理。
+Event Loop就是为了解决这个问题而提出的。[Wikipedia](http://en.wikipedia.org/wiki/Event_loop)这样定义：
+ **Event Loop是一个程序结构，用于等待和发送消息和事件。（a programming construct that waits for and dispatches events or messages in a program.）**
+
+简单说，就是在程序中设置两个线程：一个负责程序本身的运行，称为"主线程"；另一个负责主线程与其他进程（主要是各种I/O操作）的通信，被称为"Event Loop线程"（可以译为"消息线程"）。
+
+![事件循环示意图](http://upload-images.jianshu.io/upload_images/2836699-12a5e533382cfbaf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+上图主线程的绿色部分，还是表示运行时间，而橙色部分表示空闲时间。每当遇到I/O的时候，主线程就让Event Loop线程去通知相应的I/O程序，然后接着往后运行，所以不存在红色的等待时间。等到I/O程序完成操作，Event Loop线程再把结果返回主线程。主线程就调用事先设定的回调函数，完成整个任务。
+可以看到，由于多出了橙色的空闲时间，所以主线程得以运行更多的任务，这就提高了效率。这种运行方式称为"[异步模式](http://en.wikipedia.org/wiki/Asynchronous_I/O)"（asynchronous I/O）或"非堵塞模式"（non-blocking mode）。
+这正是JavaScript语言的运行方式。单线程模型虽然对JavaScript构成了很大的限制，但也因此使它具备了其他语言不具备的优势。如果部署得好，JavaScript程序是不会出现堵塞的，这就是为什么node.js平台可以用很少的资源，应付大流量访问的原因。
+####代码体现
+***
+创建一个main.js文件
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">//引入events模块</div><div class="line">var events = require(&apos;events&apos;);</div><div class="line">//创建eventEmitter对象 内部类对象</div><div class="line">var eventEmitter = new events.EventEmitter();</div><div class="line">//创建事件处理程序</div><div class="line">var connectHandler = function connected() &#123;</div><div class="line">     console.log(&apos;连接成功&apos;)；</div><div class="line">    //触发data_received事件</div><div class="line">     evenEmitter.emit(&apos;data_received&apos;);</div><div class="line">&#125;</div><div class="line">//创建 名为connection 事件，并将事件处理程序（回调函数）绑定到事件上</div><div class="line">eventEmitter.on(&apos;connection&apos;,connectHandler);</div><div class="line">//创建名为data_reveived事件，并将匿名处理函数（回调函数）绑定到事件上</div><div class="line">eventEmitter.on(&apos;data_received&apos;,function() &#123;</div><div class="line">      console.log(&apos;数据接收成功&apos;)；</div><div class="line">&#125;)</div><div class="line">//触发connection 事件</div><div class="line">eventEmitter.emit(&apos;connection&apos;);</div><div class="line"></div><div class="line">console.log(&quot;程序执行完毕&quot;)；</div></pre></td></tr></table></figure>
+
+接下来让我们执行以上代码：
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ node main.js</div><div class="line">连接成功</div><div class="line">数据接收成功</div><div class="line">程序执行完毕</div></pre></td></tr></table></figure>
+
+看了上面的程序如果还不懂的话，请看下面的这幅图，并结合最后一段话去理解：
+
+![node.js事件循环示意图](http://upload-images.jianshu.io/upload_images/2836699-beae45f61ad156a1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+事件相当于一个主题(Subject)，而所有注册到这个事件上的处理函数相当于观察者(Observer)。
+要点：
+        **1.观察者相当于事件处理程序--被回调的函数。
+        2.事件就相当于我们认为的任务，比如程序执行期间需要等待I/O这就是一个事件。
+        3.我们可以把node.js的主线程想像成一个来者不拒的主人，这个人遇到什么事情都不拒绝，但是他处理事情也要找其他人（I/O）帮忙。
+          他有一个管家叫event loop线程，当事情来得时候，主人告诉管家这个事情，并让管家去找能够解决这个问题的人，然后继续接事情，当能够解决这个事情的人解决了事情，管家就把事情的结果告诉给主人，这里的回调函数可以想象成信鸽，主人将事情的结果放在信鸽身上（结果为参数，信鸽为回调函数载体），完成整个任务，这就说明node.js是异步执行的语言，非阻塞的语言，这也就是node.js性能高的原因。
+        4.node.js使用的是javascript语法，javascript语法是单线程的，当用户触发事件，事件会产生消息，消息会进入消息列表，在消息进入列表的同时，回调函数也进入列表，当消息出队列时，回调函数被调用。整个底层过程就是这样的**
+####吴海星译
+***
+**谢天谢地，实际情况不是这样的。当浏览器中有I/O操作时，该操作会在事件轮询的外面执
+行（脚本执行的主顺序之外），然后当这个I/O操作完成时，它会发出一个“事件”，①会有一个函
+数（通常称作“回调”）处理它，如图1-1所示。**
+
+![](http://upload-images.jianshu.io/upload_images/2836699-af84cf3cfbd2e1f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![Paste_Image.png](http://upload-images.jianshu.io/upload_images/2836699-24222c605786e2c9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
       
-
     </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/path/to/your/wechatqcode ex. /uploads/wechat-qcode.jpg" alt="大坤 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>ex. subscribe to my blog by scanning my public wechat account</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Donate comment here</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="大坤 WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="大坤 Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+      <div id="bitcoin" style="display: inline-block">
+        <img id="bitcoin_qr" src="/images/bitcoin.png" alt="大坤 Bitcoin"/>
+        <p>Bitcoin</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/04/java_nio/" rel="next" title="Java NIO(一)－I/O模型： 阻塞、非阻塞、I/O复用、同步、异步">
+                <i class="fa fa-chevron-left"></i> Java NIO(一)－I/O模型： 阻塞、非阻塞、I/O复用、同步、异步
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -449,6 +563,17 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -641,11 +766,9 @@
 
 
   
-  
-    <script type="text/javascript" id="motion.page.archive">
-      $('.archive-year').velocity('transition.slideLeftIn');
-    </script>
-  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
 
 
   
@@ -664,6 +787,18 @@
       <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
     
 
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://willxue.top/2017/11/04/Node/';
+          this.page.identifier = '2017/11/04/Node/';
+          this.page.title = 'Node.js Event-loop事件循环';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
     
 
   
