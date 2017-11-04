@@ -96,23 +96,17 @@
 
 
 
-<meta name="description" content="目的 为后期学习 Netty框架打好理论基础，并且在分布式RPC 服务中对客户端与服务端之间服务的调用，底层数据通讯可以使用Netty 进行封装。   记录结构   Java NIO(一)–I/O模型： 阻塞、非阻塞、I/O复用、同步、异步地址：http://www.jianshu.com/writer#/notebooks/5970279/notes/7531041/preview Java N">
+<meta name="description" content="– title:Node.js EventEmitter (触发器)####Node.js EventEmitter  Node.js 所有的异步 I/O 操作在完成时都会发送一个事件到事件队列.Node.js里面的许多对象都会分发事件：一个net.Server对象会在每次有新连接时分发一个事件， 一个fs.readStream对象会在文件被打开的时候发出一个事件。 所有这些产生事件的对象都是 e">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java NIO(一)－I&#x2F;O模型： 阻塞、非阻塞、I&#x2F;O复用、同步、异步">
-<meta property="og:url" content="http://willxue.top/2017/11/04/java_nio/index.html">
+<meta property="og:title" content="鱼大坤个人博客">
+<meta property="og:url" content="http://willxue.top/2017/11/04/EventEmitter-2017-11-04/index.html">
 <meta property="og:site_name" content="鱼大坤个人博客">
-<meta property="og:description" content="目的 为后期学习 Netty框架打好理论基础，并且在分布式RPC 服务中对客户端与服务端之间服务的调用，底层数据通讯可以使用Netty 进行封装。   记录结构   Java NIO(一)–I/O模型： 阻塞、非阻塞、I/O复用、同步、异步地址：http://www.jianshu.com/writer#/notebooks/5970279/notes/7531041/preview Java N">
+<meta property="og:description" content="– title:Node.js EventEmitter (触发器)####Node.js EventEmitter  Node.js 所有的异步 I/O 操作在完成时都会发送一个事件到事件队列.Node.js里面的许多对象都会分发事件：一个net.Server对象会在每次有新连接时分发一个事件， 一个fs.readStream对象会在文件被打开的时候发出一个事件。 所有这些产生事件的对象都是 e">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-a13146fd8158712e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-5a4cc7c4c9f2b94d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-1f7ed47b78c08e25.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-0729a57363191150.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-42af7c7049d2b23c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-11-04T04:53:49.000Z">
+<meta property="og:updated_time" content="2017-11-04T06:35:15.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java NIO(一)－I&#x2F;O模型： 阻塞、非阻塞、I&#x2F;O复用、同步、异步">
-<meta name="twitter:description" content="目的 为后期学习 Netty框架打好理论基础，并且在分布式RPC 服务中对客户端与服务端之间服务的调用，底层数据通讯可以使用Netty 进行封装。   记录结构   Java NIO(一)–I/O模型： 阻塞、非阻塞、I/O复用、同步、异步地址：http://www.jianshu.com/writer#/notebooks/5970279/notes/7531041/preview Java N">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2836699-a13146fd8158712e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="鱼大坤个人博客">
+<meta name="twitter:description" content="– title:Node.js EventEmitter (触发器)####Node.js EventEmitter  Node.js 所有的异步 I/O 操作在完成时都会发送一个事件到事件队列.Node.js里面的许多对象都会分发事件：一个net.Server对象会在每次有新连接时分发一个事件， 一个fs.readStream对象会在文件被打开的时候发出一个事件。 所有这些产生事件的对象都是 e">
 
 
 
@@ -141,13 +135,13 @@
 
 
 
-  <link rel="canonical" href="http://willxue.top/2017/11/04/java_nio/"/>
+  <link rel="canonical" href="http://willxue.top/2017/11/04/EventEmitter-2017-11-04/"/>
 
 
 
 
 
-  <title>Java NIO(一)－I/O模型： 阻塞、非阻塞、I/O复用、同步、异步 | 鱼大坤个人博客</title>
+  <title> | 鱼大坤个人博客</title>
   
 
 
@@ -324,7 +318,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://willxue.top/2017/11/04/java_nio/">
+    <link itemprop="mainEntityOfPage" href="http://willxue.top/2017/11/04/EventEmitter-2017-11-04/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="大坤">
@@ -341,7 +335,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Java NIO(一)－I/O模型： 阻塞、非阻塞、I/O复用、同步、异步</h2>
+          <h2 class="post-title" itemprop="name headline"></h2>
         
 
         <div class="post-meta">
@@ -353,7 +347,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-04T12:53:49+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-04T14:35:15+08:00">
                 2017-11-04
               </time>
             
@@ -372,9 +366,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/04/java_nio/#comments" itemprop="discussionUrl">
+                <a href="/2017/11/04/EventEmitter-2017-11-04/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/04/java_nio/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/11/04/EventEmitter-2017-11-04/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -402,71 +396,17 @@
       
 
       
-        <h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><blockquote>
-<p>为后期学习 Netty框架打好理论基础，并且在分布式RPC 服务中对客户端与服务端之间服务的调用，底层数据通讯可以使用Netty 进行封装。 </p>
-</blockquote>
-<h2 id="记录结构"><a href="#记录结构" class="headerlink" title="记录结构"></a>记录结构</h2><hr>
-<blockquote>
-<ul>
-<li>Java NIO(一)–I/O模型： 阻塞、非阻塞、I/O复用、同步、异步<br>地址：<a href="http://www.jianshu.com/writer#/notebooks/5970279/notes/7531041/preview" target="_blank" rel="external">http://www.jianshu.com/writer#/notebooks/5970279/notes/7531041/preview</a></li>
-<li>Java NIO(二)–Channel、Buffer、Selector<br>地址：待定</li>
-<li>Java NIO(三)–多路复用之TCP传输中的NIO应用<br>地址：待定<a id="more"></a>
-今天记录I/O模型中的阻塞、非阻塞、I/O复用、同步、异步。<br>##混沌的概念##<br>对于上述四种概念，常常使我陷入混沌，我经常这样想同步不就是阻塞的么？异步不就是非阻塞的么？<br>我也会去看下别人写的博客以验证我的想法是正确的，事实上，大多博客也这样举例子：同步类似于你叫某人吃饭，某人不应答你，你就一直等着他，这期间你什么事情都不能做，也就是说你在等待某人去吃饭这个时刻内一直都是阻塞的。<br>针对于上述的举例，我一直深信不疑，一句话，<strong>没毛病</strong>。<br>但直到我看到UNIX 网络编程之后，才发现理解有偏差，起码我之前的理解是将I/O操作中的概念结合起来记忆。即：同步==阻塞  异步==非阻塞。</li>
-</ul>
-</blockquote>
-<p>但其实，以上的记忆有点以偏概全，或者说根本没有清晰的认识。</p>
-<p>话不多说，开始记录。</p>
-<h2 id="1-明确I-O考察的对象和流程"><a href="#1-明确I-O考察的对象和流程" class="headerlink" title="1. 明确I/O考察的对象和流程"></a><strong>1. 明确I/O考察的对象和流程</strong></h2><hr>
-<p><strong>1.1 参考Unix网络编程，一个输入操作通常包括两个不同的阶段：</strong></p>
-<blockquote>
-<ul>
-<li>等待数据准备好；</li>
-<li>从内核向进程复制数据。</li>
-</ul>
-</blockquote>
-<p><strong>1.2 对于一个套接字的输入操作:</strong></p>
-<blockquote>
-<ul>
-<li>通常涉及等待数据从网络到达，当所等待分组到达时，被复制到内核的某个缓冲区;</li>
-<li>把数据从内核缓冲区复制到应用进程缓冲区。</li>
-</ul>
-</blockquote>
-<p><strong>注意： 理解上述两个不同阶段对于后续理解I/O模型尤其是非阻塞I/O与同步I/O关系十分必要。</strong></p>
-<h2 id="2-I-O模型"><a href="#2-I-O模型" class="headerlink" title="2. I/O模型"></a>2. I/O模型</h2><hr>
-<p><strong>2.1 阻塞式I/O模型</strong><br>阻塞式I/O是最流行的I/O，也是所有套接字默认的I/O。Java  BIO中对socket 网络数据通信的<br>封装 就采用的是这种方式。当然效率也是低下的。</p>
-<p>阻塞式I/O是最流行的I/O，也是所有套接字默认的I/O。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2836699-a13146fd8158712e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="阻塞式I/O.png"><br>（注：所有图片来源 Unix网络编程卷1，第三版）</p>
-<p>如图所示，进程调用recvfrom系统调用，直到网络数据报到达且被复制到应用进程缓冲区中或发生错误才返回。</p>
-<p><strong>注意：也就是说，进程从调用recvfrom开始到返回的整个时段都是阻塞的（</strong>上述1.1两个阶段都是阻塞<strong>），recvfrom成功返回后，应用进程才开始处理数据报。</strong></p>
-<p><strong>上述的注意读三遍</strong></p>
-<p><strong>2.2 非阻塞I/O模型</strong><br>直接上图:<br><img src="http://upload-images.jianshu.io/upload_images/2836699-5a4cc7c4c9f2b94d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="非阻塞式I/O"></p>
-<p>如图所示，不同于阻塞式I/O，非阻塞I/O在第一阶段数据没有准备好的时候，不阻塞，而是直接返回一个错误（EWOULDBLOCK）。</p>
-<p>所以一般采用轮询（polling）的方式，应用进程持续轮询内核，查看数据是否准备好。当数据准备好时，被复制到应用进程缓冲区（第二阶段）。</p>
-<p><strong>注意：值得注意的一点是，当第一阶段数据准备完成后，进入第二阶段，内核向内存的复制。这一阶段仍然是阻塞的，这对于后续理解非阻塞与同步的关系十分重要。</strong></p>
-<p><strong>上述注意项读三遍。</strong></p>
-<p><strong>2.3 I/O多路复用模型</strong><br>I/O复用最常见的就是select和epoll，其阻塞发生在上述两个系统调用之一，而不是真正的I/O系统调用上。  Java NIO 对TCP 网络通信的封装内部采用的就是这种原理。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2836699-1f7ed47b78c08e25.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=" I/O复用模型.png"></p>
-<p>当用户进程调用了select，那么整个进程会被阻塞与select。内核会“监视”所有select负责的套接字，当任何一个套接字中的数据准备好了，select就会返回。(进程阻塞)</p>
-<p>这时候进入第二阶段，完成内核向内存的数据复制。（进程阻塞）</p>
-<p>注意:I/O复用的优势在于<strong>同时等待多个描述符就绪</strong>，单就一个描述符可言，其没有优势，反而还会因为多一次select系统调用存在劣势。</p>
-<p><strong>上述注意项读三遍。</strong></p>
-<p><strong>2.4 异步I/O模型</strong><br>异步I/O的工作机制是告知内核启动某个操作，并让内核在整个操作（包括第二阶段数据从内核向内存的复制）完成后告知我们。</p>
-<p>如下图所示：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2836699-0729a57363191150.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="异步I/O 模型.png"></p>
-<p><strong>注意：异步I/O要通过调用特殊API实现（如POSIX的aio_read），可以看出，其在两个阶段都是没有对于用户进程的阻塞的，依靠信号通知进程整个过程完成。</strong></p>
-<p> <strong>上述注意读三遍</strong></p>
-<p><strong>2.5 同步、异步与阻塞、非阻塞、I/O复用的关系</strong><br>在了解了阻塞式I/O、非阻塞式I/O、I/O多路复用、异步I/O后我们看下这几个模式的I/O模型与同步异步模型有什么关系。<br><strong>注意：重头戏，接下来就是彻底领悟这几个概念之间关系，让你不再混沌，请保持接受状态，保持信心看下去。</strong></p>
-<blockquote>
-<p>首先先来再明确一下同步、异步I/O之间的区别。<br>书中所述，POSIX把两种术语定义如下：<br><strong>同步I/O：导致请求进程阻塞，直到I/O操作完成；</strong>(两个阶段(等待网络数据到达内核空间缓存区域，以及将内核空间缓存区域中的数据复制到用户进程缓存中)中只要有一个阶段阻塞，那整个I/O操作就就是同步)<br><strong>异步I/O：不导致请求进程阻塞。</strong> （两个阶段都不阻塞，那么就是异步I/O）</p>
-</blockquote>
-<p><strong>注意：所以说，阻塞式I/O， 非阻塞I/O， I/O复用由于都导致了请求进程阻塞，所以均属于同步I/O。<br>（值得注意的是非阻塞I/O，正如之前提示要注意的，其在第二阶段内核向内存复制数据是会导致用户进程的阻塞，所以也属于同步I/O</strong></p>
-<p><strong>上述注意读三遍</strong></p>
-<p><strong>3. 总结</strong><br>如下图所示：（暂时忽略信号驱动I/O）</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2836699-42af7c7049d2b23c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="每种I/O的特点和调用流程.png"></p>
-<p>可以看出阻塞式、非阻塞式、与I/O复用，其不同之处在于第一阶段，第二阶段的处理方式相同（均阻塞与recvfrom调用），这也是刚才说到的将他们归于同步I/O的原因。</p>
-<p><strong>注意：异步I/O不存在请求进程阻塞的情况。同时注意前三种I/O模型在第一阶段的处理方式（阻塞，返回+轮询，阻塞于select等），区分这三种I/O模型。</strong></p>
-<p><strong>上述注意读三遍</strong></p>
-<p>完。</p>
+        <p>–</p>
+<h2 id="title-Node-js-EventEmitter-触发器"><a href="#title-Node-js-EventEmitter-触发器" class="headerlink" title="title:Node.js EventEmitter (触发器)"></a>title:Node.js EventEmitter (触发器)</h2><p>####Node.js EventEmitter</p>
+<hr>
+<p>Node.js 所有的异步 I/O 操作在完成时都会发送一个事件到事件队列.<br>Node.js里面的许多对象都会分发事件：一个net.Server对象会在每次有新连接时分发一个事件， 一个fs.readStream对象会在文件被打开的时候发出一个事件。 所有这些产生事件的对象都是 events.EventEmitter 的实例。<br><a id="more"></a></p>
+<p>####EventEmitter 类</p>
+<hr>
+<p>events 模块只提供了一个内部类： events.EventEmitter。EventEmitter 的核心就是事件触发与事件监听器功能的封装。你可以通过require(“events”);来访问该模块。创建一个文件叫做<strong>emitter.js</strong>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">//创建EventEmitter类</div><div class="line">var EventEmitter = require(&apos;events&apos;).EventEmitter();</div><div class="line">//创建eventEmitter对象</div><div class="line">var eventEmitter = new EventEmitter();</div><div class="line">eventEmitter.on(&apos;bomb&apos;,function()&#123;</div><div class="line">      //观察者为匿名函数，事件为bomb</div><div class="line">      console.log(&apos;bomb已经引爆&apos;);</div><div class="line">&#125;)</div><div class="line"></div><div class="line">//创建bomb之后就是要引爆它了，这里牵扯到事件的触发</div><div class="line">setTimeout(function()&#123;</div><div class="line">      eventEmitter.emit(&apos;bomb&apos;);</div><div class="line">&#125;,1000)；</div></pre></td></tr></table></figure></p>
+<p>执行结果如下：<br>运行这段代码，1 秒后控制台输出了 <strong>‘事件触发’</strong>。其原理是 event 对象注册了事件 bomb 的一个监听器，然后我们通过 setTimeout 在 1000 毫秒以后 event 对象触发事件bomb，此时会调用bomb的监听器(匿名函数)。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ node emitter.js</div><div class="line">bomb已经引爆</div></pre></td></tr></table></figure></p>
+<p>eventEmitter 的每个事件由一个事件名和若干个参数组成，事件名是一个字符串，通常表达一定的语义。对于每个事件，EventEmitter 支持 若干个事件监听器。<br>当事件触发时，注册到这个事件的事件监听器被依次调用，事件参数作为回调函数参数传递。<br>让我们以下面的例子解释这个过程：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"> var event = require(&apos;events&apos;);</div><div class="line"> var eventEmitter = new event.EventEmitter();</div><div class="line"></div><div class="line"> eventEmitter.on(&apos;bobm&apos;,function(args1,args2)&#123;</div><div class="line">       console.log(&apos;bomb引燃，引燃使用的是:&apos;+args1+&quot; 和&quot;+arg2)；</div><div class="line"> &#125;);</div><div class="line"></div><div class="line">eventEmitter.on(&apos;bobm&apos;,function(args1,args2)&#123;</div><div class="line">       console.log(&apos;bomb引燃，使用的是:&apos;+args1+&quot;或者 &quot;+arg2)；</div><div class="line"> &#125;);</div></pre></td></tr></table></figure></p>
+<p>执行以上代码，运行的结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ node event.js</div><div class="line">listener1 arg1 参数 arg2 参数</div><div class="line">listener2 arg1 参数 arg2 参数</div></pre></td></tr></table></figure></p>
+<p>以上例子中，emitter 为事件 someEvent 注册了两个事件监听器，然后触发了 someEvent 事件。<br>运行结果中可以看到两个事件监听器回调函数被先后调用。 这就是EventEmitter最简单的用法。<br>EventEmitter 提供了多个属性，如 <strong>on</strong> 和 <strong>emit</strong>。<strong>on</strong> 函数用于绑定事件函数，<strong>emit</strong> 属性用于触发一个事件。</p>
 
       
     </div>
@@ -533,8 +473,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/04/kcode/" rel="next" title="k码特权中关于 Redis & MySQL DB 乐观锁应用">
-                <i class="fa fa-chevron-left"></i> k码特权中关于 Redis & MySQL DB 乐观锁应用
+              <a href="/2017/11/04/node/" rel="next" title="Node.js Event-loop事件循环">
+                <i class="fa fa-chevron-left"></i> Node.js Event-loop事件循环
               </a>
             
           </div>
@@ -542,10 +482,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/11/04/node/" rel="prev" title="Node.js Event-loop事件循环">
-                Node.js Event-loop事件循环 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -675,7 +611,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#目的"><span class="nav-number">1.</span> <span class="nav-text">目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#记录结构"><span class="nav-number">2.</span> <span class="nav-text">记录结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-明确I-O考察的对象和流程"><span class="nav-number">3.</span> <span class="nav-text">1. 明确I/O考察的对象和流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-I-O模型"><span class="nav-number">4.</span> <span class="nav-text">2. I/O模型</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#title-Node-js-EventEmitter-触发器"><span class="nav-number">1.</span> <span class="nav-text">title:Node.js EventEmitter (触发器)</span></a></li></ol></div>
             
 
           </div>
@@ -825,9 +761,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://willxue.top/2017/11/04/java_nio/';
-          this.page.identifier = '2017/11/04/java_nio/';
-          this.page.title = 'Java NIO(一)－I/O模型： 阻塞、非阻塞、I/O复用、同步、异步';
+          this.page.url = 'http://willxue.top/2017/11/04/EventEmitter-2017-11-04/';
+          this.page.identifier = '2017/11/04/EventEmitter-2017-11-04/';
+          this.page.title = '';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://.disqus.com/embed.js';
