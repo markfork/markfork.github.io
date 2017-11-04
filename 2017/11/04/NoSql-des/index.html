@@ -96,17 +96,23 @@
 
 
 
-<meta name="description" content="1.【背景】  斐讯路由App 需要新增k码特权模块。  2.【需求】 1.已通过k码激活状态验证的用户可免费领取k码特权商品2.每个用户每天只能领取一张k码特权奖品  3.【应用场景及难点分析】 1.接口数据安全性要求：121.1 当某k码特权商品数据量为1，且高并发情况下，1.2 如何防止超卖(即多个用户都抢到了剩余的一个商品)">
+<meta name="description" content="首先应该说的是：所有天上飞的理念都会有落地实现。所以我觉得还是从数据存储处理的发展简史来引入NoSQL更为贴切，也能让自己有更细致的认识。数据存储与处理技术的发展有这么几个时间跨度  1.单机MySQL的美好时代   2.Memcached(缓存)＋MySQL＋垂直分离   3.MySQL主从读写分离   4.分库分表＋水平拆分＋mysql集群   5.MySQL的扩展性瓶颈   6.今天的架构">
 <meta property="og:type" content="article">
-<meta property="og:title" content="k码特权中关于 Redis &amp; MySQL DB 乐观锁应用">
-<meta property="og:url" content="http://willxue.top/2017/11/04/kcode/index.html">
+<meta property="og:title" content="NoSql入门概述">
+<meta property="og:url" content="http://willxue.top/2017/11/04/NoSql-des/index.html">
 <meta property="og:site_name" content="鱼大坤个人博客">
-<meta property="og:description" content="1.【背景】  斐讯路由App 需要新增k码特权模块。  2.【需求】 1.已通过k码激活状态验证的用户可免费领取k码特权商品2.每个用户每天只能领取一张k码特权奖品  3.【应用场景及难点分析】 1.接口数据安全性要求：121.1 当某k码特权商品数据量为1，且高并发情况下，1.2 如何防止超卖(即多个用户都抢到了剩余的一个商品)">
+<meta property="og:description" content="首先应该说的是：所有天上飞的理念都会有落地实现。所以我觉得还是从数据存储处理的发展简史来引入NoSQL更为贴切，也能让自己有更细致的认识。数据存储与处理技术的发展有这么几个时间跨度  1.单机MySQL的美好时代   2.Memcached(缓存)＋MySQL＋垂直分离   3.MySQL主从读写分离   4.分库分表＋水平拆分＋mysql集群   5.MySQL的扩展性瓶颈   6.今天的架构">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-04T04:52:02.000Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-3608619eb0958ca0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-fa05ac0f08d64e70.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-19e823f65ea71ef9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-bf76e651b8921104.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-9caee75ccd763cd9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-11-04T06:57:30.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="k码特权中关于 Redis &amp; MySQL DB 乐观锁应用">
-<meta name="twitter:description" content="1.【背景】  斐讯路由App 需要新增k码特权模块。  2.【需求】 1.已通过k码激活状态验证的用户可免费领取k码特权商品2.每个用户每天只能领取一张k码特权奖品  3.【应用场景及难点分析】 1.接口数据安全性要求：121.1 当某k码特权商品数据量为1，且高并发情况下，1.2 如何防止超卖(即多个用户都抢到了剩余的一个商品)">
+<meta name="twitter:title" content="NoSql入门概述">
+<meta name="twitter:description" content="首先应该说的是：所有天上飞的理念都会有落地实现。所以我觉得还是从数据存储处理的发展简史来引入NoSQL更为贴切，也能让自己有更细致的认识。数据存储与处理技术的发展有这么几个时间跨度  1.单机MySQL的美好时代   2.Memcached(缓存)＋MySQL＋垂直分离   3.MySQL主从读写分离   4.分库分表＋水平拆分＋mysql集群   5.MySQL的扩展性瓶颈   6.今天的架构">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2836699-3608619eb0958ca0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -135,13 +141,13 @@
 
 
 
-  <link rel="canonical" href="http://willxue.top/2017/11/04/kcode/"/>
+  <link rel="canonical" href="http://willxue.top/2017/11/04/NoSql-des/"/>
 
 
 
 
 
-  <title>k码特权中关于 Redis & MySQL DB 乐观锁应用 | 鱼大坤个人博客</title>
+  <title>NoSql入门概述 | 鱼大坤个人博客</title>
   
 
 
@@ -318,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://willxue.top/2017/11/04/kcode/">
+    <link itemprop="mainEntityOfPage" href="http://willxue.top/2017/11/04/NoSql-des/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="大坤">
@@ -335,7 +341,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">k码特权中关于 Redis & MySQL DB 乐观锁应用</h2>
+          <h2 class="post-title" itemprop="name headline">NoSql入门概述</h2>
         
 
         <div class="post-meta">
@@ -347,7 +353,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-04T12:52:02+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-04T14:57:30+08:00">
                 2017-11-04
               </time>
             
@@ -366,9 +372,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/04/kcode/#comments" itemprop="discussionUrl">
+                <a href="/2017/11/04/NoSql-des/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/04/kcode/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/11/04/NoSql-des/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -396,46 +402,47 @@
       
 
       
-        <h2 id="1-【背景】"><a href="#1-【背景】" class="headerlink" title="1.【背景】"></a>1.【背景】</h2><hr>
+        <p><strong>首先应该说的是</strong>：所有天上飞的理念都会有落地实现。所以我觉得还是从数据存储处理的发展简史来引入NoSQL更为贴切，也能让自己有更细致的认识。<br>数据存储与处理技术的发展有这么几个时间跨度</p>
 <blockquote>
-<p>斐讯路由App 需要新增k码特权模块。</p>
+<p>1.单机MySQL的美好时代<br>   2.Memcached(缓存)＋MySQL＋垂直分离<br>   3.MySQL主从读写分离<br>   4.分库分表＋水平拆分＋mysql集群<br>   5.MySQL的扩展性瓶颈<br>   6.今天的架构<br>   7.为什么使用NoSQL<br><a id="more"></a></p>
+<h2 id="1-单机MySQL的美好时代"><a href="#1-单机MySQL的美好时代" class="headerlink" title="1.单机MySQL的美好时代"></a>1.单机MySQL的美好时代</h2><hr>
+<p>   在90年代，一个网站的访问量并不大，用单个数据库完全可以轻松应对，那个时候，更多的都是静态网页，动态交互型的网站并不多。<br>网站的架构设计如下图所示：</p>
 </blockquote>
-<h2 id="2-【需求】"><a href="#2-【需求】" class="headerlink" title="2.【需求】"></a>2.【需求】</h2><blockquote>
-<p>1.已通过k码激活状态验证的用户可免费领取k码特权商品<br>2.每个用户每天只能领取一张k码特权奖品</p>
-</blockquote>
-<h2 id="3-【应用场景及难点分析】"><a href="#3-【应用场景及难点分析】" class="headerlink" title="3.【应用场景及难点分析】"></a>3.【应用场景及难点分析】</h2><blockquote>
-<p><strong>1.接口数据安全性要求：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">1.1 当某k码特权商品数据量为1，且高并发情况下，</div><div class="line">1.2 如何防止超卖(即多个用户都抢到了剩余的一个商品)</div></pre></td></tr></table></figure></p>
-</blockquote>
-<a id="more"></a> 
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-3608619eb0958ca0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="早期动态网站架构图.png"></p>
+<p>   大学期间我们大都用的是这个简单原始的架构来做网站，在数据量不是很大的情况下，是完全应付的来的。</p>
+<p><strong>那么上述架构能带来什么问题呢？</strong></p>
 <blockquote>
-<p><strong>2.接口性能要求：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">斐讯路由App 现用户量为300w+，日活4w＋，2/8原则分析(**指80%的业务量在20%的时间里完成**)。</div><div class="line">经验可知用户使用斐讯路由App 的持续时间为12小时，</div><div class="line">所以2/8分析后，80%的日活在20%的时间内完成。</div><div class="line">即32000人免费领取k码特权商品要在2.4小时内完成，</div><div class="line">换算成每秒 完成请求数即 QPS = 3.7/s 。</div><div class="line">即每个接口响应请求时间至少要在 270ms 以内。才算是高性能。</div></pre></td></tr></table></figure></p>
+<p><strong>1.数据量太大，一个机器放不下时。</strong><br>   MySQL5.7单表500w数量已经很棒，但是300w时就应该优化了。<br><strong>2.数据的索引（B+Tree）一个机器的内存放不下时。</strong><br>   索引是加速数据库访问效率的一种机制，但是索引是存储在内存当中的，如果数据量太大，那么意味着内存中存储的索引也会很大，在每一次加入数据的时候，数据库都需要维持索引，这样假设索引跟数据量同处一个机器，而不做优化，那么数据访问将非常之缓慢。<br><strong>3.访问量（读写混合）一个实例并不能承受。</strong></p>
 </blockquote>
-<h2 id="4-问题分析："><a href="#4-问题分析：" class="headerlink" title="4.问题分析："></a>4.问题分析：</h2><blockquote>
-<p><strong>1.读多写少</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">每个用户每日只能领取一个k码特权商品。即1个用户加入请求免费领取k码特权接口多次，在k码商品库存量充足的情况下，只能领取到1个商品，其余请求都应该返回“对不起，您今日已领取k码特权商品”。从这个方面来定义，其属于读多写少的问题。</div></pre></td></tr></table></figure></p>
-<p><strong>2.并发量低</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">以斐讯路由现在日活情况为4w＋的数据量来估算、接口并发能力 QPS = 3.7/s ，</div><div class="line">属于低并发，但在k码特权模块优化程度达到一定量时，并发量是否会上升有待考察。</div><div class="line">但总体来说属于并发量不高的场景。</div></pre></td></tr></table></figure></p>
-</blockquote>
-<p><strong>也就是说k码特权问题经过模型抽象，已经变成了读多写少、并发量不大，但要保证性能，和数据安全性一致性的问题。</strong></p>
-<p>对于这类问题，乐观锁思想可以作为解决这类问题的指导思想。</p>
-<h2 id="5-乐观锁思想"><a href="#5-乐观锁思想" class="headerlink" title="5.乐观锁思想"></a>5.乐观锁思想</h2><blockquote>
-<p>网上文章对乐观锁理解的误区:</p>
-<hr>
-<p><strong>1.乐观锁是一种思想，并不是一种具体的技术实现。</strong><br><strong>2.乐观锁类似于CAS无锁编程技术(其实也加锁，只不过在cpu层面)</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">即当多个线程同时并发更新统一个变量，</div><div class="line">采用先select再update的方式，select出当前变量a的副本值b，然后用新值c去更新，</div><div class="line">更新时需要拿select 出来的变量值a的副本值b与当前非副本变量a的值做对比，</div><div class="line">若暂存副本值b与当前变量a非副本值相同，则正常更新，</div><div class="line">如果不同，则认为在当前线程更新之前已经有一个值将a变量更新，</div><div class="line">则更新失败，在并发情况不大的情况下，</div><div class="line">采用循环的方式去更新，总能更新成功，且循环更新次数不会太多。因此CAS也叫自旋锁。</div></pre></td></tr></table></figure></p>
-</blockquote>
-<h2 id="6-k码特权-免费领取解决方案"><a href="#6-k码特权-免费领取解决方案" class="headerlink" title="6.k码特权-免费领取解决方案"></a>6.k码特权-免费领取解决方案</h2><hr>
-<p><strong>1.用户每日成功领取k码特权商品次数的限制</strong></p>
+<p>如果满足不了上述当中的1-3个，请演化。</p>
+<h2 id="2-Memcached-缓存-＋MySQL＋垂直分离"><a href="#2-Memcached-缓存-＋MySQL＋垂直分离" class="headerlink" title="2.Memcached(缓存)＋MySQL＋垂直分离"></a>2.Memcached(缓存)＋MySQL＋垂直分离</h2><hr>
+<p><strong>2.1 Memcached(缓存)</strong></p>
 <blockquote>
-<p>采用redis 数据结构 String，记录用户每日免费领取成功次数。并且可以轻松使用redis 缓存的过期 (expire) 机制做每日领次数的控制），用户每日成功领取k码特权的次数次日凌晨清空。<br>为什么不使用数据库来进行用户成功领取k码特权商品次数的控制。当然建立好索引此问题也可以完美解决。<br>使用redis进行用户成功领取k码特权商品次数的控制原因有两个：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">1.因为redis 纯粹的查询快，减轻数据库压力！不用每次都通过数据库二次索引，从磁盘找到目标记录并读入到内存。**</div><div class="line">2.线上配置的redis使用量10%都不到，为了更好的利用硬件资源。**</div></pre></td></tr></table></figure></p>
+<p>  随着访问量的上升，几乎大部分使用MySQL架构的网站在数据库上都出现了性能问题，web程序不再仅仅关注在功能上，同时也开始追求性能，程序员们开始大量的使用<strong>缓存技术</strong>来缓解数据库的压力，优化数据库的结构和索引，开始比较流行的是通过文件缓存来缓解数据库的压力，但是当访问量继续增大的时候，多台web服务器通过文件缓存不能共享，大量的小文件缓存也带来了比较高的IO压力，在这个时候，Memcached(缓存)自然成为一个非常时尚的技术产品。<br><strong>缓存的实质是替数据库挡了一层。</strong><br>频繁被访问的数据可以被放置于缓存当中，以供频繁访问。</p>
 </blockquote>
-<p><strong>2.用户每日成功领取k码特权次数的并发更改</strong></p>
+<p>架构图如下所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-fa05ac0f08d64e70.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Memcached(缓存)＋MySQL＋垂直分离.png"></p>
+<p><strong>2.2 垂直拆分</strong></p>
 <blockquote>
-<p>从接口安全性考虑，若有用户恶意领取、那么有可能产生一个用户在一天之内领取了多个k码特权奖品，这个是业务需求所不允许的。<br>这里我们使用到了redis 提供的 事务(multi)与watch(乐观锁实现) 机制来控制 用户每日成功领取k码特权次数的并发更改。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">watch机制：对键值进行监控，当被其他客户端改变时，</div><div class="line">当前的客户端的所有操作将会失败，抛出错误信息。</div></pre></td></tr></table></figure></p>
+<p><strong>什么是垂直拆分？</strong><br>   举个例子，淘宝的数据库服务器是要进行定性 的，比如说有四台数据库服务器，两台进行买家数据的存储，两台进行卖家数据的存储，将原本一台数据库实例需要做的事情，均摊给四台服务器。DB数据操作能力会有很大提升。</p>
 </blockquote>
-<p><strong>3.用户并发更新同一k码特权商品库存、同一商品的具体某个item</strong></p>
+<p>####3. MySQL主从读写分离</p>
 <blockquote>
-<p>上述问题，属于对竟态资源的并发修改，在接口请求并发量不大、且读多写少的情况下，采用数据库乐观锁来解决问题。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">数据库乐观锁实现方式：</div><div class="line">在竞态资源(商品)记录上添加一列，update_version，表示更新次数。</div><div class="line">数据库乐观锁实现方式伪代码：</div><div class="line">for(;;)&#123;</div><div class="line">    //获取某k码商品库存，更新版本号 sql</div><div class="line">    $getRewardStcokSql = &apos;select reward_stock,reward_update_version from fx_platform_reward_amount where reward_type_id = &#123;$reward_type_id&#125;&apos;;</div><div class="line">    $getReardStockResult = $model-&gt;query($getRewardStcokSql);</div><div class="line">    if(!$getReardStockResult )&#123;</div><div class="line">        die;</div><div class="line">    &#125; </div><div class="line">    $reward_stock = getReardStockResult[&apos;reward_stock&apos;];</div><div class="line">    $reward_update_version = getReardStockResult[&apos;reward_update_version&apos;];</div><div class="line">    //如果库存量&gt;0</div><div class="line">    if($reward_stock&gt;0)&#123;</div><div class="line">      //更新k码商品库存，版本号需要进行对比，其实本质上是不再使用数据库提供的排它锁，而将排他控制的职责交给选择某条需要更新记录的过滤条件。</div><div class="line">        $updateRewardStockSql = &apos;update fx_platform_reward_amount set reward_stock = reward_stock-1 and reward_update_version = reward_update_version + 1 where reward_type_id = &#123;$reward_type_id&#125; reward_update_version = &#123;$reward_update_version&#125; &apos;;</div><div class="line">        $updateRewardStockResult = $model-&gt;excute($updateRewardStockSql);</div><div class="line">    &#125;</div><div class="line">    //并发更新失败，表示在此用户更新商品库存之前已经有用户更新成功，需要重新尝试更新。</div><div class="line">    if(!$updateRewardStockResult)&#123;</div><div class="line">        continue;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>1 什么是主从复制？</strong><br>   多搞几个数据库来存储数据，假设有三台数据库，一主二仆，即一台主服务器，两台从服务器，当新增数据至主数据库服务器的时候，那么同时复制此数据进入到从数据库服务器当中。数据复制是为了容灾备份，缓存备份，保证数据的完整性。<br><strong>2 什么是读写分离？</strong><br>   增删改是写，查为读。<br>   读就去职能为被查询的数据库服务器去读。<br>   写就去职能为写数据的数据库服务器去写。<br>   分工明确，结合缓存能实现性能的一大提升</p>
 </blockquote>
-<h2 id="7-测试结果"><a href="#7-测试结果" class="headerlink" title="7.测试结果"></a>7.测试结果</h2><hr>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">7.1 并发测试，数据能保持一致性</div><div class="line">7.2 用户免费领取k码特权商品响应时间均值为 110ms 左右，</div><div class="line">      用户当日已领取过k码特权奖品的接口响应时间40-55ms左右。</div></pre></td></tr></table></figure>
+<p>架构图如下所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-19e823f65ea71ef9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="主从复制与读写分离.png"></p>
+<p>其中的M是master 即主DB Server ,S为slaver即从属DB Server,各有分工。<br>写操作在 M，读操作在S。S的数据是从master方复制的。</p>
+<h2 id="4-分库分表＋水平拆分＋MySQL集群"><a href="#4-分库分表＋水平拆分＋MySQL集群" class="headerlink" title="4.分库分表＋水平拆分＋MySQL集群"></a>4.分库分表＋水平拆分＋MySQL集群</h2><hr>
+<p>   承接主从复制，读写分离，以及Memcached的使用，这时MySQL主库的写压力开始出现瓶颈，而数据量的持续猛增，由于MYISAM使用表锁，在高并发下会出现严重的锁问题，大量的高并发MySQL应用开始使用InnoDB引擎代替MYISAM,由于数据量的指数级增长，只能继续对架构进行演变。<br>与此同时，开始流行使用分库分表来缓解写压力和数据增长的扩展问题。这个时候，MySQL推出了还不太稳定的表分区，这也给技术实力一般的公司带来了希望。虽然MySQL推出了MySQL cluster集群，单性能也不能很好的满足互联网的要求，知识在高可靠性上提供了非常大的保证。</p>
+<blockquote>
+<p><strong>1 基本思想之什么是分库分表？</strong><br>   从字面上简单理解，就是把原本存储于一个库的数据分块存储到多个库上，把原本存储于一个表的数据分块存储到多个表上。<br><strong>2 基本思想之为什么要分库分表？</strong><br>   数据库中的数据量不一定是可控的，在未进行分库分表的情况下，随着时间和业务的发展，库中的表会越来越多，表中的数据量也会越来越大，相应地，数据操作，增删改查的开销也会越来越大；另外，由于无法进行分布式式部署，而一台服务器的资源（CPU、磁盘、内存、IO等）是有限的，最终数据库所能承载的数据量、数据处理能力都将遭遇瓶颈。<br><strong>3 分库分表的实施策略。</strong><br>   分库分表有垂直切分和水平切分两种。<br><strong>3.1 何谓垂直切分</strong>:<br>   即将表按照功能模块、关系密切程度划分出来，部署到不同的库上。例如，我们会建立定义数据库workDB、商品数据库payDB、用户数据库userDB、日志数据库logDB等，分别用于存储项目数据定义表、商品定义表、用户数据表、日志数据表等。<br><strong>3.2 何谓水平切分</strong>:<br>   当一个表中的数据量过大时，我们可以把该表的数据按照某种规则，例如userID散列，进行划分，然后存储到多个结构相同的表，和不同的库上。例如，我们的userDB中的用户数据表中，每一个表的数据量都很大，就可以把userDB切分为结构相同的多个userDB：part0DB、part1DB等，再将userDB上的用户数据表userTable，切分为很多userTable：userTable0、userTable1等，然后将这些表按照一定的规则存储到多个userDB上。</p>
+</blockquote>
+<h2 id="5-MySQL的扩展性瓶颈"><a href="#5-MySQL的扩展性瓶颈" class="headerlink" title="5.MySQL的扩展性瓶颈"></a>5.MySQL的扩展性瓶颈</h2><hr>
+<p>   视频、图片大数据量的数据时不能存储到数据库当中的，假设一个视频1.8G,MySQL中肯定是不能进行存储的。<br>下图是淘宝分享出来的一种架构方式：<br><img src="http://upload-images.jianshu.io/upload_images/2836699-bf76e651b8921104.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><img src="http://upload-images.jianshu.io/upload_images/2836699-9caee75ccd763cd9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="淘宝分享－高性能网站架构.png.png"></p>
+<h2 id="6-今天的架构"><a href="#6-今天的架构" class="headerlink" title="6.今天的架构"></a>6.今天的架构</h2><hr>
+<p>答案就是NoSQL。<br>NoSQL(NoSQL ＝ Not Only SQL),意为”不仅仅是SQL”。泛指<strong>非关系型</strong>数据库。随着互联网2.0网站的兴起，传统的关系型数据库在应付web2.0网站，特别是超大规模和高并发的SNS类型的web2.0动态网站已经显得力不从心，暴露了很多难以克服的问题，而非关系型数据库则由于其本身的特点得到了非常迅速的发展。NoSQL数据库的产生就是为了解决大规模数据集合以及多中数据带来的挑战，尤其是大数据应用难题，包括大规模数据的存储。<br><strong>例如：</strong>谷歌活着Facebook每天为他们的用户收集万亿比特的数据。<strong>这些数据的存储不需要固定的模式，无需多余的操作就可以横向扩展。</strong></p>
+<p>下一节继续！</p>
 
       
     </div>
@@ -502,14 +509,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/11/04/NoSql-Redis-transaction/" rel="next" title="NoSql-Redis入门（事务）">
+                <i class="fa fa-chevron-left"></i> NoSql-Redis入门（事务）
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/11/04/java_nio/" rel="prev" title="Java NIO(一)－I/O模型： 阻塞、非阻塞、I/O复用、同步、异步">
-                Java NIO(一)－I/O模型： 阻塞、非阻塞、I/O复用、同步、异步 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/11/04/simple-factory/" rel="prev" title="简单工厂模式">
+                简单工厂模式 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -640,7 +651,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-【背景】"><span class="nav-number">1.</span> <span class="nav-text">1.【背景】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-【需求】"><span class="nav-number">2.</span> <span class="nav-text">2.【需求】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-【应用场景及难点分析】"><span class="nav-number">3.</span> <span class="nav-text">3.【应用场景及难点分析】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-问题分析："><span class="nav-number">4.</span> <span class="nav-text">4.问题分析：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-乐观锁思想"><span class="nav-number">5.</span> <span class="nav-text">5.乐观锁思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-k码特权-免费领取解决方案"><span class="nav-number">6.</span> <span class="nav-text">6.k码特权-免费领取解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-测试结果"><span class="nav-number">7.</span> <span class="nav-text">7.测试结果</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-单机MySQL的美好时代"><span class="nav-number">1.</span> <span class="nav-text">1.单机MySQL的美好时代</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Memcached-缓存-＋MySQL＋垂直分离"><span class="nav-number">2.</span> <span class="nav-text">2.Memcached(缓存)＋MySQL＋垂直分离</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-分库分表＋水平拆分＋MySQL集群"><span class="nav-number">3.</span> <span class="nav-text">4.分库分表＋水平拆分＋MySQL集群</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-MySQL的扩展性瓶颈"><span class="nav-number">4.</span> <span class="nav-text">5.MySQL的扩展性瓶颈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-今天的架构"><span class="nav-number">5.</span> <span class="nav-text">6.今天的架构</span></a></li></ol></div>
             
 
           </div>
@@ -790,9 +801,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://willxue.top/2017/11/04/kcode/';
-          this.page.identifier = '2017/11/04/kcode/';
-          this.page.title = 'k码特权中关于 Redis & MySQL DB 乐观锁应用';
+          this.page.url = 'http://willxue.top/2017/11/04/NoSql-des/';
+          this.page.identifier = '2017/11/04/NoSql-des/';
+          this.page.title = 'NoSql入门概述';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://.disqus.com/embed.js';

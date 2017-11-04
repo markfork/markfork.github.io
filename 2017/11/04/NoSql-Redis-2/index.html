@@ -96,17 +96,19 @@
 
 
 
-<meta name="description" content="1.【背景】  斐讯路由App 需要新增k码特权模块。  2.【需求】 1.已通过k码激活状态验证的用户可免费领取k码特权商品2.每个用户每天只能领取一张k码特权奖品  3.【应用场景及难点分析】 1.接口数据安全性要求：121.1 当某k码特权商品数据量为1，且高并发情况下，1.2 如何防止超卖(即多个用户都抢到了剩余的一个商品)">
+<meta name="description" content="Redis要点：  1.关键字(keys)用于标识一段数据的字符串2.值(values)是一段任意的字节序列，Redis不会关注他们实质是什么3.Redis展示了5种专门的数据结构4.上面几点使得Redis快速而且容易使用，但Redis不适用于所有的应用场景  1.Redis的数据结构 每种数据结构的要点包括：  1.是什么？2.包含的有效方法3.使用这些数据结构能处理哪些类型的特性和数据">
 <meta property="og:type" content="article">
-<meta property="og:title" content="k码特权中关于 Redis &amp; MySQL DB 乐观锁应用">
-<meta property="og:url" content="http://willxue.top/2017/11/04/kcode/index.html">
+<meta property="og:title" content="NoSQL－Redis入门(二)">
+<meta property="og:url" content="http://willxue.top/2017/11/04/NoSql-Redis-2/index.html">
 <meta property="og:site_name" content="鱼大坤个人博客">
-<meta property="og:description" content="1.【背景】  斐讯路由App 需要新增k码特权模块。  2.【需求】 1.已通过k码激活状态验证的用户可免费领取k码特权商品2.每个用户每天只能领取一张k码特权奖品  3.【应用场景及难点分析】 1.接口数据安全性要求：121.1 当某k码特权商品数据量为1，且高并发情况下，1.2 如何防止超卖(即多个用户都抢到了剩余的一个商品)">
+<meta property="og:description" content="Redis要点：  1.关键字(keys)用于标识一段数据的字符串2.值(values)是一段任意的字节序列，Redis不会关注他们实质是什么3.Redis展示了5种专门的数据结构4.上面几点使得Redis快速而且容易使用，但Redis不适用于所有的应用场景  1.Redis的数据结构 每种数据结构的要点包括：  1.是什么？2.包含的有效方法3.使用这些数据结构能处理哪些类型的特性和数据">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-04T04:52:02.000Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-aa4c5f6e39ebd3cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-11-04T06:54:39.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="k码特权中关于 Redis &amp; MySQL DB 乐观锁应用">
-<meta name="twitter:description" content="1.【背景】  斐讯路由App 需要新增k码特权模块。  2.【需求】 1.已通过k码激活状态验证的用户可免费领取k码特权商品2.每个用户每天只能领取一张k码特权奖品  3.【应用场景及难点分析】 1.接口数据安全性要求：121.1 当某k码特权商品数据量为1，且高并发情况下，1.2 如何防止超卖(即多个用户都抢到了剩余的一个商品)">
+<meta name="twitter:title" content="NoSQL－Redis入门(二)">
+<meta name="twitter:description" content="Redis要点：  1.关键字(keys)用于标识一段数据的字符串2.值(values)是一段任意的字节序列，Redis不会关注他们实质是什么3.Redis展示了5种专门的数据结构4.上面几点使得Redis快速而且容易使用，但Redis不适用于所有的应用场景  1.Redis的数据结构 每种数据结构的要点包括：  1.是什么？2.包含的有效方法3.使用这些数据结构能处理哪些类型的特性和数据">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2836699-aa4c5f6e39ebd3cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -135,13 +137,13 @@
 
 
 
-  <link rel="canonical" href="http://willxue.top/2017/11/04/kcode/"/>
+  <link rel="canonical" href="http://willxue.top/2017/11/04/NoSql-Redis-2/"/>
 
 
 
 
 
-  <title>k码特权中关于 Redis & MySQL DB 乐观锁应用 | 鱼大坤个人博客</title>
+  <title>NoSQL－Redis入门(二) | 鱼大坤个人博客</title>
   
 
 
@@ -318,7 +320,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://willxue.top/2017/11/04/kcode/">
+    <link itemprop="mainEntityOfPage" href="http://willxue.top/2017/11/04/NoSql-Redis-2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="大坤">
@@ -335,7 +337,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">k码特权中关于 Redis & MySQL DB 乐观锁应用</h2>
+          <h2 class="post-title" itemprop="name headline">NoSQL－Redis入门(二)</h2>
         
 
         <div class="post-meta">
@@ -347,7 +349,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-04T12:52:02+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-04T14:54:39+08:00">
                 2017-11-04
               </time>
             
@@ -366,9 +368,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/04/kcode/#comments" itemprop="discussionUrl">
+                <a href="/2017/11/04/NoSql-Redis-2/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/04/kcode/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/11/04/NoSql-Redis-2/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -396,46 +398,32 @@
       
 
       
-        <h2 id="1-【背景】"><a href="#1-【背景】" class="headerlink" title="1.【背景】"></a>1.【背景】</h2><hr>
+        <p><strong>Redis要点：</strong></p>
 <blockquote>
-<p>斐讯路由App 需要新增k码特权模块。</p>
+<p>1.关键字(keys)用于标识一段数据的字符串<br>2.值(values)是一段任意的字节序列，Redis不会关注他们实质是什么<br>3.Redis展示了5种专门的数据结构<br>4.上面几点使得Redis快速而且容易使用，但Redis不适用于所有的应用场景</p>
 </blockquote>
-<h2 id="2-【需求】"><a href="#2-【需求】" class="headerlink" title="2.【需求】"></a>2.【需求】</h2><blockquote>
-<p>1.已通过k码激活状态验证的用户可免费领取k码特权商品<br>2.每个用户每天只能领取一张k码特权奖品</p>
-</blockquote>
-<h2 id="3-【应用场景及难点分析】"><a href="#3-【应用场景及难点分析】" class="headerlink" title="3.【应用场景及难点分析】"></a>3.【应用场景及难点分析】</h2><blockquote>
-<p><strong>1.接口数据安全性要求：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">1.1 当某k码特权商品数据量为1，且高并发情况下，</div><div class="line">1.2 如何防止超卖(即多个用户都抢到了剩余的一个商品)</div></pre></td></tr></table></figure></p>
-</blockquote>
-<a id="more"></a> 
+<h2 id="1-Redis的数据结构"><a href="#1-Redis的数据结构" class="headerlink" title="1.Redis的数据结构"></a>1.Redis的数据结构</h2><hr>
+<p>每种数据结构的要点包括：</p>
 <blockquote>
-<p><strong>2.接口性能要求：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">斐讯路由App 现用户量为300w+，日活4w＋，2/8原则分析(**指80%的业务量在20%的时间里完成**)。</div><div class="line">经验可知用户使用斐讯路由App 的持续时间为12小时，</div><div class="line">所以2/8分析后，80%的日活在20%的时间内完成。</div><div class="line">即32000人免费领取k码特权商品要在2.4小时内完成，</div><div class="line">换算成每秒 完成请求数即 QPS = 3.7/s 。</div><div class="line">即每个接口响应请求时间至少要在 270ms 以内。才算是高性能。</div></pre></td></tr></table></figure></p>
+<p>1.是什么？<br>2.包含的有效方法<br>3.使用这些数据结构能处理哪些类型的特性和数据<br><a id="more"></a><br><strong>1.1 字符串(String)</strong><br>在Redis里,字符串是最基本的数据结构。<br>for example<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">set users:leto &quot;&#123;name: leto, planet: dune, likes: [spice]&#125;&quot;</div></pre></td></tr></table></figure></p>
 </blockquote>
-<h2 id="4-问题分析："><a href="#4-问题分析：" class="headerlink" title="4.问题分析："></a>4.问题分析：</h2><blockquote>
-<p><strong>1.读多写少</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">每个用户每日只能领取一个k码特权商品。即1个用户加入请求免费领取k码特权接口多次，在k码商品库存量充足的情况下，只能领取到1个商品，其余请求都应该返回“对不起，您今日已领取k码特权商品”。从这个方面来定义，其属于读多写少的问题。</div></pre></td></tr></table></figure></p>
-<p><strong>2.并发量低</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">以斐讯路由现在日活情况为4w＋的数据量来估算、接口并发能力 QPS = 3.7/s ，</div><div class="line">属于低并发，但在k码特权模块优化程度达到一定量时，并发量是否会上升有待考察。</div><div class="line">但总体来说属于并发量不高的场景。</div></pre></td></tr></table></figure></p>
-</blockquote>
-<p><strong>也就是说k码特权问题经过模型抽象，已经变成了读多写少、并发量不大，但要保证性能，和数据安全性一致性的问题。</strong></p>
-<p>对于这类问题，乐观锁思想可以作为解决这类问题的指导思想。</p>
-<h2 id="5-乐观锁思想"><a href="#5-乐观锁思想" class="headerlink" title="5.乐观锁思想"></a>5.乐观锁思想</h2><blockquote>
-<p>网上文章对乐观锁理解的误区:</p>
-<hr>
-<p><strong>1.乐观锁是一种思想，并不是一种具体的技术实现。</strong><br><strong>2.乐观锁类似于CAS无锁编程技术(其实也加锁，只不过在cpu层面)</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">即当多个线程同时并发更新统一个变量，</div><div class="line">采用先select再update的方式，select出当前变量a的副本值b，然后用新值c去更新，</div><div class="line">更新时需要拿select 出来的变量值a的副本值b与当前非副本变量a的值做对比，</div><div class="line">若暂存副本值b与当前变量a非副本值相同，则正常更新，</div><div class="line">如果不同，则认为在当前线程更新之前已经有一个值将a变量更新，</div><div class="line">则更新失败，在并发情况不大的情况下，</div><div class="line">采用循环的方式去更新，总能更新成功，且循环更新次数不会太多。因此CAS也叫自旋锁。</div></pre></td></tr></table></figure></p>
-</blockquote>
-<h2 id="6-k码特权-免费领取解决方案"><a href="#6-k码特权-免费领取解决方案" class="headerlink" title="6.k码特权-免费领取解决方案"></a>6.k码特权-免费领取解决方案</h2><hr>
-<p><strong>1.用户每日成功领取k码特权商品次数的限制</strong></p>
+<p>Redis是怎么知道我们是在使用哪个数据结构?其解决方法是,每个命令都相对应于一种特定的数据结构。例如,当你使用 set 命令,你就是将值存储到一个字符串数据结构里。而当你使用 hset 命令,你就是将值存储到一个散列数据结构里。考虑到Redis的关键字集很小,这样的机制具有相当的可管理性。<br>正如上述：<br>我们已经看到了一个常见的字符串使用案例,即通过关键字存储对象的实例。<br>我们可以通过下面的命令进行实操：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; set user:liutao &quot;&#123;name:liutao,age:23,likes[ad,dd]&#125;&quot;</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; get user:liutao</div><div class="line">&quot;&#123;name:liutao,age:23,likes[ad,dd]&#125;&quot;</div><div class="line">127.0.0.1:6379&gt; strlen user:liutao</div><div class="line">(integer) 33</div><div class="line">127.0.0.1:6379&gt; getrange user:liutao 27 40</div><div class="line">&quot;d,dd]&#125;&quot;</div><div class="line">127.0.0.1:6379&gt; append user:liutao &quot;,sex:male&quot;</div><div class="line">(integer) 42</div><div class="line">127.0.0.1:6379&gt;</div></pre></td></tr></table></figure></p>
 <blockquote>
-<p>采用redis 数据结构 String，记录用户每日免费领取成功次数。并且可以轻松使用redis 缓存的过期 (expire) 机制做每日领次数的控制），用户每日成功领取k码特权的次数次日凌晨清空。<br>为什么不使用数据库来进行用户成功领取k码特权商品次数的控制。当然建立好索引此问题也可以完美解决。<br>使用redis进行用户成功领取k码特权商品次数的控制原因有两个：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">1.因为redis 纯粹的查询快，减轻数据库压力！不用每次都通过数据库二次索引，从磁盘找到目标记录并读入到内存。**</div><div class="line">2.线上配置的redis使用量10%都不到，为了更好的利用硬件资源。**</div></pre></td></tr></table></figure></p>
+<p>get: 根据关键字获取关键字对应的值<br>strlen：获取关键字对应的值的长度<br>getrange：获取关键字对应的值从起始索引到末尾索引的值<br>append： 在关键字对应值末尾添加新的字符串</p>
 </blockquote>
-<p><strong>2.用户每日成功领取k码特权次数的并发更改</strong></p>
-<blockquote>
-<p>从接口安全性考虑，若有用户恶意领取、那么有可能产生一个用户在一天之内领取了多个k码特权奖品，这个是业务需求所不允许的。<br>这里我们使用到了redis 提供的 事务(multi)与watch(乐观锁实现) 机制来控制 用户每日成功领取k码特权次数的并发更改。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">watch机制：对键值进行监控，当被其他客户端改变时，</div><div class="line">当前的客户端的所有操作将会失败，抛出错误信息。</div></pre></td></tr></table></figure></p>
-</blockquote>
-<p><strong>3.用户并发更新同一k码特权商品库存、同一商品的具体某个item</strong></p>
-<blockquote>
-<p>上述问题，属于对竟态资源的并发修改，在接口请求并发量不大、且读多写少的情况下，采用数据库乐观锁来解决问题。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">数据库乐观锁实现方式：</div><div class="line">在竞态资源(商品)记录上添加一列，update_version，表示更新次数。</div><div class="line">数据库乐观锁实现方式伪代码：</div><div class="line">for(;;)&#123;</div><div class="line">    //获取某k码商品库存，更新版本号 sql</div><div class="line">    $getRewardStcokSql = &apos;select reward_stock,reward_update_version from fx_platform_reward_amount where reward_type_id = &#123;$reward_type_id&#125;&apos;;</div><div class="line">    $getReardStockResult = $model-&gt;query($getRewardStcokSql);</div><div class="line">    if(!$getReardStockResult )&#123;</div><div class="line">        die;</div><div class="line">    &#125; </div><div class="line">    $reward_stock = getReardStockResult[&apos;reward_stock&apos;];</div><div class="line">    $reward_update_version = getReardStockResult[&apos;reward_update_version&apos;];</div><div class="line">    //如果库存量&gt;0</div><div class="line">    if($reward_stock&gt;0)&#123;</div><div class="line">      //更新k码商品库存，版本号需要进行对比，其实本质上是不再使用数据库提供的排它锁，而将排他控制的职责交给选择某条需要更新记录的过滤条件。</div><div class="line">        $updateRewardStockSql = &apos;update fx_platform_reward_amount set reward_stock = reward_stock-1 and reward_update_version = reward_update_version + 1 where reward_type_id = &#123;$reward_type_id&#125; reward_update_version = &#123;$reward_update_version&#125; &apos;;</div><div class="line">        $updateRewardStockResult = $model-&gt;excute($updateRewardStockSql);</div><div class="line">    &#125;</div><div class="line">    //并发更新失败，表示在此用户更新商品库存之前已经有用户更新成功，需要重新尝试更新。</div><div class="line">    if(!$updateRewardStockResult)&#123;</div><div class="line">        continue;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-</blockquote>
-<h2 id="7-测试结果"><a href="#7-测试结果" class="headerlink" title="7.测试结果"></a>7.测试结果</h2><hr>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">7.1 并发测试，数据能保持一致性</div><div class="line">7.2 用户免费领取k码特权商品响应时间均值为 110ms 左右，</div><div class="line">      用户当日已领取过k码特权奖品的接口响应时间40-55ms左右。</div></pre></td></tr></table></figure>
+<p><strong>string类型是Redis最基本的数据类型，一个键最大能存储512MB。</strong></p>
+<p><strong>1.2 Hash（哈希）</strong><br>Redis hash 是一个键值对集合<br>Redis hash是一个string类型的field和value的映射表，hash特别适合用于存储对象。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-aa4c5f6e39ebd3cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>for example<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; hmset user name zhangxiao age 23 sex famale</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; hgetall user</div><div class="line">1) &quot;name&quot;</div><div class="line">2) &quot;zhangxiao&quot;</div><div class="line">3) &quot;age&quot;</div><div class="line">4) &quot;23&quot;</div><div class="line">5) &quot;sex&quot;</div><div class="line">6) &quot;famale&quot;</div><div class="line">127.0.0.1:6379&gt;</div></pre></td></tr></table></figure></p>
+<p>以上实例中 hash 数据类型存储了包含用户脚本信息的用户对象。 实例中我们使用了 Redis <strong>hmset,hgetall</strong> 命令，<strong>user</strong> 为键值。<br>每个 hash 可以存储 232<br> -1 键值对（40多亿）。</p>
+<p><strong>1.3 List(列表)</strong><br>Redis 列表是简单的字符串列表，按照插入顺序排序。你可以添加一个元素到列表的头部（左边）或者尾部（右边）。<br>for example<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; lpush zhangxiao 13 175cm</div><div class="line">(integer) 4</div><div class="line">127.0.0.1:6379&gt; lrange zhangxiao 0 1</div><div class="line">1) &quot;175cm&quot;</div><div class="line">2) &quot;13&quot;</div><div class="line">127.0.0.1:6379&gt;</div></pre></td></tr></table></figure></p>
+<p>lpush 向redis集合中存储一系列字符串，使用lrange ［start］［end］ 获取相应的元素值。<br>列表最多可存储 232</p>
+<ul>
+<li>1 元素 (4294967295, 每个列表可存储40多亿)。</li>
+</ul>
+<p><strong>1.4 Set（集合）</strong><br>Redis的Set是string类型的无序集合。<br>集合是通过哈希表实现的，所以添加，删除，查找的复杂度都是O(1)。<br>for example<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; sadd ages 11</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; add ages 12</div><div class="line">(error) ERR unknown command &apos;add&apos;</div><div class="line">127.0.0.1:6379&gt; sadd ages 14</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; sadd ages 14</div><div class="line">(integer) 0</div><div class="line">127.0.0.1:6379&gt; sadd ages 15</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; smembers ages</div><div class="line">1) &quot;11&quot;</div><div class="line">2) &quot;14&quot;</div><div class="line">3) &quot;15&quot;</div><div class="line">127.0.0.1:6379&gt;</div></pre></td></tr></table></figure></p>
+<p>可以看到我们为ages集合添加了两次14 ，但是最终set集合中只存在一个14,这是因为set集合中的元素唯一性导致的，第二次插入的元素将被忽略。集合中最大的成员数为  2的32次方 - 1(4294967295, 每个集合可存储40多亿个成员)。</p>
+<p><strong> 1.5 zset(sorted set：有序集合)</strong><br>Redis zset 和 set 一样也是string类型元素的集合,且不允许重复的成员。<br>不同的是每个元素都会关联一个double类型的分数。redis正是通过分数来为集合中的成员进行从小到大的排序。<br>zset的成员是唯一的,但分数(score)却可以重复。<br>for example<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; zadd nums 0 11</div><div class="line">(integer) 0</div><div class="line">127.0.0.1:6379&gt; zadd nums 1 12</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; zadd nums 2 13</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; zrangebyscore nums 0 2</div><div class="line">1) &quot;11&quot;</div><div class="line">2) &quot;12&quot;</div><div class="line">3) &quot;13&quot;</div></pre></td></tr></table></figure></p>
+<p>Redis zset 和 set 一样也是string类型元素的集合,且不允许重复的成员。<br>不同的是每个元素都会关联一个double类型的分数。redis正是通过分数来为集合中的成员进行从小到大的排序。<br>zset的成员是唯一的,但分数(score)却可以重复。<br>基本的数据结构就是这些，接下来我会更加详细的来进行记录。</p>
 
       
     </div>
@@ -502,14 +490,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/11/04/NoSql-Redis/" rel="next" title="NoSql-Redis入门（事务）">
+                <i class="fa fa-chevron-left"></i> NoSql-Redis入门（事务）
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/11/04/java_nio/" rel="prev" title="Java NIO(一)－I/O模型： 阻塞、非阻塞、I/O复用、同步、异步">
-                Java NIO(一)－I/O模型： 阻塞、非阻塞、I/O复用、同步、异步 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/11/04/NoSql-Redis-transaction/" rel="prev" title="NoSql-Redis入门（事务）">
+                NoSql-Redis入门（事务） <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -640,7 +632,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-【背景】"><span class="nav-number">1.</span> <span class="nav-text">1.【背景】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-【需求】"><span class="nav-number">2.</span> <span class="nav-text">2.【需求】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-【应用场景及难点分析】"><span class="nav-number">3.</span> <span class="nav-text">3.【应用场景及难点分析】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-问题分析："><span class="nav-number">4.</span> <span class="nav-text">4.问题分析：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-乐观锁思想"><span class="nav-number">5.</span> <span class="nav-text">5.乐观锁思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-k码特权-免费领取解决方案"><span class="nav-number">6.</span> <span class="nav-text">6.k码特权-免费领取解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-测试结果"><span class="nav-number">7.</span> <span class="nav-text">7.测试结果</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Redis的数据结构"><span class="nav-number">1.</span> <span class="nav-text">1.Redis的数据结构</span></a></li></ol></div>
             
 
           </div>
@@ -790,9 +782,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://willxue.top/2017/11/04/kcode/';
-          this.page.identifier = '2017/11/04/kcode/';
-          this.page.title = 'k码特权中关于 Redis & MySQL DB 乐观锁应用';
+          this.page.url = 'http://willxue.top/2017/11/04/NoSql-Redis-2/';
+          this.page.identifier = '2017/11/04/NoSql-Redis-2/';
+          this.page.title = 'NoSQL－Redis入门(二)';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://.disqus.com/embed.js';

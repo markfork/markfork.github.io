@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="鱼大坤个人博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="记录结构:JNI技术入门详解，参照刚哥的手记：http://www.jianshu.com/p/fe42aa3150a0注意：刚哥手记与接下来要记录的web项目中使用JNI技术是无缝连接的。应用场景：当我们根据不同的平台生成不同的JNI libaray时，例如：linux .so、mac jnilib、windows .dll。我们想在打包web 应用时让程序动态调用c,或者c++对Java Na">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java web 项目中使用JNI技术（如何在程序运行期间改变 java.library.path并生效）">
+<meta property="og:url" content="http://willxue.top/2017/11/04/java-jni/index.html">
+<meta property="og:site_name" content="鱼大坤个人博客">
+<meta property="og:description" content="记录结构:JNI技术入门详解，参照刚哥的手记：http://www.jianshu.com/p/fe42aa3150a0注意：刚哥手记与接下来要记录的web项目中使用JNI技术是无缝连接的。应用场景：当我们根据不同的平台生成不同的JNI libaray时，例如：linux .so、mac jnilib、windows .dll。我们想在打包web 应用时让程序动态调用c,或者c++对Java Na">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-22eeba75f8fa0d4d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-1ee45d6aa1c92109.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-ae1b43a347b8ff79.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-13fcd2df6e35af71.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-11-04T07:00:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java web 项目中使用JNI技术（如何在程序运行期间改变 java.library.path并生效）">
+<meta name="twitter:description" content="记录结构:JNI技术入门详解，参照刚哥的手记：http://www.jianshu.com/p/fe42aa3150a0注意：刚哥手记与接下来要记录的web项目中使用JNI技术是无缝连接的。应用场景：当我们根据不同的平台生成不同的JNI libaray时，例如：linux .so、mac jnilib、windows .dll。我们想在打包web 应用时让程序动态调用c,或者c++对Java Na">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2836699-22eeba75f8fa0d4d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://willxue.top/2017/11/04/java-jni/"/>
+
+
+
+
+
+  <title>Java web 项目中使用JNI技术（如何在程序运行期间改变 java.library.path并生效） | 鱼大坤个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">鱼大坤个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">世间皆有及困难之事，挺的过的，便是好汉！</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://willxue.top/2017/11/04/java-jni/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="大坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="鱼大坤个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Java web 项目中使用JNI技术（如何在程序运行期间改变 java.library.path并生效）</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-04T15:00:28+08:00">
+                2017-11-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/04/java-jni/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/04/java-jni/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>记录结构:</strong><br>JNI技术入门详解，参照刚哥的手记：<a href="http://www.jianshu.com/p/fe42aa3150a0" target="_blank" rel="external">http://www.jianshu.com/p/fe42aa3150a0</a><br><strong>注意：</strong>刚哥手记与接下来要记录的web项目中使用JNI技术是无缝连接的。<br><strong>应用场景：</strong>当我们根据不同的平台生成不同的JNI libaray时，例如：linux <strong>.so</strong>、mac <strong>jnilib</strong>、windows <strong>.dll</strong>。我们想在打包web 应用时让程序动态调用c,或者c++对Java Native Inteface 的具体底层实现时，有一种方法是借助配置在idea中的vm option中设置库文件所在的路径，即<strong>-Djava.path.library</strong>，刚哥手记最后一部分有说明。<br><a id="more"></a><br><strong>精准定位问题：</strong></p>
+<blockquote>
+<p>1.那么有没有另外一种方式使得Java 程序在调用native inteface 中抽象本地方法自动加载所需要的代码呢？也就是说应用程序自动加载.so <strong>|| (或)</strong>.jnilib<strong> || </strong>.dll?。<br> 2.我们知道Java  应用程序在调用底层代码生成的库文件时，需要指定库文件所在的path。那么我们的问题就清晰了，问题的痛点在于如何让应用程序在程序运行期间动态加载库文件所在的路径，进而加载所需的库文件。<br>网上的一种说法是：在使用System.loadLibrary(“具体库文件所在的路径的相对路径”)，之前使用System.load(“具体库文件所在的根目录的全路径”)，本人试了一下，发现并不起作用。</p>
+</blockquote>
+<p>继续找解决方案，无意中发现了一篇博客，博客地址是：<a href="http://ju.outofmemory.cn/entry/150717" target="_blank" rel="external">http://ju.outofmemory.cn/entry/150717</a><br>这篇文章讲述的是如何在运行时改变 java.library.path并生效。<br>我想这正是我要的答案，无奈是英文的，还是硬着头皮看吧<br><strong>首先开篇很简明扼要说明问题：</strong></p>
+<blockquote>
+<p>The java.library.path<br> system property instructs the JVM where to search for native libraries. You have to specify it as a JVM argument using -Djava.library.path=/path/to/lib<br> and then when you try to load a library using System.loadLibrary(“foo”)<br>, the JVM will search the library path for the specified library. If it cannot be found you will get an exception which looks like:</p>
+</blockquote>
+<p>大致的意思是：</p>
+<blockquote>
+<p>系统属性－ java.library.path指引JVM去寻找底层的库文件，你必须为JVM声明一个属性，类似于Djava.library.path=/path/to/lib ,当你需要使用System.loadLibrary(“foo”)加载底层foo库文件的时候，jvm会按照你声明的path去加载这个库文件，如果你不声明的话，会出现下面错误：</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Exception in thread <span class="string">"main"</span> java.lang.UnsatisfiedLinkError: no foo in java.library.path</div><div class="line">    at java.lang.ClassLoader.loadLibrary(ClassLoader.java:<span class="number">1734</span>)</div><div class="line">    at java.lang.Runtime.loadLibrary0(Runtime.java:<span class="number">823</span>)</div><div class="line">    at java.lang.System.loadLibrary(System.java:<span class="number">1028</span>)</div></pre></td></tr></table></figure>
+<p>这个错告诉我们foo库并不在我们所要加载的路径下面。<br>接下来说明原因：</p>
+<blockquote>
+<p>The java.library.path<br> is read only once when the JVM starts up. If you change this property usingSystem.setProperty<br>, it won’t make any difference.</p>
+</blockquote>
+<p>意思是：java.library.path 只会在JVM启动的时候被都到，如果你直接使用<br><strong>System.setProperty(“java.path.libarary”,”库所在路径”)</strong>这样是不起作用的，因为JVM已经启动了。所以这个JVM后期不能找到这个库文件所在的路径，所以就报如上错误。<br>源码中<strong>ClassLoader.loadLibrary</strong>有这样一句代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (sys_paths == <span class="keyword">null</span>) &#123;</div><div class="line">    usr_paths = initializePath(<span class="string">"java.library.path"</span>);</div><div class="line">    sys_paths = initializePath(<span class="string">"sun.boot.library.path"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>为什么就定位问题到上述几行代码，我们得从源码的角度来分析，看下源码：<br>首先是System.loadLibaray()，借助idea看下源码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">  <span class="comment">/**</span></div><div class="line"><span class="comment">     * Loads the native library specified by the &lt;code&gt;libname&lt;/code&gt;</span></div><div class="line"><span class="comment">     * argument.  The &lt;code&gt;libname&lt;/code&gt; argument must not contain any platform</span></div><div class="line"><span class="comment">     * specific prefix, file extension or path. If a native library</span></div><div class="line"><span class="comment">     * called &lt;code&gt;libname&lt;/code&gt; is statically linked with the VM, then the</span></div><div class="line"><span class="comment">     * JNI_OnLoad_&lt;code&gt;libname&lt;/code&gt; function exported by the library is invoked.</span></div><div class="line"><span class="comment">     * See the JNI Specification for more details.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * Otherwise, the libname argument is loaded from a system library</span></div><div class="line"><span class="comment">     * location and mapped to a native library image in an implementation-</span></div><div class="line"><span class="comment">     * dependent manner.</span></div><div class="line"><span class="comment">     * &lt;p&gt;</span></div><div class="line"><span class="comment">     * The call &lt;code&gt;System.loadLibrary(name)&lt;/code&gt; is effectively</span></div><div class="line"><span class="comment">     * equivalent to the call</span></div><div class="line"><span class="comment">     * &lt;blockquote&gt;&lt;pre&gt;</span></div><div class="line"><span class="comment">     * Runtime.getRuntime().loadLibrary(name)</span></div><div class="line"><span class="comment">     * &lt;/pre&gt;&lt;/blockquote&gt;</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span>      libname   the name of the library.</span></div><div class="line"><span class="comment">     * <span class="doctag">@exception</span>  SecurityException  if a security manager exists and its</span></div><div class="line"><span class="comment">     *             &lt;code&gt;checkLink&lt;/code&gt; method doesn't allow</span></div><div class="line"><span class="comment">     *             loading of the specified dynamic library</span></div><div class="line"><span class="comment">     * <span class="doctag">@exception</span>  UnsatisfiedLinkError if either the libname argument</span></div><div class="line"><span class="comment">     *             contains a file path, the native library is not statically</span></div><div class="line"><span class="comment">     *             linked with the VM,  or the library cannot be mapped to a</span></div><div class="line"><span class="comment">     *             native library image by the host system.</span></div><div class="line"><span class="comment">     * <span class="doctag">@exception</span>  NullPointerException if &lt;code&gt;libname&lt;/code&gt; is</span></div><div class="line"><span class="comment">     *             &lt;code&gt;null&lt;/code&gt;</span></div><div class="line"><span class="comment">     * <span class="doctag">@see</span>        java.lang.Runtime#loadLibrary(java.lang.String)</span></div><div class="line"><span class="comment">     * <span class="doctag">@see</span>        java.lang.SecurityManager#checkLink(java.lang.String)</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="meta">@CallerSensitive</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">loadLibrary</span><span class="params">(String libname)</span> </span>&#123;</div><div class="line">        Runtime.getRuntime().loadLibrary0(Reflection.getCallerClass(), libname);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>可以看到 <strong>方法调用中出现Runtime.getRuntime().loadLibrary0()</strong>, 从这行代码我们知道库文件是在运行时被加载起作用的。<br>我们继续看<strong>loadLibrary0()</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line">  <span class="comment">/**</span></div><div class="line"><span class="comment">     * Loads the native library specified by the &lt;code&gt;libname&lt;/code&gt;</span></div><div class="line"><span class="comment">     * argument.  The &lt;code&gt;libname&lt;/code&gt; argument must not contain any platform</span></div><div class="line"><span class="comment">     * specific prefix, file extension or path. If a native library</span></div><div class="line"><span class="comment">     * called &lt;code&gt;libname&lt;/code&gt; is statically linked with the VM, then the</span></div><div class="line"><span class="comment">     * JNI_OnLoad_&lt;code&gt;libname&lt;/code&gt; function exported by the library is invoked.</span></div><div class="line"><span class="comment">     * See the JNI Specification for more details.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * Otherwise, the libname argument is loaded from a system library</span></div><div class="line"><span class="comment">     * location and mapped to a native library image in an implementation-</span></div><div class="line"><span class="comment">     * dependent manner.</span></div><div class="line"><span class="comment">     * &lt;p&gt;</span></div><div class="line"><span class="comment">     * First, if there is a security manager, its &lt;code&gt;checkLink&lt;/code&gt;</span></div><div class="line"><span class="comment">     * method is called with the &lt;code&gt;libname&lt;/code&gt; as its argument.</span></div><div class="line"><span class="comment">     * This may result in a security exception.</span></div><div class="line"><span class="comment">     * &lt;p&gt;</span></div><div class="line"><span class="comment">     * The method &#123;<span class="doctag">@link</span> System#loadLibrary(String)&#125; is the conventional</span></div><div class="line"><span class="comment">     * and convenient means of invoking this method. If native</span></div><div class="line"><span class="comment">     * methods are to be used in the implementation of a class, a standard</span></div><div class="line"><span class="comment">     * strategy is to put the native code in a library file (call it</span></div><div class="line"><span class="comment">     * &lt;code&gt;LibFile&lt;/code&gt;) and then to put a static initializer:</span></div><div class="line"><span class="comment">     * &lt;blockquote&gt;&lt;pre&gt;</span></div><div class="line"><span class="comment">     * static &#123; System.loadLibrary("LibFile"); &#125;</span></div><div class="line"><span class="comment">     * &lt;/pre&gt;&lt;/blockquote&gt;</span></div><div class="line"><span class="comment">     * within the class declaration. When the class is loaded and</span></div><div class="line"><span class="comment">     * initialized, the necessary native code implementation for the native</span></div><div class="line"><span class="comment">     * methods will then be loaded as well.</span></div><div class="line"><span class="comment">     * &lt;p&gt;</span></div><div class="line"><span class="comment">     * If this method is called more than once with the same library</span></div><div class="line"><span class="comment">     * name, the second and subsequent calls are ignored.</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span>      libname   the name of the library.</span></div><div class="line"><span class="comment">     * <span class="doctag">@exception</span>  SecurityException  if a security manager exists and its</span></div><div class="line"><span class="comment">     *             &lt;code&gt;checkLink&lt;/code&gt; method doesn't allow</span></div><div class="line"><span class="comment">     *             loading of the specified dynamic library</span></div><div class="line"><span class="comment">     * <span class="doctag">@exception</span>  UnsatisfiedLinkError if either the libname argument</span></div><div class="line"><span class="comment">     *             contains a file path, the native library is not statically</span></div><div class="line"><span class="comment">     *             linked with the VM,  or the library cannot be mapped to a</span></div><div class="line"><span class="comment">     *             native library image by the host system.</span></div><div class="line"><span class="comment">     * <span class="doctag">@exception</span>  NullPointerException if &lt;code&gt;libname&lt;/code&gt; is</span></div><div class="line"><span class="comment">     *             &lt;code&gt;null&lt;/code&gt;</span></div><div class="line"><span class="comment">     * <span class="doctag">@see</span>        java.lang.SecurityException</span></div><div class="line"><span class="comment">     * <span class="doctag">@see</span>        java.lang.SecurityManager#checkLink(java.lang.String)</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="meta">@CallerSensitive</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">loadLibrary</span><span class="params">(String libname)</span> </span>&#123;</div><div class="line">        loadLibrary0(Reflection.getCallerClass(), libname);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">loadLibrary0</span><span class="params">(Class&lt;?&gt; fromClass, String libname)</span> </span>&#123;</div><div class="line">        SecurityManager security = System.getSecurityManager();</div><div class="line">        <span class="keyword">if</span> (security != <span class="keyword">null</span>) &#123;</div><div class="line">            security.checkLink(libname);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (libname.indexOf((<span class="keyword">int</span>)File.separatorChar) != -<span class="number">1</span>) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> UnsatisfiedLinkError(</div><div class="line">    <span class="string">"Directory separator should not appear in library name: "</span> + libname);</div><div class="line">        &#125;</div><div class="line">        ClassLoader.loadLibrary(fromClass, libname, <span class="keyword">false</span>);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>题外话：<strong>loadLibrary()</strong>,<strong>loadLibrary0()</strong>这两个方法的命名还是挺不符合规范的，历史遗留问题吧。<br>在loadLibrary中我们看到了<strong>ClassLoader.loadLibrary(fromClass, libname, false)</strong>;方法<br>继续追溯<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line"> <span class="comment">// Invoked in the java.lang.Runtime class to implement load and loadLibrary.</span></div><div class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">loadLibrary</span><span class="params">(Class&lt;?&gt; fromClass, String name,</span></span></div><div class="line"><span class="function"><span class="params">                            <span class="keyword">boolean</span> isAbsolute)</span> </span>&#123;</div><div class="line">        ClassLoader loader =</div><div class="line">            (fromClass == <span class="keyword">null</span>) ? <span class="keyword">null</span> : fromClass.getClassLoader();</div><div class="line">        <span class="keyword">if</span> (sys_paths == <span class="keyword">null</span>) &#123;</div><div class="line">            usr_paths = initializePath(<span class="string">"java.library.path"</span>);</div><div class="line">            sys_paths = initializePath(<span class="string">"sun.boot.library.path"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (isAbsolute) &#123;</div><div class="line">            <span class="keyword">if</span> (loadLibrary0(fromClass, <span class="keyword">new</span> File(name))) &#123;</div><div class="line">                <span class="keyword">return</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> UnsatisfiedLinkError(<span class="string">"Can't load library: "</span> + name);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (loader != <span class="keyword">null</span>) &#123;</div><div class="line">            String libfilename = loader.findLibrary(name);</div><div class="line">            <span class="keyword">if</span> (libfilename != <span class="keyword">null</span>) &#123;</div><div class="line">                File libfile = <span class="keyword">new</span> File(libfilename);</div><div class="line">                <span class="keyword">if</span> (!libfile.isAbsolute()) &#123;</div><div class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> UnsatisfiedLinkError(</div><div class="line">    <span class="string">"ClassLoader.findLibrary failed to return an absolute path: "</span> + libfilename);</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span> (loadLibrary0(fromClass, libfile)) &#123;</div><div class="line">                    <span class="keyword">return</span>;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> UnsatisfiedLinkError(<span class="string">"Can't load "</span> + libfilename);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; sys_paths.length ; i++) &#123;</div><div class="line">            File libfile = <span class="keyword">new</span> File(sys_paths[i], System.mapLibraryName(name));</div><div class="line">            <span class="keyword">if</span> (loadLibrary0(fromClass, libfile)) &#123;</div><div class="line">                <span class="keyword">return</span>;</div><div class="line">            &#125;</div><div class="line">            libfile = ClassLoaderHelper.mapAlternativeName(libfile);</div><div class="line">            <span class="keyword">if</span> (libfile != <span class="keyword">null</span> &amp;&amp; loadLibrary0(fromClass, libfile)) &#123;</div><div class="line">                <span class="keyword">return</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (loader != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; usr_paths.length ; i++) &#123;</div><div class="line">                File libfile = <span class="keyword">new</span> File(usr_paths[i],</div><div class="line">                                        System.mapLibraryName(name));</div><div class="line">                <span class="keyword">if</span> (loadLibrary0(fromClass, libfile)) &#123;</div><div class="line">                    <span class="keyword">return</span>;</div><div class="line">                &#125;</div><div class="line">                libfile = ClassLoaderHelper.mapAlternativeName(libfile);</div><div class="line">                <span class="keyword">if</span> (libfile != <span class="keyword">null</span> &amp;&amp; loadLibrary0(fromClass, libfile)) &#123;</div><div class="line">                    <span class="keyword">return</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// Oops, it failed</span></div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> UnsatisfiedLinkError(<span class="string">"no "</span> + name + <span class="string">" in java.library.path"</span>);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>这其中有段代码很重要：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">   <span class="keyword">if</span> (sys_paths == <span class="keyword">null</span>) &#123;</div><div class="line">            usr_paths = initializePath(<span class="string">"java.library.path"</span>);</div><div class="line">            sys_paths = initializePath(<span class="string">"sun.boot.library.path"</span>);</div><div class="line">        &#125;</div></pre></td></tr></table></figure></p>
+<p>对于上述代码的解释我们可以从这篇博客中获取到答案：</p>
+<blockquote>
+<p>if you set sys_paths to null, the library path will be re-initialised when you try to load a library. </p>
+</blockquote>
+<p>意思是说，如果我们通过代码将<strong>sys_paths</strong>，设置为null,那么java.library.path将被重新加载一次。<br>那么问题来了，通过刚才的源代码追溯，我们知道System.loadLibray()调用ClassLoader.loadLibrary()方法，<br>我们应该如何将sys_paths设置为空？<br><img src="http://upload-images.jianshu.io/upload_images/2836699-22eeba75f8fa0d4d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2016-11-21 下午2.15.02.png"><br>通过上述情景描述，我们要更改sys_paths的值为null,只能在sys_paths初始化之前做手脚（反射在程序动态运行期间更改程序中的属性值）。<br>代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Sets the java library path to the specified path</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> * <span class="doctag">@param</span> path the new library path</span></div><div class="line"><span class="comment"> * <span class="doctag">@throws</span> Exception</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setLibraryPath</span><span class="params">(String path)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line"> System.setProperty(<span class="string">"java.library.path"</span>, path);</div><div class="line"> <span class="comment">//set sys_paths to null</span></div><div class="line"> <span class="keyword">final</span> Field sysPathsField =   ClassLoader.class.getDeclaredField(<span class="string">"sys_paths"</span>);</div><div class="line"> sysPathsField.setAccessible(<span class="keyword">true</span>);</div><div class="line"> sysPathsField.set(<span class="keyword">null</span>, <span class="keyword">null</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>追溯上述代码，debug结果如下图所示：<br><img src="http://upload-images.jianshu.io/upload_images/2836699-1ee45d6aa1c92109.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2016-11-21 下午2.56.22.png"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-ae1b43a347b8ff79.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2016-11-21 下午2.57.15.png"><br>上图红色注释为<strong>java.library.path</strong>，<strong>注释有误</strong>特此说明。<br>最终程序的正常运行。</p>
+<p>在程序中实现了程序运行时动态更改java.library.path并生效的效果。<br>我在web项目中的应用是这样的：<br>程序封装，对JNI的使用封装成jniutil工具类：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-13fcd2df6e35af71.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2016-11-21 下午3.16.18.png"><br>代码如下：<br><strong>GetDownloadID.java</strong> 声明本地方法，依赖底层实现。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.fxmms.common.jniutil;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GetDownloadID</span></span>&#123;</div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">native</span> String <span class="title">getDownloadID</span><span class="params">(String mac)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>GetDownloadIDUtil.java</strong>，工具类，调用上述GetDownloadID类的实例方法<strong>getDownloadID()</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.fxmms.common.jniutil;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.apache.http.util.Asserts;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.lang.reflect.Field;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * <span class="doctag">@usage</span> JNI调用底层c算法将mac地址转化为downloadid</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GetDownloadIDUtil</span> </span>&#123;</div><div class="line"> <span class="keyword">static</span>&#123;</div><div class="line">   <span class="keyword">try</span>&#123;</div><div class="line">    setLibraryPath(<span class="string">"/Users/mark/mms/src/main/java/com/fxmms/common/jniutil"</span>);</div><div class="line">    System.loadLibrary(<span class="string">"GetDownloadID"</span>);</div><div class="line">   &#125;<span class="keyword">catch</span>(Exception e)&#123;</div><div class="line">    System.err.println(<span class="string">"Native code library failed to load.\n"</span> + e);</div><div class="line">    System.exit(<span class="number">1</span>);</div><div class="line">   &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getDownLoadId</span><span class="params">(String mac)</span></span>&#123;</div><div class="line">  GetDownloadID test = <span class="keyword">new</span> GetDownloadID();</div><div class="line">  String downLoadId = test.getDownloadID(mac);</div><div class="line">  <span class="keyword">return</span> downLoadId;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="comment">/**</span></div><div class="line"><span class="comment">  * Sets the java library path to the specified path</span></div><div class="line"><span class="comment">  * <span class="doctag">@usage</span> 动态更改sys_paths,使得usr_paths 重新初始化</span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> path the new library path</span></div><div class="line"><span class="comment">  * <span class="doctag">@throws</span> Exception</span></div><div class="line"><span class="comment">  */</span></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setLibraryPath</span><span class="params">(String path)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">  System.setProperty(<span class="string">"java.library.path"</span>, path);</div><div class="line">  <span class="comment">//set sys_paths to null</span></div><div class="line">  <span class="keyword">final</span> Field sysPathsField = ClassLoader.class.getDeclaredField(<span class="string">"sys_paths"</span>);</div><div class="line">  sysPathsField.setAccessible(<span class="keyword">true</span>);</div><div class="line">  sysPathsField.set(<span class="keyword">null</span>, <span class="keyword">null</span>);</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">  <span class="comment">//-Djava.library.path="/Users/mark/mms/src/main/java/com/fxmms/common/jniutil"</span></div><div class="line">  <span class="comment">///Users/mark/mms/src/main/java/com/fxmms/common/jniutil</span></div><div class="line">  System.out.println(System.getProperty(<span class="string">"java.library.path"</span>));</div><div class="line">  String mac = <span class="string">"CC:81:DA:86:42:E7"</span>;</div><div class="line">  Asserts.check(mac!=<span class="keyword">null</span>,<span class="string">"mac  null"</span>);</div><div class="line">  GetDownloadID test = <span class="keyword">new</span> GetDownloadID();</div><div class="line">  System.out.println(test.getDownloadID(mac));</div><div class="line"> &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>注意：</strong>对库文件的加载放置在静态代码块中。<br>记录完毕。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/path/to/your/wechatqcode ex. /uploads/wechat-qcode.jpg" alt="大坤 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>ex. subscribe to my blog by scanning my public wechat account</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Donate comment here</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="大坤 WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="大坤 Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+      <div id="bitcoin" style="display: inline-block">
+        <img id="bitcoin_qr" src="/images/bitcoin.png" alt="大坤 Bitcoin"/>
+        <p>Bitcoin</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/04/simple-factory/" rel="next" title="简单工厂模式">
+                <i class="fa fa-chevron-left"></i> 简单工厂模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/04/java-clone/" rel="prev" title="Java 深克隆&浅克隆">
+                Java 深克隆&浅克隆 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="大坤" />
+          <p class="site-author-name" itemprop="name">大坤</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">大坤</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://willxue.top/2017/11/04/java-jni/';
+          this.page.identifier = '2017/11/04/java-jni/';
+          this.page.title = 'Java web 项目中使用JNI技术（如何在程序运行期间改变 java.library.path并生效）';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

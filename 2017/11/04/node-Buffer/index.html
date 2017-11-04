@@ -96,17 +96,17 @@
 
 
 
-<meta name="description" content="1.【背景】  斐讯路由App 需要新增k码特权模块。  2.【需求】 1.已通过k码激活状态验证的用户可免费领取k码特权商品2.每个用户每天只能领取一张k码特权奖品  3.【应用场景及难点分析】 1.接口数据安全性要求：121.1 当某k码特权商品数据量为1，且高并发情况下，1.2 如何防止超卖(即多个用户都抢到了剩余的一个商品)">
+<meta name="description" content="Node.js中Buffer简介： JavaScript 语言自身只有字符串数据类型，没有二进制数据类型。但在处理像TCP流或文件流时，必须使用到二进制数据。因此在 Node.js中，定义了一个 Buffer 类，该类用来创建一个专门存放二进制数据的缓存区。在 Node.js 中，Buffer 类是随 Node 内核一起发布的核心库。Buffer 库为 Node.js 带来了一种存储原始数据的方法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="k码特权中关于 Redis &amp; MySQL DB 乐观锁应用">
-<meta property="og:url" content="http://willxue.top/2017/11/04/kcode/index.html">
+<meta property="og:title" content="node.js中缓冲区--Buffer">
+<meta property="og:url" content="http://willxue.top/2017/11/04/node-Buffer/index.html">
 <meta property="og:site_name" content="鱼大坤个人博客">
-<meta property="og:description" content="1.【背景】  斐讯路由App 需要新增k码特权模块。  2.【需求】 1.已通过k码激活状态验证的用户可免费领取k码特权商品2.每个用户每天只能领取一张k码特权奖品  3.【应用场景及难点分析】 1.接口数据安全性要求：121.1 当某k码特权商品数据量为1，且高并发情况下，1.2 如何防止超卖(即多个用户都抢到了剩余的一个商品)">
+<meta property="og:description" content="Node.js中Buffer简介： JavaScript 语言自身只有字符串数据类型，没有二进制数据类型。但在处理像TCP流或文件流时，必须使用到二进制数据。因此在 Node.js中，定义了一个 Buffer 类，该类用来创建一个专门存放二进制数据的缓存区。在 Node.js 中，Buffer 类是随 Node 内核一起发布的核心库。Buffer 库为 Node.js 带来了一种存储原始数据的方法">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-04T04:52:02.000Z">
+<meta property="og:updated_time" content="2017-11-04T06:43:32.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="k码特权中关于 Redis &amp; MySQL DB 乐观锁应用">
-<meta name="twitter:description" content="1.【背景】  斐讯路由App 需要新增k码特权模块。  2.【需求】 1.已通过k码激活状态验证的用户可免费领取k码特权商品2.每个用户每天只能领取一张k码特权奖品  3.【应用场景及难点分析】 1.接口数据安全性要求：121.1 当某k码特权商品数据量为1，且高并发情况下，1.2 如何防止超卖(即多个用户都抢到了剩余的一个商品)">
+<meta name="twitter:title" content="node.js中缓冲区--Buffer">
+<meta name="twitter:description" content="Node.js中Buffer简介： JavaScript 语言自身只有字符串数据类型，没有二进制数据类型。但在处理像TCP流或文件流时，必须使用到二进制数据。因此在 Node.js中，定义了一个 Buffer 类，该类用来创建一个专门存放二进制数据的缓存区。在 Node.js 中，Buffer 类是随 Node 内核一起发布的核心库。Buffer 库为 Node.js 带来了一种存储原始数据的方法">
 
 
 
@@ -135,13 +135,13 @@
 
 
 
-  <link rel="canonical" href="http://willxue.top/2017/11/04/kcode/"/>
+  <link rel="canonical" href="http://willxue.top/2017/11/04/node-Buffer/"/>
 
 
 
 
 
-  <title>k码特权中关于 Redis & MySQL DB 乐观锁应用 | 鱼大坤个人博客</title>
+  <title>node.js中缓冲区--Buffer | 鱼大坤个人博客</title>
   
 
 
@@ -318,7 +318,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://willxue.top/2017/11/04/kcode/">
+    <link itemprop="mainEntityOfPage" href="http://willxue.top/2017/11/04/node-Buffer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="大坤">
@@ -335,7 +335,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">k码特权中关于 Redis & MySQL DB 乐观锁应用</h2>
+          <h2 class="post-title" itemprop="name headline">node.js中缓冲区--Buffer</h2>
         
 
         <div class="post-meta">
@@ -347,7 +347,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-04T12:52:02+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-04T14:43:32+08:00">
                 2017-11-04
               </time>
             
@@ -366,9 +366,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/04/kcode/#comments" itemprop="discussionUrl">
+                <a href="/2017/11/04/node-Buffer/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/04/kcode/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/11/04/node-Buffer/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -396,46 +396,13 @@
       
 
       
-        <h2 id="1-【背景】"><a href="#1-【背景】" class="headerlink" title="1.【背景】"></a>1.【背景】</h2><hr>
-<blockquote>
-<p>斐讯路由App 需要新增k码特权模块。</p>
-</blockquote>
-<h2 id="2-【需求】"><a href="#2-【需求】" class="headerlink" title="2.【需求】"></a>2.【需求】</h2><blockquote>
-<p>1.已通过k码激活状态验证的用户可免费领取k码特权商品<br>2.每个用户每天只能领取一张k码特权奖品</p>
-</blockquote>
-<h2 id="3-【应用场景及难点分析】"><a href="#3-【应用场景及难点分析】" class="headerlink" title="3.【应用场景及难点分析】"></a>3.【应用场景及难点分析】</h2><blockquote>
-<p><strong>1.接口数据安全性要求：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">1.1 当某k码特权商品数据量为1，且高并发情况下，</div><div class="line">1.2 如何防止超卖(即多个用户都抢到了剩余的一个商品)</div></pre></td></tr></table></figure></p>
-</blockquote>
-<a id="more"></a> 
-<blockquote>
-<p><strong>2.接口性能要求：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">斐讯路由App 现用户量为300w+，日活4w＋，2/8原则分析(**指80%的业务量在20%的时间里完成**)。</div><div class="line">经验可知用户使用斐讯路由App 的持续时间为12小时，</div><div class="line">所以2/8分析后，80%的日活在20%的时间内完成。</div><div class="line">即32000人免费领取k码特权商品要在2.4小时内完成，</div><div class="line">换算成每秒 完成请求数即 QPS = 3.7/s 。</div><div class="line">即每个接口响应请求时间至少要在 270ms 以内。才算是高性能。</div></pre></td></tr></table></figure></p>
-</blockquote>
-<h2 id="4-问题分析："><a href="#4-问题分析：" class="headerlink" title="4.问题分析："></a>4.问题分析：</h2><blockquote>
-<p><strong>1.读多写少</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">每个用户每日只能领取一个k码特权商品。即1个用户加入请求免费领取k码特权接口多次，在k码商品库存量充足的情况下，只能领取到1个商品，其余请求都应该返回“对不起，您今日已领取k码特权商品”。从这个方面来定义，其属于读多写少的问题。</div></pre></td></tr></table></figure></p>
-<p><strong>2.并发量低</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">以斐讯路由现在日活情况为4w＋的数据量来估算、接口并发能力 QPS = 3.7/s ，</div><div class="line">属于低并发，但在k码特权模块优化程度达到一定量时，并发量是否会上升有待考察。</div><div class="line">但总体来说属于并发量不高的场景。</div></pre></td></tr></table></figure></p>
-</blockquote>
-<p><strong>也就是说k码特权问题经过模型抽象，已经变成了读多写少、并发量不大，但要保证性能，和数据安全性一致性的问题。</strong></p>
-<p>对于这类问题，乐观锁思想可以作为解决这类问题的指导思想。</p>
-<h2 id="5-乐观锁思想"><a href="#5-乐观锁思想" class="headerlink" title="5.乐观锁思想"></a>5.乐观锁思想</h2><blockquote>
-<p>网上文章对乐观锁理解的误区:</p>
-<hr>
-<p><strong>1.乐观锁是一种思想，并不是一种具体的技术实现。</strong><br><strong>2.乐观锁类似于CAS无锁编程技术(其实也加锁，只不过在cpu层面)</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">即当多个线程同时并发更新统一个变量，</div><div class="line">采用先select再update的方式，select出当前变量a的副本值b，然后用新值c去更新，</div><div class="line">更新时需要拿select 出来的变量值a的副本值b与当前非副本变量a的值做对比，</div><div class="line">若暂存副本值b与当前变量a非副本值相同，则正常更新，</div><div class="line">如果不同，则认为在当前线程更新之前已经有一个值将a变量更新，</div><div class="line">则更新失败，在并发情况不大的情况下，</div><div class="line">采用循环的方式去更新，总能更新成功，且循环更新次数不会太多。因此CAS也叫自旋锁。</div></pre></td></tr></table></figure></p>
-</blockquote>
-<h2 id="6-k码特权-免费领取解决方案"><a href="#6-k码特权-免费领取解决方案" class="headerlink" title="6.k码特权-免费领取解决方案"></a>6.k码特权-免费领取解决方案</h2><hr>
-<p><strong>1.用户每日成功领取k码特权商品次数的限制</strong></p>
-<blockquote>
-<p>采用redis 数据结构 String，记录用户每日免费领取成功次数。并且可以轻松使用redis 缓存的过期 (expire) 机制做每日领次数的控制），用户每日成功领取k码特权的次数次日凌晨清空。<br>为什么不使用数据库来进行用户成功领取k码特权商品次数的控制。当然建立好索引此问题也可以完美解决。<br>使用redis进行用户成功领取k码特权商品次数的控制原因有两个：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">1.因为redis 纯粹的查询快，减轻数据库压力！不用每次都通过数据库二次索引，从磁盘找到目标记录并读入到内存。**</div><div class="line">2.线上配置的redis使用量10%都不到，为了更好的利用硬件资源。**</div></pre></td></tr></table></figure></p>
-</blockquote>
-<p><strong>2.用户每日成功领取k码特权次数的并发更改</strong></p>
-<blockquote>
-<p>从接口安全性考虑，若有用户恶意领取、那么有可能产生一个用户在一天之内领取了多个k码特权奖品，这个是业务需求所不允许的。<br>这里我们使用到了redis 提供的 事务(multi)与watch(乐观锁实现) 机制来控制 用户每日成功领取k码特权次数的并发更改。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">watch机制：对键值进行监控，当被其他客户端改变时，</div><div class="line">当前的客户端的所有操作将会失败，抛出错误信息。</div></pre></td></tr></table></figure></p>
-</blockquote>
-<p><strong>3.用户并发更新同一k码特权商品库存、同一商品的具体某个item</strong></p>
-<blockquote>
-<p>上述问题，属于对竟态资源的并发修改，在接口请求并发量不大、且读多写少的情况下，采用数据库乐观锁来解决问题。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">数据库乐观锁实现方式：</div><div class="line">在竞态资源(商品)记录上添加一列，update_version，表示更新次数。</div><div class="line">数据库乐观锁实现方式伪代码：</div><div class="line">for(;;)&#123;</div><div class="line">    //获取某k码商品库存，更新版本号 sql</div><div class="line">    $getRewardStcokSql = &apos;select reward_stock,reward_update_version from fx_platform_reward_amount where reward_type_id = &#123;$reward_type_id&#125;&apos;;</div><div class="line">    $getReardStockResult = $model-&gt;query($getRewardStcokSql);</div><div class="line">    if(!$getReardStockResult )&#123;</div><div class="line">        die;</div><div class="line">    &#125; </div><div class="line">    $reward_stock = getReardStockResult[&apos;reward_stock&apos;];</div><div class="line">    $reward_update_version = getReardStockResult[&apos;reward_update_version&apos;];</div><div class="line">    //如果库存量&gt;0</div><div class="line">    if($reward_stock&gt;0)&#123;</div><div class="line">      //更新k码商品库存，版本号需要进行对比，其实本质上是不再使用数据库提供的排它锁，而将排他控制的职责交给选择某条需要更新记录的过滤条件。</div><div class="line">        $updateRewardStockSql = &apos;update fx_platform_reward_amount set reward_stock = reward_stock-1 and reward_update_version = reward_update_version + 1 where reward_type_id = &#123;$reward_type_id&#125; reward_update_version = &#123;$reward_update_version&#125; &apos;;</div><div class="line">        $updateRewardStockResult = $model-&gt;excute($updateRewardStockSql);</div><div class="line">    &#125;</div><div class="line">    //并发更新失败，表示在此用户更新商品库存之前已经有用户更新成功，需要重新尝试更新。</div><div class="line">    if(!$updateRewardStockResult)&#123;</div><div class="line">        continue;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-</blockquote>
-<h2 id="7-测试结果"><a href="#7-测试结果" class="headerlink" title="7.测试结果"></a>7.测试结果</h2><hr>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">7.1 并发测试，数据能保持一致性</div><div class="line">7.2 用户免费领取k码特权商品响应时间均值为 110ms 左右，</div><div class="line">      用户当日已领取过k码特权奖品的接口响应时间40-55ms左右。</div></pre></td></tr></table></figure>
+        <h2 id="Node-js中Buffer简介："><a href="#Node-js中Buffer简介：" class="headerlink" title="Node.js中Buffer简介："></a>Node.js中Buffer简介：</h2><hr>
+<p>JavaScript 语言自身只有字符串数据类型，没有二进制数据类型。<br>但在处理像TCP流或文件流时，必须使用到二进制数据。因此在 Node.js中，定义了一个 Buffer 类，该类用来创建一个专门存放二进制数据的缓存区。<br>在 Node.js 中，Buffer 类是随 Node 内核一起发布的核心库。Buffer 库为 Node.js 带来了一种存储原始数据的方法，可以让 Node.js 处理二进制数据，每当需要在 Node.js 中处理I/O操作中移动的数据时，就有可能使用 Buffer 库。原始数据存储在 Buffer 类的实例中。一个 Buffer 类似于一个整数数组，但它对应于 V8 堆内存之外的一块原始内存。<br><a id="more"></a></p>
+<h2 id="Buffer常用API"><a href="#Buffer常用API" class="headerlink" title="Buffer常用API"></a>Buffer常用API</h2><hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div></pre></td><td class="code"><pre><div class="line">/*1.Node.js中Buffer是一个典型的javascript与c++结合的模块，它将性能相关的部分用              c++实现，将非性能的部分用javascript实现。 </div><div class="line">  2.纯javascript对字符友好但是i无法很好的处理二进制数据，在java与node中buffer中存 储的是二进制数据。当我们面对TCP流或者文件系统时，是需要处理八位流的，因此在Node.js中定义了一个Buffer类，该类用来创建一个专门的存放二进制数据的缓冲区。 </div><div class="line">  3.代码演示：*///buffer的创建，一共有三种创建方式：从不同维度进行创建，1创建长度为n的buffer实例，创建数组为arr的buffer实例，创建字符串str的buffer实例</div><div class="line"> //&lt;1创建buffer实例</div><div class="line">   var buff;</div><div class="line"> //buff = new Buffer(n);//创建长度为n的Buffer实例</div><div class="line"> //buff = new Buffer(arr);//创建数组为arr的buffer实例</div><div class="line"> //buff = new Buffer(str,encoding);//创建字符串Str的Buffer实例</div><div class="line">   buff = new Buffer(10);</div><div class="line">   buff = new Buffer([10,20,30,40,50]);</div><div class="line">   buff = new Buffer(&quot;www.funoob.com&quot;,&quot;utf-8&quot;);</div><div class="line">//&lt;2写入缓冲区</div><div class="line">   buff = new Buffer(256);</div><div class="line">   len = buff.write(&quot;www.runoob.com&quot;);</div><div class="line">   console.log(&quot;写入字节数为：&quot;+ len);</div><div class="line">//&lt;3从缓冲区中读数据buf = new Buffer(26);</div><div class="line">for(var i = 0 ; i &lt; 26 ; i++) &#123;    </div><div class="line">    buf[i]=+97;</div><div class="line">&#125;</div><div class="line">console.log(buf.toString(&apos;ascii&apos;));</div><div class="line">console.log(buf.toString(&apos;ascii&apos;,0,5));//截前不截后</div><div class="line">console.log(buf.toString(&apos;utf8&apos;,0,5));</div><div class="line">console.log(buf.toString(undefined,0,5));//使用utf8编码，并输出abcde</div><div class="line">//&lt;4将Buffer转换为json对象，语法如下：buf.toJson()</div><div class="line">var buf = new Buffer(&quot;www.runoob.com&quot;);</div><div class="line">var json = buf.toJSON(buf);</div><div class="line">console.log(json);</div><div class="line">var buf = new Buffer(&apos;我爱 node.js&apos;);</div><div class="line">var json = buf.toJSON(buf);</div><div class="line">console.log(json);</div><div class="line">//&lt;5 缓冲区合并</div><div class="line">var buffer1 = new Buffer(&apos;菜鸟教程&apos;);</div><div class="line">var buffer2 = new Buffer(&apos;www.runoob.com&apos;);</div><div class="line">var buffer3 = Buffer.concat([buffer1,buffer2]);</div><div class="line">console.log(&quot;buffer3 的内容是: &quot;+buffer3.toString());</div><div class="line">//&lt;6 缓冲区比较</div><div class="line">/*  Node Buffer 比较的函数如下所示 </div><div class="line">    buf.compare(otherBuffer)*/</div><div class="line">var buff1 = new Buffer(&apos;ABC&apos;);</div><div class="line">var buff2 = new Buffer(&apos;ABCD&apos;);</div><div class="line">var result = buff1.compare(buff2);</div><div class="line">if(result &lt; 0) &#123;   </div><div class="line">    console.log(buff1 + &quot;在&quot; + buff2 + &quot;之前&quot;);</div><div class="line">&#125;else if(result == 0) &#123; </div><div class="line">    console.log(buff1 + &quot;在&quot; + buff2 + &quot;相同&quot;);</div><div class="line">&#125;else &#123;   </div><div class="line">    console.log(buff1 + &quot;在&quot; + buff2 + &quot;之后&quot;);</div><div class="line">&#125;</div><div class="line">//&lt;7 拷贝缓冲区</div><div class="line">/*  语法为 buf.copy(targetBuffer) 将调用copy方法</div><div class="line">    的缓冲区中内容拷贝到targetBuffer中</div><div class="line">*/</div><div class="line">var buffer1 = new Buffer(&apos;ABC&apos;);</div><div class="line">var buffer2 = new Buffer(3);</div><div class="line">buffer1.copy(buffer2);</div><div class="line">console.log(&quot;buffer2&apos;s content is : &quot;+ buffer2.toString());</div><div class="line">//&lt;8 缓冲区裁剪</div><div class="line">var buffer1 = new Buffer(&apos;runoob&apos;);</div><div class="line">var buffer2 = buffer1.slice(0,2);//裁剪是包前不包后end索引指向的元素并不被包含在裁剪之后的内容当中</div><div class="line">console.log(&quot;buffer2&apos;s content is : &quot;+buffer2.toString());</div><div class="line">//&lt;9 缓冲区长度</div><div class="line">/*缓冲区长度计算语法如下所示： </div><div class="line">  buf.length; </div><div class="line">  返回值：  返回buffer对象所占据的内存长度</div><div class="line">*/</div><div class="line">var buffer = new Buffer(&apos;我爱 www.runoob.com &apos;);</div><div class="line">var len = buffer.length;//计算的是buff中字节的个数，而非传统的java中length的字符长度</div><div class="line">console.log(&quot;buffer&apos;s length is : &quot;+len);</div></pre></td></tr></table></figure>
+<p>注意：以上代码可以直接拷贝至node.js文件当中</p>
+<h2 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">$ node buff.js</div><div class="line">写入字节数为：14</div><div class="line">abcdefghijklmnopqrstuvwxyz</div><div class="line">abcde</div><div class="line">abcde</div><div class="line">abcde</div><div class="line">&#123; type: &apos;Buffer&apos;,</div><div class="line">  data: [ 119, 119, 119, 46, 114, 117, 110, 111, 111, 98, 46, 99, 111, 109 ] &#125;</div><div class="line">&#123; type: &apos;Buffer&apos;,</div><div class="line">  data: [ 230, 136, 145, 231, 136, 177, 32, 110, 111, 100, 101, 46, 106, 115 ] &#125;</div><div class="line"></div><div class="line">buffer3 的内容是: 菜鸟教程www.runoob.com</div><div class="line">ABC在ABCD之前</div><div class="line">buffer2&apos;s content is : ABC</div><div class="line">buffer2&apos;s content is : ru</div><div class="line">buffer&apos;s length is : 22</div></pre></td></tr></table></figure>
+<p>完。</p>
 
       
     </div>
@@ -502,14 +469,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/11/04/EventEmitter/" rel="next" title="Node.js EventEmitter (触发器)">
+                <i class="fa fa-chevron-left"></i> Node.js EventEmitter (触发器)
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/11/04/java_nio/" rel="prev" title="Java NIO(一)－I/O模型： 阻塞、非阻塞、I/O复用、同步、异步">
-                Java NIO(一)－I/O模型： 阻塞、非阻塞、I/O复用、同步、异步 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/11/04/NoSql-Redis/" rel="prev" title="NoSql-Redis入门（事务）">
+                NoSql-Redis入门（事务） <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -640,7 +611,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-【背景】"><span class="nav-number">1.</span> <span class="nav-text">1.【背景】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-【需求】"><span class="nav-number">2.</span> <span class="nav-text">2.【需求】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-【应用场景及难点分析】"><span class="nav-number">3.</span> <span class="nav-text">3.【应用场景及难点分析】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-问题分析："><span class="nav-number">4.</span> <span class="nav-text">4.问题分析：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-乐观锁思想"><span class="nav-number">5.</span> <span class="nav-text">5.乐观锁思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-k码特权-免费领取解决方案"><span class="nav-number">6.</span> <span class="nav-text">6.k码特权-免费领取解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-测试结果"><span class="nav-number">7.</span> <span class="nav-text">7.测试结果</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Node-js中Buffer简介："><span class="nav-number">1.</span> <span class="nav-text">Node.js中Buffer简介：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Buffer常用API"><span class="nav-number">2.</span> <span class="nav-text">Buffer常用API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行结果"><span class="nav-number">3.</span> <span class="nav-text">运行结果</span></a></li></ol></div>
             
 
           </div>
@@ -790,9 +761,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://willxue.top/2017/11/04/kcode/';
-          this.page.identifier = '2017/11/04/kcode/';
-          this.page.title = 'k码特权中关于 Redis & MySQL DB 乐观锁应用';
+          this.page.url = 'http://willxue.top/2017/11/04/node-Buffer/';
+          this.page.identifier = '2017/11/04/node-Buffer/';
+          this.page.title = 'node.js中缓冲区--Buffer';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://.disqus.com/embed.js';

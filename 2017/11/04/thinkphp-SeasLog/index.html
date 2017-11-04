@@ -96,17 +96,28 @@
 
 
 
-<meta name="description" content="1.【背景】  斐讯路由App 需要新增k码特权模块。  2.【需求】 1.已通过k码激活状态验证的用户可免费领取k码特权商品2.每个用户每天只能领取一张k码特权奖品  3.【应用场景及难点分析】 1.接口数据安全性要求：121.1 当某k码特权商品数据量为1，且高并发情况下，1.2 如何防止超卖(即多个用户都抢到了剩余的一个商品)">
+<meta name="description" content="##【背景】    为实现开发前期联调bug 定位、线上bug快速定位、快速响应，遂暂为斐讯路由后台 Api 模块添加日志记录支持。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="k码特权中关于 Redis &amp; MySQL DB 乐观锁应用">
-<meta property="og:url" content="http://willxue.top/2017/11/04/kcode/index.html">
+<meta property="og:title" content="ThinkPHP 接入 SeasLog 日志组件">
+<meta property="og:url" content="http://willxue.top/2017/11/04/thinkphp-SeasLog/index.html">
 <meta property="og:site_name" content="鱼大坤个人博客">
-<meta property="og:description" content="1.【背景】  斐讯路由App 需要新增k码特权模块。  2.【需求】 1.已通过k码激活状态验证的用户可免费领取k码特权商品2.每个用户每天只能领取一张k码特权奖品  3.【应用场景及难点分析】 1.接口数据安全性要求：121.1 当某k码特权商品数据量为1，且高并发情况下，1.2 如何防止超卖(即多个用户都抢到了剩余的一个商品)">
+<meta property="og:description" content="##【背景】    为实现开发前期联调bug 定位、线上bug快速定位、快速响应，遂暂为斐讯路由后台 Api 模块添加日志记录支持。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-04T04:52:02.000Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-35ca6ce40369d0ab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-48c69df592dcb26c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-a7854e70a2a521cd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-ae861f881255cfff.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-cc8e33c8535f316f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-a85c33691bce2de3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-456d8f4043ffb701.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-12fab8255aa3c44f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-efd918b4f4139d6c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-da859d5f30ed4680.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-11-04T07:03:20.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="k码特权中关于 Redis &amp; MySQL DB 乐观锁应用">
-<meta name="twitter:description" content="1.【背景】  斐讯路由App 需要新增k码特权模块。  2.【需求】 1.已通过k码激活状态验证的用户可免费领取k码特权商品2.每个用户每天只能领取一张k码特权奖品  3.【应用场景及难点分析】 1.接口数据安全性要求：121.1 当某k码特权商品数据量为1，且高并发情况下，1.2 如何防止超卖(即多个用户都抢到了剩余的一个商品)">
+<meta name="twitter:title" content="ThinkPHP 接入 SeasLog 日志组件">
+<meta name="twitter:description" content="##【背景】    为实现开发前期联调bug 定位、线上bug快速定位、快速响应，遂暂为斐讯路由后台 Api 模块添加日志记录支持。">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2836699-35ca6ce40369d0ab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -135,13 +146,13 @@
 
 
 
-  <link rel="canonical" href="http://willxue.top/2017/11/04/kcode/"/>
+  <link rel="canonical" href="http://willxue.top/2017/11/04/thinkphp-SeasLog/"/>
 
 
 
 
 
-  <title>k码特权中关于 Redis & MySQL DB 乐观锁应用 | 鱼大坤个人博客</title>
+  <title>ThinkPHP 接入 SeasLog 日志组件 | 鱼大坤个人博客</title>
   
 
 
@@ -318,7 +329,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://willxue.top/2017/11/04/kcode/">
+    <link itemprop="mainEntityOfPage" href="http://willxue.top/2017/11/04/thinkphp-SeasLog/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="大坤">
@@ -335,7 +346,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">k码特权中关于 Redis & MySQL DB 乐观锁应用</h2>
+          <h2 class="post-title" itemprop="name headline">ThinkPHP 接入 SeasLog 日志组件</h2>
         
 
         <div class="post-meta">
@@ -347,7 +358,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-04T12:52:02+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-04T15:03:20+08:00">
                 2017-11-04
               </time>
             
@@ -366,9 +377,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/04/kcode/#comments" itemprop="discussionUrl">
+                <a href="/2017/11/04/thinkphp-SeasLog/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/04/kcode/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/11/04/thinkphp-SeasLog/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -396,46 +407,61 @@
       
 
       
-        <h2 id="1-【背景】"><a href="#1-【背景】" class="headerlink" title="1.【背景】"></a>1.【背景】</h2><hr>
-<blockquote>
-<p>斐讯路由App 需要新增k码特权模块。</p>
-</blockquote>
-<h2 id="2-【需求】"><a href="#2-【需求】" class="headerlink" title="2.【需求】"></a>2.【需求】</h2><blockquote>
-<p>1.已通过k码激活状态验证的用户可免费领取k码特权商品<br>2.每个用户每天只能领取一张k码特权奖品</p>
-</blockquote>
-<h2 id="3-【应用场景及难点分析】"><a href="#3-【应用场景及难点分析】" class="headerlink" title="3.【应用场景及难点分析】"></a>3.【应用场景及难点分析】</h2><blockquote>
-<p><strong>1.接口数据安全性要求：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">1.1 当某k码特权商品数据量为1，且高并发情况下，</div><div class="line">1.2 如何防止超卖(即多个用户都抢到了剩余的一个商品)</div></pre></td></tr></table></figure></p>
-</blockquote>
-<a id="more"></a> 
-<blockquote>
-<p><strong>2.接口性能要求：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">斐讯路由App 现用户量为300w+，日活4w＋，2/8原则分析(**指80%的业务量在20%的时间里完成**)。</div><div class="line">经验可知用户使用斐讯路由App 的持续时间为12小时，</div><div class="line">所以2/8分析后，80%的日活在20%的时间内完成。</div><div class="line">即32000人免费领取k码特权商品要在2.4小时内完成，</div><div class="line">换算成每秒 完成请求数即 QPS = 3.7/s 。</div><div class="line">即每个接口响应请求时间至少要在 270ms 以内。才算是高性能。</div></pre></td></tr></table></figure></p>
-</blockquote>
-<h2 id="4-问题分析："><a href="#4-问题分析：" class="headerlink" title="4.问题分析："></a>4.问题分析：</h2><blockquote>
-<p><strong>1.读多写少</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">每个用户每日只能领取一个k码特权商品。即1个用户加入请求免费领取k码特权接口多次，在k码商品库存量充足的情况下，只能领取到1个商品，其余请求都应该返回“对不起，您今日已领取k码特权商品”。从这个方面来定义，其属于读多写少的问题。</div></pre></td></tr></table></figure></p>
-<p><strong>2.并发量低</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">以斐讯路由现在日活情况为4w＋的数据量来估算、接口并发能力 QPS = 3.7/s ，</div><div class="line">属于低并发，但在k码特权模块优化程度达到一定量时，并发量是否会上升有待考察。</div><div class="line">但总体来说属于并发量不高的场景。</div></pre></td></tr></table></figure></p>
-</blockquote>
-<p><strong>也就是说k码特权问题经过模型抽象，已经变成了读多写少、并发量不大，但要保证性能，和数据安全性一致性的问题。</strong></p>
-<p>对于这类问题，乐观锁思想可以作为解决这类问题的指导思想。</p>
-<h2 id="5-乐观锁思想"><a href="#5-乐观锁思想" class="headerlink" title="5.乐观锁思想"></a>5.乐观锁思想</h2><blockquote>
-<p>网上文章对乐观锁理解的误区:</p>
+        <p>##【背景】</p>
 <hr>
-<p><strong>1.乐观锁是一种思想，并不是一种具体的技术实现。</strong><br><strong>2.乐观锁类似于CAS无锁编程技术(其实也加锁，只不过在cpu层面)</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">即当多个线程同时并发更新统一个变量，</div><div class="line">采用先select再update的方式，select出当前变量a的副本值b，然后用新值c去更新，</div><div class="line">更新时需要拿select 出来的变量值a的副本值b与当前非副本变量a的值做对比，</div><div class="line">若暂存副本值b与当前变量a非副本值相同，则正常更新，</div><div class="line">如果不同，则认为在当前线程更新之前已经有一个值将a变量更新，</div><div class="line">则更新失败，在并发情况不大的情况下，</div><div class="line">采用循环的方式去更新，总能更新成功，且循环更新次数不会太多。因此CAS也叫自旋锁。</div></pre></td></tr></table></figure></p>
-</blockquote>
-<h2 id="6-k码特权-免费领取解决方案"><a href="#6-k码特权-免费领取解决方案" class="headerlink" title="6.k码特权-免费领取解决方案"></a>6.k码特权-免费领取解决方案</h2><hr>
-<p><strong>1.用户每日成功领取k码特权商品次数的限制</strong></p>
-<blockquote>
-<p>采用redis 数据结构 String，记录用户每日免费领取成功次数。并且可以轻松使用redis 缓存的过期 (expire) 机制做每日领次数的控制），用户每日成功领取k码特权的次数次日凌晨清空。<br>为什么不使用数据库来进行用户成功领取k码特权商品次数的控制。当然建立好索引此问题也可以完美解决。<br>使用redis进行用户成功领取k码特权商品次数的控制原因有两个：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">1.因为redis 纯粹的查询快，减轻数据库压力！不用每次都通过数据库二次索引，从磁盘找到目标记录并读入到内存。**</div><div class="line">2.线上配置的redis使用量10%都不到，为了更好的利用硬件资源。**</div></pre></td></tr></table></figure></p>
-</blockquote>
-<p><strong>2.用户每日成功领取k码特权次数的并发更改</strong></p>
-<blockquote>
-<p>从接口安全性考虑，若有用户恶意领取、那么有可能产生一个用户在一天之内领取了多个k码特权奖品，这个是业务需求所不允许的。<br>这里我们使用到了redis 提供的 事务(multi)与watch(乐观锁实现) 机制来控制 用户每日成功领取k码特权次数的并发更改。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">watch机制：对键值进行监控，当被其他客户端改变时，</div><div class="line">当前的客户端的所有操作将会失败，抛出错误信息。</div></pre></td></tr></table></figure></p>
-</blockquote>
-<p><strong>3.用户并发更新同一k码特权商品库存、同一商品的具体某个item</strong></p>
-<blockquote>
-<p>上述问题，属于对竟态资源的并发修改，在接口请求并发量不大、且读多写少的情况下，采用数据库乐观锁来解决问题。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">数据库乐观锁实现方式：</div><div class="line">在竞态资源(商品)记录上添加一列，update_version，表示更新次数。</div><div class="line">数据库乐观锁实现方式伪代码：</div><div class="line">for(;;)&#123;</div><div class="line">    //获取某k码商品库存，更新版本号 sql</div><div class="line">    $getRewardStcokSql = &apos;select reward_stock,reward_update_version from fx_platform_reward_amount where reward_type_id = &#123;$reward_type_id&#125;&apos;;</div><div class="line">    $getReardStockResult = $model-&gt;query($getRewardStcokSql);</div><div class="line">    if(!$getReardStockResult )&#123;</div><div class="line">        die;</div><div class="line">    &#125; </div><div class="line">    $reward_stock = getReardStockResult[&apos;reward_stock&apos;];</div><div class="line">    $reward_update_version = getReardStockResult[&apos;reward_update_version&apos;];</div><div class="line">    //如果库存量&gt;0</div><div class="line">    if($reward_stock&gt;0)&#123;</div><div class="line">      //更新k码商品库存，版本号需要进行对比，其实本质上是不再使用数据库提供的排它锁，而将排他控制的职责交给选择某条需要更新记录的过滤条件。</div><div class="line">        $updateRewardStockSql = &apos;update fx_platform_reward_amount set reward_stock = reward_stock-1 and reward_update_version = reward_update_version + 1 where reward_type_id = &#123;$reward_type_id&#125; reward_update_version = &#123;$reward_update_version&#125; &apos;;</div><div class="line">        $updateRewardStockResult = $model-&gt;excute($updateRewardStockSql);</div><div class="line">    &#125;</div><div class="line">    //并发更新失败，表示在此用户更新商品库存之前已经有用户更新成功，需要重新尝试更新。</div><div class="line">    if(!$updateRewardStockResult)&#123;</div><div class="line">        continue;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-</blockquote>
-<h2 id="7-测试结果"><a href="#7-测试结果" class="headerlink" title="7.测试结果"></a>7.测试结果</h2><hr>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">7.1 并发测试，数据能保持一致性</div><div class="line">7.2 用户免费领取k码特权商品响应时间均值为 110ms 左右，</div><div class="line">      用户当日已领取过k码特权奖品的接口响应时间40-55ms左右。</div></pre></td></tr></table></figure>
+<p>  为实现开发前期联调bug 定位、线上bug快速定位、快速响应，遂暂为斐讯路由后台 Api 模块添加日志记录支持。</p>
+<a id="more"></a>
+<p>##【SeasLog 简介】</p>
+<hr>
+<pre><code>1. 国产log组件
+2. 简洁配置
+
+3.应用简单、性能强劲
+4.分模块、分级别记录日志。
+   分模块：如斐讯路由后台分为 Api 模块、后台Admin模块。
+   分级别：支持8种日志记录级别，对斐讯路由后台来说日志记录级别定义为—debug、info、emergency 即可。
+5.日志记录策略：日志-&gt;内存-&gt;文件
+更详细介绍，github主页：https://github.com/Neeke/SeasLog
+</code></pre><p>##【SeasLog安装流程】</p>
+<hr>
+<pre><code>1.打开网址 http://pecl.php.net/
+2.选择seaslog 并点击获取箭头
+</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/2836699-35ca6ce40369d0ab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="09BF40A1-1A0C-4BF8-8589-8E690F97922B.png"></p>
+<pre><code>3.点击seaslog
+</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/2836699-48c69df592dcb26c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="770A85EE-4100-4C46-BA92-E80842B06D51.png"></p>
+<p>4.下载最新版本SeasLog</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-a7854e70a2a521cd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="3401D24C-3075-467F-A9C1-BE9E23ED2D05.png"></p>
+<p>5.安装php seaslog 扩展<br>5.1解压压缩包</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-ae861f881255cfff.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="EDCC1B98-A9E4-465D-89E4-9C22475AB90F.png"></p>
+<p>5.2使用phpize 编译安装seaslog 外挂模块<br>  什么是phpize？链接如下：<a href="http://blog.csdn.net/czhphp/article/details/68067324" target="_blank" rel="external">http://blog.csdn.net/czhphp/article/details/68067324</a></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-cc8e33c8535f316f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="C91A3F7A-227F-4E80-8992-49C9D122A7F5.png"></p>
+<p>由上至下之行前两个命令，执行完phpize 命令之后，会看到文件夹下多出了 configure 文件夹</p>
+<p>5.3执行如下命令 ./configure — with-php-config=(服务器上php安装路径)/usr/local/php/bin/php-config<br>“＝” 后面的路径为本地php-config 目录<br><img src="http://upload-images.jianshu.io/upload_images/2836699-a85c33691bce2de3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="074D8E5A-59B8-48FB-B0EE-2F28557447DA.png"></p>
+<p>5.4执行如下命令 <strong>make &amp;&amp; make install</strong> 编译 SeasLog 模块</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-456d8f4043ffb701.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="F1A69EF8-776E-4E3A-84D2-B515268E9E59.png"></p>
+<p>5.5 安装成功，安装成功之后，扩展模块所在文件路径如下图所示<br>/usr/local/Cellar/php55/5.5.38_11/lib/php/extensions/no-debug-non-zts-20121212/ 本机</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-12fab8255aa3c44f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="E54236A9-7D7F-4C33-82EB-0D4423B651DE.png"></p>
+<p>5.6在php.ini 中配置 seaslog.so 扩展，应该是在etc文件夹下<br><img src="http://upload-images.jianshu.io/upload_images/2836699-efd918b4f4139d6c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="8DBF1CE2-CBEA-47DD-8A56-16207B849913.png"></p>
+<p>5.7 重启php应用服务器</p>
+<p>5.8 验证 seaslog有没有安装成功，访问phpInfo.php 文件</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-da859d5f30ed4680.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="B30137BC-6914-4FD3-B9B1-FAC9C1B724EC.png"></p>
+<p>SeasLog 为国产日志软件，支持！<br>gitHub 地址:<a href="https://github.com/Neeke/SeasLog" target="_blank" rel="external">https://github.com/Neeke/SeasLog</a><br>作者自述：<a href="https://github.com/Neeke/SeasLog/blob/master/README.md" target="_blank" rel="external">https://github.com/Neeke/SeasLog/blob/master/README.md</a></p>
+<p>5.9 在 php.ini 中配置 seaslog 基础配置<br>      关于 SeasLog 的配置跟统一开发环境一致。</p>
+<p>5.10 重新访问php info 看是否配置成功</p>
+<p>##【现阶段SeasLog实践情况】</p>
+<hr>
+<p>  已在统一开发环境实现斐讯路由App 5.0.0 新增接口的日志记录。<br>  若测试环境配置通过，可立即接入。</p>
+<p>##【SeasLog  对 接口响应性能的影响】</p>
+<hr>
+<p>   理论上SeasLog 对接口响应时间肯定会有延迟影响。</p>
+<pre><code>但因SeasLog 对应用系统产生的日志是先写入存储到内存，当内存中写入的日志达到阀值(内存中日志达到1000行刷新一次，一次访问结束刷新一次),便刷新日志内容到文件当中。（缓冲区）
+</code></pre><p>  性能测试：</p>
+<p>  虽有理论支持， 建议仍需要做性能测试。</p>
+<p>##【SeasLog 与 Kibana 结合】</p>
+<hr>
+<p>  SeasLog 负责生产日志。</p>
+<p>   Kibana负责消费、分析日志。</p>
+<p>   烦请运维同事先在测试环境配置、多谢！</p>
 
       
     </div>
@@ -502,14 +528,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/11/04/java-clone/" rel="next" title="Java 深克隆&浅克隆">
+                <i class="fa fa-chevron-left"></i> Java 深克隆&浅克隆
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/11/04/java_nio/" rel="prev" title="Java NIO(一)－I/O模型： 阻塞、非阻塞、I/O复用、同步、异步">
-                Java NIO(一)－I/O模型： 阻塞、非阻塞、I/O复用、同步、异步 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/11/04/mysql-producer/" rel="prev" title="存储过程">
+                存储过程 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -569,17 +599,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -630,22 +651,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-【背景】"><span class="nav-number">1.</span> <span class="nav-text">1.【背景】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-【需求】"><span class="nav-number">2.</span> <span class="nav-text">2.【需求】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-【应用场景及难点分析】"><span class="nav-number">3.</span> <span class="nav-text">3.【应用场景及难点分析】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-问题分析："><span class="nav-number">4.</span> <span class="nav-text">4.问题分析：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-乐观锁思想"><span class="nav-number">5.</span> <span class="nav-text">5.乐观锁思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-k码特权-免费领取解决方案"><span class="nav-number">6.</span> <span class="nav-text">6.k码特权-免费领取解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-测试结果"><span class="nav-number">7.</span> <span class="nav-text">7.测试结果</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -790,9 +795,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://willxue.top/2017/11/04/kcode/';
-          this.page.identifier = '2017/11/04/kcode/';
-          this.page.title = 'k码特权中关于 Redis & MySQL DB 乐观锁应用';
+          this.page.url = 'http://willxue.top/2017/11/04/thinkphp-SeasLog/';
+          this.page.identifier = '2017/11/04/thinkphp-SeasLog/';
+          this.page.title = 'ThinkPHP 接入 SeasLog 日志组件';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://.disqus.com/embed.js';
