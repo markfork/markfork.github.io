@@ -96,17 +96,17 @@
 
 
 
-<meta name="description" content="区别概述： 1.where是一个约束声明，使用where约束来自数据库的数据，where是在结果集返回之前起作用的，where中不能使用聚合函数。注意：返回结果集之前起作用2.having是一个过滤声明，是在查询返回结果集以后对查询结果进行过滤操作，在Having中可以使聚合函数。注意：返回结果集之后起作用3.在查询过程中where子句、聚合语句、having子句，的执行优先级为where&amp;gt;">
+<meta name="description" content="创建型设计模式： 简单工厂模式、工厂方法模式、抽象工厂模式、单例模式、原型模式和建造者模式。 统共六种。 本此分享三种工厂模式中的简单工厂模式。 记录结构： –1.实际问题引入（需求） –2.传统解决办法 –3.传统解决办法带来的问题 –4.使用xx模式解决问题 –4.1xx模式简述 –4.2xx模式类图表示 –4.3xx模式完整解决方案 –5.方案改进 –6.模式总结">
 <meta property="og:type" content="article">
-<meta property="og:title" content="where与having的区别">
-<meta property="og:url" content="http://willxue.top/2017/11/04/mysql-where-having/index.html">
+<meta property="og:title" content="简单工厂模式">
+<meta property="og:url" content="http://willxue.top/2017/11/05/simple-factory/index.html">
 <meta property="og:site_name" content="鱼大坤个人博客">
-<meta property="og:description" content="区别概述： 1.where是一个约束声明，使用where约束来自数据库的数据，where是在结果集返回之前起作用的，where中不能使用聚合函数。注意：返回结果集之前起作用2.having是一个过滤声明，是在查询返回结果集以后对查询结果进行过滤操作，在Having中可以使聚合函数。注意：返回结果集之后起作用3.在查询过程中where子句、聚合语句、having子句，的执行优先级为where&amp;gt;">
+<meta property="og:description" content="创建型设计模式： 简单工厂模式、工厂方法模式、抽象工厂模式、单例模式、原型模式和建造者模式。 统共六种。 本此分享三种工厂模式中的简单工厂模式。 记录结构： –1.实际问题引入（需求） –2.传统解决办法 –3.传统解决办法带来的问题 –4.使用xx模式解决问题 –4.1xx模式简述 –4.2xx模式类图表示 –4.3xx模式完整解决方案 –5.方案改进 –6.模式总结">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-04T07:06:21.000Z">
+<meta property="og:updated_time" content="2017-11-05T13:00:35.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="where与having的区别">
-<meta name="twitter:description" content="区别概述： 1.where是一个约束声明，使用where约束来自数据库的数据，where是在结果集返回之前起作用的，where中不能使用聚合函数。注意：返回结果集之前起作用2.having是一个过滤声明，是在查询返回结果集以后对查询结果进行过滤操作，在Having中可以使聚合函数。注意：返回结果集之后起作用3.在查询过程中where子句、聚合语句、having子句，的执行优先级为where&amp;gt;">
+<meta name="twitter:title" content="简单工厂模式">
+<meta name="twitter:description" content="创建型设计模式： 简单工厂模式、工厂方法模式、抽象工厂模式、单例模式、原型模式和建造者模式。 统共六种。 本此分享三种工厂模式中的简单工厂模式。 记录结构： –1.实际问题引入（需求） –2.传统解决办法 –3.传统解决办法带来的问题 –4.使用xx模式解决问题 –4.1xx模式简述 –4.2xx模式类图表示 –4.3xx模式完整解决方案 –5.方案改进 –6.模式总结">
 
 
 
@@ -135,13 +135,13 @@
 
 
 
-  <link rel="canonical" href="http://willxue.top/2017/11/04/mysql-where-having/"/>
+  <link rel="canonical" href="http://willxue.top/2017/11/05/simple-factory/"/>
 
 
 
 
 
-  <title>where与having的区别 | 鱼大坤个人博客</title>
+  <title>简单工厂模式 | 鱼大坤个人博客</title>
   
 
 
@@ -318,7 +318,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://willxue.top/2017/11/04/mysql-where-having/">
+    <link itemprop="mainEntityOfPage" href="http://willxue.top/2017/11/05/simple-factory/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="大坤">
@@ -335,7 +335,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">where与having的区别</h2>
+          <h2 class="post-title" itemprop="name headline">简单工厂模式</h2>
         
 
         <div class="post-meta">
@@ -347,8 +347,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-04T15:06:21+08:00">
-                2017-11-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-05T21:00:35+08:00">
+                2017-11-05
               </time>
             
 
@@ -366,9 +366,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/04/mysql-where-having/#comments" itemprop="discussionUrl">
+                <a href="/2017/11/05/simple-factory/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/04/mysql-where-having/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/11/05/simple-factory/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -396,17 +396,274 @@
       
 
       
-        <h2 id="区别概述："><a href="#区别概述：" class="headerlink" title="区别概述："></a>区别概述：</h2><hr>
-<p>1.<strong>where是一个约束声明</strong>，使用where约束来自数据库的数据，where是在结果集返回之前起作用的，where中不能使用聚合函数。<strong>注意：返回结果集之前起作用</strong><br>2.<strong>having是一个过滤声明</strong>，是在查询返回结果集以后对查询结果进行过滤操作，在Having中可以使聚合函数。<strong>注意：返回结果集之后起作用</strong><br>3.在查询过程中<strong>where子句</strong>、<strong>聚合语句</strong>、<strong>having子句</strong>，的执行优先级为<strong>where&gt;group by&gt;聚合语句(sum、count、avg、max、min)&gt;having子句</strong><br><a id="more"></a></p>
-<h2 id="举例说明："><a href="#举例说明：" class="headerlink" title="举例说明："></a>举例说明：</h2><hr>
-<p><strong>&lt;1.</strong>假设有数据表：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">CREATE TABLE  `test`.`salary_info` (  </div><div class="line">  `id` int(10) unsigned NOT NULL auto_increment,  </div><div class="line">  `department` varchar(16) NOT NULL default &apos;&apos;,  </div><div class="line">  `name` varchar(16) NOT NULL default &apos;&apos;,  </div><div class="line">  `salary` int(10) unsigned NOT NULL default &apos;0&apos;,  </div><div class="line">   PRIMARY KEY  (`id`)  </div><div class="line">) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;</div></pre></td></tr></table></figure></p>
-<p><strong>example 1: 要查找平均工资大于3000的部门</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">select department,avg(salary) from salary_info group by department having avg(salary)&gt;3000</div></pre></td></tr></table></figure></p>
-<p><strong>解释：</strong>此时我们只能用having，而不能使用where子句。1.sql语句中使用了聚合函数。2.对聚合后的结果进行筛选。所以不能使用where。3.可以从题目中看出平均工资3000，是必须要知道总额之后才能计算出平均值，也就是在知道结果集之后才能计算出avg，这就是使用having的原因</p>
-<p><strong>example 2: 要查询每个部门工资大于3000的员工个数</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">select department,count(*) as c from salary_info where</div><div class="line">salary&gt;3000 group by department</div></pre></td></tr></table></figure></p>
-<p><strong>解释：</strong>1.此处的sql执行顺序是这样的 where语句在没有获得结果集之前对数据进行约束，符合条件的数据被筛选出来，然后对数据分组，然后对每个分组的数据进行count统计。这个执行顺序是跟区别概述中第三条对应的，这也是优先级是以上所述的原因。<br>                2.可以从题目中看出个人工资大于3000的员工个数，则在count之前，必须把工资大于3000的员工晒寻出来。在返回结果集之前先得把这些人筛选出来，而返回结果集之前的操作使用where。</p>
-<p><strong>&lt;2.</strong>假设有数据表：Orders<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">o_Id   |     OrderDate   |    OrderPrice   |    Customer</div><div class="line">  1          2008/12/29          1000               yy</div><div class="line">  2          2008/11/23          2000               xx</div><div class="line">  3          2008/10/05          1600               mm</div><div class="line">  4          2008/09/28          700                 hh</div><div class="line">  5          2008/08/06          300                 gg</div><div class="line">  6          2008/07/21          100                 uu</div></pre></td></tr></table></figure></p>
-<p><strong>example 1: 计算”OrderPrice” 字段的平均值</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">select avg(OrderPrice) as v from Orders;</div></pre></td></tr></table></figure></p>
-<p><strong>example 2:找到OrderPrice 大于OrderPrice平均值的客户</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">select Customer From Orders where OrderPrice&gt;(select avg(OrderPrice) as v from Orders);</div><div class="line">//这个（）语句是第一个where语句的子查询，先执行子查询，再以子查询的结果作为筛选条件，过滤出结果集</div></pre></td></tr></table></figure></p>
+        <p>创建型设计模式：</p>
+<p>简单工厂模式、工厂方法模式、抽象工厂模式、单例模式、原型模式和建造者模式。 统共六种。</p>
+<p>本此分享三种工厂模式中的简单工厂模式。</p>
+<p>记录结构：</p>
+<p>–1.实际问题引入（需求）</p>
+<p>–2.传统解决办法</p>
+<p>–3.传统解决办法带来的问题</p>
+<p>–4.使用xx模式解决问题</p>
+<p>–4.1xx模式简述</p>
+<p>–4.2xx模式类图表示</p>
+<p>–4.3xx模式完整解决方案</p>
+<p>–5.方案改进</p>
+<p>–6.模式总结<br><a id="more"></a><br>1.简单工厂模式：</p>
+<p>1.1实际问题引入</p>
+<p>YY软件公司欲基于 Java 语言开发一套图表库,该图表库可以为应用系统提供各种不同外观的图表,例如柱 状图、饼状图、折线图等。Sunny 软件公司图表库设计人员希望为应用系统开发人员提供一套灵活易用的图表 库,而且可以较为方便地对图表库进行扩展,以便能够在将来增加一些新类型的图表。</p>
+<p>2.2传统解决办法：</p>
+<p>Sunny 软件公司图表库设计人员提出了一个初始设计方案,将所有图表的实现代码封装在一个 Chart 类中,其框 架代码如下所示:</p>
+<p>/**</p>
+<ul>
+<li>Created by tao.liu on 16/10/18.</li>
+</ul>
+<p>*/</p>
+<p>class Chart {</p>
+<p>private String type; //图表类型</p>
+<p>public Chart(Object[][] data, String type) {</p>
+<p>this.type = type;</p>
+<p>if (type.equalsIgnoreCase(“histogram”)) {</p>
+<p>//初始化柱状图</p>
+<p>} else if (type.equalsIgnoreCase(“pie”)) {</p>
+<p>//初始化饼状图</p>
+<p>} else if (type.equalsIgnoreCase(“line”)) {</p>
+<p>//初始化折线图</p>
+<p>}</p>
+<p>}</p>
+<p>public void display() {</p>
+<p>if (this.type.equalsIgnoreCase(“histogram”)) {</p>
+<p>//显示柱状图</p>
+<p>} else if (this.type.equalsIgnoreCase(“pie”)) {</p>
+<p>//显示饼状图</p>
+<p>} else if (this.type.equalsIgnoreCase(“line”)) {</p>
+<p>//显示折线图</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>客户端代码通过调用 Chart 类的构造函数来创建图表对象,根据参数 type 的不同可以得到不同类型的图表,然 后再调用 display() 方法来显示相应的图表。</p>
+<p>3.传统解决办法带来的问题</p>
+<p>不难看出,Chart 类是一个“巨大的”类,在该类的设计中存在如下几个问题:</p>
+<p>(1) 在 Chart 类中包含很多if…else…代码块,整个类的代码相当冗长,代码越长,阅读难度、维护难度和测试 难度也越大;而且大量条件语句的存在还将影响系统的性能,程序在执行过程中需要做大量的条件判断。</p>
+<p>(2) Chart 类的职责过重,它负责初始化和显示所有的图表对象,将各种图表对象的初始化代码和显示代码集中在 一个类中实现,违反了“单一职责原则”,不利于类的重用和维护;而且将大量的对象初始化代码都写在构造函 数中将导致构造函数非常庞大,对象在创建时需要进行条件判断,降低了对象创建的效率。</p>
+<p>(3) 当需要增加新类型的图表时,必须修改 Chart 类的源代码,违反了“开闭原则”。</p>
+<p>(4) 客户端只能通过 new 关键字来直接创建 Chart 对象,Chart 类与客户端类耦合度较高,对象的创建和使用无 法分离。</p>
+<p>(5) 客户端在创建 Chart 对象之前可能还需要进行大量初始化设置,例如设置柱状图的颜色、高度等,如果在 Chart 类的构造函数中没有提供一个默认设置,那就只能由客户端来完成初始设置,这些代码在每次创建 Chart 对 象时都会出现,导致代码的重复。</p>
+<p>面对一个如此巨大、职责如此重,且与客户端代码耦合度非常高的类,我们应该怎么办?本章将要介绍的简单工厂模式将在一定程度上解决上述问题。</p>
+<p>4.使用简单工厂模式解决问题</p>
+<p>4.1简单工厂模式简述：</p>
+<p>简单工厂模式并不属于 GoF 23 个经典设计模式,但通常将它作为学习其他工厂模式的基础,它的设计思想很简单,其基本流程如下:</p>
+<p>首先将需要创建的各种不同对象(例如各种不同的 Chart 对象)的相关代码封装到不同的类中,这些类称为具体 产品类,而将它们公共的代码进行抽象和提取后封装在一个抽象产品类中,每一个具体产品类都是抽象产品类的子类;然后提供一个工厂类用于创建各种产品,在工厂类中提供一个创建产品的工厂方法,该方法可以根据所传入的参数不同创建不同的具体产品对象;客户端只需调用工厂类的工厂方法并传入相应的参数即可得到一个产品对象。</p>
+<p>4.2简单工厂模式类图表示</p>
+<p>简单工厂模式类图<br>在简单工厂模式结构图中包含如下几个角色:</p>
+<p>Factory(工厂角色):工厂角色即工厂类,它是简单工厂模式的核心,负责实现创建所有产品实例的内部逻 辑;工厂类可以被外界直接调用,创建所需的产品对象;在工厂类中提供了静态的工厂方法 factoryMethod(),它的返回类型为抽象产品类型 Product。</p>
+<p>Product(抽象产品角色):它是工厂类所创建的所有对象的父类,封装了各种产品对象的公有方法,它的 引入将提高系统的灵活性,使得在工厂类中只需定义一个通用的工厂方法,因为所有创建的具体产品对象都 是其子类对象。</p>
+<p>ConcreteProduct(具体产品角色):它是简单工厂模式的创建目标,所有被创建的对象都充当这个角色的 某个具体类的实例。每一个具体产品角色都继承了抽象产品角色,需要实现在抽象产品中声明的抽象方法。</p>
+<p>在简单工厂模式中,客户端通过工厂类来创建一个产品类的实例,而无须直接使用 new 关键字来创建对象,它是工厂模式家族中最简单的一员。</p>
+<p>分部代码展示：</p>
+<p>1.在使用简单工厂模式时,首先需要对产品类进行重构,不能设计一个包罗万象的产品类,而需根据实际情况设计 一个产品层次结构,将所有产品类公共的代码移至抽象产品类,并在抽象产品类中声明一些抽象方法,以供不同 的具体产品类来实现,典型的抽象产品类代码如下所示:</p>
+<p>/**</p>
+<ul>
+<li>Created by tao.liu on 16/10/18.</li>
+</ul>
+<p>*/</p>
+<p>abstract class Product {</p>
+<p>//所有产品类的公共业务方法</p>
+<p>public void methodSame() {</p>
+<p>//公共方法的实现</p>
+<p>}</p>
+<p>//声明抽象业务方法</p>
+<p>public abstract void methodDiff();</p>
+<p>}</p>
+<p>2.在具体产品类中实现了抽象产品类中声明的抽象业务方法,不同的具体产品类可以提供不同的实现,典型的具体 产品类代码如下所示:</p>
+<p>/**</p>
+<ul>
+<li>Created by tao.liu on 16/10/18.</li>
+</ul>
+<p>*/</p>
+<p>class ConcreteProduct extends Product {</p>
+<p>//实现业务方法</p>
+<p>public void methodDiff() {</p>
+<p>//业务方法的实现</p>
+<p>}</p>
+<p>｝</p>
+<p>3.简单工厂模式的核心是工厂类,在没有工厂类之前,客户端一般会使用 new 关键字来直接创建产品对象,而在引 入工厂类之后,客户端可以通过工厂类来创建产品,在简单工厂模式中,工厂类提供了一个静态工厂方法供客户 端使用,根据所传入的参数不同可以创建不同的产品对象,典型的工厂类代码如下所示:</p>
+<p>/**</p>
+<ul>
+<li>Created by tao.liu on 16/10/18.</li>
+</ul>
+<p>*/</p>
+<p>class Factory {</p>
+<p>//静态工厂方法</p>
+<p>public static Product getProduct(String arg) {</p>
+<p>Product product = null;</p>
+<p>if (arg.equalsIgnoreCase(“A”)) {</p>
+<p>//初始化设置productA</p>
+<p>product = new ConcreteProductA();</p>
+<p>} else if (arg.equalsIgnoreCase(“B”)) {</p>
+<p>//初始化设置productB</p>
+<p>product = new ConcreteProductB();</p>
+<p>}</p>
+<p>return product;</p>
+<p>}</p>
+<p>}</p>
+<p>4.在客户端代码中,我们通过调用工厂类的工厂方法即可得到产品对象,典型代码如下所示:</p>
+<p>/**</p>
+<ul>
+<li>Created by tao.liu on 16/10/18.</li>
+</ul>
+<p>*/</p>
+<p>class Client {</p>
+<p>public static void main(String args[]) {</p>
+<p>Product product;</p>
+<p>//通过工厂类创建产品对象，没有通过new关键字</p>
+<p>product = Factory.getProduct(“A”);</p>
+<p>product.methodSame();</p>
+<p>product.methodDiff();</p>
+<p>}</p>
+<p>}</p>
+<p>4.3简单工厂模式完整解决方案</p>
+<p>完整解决方案：</p>
+<p>为了将 Chart 类的职责分离,同时将 Chart 对象的创建和使用分离,Sunny 软件公司开发人员决定使用简单工 厂模式对图表库进行重构,重构后的结构如图所示:</p>
+<p>图片 1.2 图表库结构图</p>
+<p>在图中,Chart 接口充当抽象产品类,其子类HistogramChart、PieChart 和 LineChart 充当具体产品类,Ch artFactory 充当工厂类。完整代码如下所示:</p>
+<p>/**</p>
+<ul>
+<li>Created by tao.liu on 16/10/18.</li>
+</ul>
+<p>*/</p>
+<p>//抽象图表接口：抽象产品类</p>
+<p>interface Chart {</p>
+<p>public void display();</p>
+<p>}</p>
+<p>//柱状图类：具体产品类</p>
+<p>class HistogramChart implements Chart {</p>
+<p>public HistogramChart() {</p>
+<p>System.out.println(“创建柱状图！”);</p>
+<p>}</p>
+<p>public void display() {</p>
+<p>System.out.println(“显示柱状图！”);</p>
+<p>}</p>
+<p>}</p>
+<p>//饼状图类：具体产品类</p>
+<p>class PieChart implements Chart {</p>
+<p>public PieChart() {</p>
+<p>System.out.println(“创建饼状图！”);</p>
+<p>}</p>
+<p>public void display() {</p>
+<p>System.out.println(“显示饼状图！”);</p>
+<p>}</p>
+<p>}</p>
+<p>//折线图类：具体产品类</p>
+<p>class LineChart implements Chart {</p>
+<p>public LineChart() {</p>
+<p>System.out.println(“创建折线图！”);</p>
+<p>}</p>
+<p>public void display() {</p>
+<p>System.out.println(“显示折线图！”);</p>
+<p>}</p>
+<p>}</p>
+<p>//图表工厂类：工厂类</p>
+<p>class ChartFactory {</p>
+<p>//静态工厂方法</p>
+<p>public static Chart getChart(String type) {</p>
+<p>Chart chart = null;</p>
+<p>if (type.equalsIgnoreCase(“histogram”)) {</p>
+<p>chart = new HistogramChart();</p>
+<p>System.out.println(“初始化设置柱状图！”);</p>
+<p>} else if (type.equalsIgnoreCase(“pie”)) {</p>
+<p>chart = new PieChart();</p>
+<p>System.out.println(“初始化设置饼状图！”);</p>
+<p>} else if (type.equalsIgnoreCase(“line”)) {</p>
+<p>chart = new LineChart();</p>
+<p>System.out.println(“初始化设置折线图！”);</p>
+<p>}</p>
+<p>return chart;</p>
+<p>}</p>
+<p>}</p>
+<p>编写如下客户端测试代码:</p>
+<p>/**</p>
+<ul>
+<li>Created by tao.liu on 16/10/18.</li>
+</ul>
+<p>*/</p>
+<p>class Client {</p>
+<p>public static void main(String args[]) {</p>
+<p>Chart chart;</p>
+<p>chart = ChartFactory.getChart(“histogram”); //通过静态工厂方法创建产品</p>
+<p>chart.display();</p>
+<p>}</p>
+<p>}</p>
+<p>编译并运行程序,输出结果如下：</p>
+<p>创建柱状图！</p>
+<p>初始化设置柱状图！</p>
+<p>显示柱状图！</p>
+<p>在客户端测试类中,我们使用工厂类的静态工厂方法创建产品对象,如果需要更换产品,只需修改静态工厂方法 中的参数即可,例如将柱状图改为饼状图,只需将代码:</p>
+<p>chart = ChartFactory.getChart(“histogram”);</p>
+<p>//改为</p>
+<p>chart = ChartFactory.getChart(“pie”);</p>
+<p>编译程序，运行结果是：</p>
+<p>创建饼状图！</p>
+<p>初始化设置饼状图！</p>
+<p>显示饼状图！</p>
+<p>5.方案改进</p>
+<p>YY软件公司开发人员发现在创建具体 Chart 对象时,每更换一个 Chart 对象都需要修改客户端代码中静态 工厂方法的参数,客户端代码将要重新编译,这对于客户端而言,违反了“开闭原则”,有没有一种方法能够在 不修改客户端代码的前提下更换具体产品对象呢?答案是肯定的,下面将介绍一种常用的实现方式。</p>
+<p>我们可以将静态工厂方法的参数存储在 XML 或 properties 格式的配置文件中,如下 config.xml 所示:</p>
+<p>histogram</p>
+<p>再通过一个工具类 XMLUtil 来读取配置文件中的字符串参数,XMLUtil 类的代码如下所示:</p>
+<p>/**</p>
+<ul>
+<li>Created by tao.liu on 16/10/18.</li>
+</ul>
+<p>*/</p>
+<p>import javax.xml.parsers.*;</p>
+<p>import org.w3c.dom.*;</p>
+<p>import org.xml.sax.SAXException;</p>
+<p>import java.io.*;</p>
+<p>public class XMLUtil {</p>
+<p>//该方法用于从XML配置文件中提取图表类型，并返回类型名</p>
+<p>public static String getChartType() {</p>
+<p>try {</p>
+<p>//创建文档对象</p>
+<p>DocumentBuilderFactory dFactory = DocumentBuilderFactory.newInstance();</p>
+<p>DocumentBuilder builder = dFactory.newDocumentBuilder();</p>
+<p>Document doc;</p>
+<p>doc = builder.parse(new File(“config.xml”));</p>
+<p>//获取包含图表类型的文本节点</p>
+<p>NodeList nl = doc.getElementsByTagName(“chartType”);</p>
+<p>Node classNode = nl.item(0).getFirstChild();</p>
+<p>String chartType = classNode.getNodeValue().trim();</p>
+<p>return chartType;</p>
+<p>} catch(Exception e) {</p>
+<p>e.printStackTrace();</p>
+<p>return null;</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>修改之后客户端调用代码如下所示：</p>
+<p>class Client {</p>
+<p>public static void main(String args[]) {</p>
+<p>Chart chart;</p>
+<p>String type = XMLUtil.getChartType(); //读取配置文件中的参数</p>
+<p>chart = ChartFactory.getChart(type); //创建产品对象</p>
+<p>chart.display();</p>
+<p>}</p>
+<p>}</p>
+<p>不难发现，在上述客户端代码中不包含任何与具体图表对象相关的信息，如果需要更换具体图表对象，只需修改配置文件 config.xml，无须修改任何源代码，符合“开闭原则”。</p>
+<p>6.模式总结：</p>
+<p>简单工厂模式提供了专门的工厂类用于创建对象，将对象的创建和对象的使用分离开，它作为一种最简单的工厂模式在软件开发中得到了较为广泛的应用。</p>
+<p>简单工厂模式的主要优点如下：</p>
+<p>(1) 工厂类包含必要的判断逻辑，可以决定在什么时候创建哪一个产品类的实例，客户端可以免除直接创建产品对象的职责，而仅仅“消费”产品，简单工厂模式实现了对象创建和使用的分离。</p>
+<p>(2) 客户端无须知道所创建的具体产品类的类名，只需要知道具体产品类所对应的参数即可，对于一些复杂的类名，通过简单工厂模式可以在一定程度减少使用者的记忆量。</p>
+<p>(3) 通过引入配置文件，可以在不修改任何客户端代码的情况下更换和增加新的具体产品类，在一定程度上提高了系统的灵活性。</p>
+<p>简单工厂模式的主要缺点如下：</p>
+<p>(1) 由于工厂类集中了所有产品的创建逻辑，职责过重，一旦不能正常工作，整个系统都要受到影响。</p>
+<p>(2) 使用简单工厂模式势必会增加系统中类的个数（引入了新的工厂类），增加了系统的复杂度和理解难度。</p>
+<p>(3) 系统扩展困难，一旦添加新产品就不得不修改工厂逻辑，在产品类型较多时，有可能造成工厂逻辑过于复杂，不利于系统的扩展和维护。</p>
+<p>(4) 简单工厂模式由于使用了静态工厂方法，造成工厂角色无法形成基于继承的等级结构。</p>
+<p>适用场景</p>
+<p>在以下情况下可以考虑使用简单工厂模式：</p>
+<p>(1) 工厂类负责创建的对象比较少，由于创建的对象较少，不会造成工厂方法中的业务逻辑太过复杂。</p>
+<p>(2) 客户端只知道传入工厂类的参数，对于如何创建对象并不关心。</p>
 
       
     </div>
@@ -463,8 +720,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/04/mysql-producer/" rel="next" title="存储过程">
-                <i class="fa fa-chevron-left"></i> 存储过程
+              <a href="/2017/11/05/IntellijIdea-Java-develop-gradle-开发环境/" rel="next" title="使用Intellij Idea＋Gradle 搭建Java 本地开发环境">
+                <i class="fa fa-chevron-left"></i> 使用Intellij Idea＋Gradle 搭建Java 本地开发环境
               </a>
             
           </div>
@@ -473,8 +730,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/11/04/mysql-isolation-read-uncommitted/" rel="prev" title="数据库事务特征、数据库隔离级别，以及各级别数据库加锁情况(含实操)--read uncommitted篇">
-                数据库事务特征、数据库隔离级别，以及各级别数据库加锁情况(含实操)--read uncommitted篇 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/11/05/Java-Design-Pattern-Creator/" rel="prev" title="创建型设计模式--建造者模式">
+                创建型设计模式--建造者模式 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -534,17 +791,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -595,22 +843,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#区别概述："><span class="nav-number">1.</span> <span class="nav-text">区别概述：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#举例说明："><span class="nav-number">2.</span> <span class="nav-text">举例说明：</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -755,9 +987,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://willxue.top/2017/11/04/mysql-where-having/';
-          this.page.identifier = '2017/11/04/mysql-where-having/';
-          this.page.title = 'where与having的区别';
+          this.page.url = 'http://willxue.top/2017/11/05/simple-factory/';
+          this.page.identifier = '2017/11/05/simple-factory/';
+          this.page.title = '简单工厂模式';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://.disqus.com/embed.js';
