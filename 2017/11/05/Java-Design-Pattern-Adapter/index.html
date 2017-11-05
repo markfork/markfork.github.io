@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="鱼大坤个人博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="前言：设计模式之结构型模式软件模式与具体的应用领域无关,也就是说无论你从事的是移动应用开发、桌面应用开发、Web 应用开发还是嵌入式软件的开发,都可以使用软件模式。在软件模式中,设计模式是研究最为深入的分支,设计模式用于在特定的条件下为一些重复出现的软件设计问题提供合理的、有效的解决方案,它融合了众多专家的设计经验,已经在成千上万的软件中得以应用。1995 年,GoF 将收集和整理好的 23 种">
+<meta property="og:type" content="article">
+<meta property="og:title" content="结构型设计模式(一) --适配器模式">
+<meta property="og:url" content="http://willxue.top/2017/11/05/Java-Design-Pattern-Adapter/index.html">
+<meta property="og:site_name" content="鱼大坤个人博客">
+<meta property="og:description" content="前言：设计模式之结构型模式软件模式与具体的应用领域无关,也就是说无论你从事的是移动应用开发、桌面应用开发、Web 应用开发还是嵌入式软件的开发,都可以使用软件模式。在软件模式中,设计模式是研究最为深入的分支,设计模式用于在特定的条件下为一些重复出现的软件设计问题提供合理的、有效的解决方案,它融合了众多专家的设计经验,已经在成千上万的软件中得以应用。1995 年,GoF 将收集和整理好的 23 种">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-d4a6768de1f67a91.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-1c663b26e3d881bc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-9cfd9c1bf4da3154.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-121173e1af8246cf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-33f3596ebe76cd16.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-daaca51fe384f8d1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-11-05T12:11:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="结构型设计模式(一) --适配器模式">
+<meta name="twitter:description" content="前言：设计模式之结构型模式软件模式与具体的应用领域无关,也就是说无论你从事的是移动应用开发、桌面应用开发、Web 应用开发还是嵌入式软件的开发,都可以使用软件模式。在软件模式中,设计模式是研究最为深入的分支,设计模式用于在特定的条件下为一些重复出现的软件设计问题提供合理的、有效的解决方案,它融合了众多专家的设计经验,已经在成千上万的软件中得以应用。1995 年,GoF 将收集和整理好的 23 种">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2836699-d4a6768de1f67a91.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://willxue.top/2017/11/05/Java-Design-Pattern-Adapter/"/>
+
+
+
+
+
+  <title>结构型设计模式(一) --适配器模式 | 鱼大坤个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">鱼大坤个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">世间皆有及困难之事，挺的过的，便是好汉！</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://willxue.top/2017/11/05/Java-Design-Pattern-Adapter/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="大坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="鱼大坤个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">结构型设计模式(一) --适配器模式</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-05T20:11:44+08:00">
+                2017-11-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/05/Java-Design-Pattern-Adapter/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/05/Java-Design-Pattern-Adapter/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p><strong>前言：</strong>设计模式之结构型模式<br>软件模式与具体的应用领域无关,也就是说无论你从事的是移动应用开发、桌面应用开发、Web 应用开发还是嵌入式软件的开发,都可以使用软件模式。<br>在软件模式中,设计模式是研究最为深入的分支,设计模式用于在特定的条件下为一些重复出现的软件设计问题提供合理的、有效的解决方案,它融合了众多专家的设计经验,已经在成千上万的软件中得以应用。1995 年,GoF 将收集和整理好的 23 种设计模式汇编成《设计模式:可复用面向对象软件的基础》一书,该书的出版也标志着设计模式正式成为面向对象(Object Oriented)软件工程的一个重要研究分支。<br><a id="more"></a><br>结构型设计模式统共七种:<strong>适配器模式、桥接模式、组合模式、装饰模式、外观模式、享元模式和代理模式</strong>。<br>今天来记录<strong>适配器模式</strong>。<br><strong>记录结构</strong><br>     <strong>1.用例引入（要解决的问题)</strong><br>     <strong>2.采用适配器模式解决问题</strong><br>        2.1 适配器模式概念及类图表示（概念，UML类图表示  ）<br>        2.2 适配器模式详细解决方案（代码层面）<br>    <strong>3.适配器模式分类</strong><br>         3.1 对象适配器<br>         3.2 类适配器<br>          3.3 缺省适配器<br>   <strong>4.适配器模式优缺点总结</strong></p>
+</blockquote>
+<h2 id="1-用例引入（要解决的问题"><a href="#1-用例引入（要解决的问题" class="headerlink" title="1.用例引入（要解决的问题)"></a>1.用例引入（要解决的问题)</h2><hr>
+<pre><code>我的笔记本电脑的工作电压是 20 V,而我国的家庭用电是 220 V,如何让 20 V 的笔记本电脑能够在 220 V 的电压下工作?答案是引入一个电源适配器(AC Adapter),俗称充电器或变压器,有了这个电源适配器,生活用电和笔记本电脑即可兼容,如图所示:
+</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/2836699-d4a6768de1f67a91.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="电脑电源适配器示意图"><br>简单来说：<br>      在软件开发中,有时也存在类似这种不兼容的情况,我们也可以像引入一个电源适配器一样引入一个称之为适配器的角色来协调这些存在不兼容的结构,这种设计方案即为适配器模式。</p>
+<p><strong>要解决的问题：</strong><br>没有源码的算法库<br>      YY软件公司在很久以前曾开发了一个算法库,里面包含了一些常用的算法,例如排序算法和查找算法,在进行各类软件开发时经常需要重用该算法库中的算法。在为某学校开发教务管理系统时,开发人员发现需要对学生成绩进行排序和查找,该系统的设计人员已经开发了一个成绩操作接口 ScoreOperation,在该接口中声明了排序方法 sort(int[]) 和查找方法 search(int[], int),为了提高排序和查找的效率,开发人员决定重用算法库中的快速排序算法类 QuickSort 和二分查找算法类 BinarySearch,其中 QuickSort 的 quickSort(int[]) 方法实现了快速排序,BinarySearch 的 binarySearch (int[], int) 方法实现了二分查找。<br>由于某些原因,现在 Y Y公司开发人员已经找不到该算法库的源代码,无法直接通过复制和粘贴操作来重用其中的代码;部分开发人员已经针对 ScoreOperation 接口编程,如果再要求对该接口进行修改或要求大家直接使用 QuickSort 类和 BinarySearch 类将导致大量代码需要修改。<br>Sunny 软件公司开发人员面对这个没有源码的算法库,遇到一个幸福而又烦恼的问题:如何在既不修改现有接口又不需要任何算法库代码的基础上能够实现算法库的重用?<br>      通过分析,我们不难得知,现在 Sunny 软件公司面对的问题有点类似本章最开始所提到的电压问题,成绩操作接口 ScoreOperation 好比只支持 20 V 电压的笔记本,而算法库好比 220 V 的家庭用电,这两部分都没有办法再进行修改,而且它们原本是两个完全不相关的结构,如图所示:</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-1c663b26e3d881bc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="问题示意图"><br>现在我们需要 ScoreOperation 接口能够和已有算法库一起工作,让它们在同一个系统中能够兼容,最好的实现方法是增加一个类似电源适配器一样的适配器角色,通过适配器来协调这两个原本不兼容的结构。如何在软件开发中设计和实现适配器是本章我们将要解决的核心问题,下面就让我们正式开始学习这种用于解决不兼容结构问题的适配器模式。</p>
+<h2 id="2-采用适配器模式解决问题"><a href="#2-采用适配器模式解决问题" class="headerlink" title="2.采用适配器模式解决问题"></a>2.采用适配器模式解决问题</h2><hr>
+<blockquote>
+<h4 id="2-1-适配器模式概念及类图表示（概念，UML类图表示"><a href="#2-1-适配器模式概念及类图表示（概念，UML类图表示" class="headerlink" title="2.1 适配器模式概念及类图表示（概念，UML类图表示  )"></a>2.1 适配器模式概念及类图表示（概念，UML类图表示  )</h4><pre><code>与电源适配器相似,在适配器模式中引入了一个被称为适配器(Adapter)的包装类,而它所包装的对象称为适配者(Adaptee),即被适配的类。适配器的实现就是把客户类的请求转化为对适配者的相应接口的调用。也就是说:当客户类调用适配器的方法时,其实在适配器类的内部将调用适配者类的方法,而这个过程对客户类是透明的,客户类并不直接访问适配者类。因此,适配器让那些由于接口不兼容而不能交互的类可以一起工作。
+</code></pre><p>适配器模式可以将一个类的接口和另一个类的接口匹配起来,而无须修改原来的适配者接口和抽象目标类接口。适配器模式定义如下:<br><strong>适配器模式(Adapter Pattern):</strong>将一个接口转换成客户希望的另一个接口,使接口不兼容的那些类可以一起工作,其别名为包装器(Wrapper)。适配器模式既可以作为类结构型模式,也可以作为对象结构型模式。<br><strong>适配器模式类图表示：</strong><br>在适配器模式中,我们通过增加一个新的适配器类来解决接口不兼容的问题,使得原本没有任何关系的类可以协同工作。根据适配器类与适配者类的关系不同,适配器模式可分为对象适配器和类适配器两种,在对象适配器模式中,适配器与适配者之间是关联关系;在类适配器模式中,适配器与适配者之间是继承(或实现)关系。在实际开发中,对象适配器的使用频率更高,对象适配器模式结构如图所示:<br><img src="http://upload-images.jianshu.io/upload_images/2836699-9cfd9c1bf4da3154.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="对象适配器类图.png"><br>在对象适配器模式结构图中包含如下几个角色:<br>Target(目标抽象类):目标抽象类定义客户所需接口,可以是一个抽象类或接口,也可以是具体类。</p>
+<ul>
+<li><strong>Target(目标抽象类):</strong>目标抽象类定义客户所需接口,可以是一个抽象类或接口,也可以是具体类。</li>
+<li><strong>Adapter(适配器类):</strong>适配器可以调用另一个接口,作为一个转换器,对Adaptee和Target进行适配,适配器类是适配器模式的核心,在对象适配器中,它通过继承Target并关联一个Adaptee对象使二者产生联系。</li>
+<li><strong>Adaptee(适配者类):</strong>适配者即被适配的角色,它定义了一个已经存在的接口,这个接口需要适配,适配者类一般是一个具体类,包含了客户希望使用的业务方法,在某些情况下可能没有适配者类的源代码。</li>
+</ul>
+<hr>
+<p><strong>       根据对象适配器模式结构图,在对象适配器中,客户端需要调用 request() 方法,而适配者类 Adaptee 没有该方法,但是它所提供的 specificRequest() 方法却是客户端所需要的。为了使客户端能够使用适配者类,需要提供一个包装类 Adapter,即适配器类。这个包装类包装了一个适配者的实例,从而将客户端与适配者衔接起来,在适配器的 request() 方法中调用适配者的 specificRequest() 方法。因为适配器类与适配者类是关联关系(也可称之为委派关系),所以这种适配器模式称为对象适配器模式。</strong></p>
+<h4 id="2-2-适配器模式详细解决方案（代码层面）"><a href="#2-2-适配器模式详细解决方案（代码层面）" class="headerlink" title="2.2 适配器模式详细解决方案（代码层面）"></a>2.2 适配器模式详细解决方案（代码层面）</h4><p>YY软件公司开发人员决定使用适配器模式来重用算法库中的算法,其基本结构如图 9-4 所示:<br><img src="http://upload-images.jianshu.io/upload_images/2836699-121173e1af8246cf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="详细解决方案 UML类图--算法库重用.png"><br>       在图中,ScoreOperation 接口充当抽象目标,QuickSort 和 BinarySearch 类充当适配者,OperationAdapter 充当适配器。完整代码如下所示:<br><strong>抽象成绩操作类:目标接口</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">ScoreOperation</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] sort(<span class="keyword">int</span> array[]); <span class="comment">//成绩排序</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">search</span><span class="params">(<span class="keyword">int</span> array[],<span class="keyword">int</span> key)</span></span>; <span class="comment">//成绩查找</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>快速排序类:适配者= 被适配的类</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">QuickSort</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] quickSort(<span class="keyword">int</span> array[]) &#123;</div><div class="line">        sort(array,<span class="number">0</span>,array.length-<span class="number">1</span>);</div><div class="line">        <span class="keyword">return</span> array;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sort</span><span class="params">(<span class="keyword">int</span> array[],<span class="keyword">int</span> p, <span class="keyword">int</span> r)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> q=<span class="number">0</span>;</div><div class="line">        <span class="keyword">if</span>(p&lt;r) &#123;</div><div class="line">             q=partition(array,p,r);</div><div class="line">             sort(array,p,q-<span class="number">1</span>);</div><div class="line">             sort(array,q+<span class="number">1</span>,r);&#125;</div><div class="line">     &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">partition</span><span class="params">(<span class="keyword">int</span>[] a, <span class="keyword">int</span> p, <span class="keyword">int</span> r)</span> </span>&#123;</div><div class="line">         <span class="keyword">int</span> x=a[r];</div><div class="line">         <span class="keyword">int</span> j=p-<span class="number">1</span>;</div><div class="line">         <span class="keyword">for</span> (<span class="keyword">int</span> i=p;i&lt;=r-<span class="number">1</span>;i++) &#123;</div><div class="line">             <span class="keyword">if</span> (a[i]&lt;=x) &#123;</div><div class="line">                 j++;</div><div class="line">                 swap(a,j,i);&#125;</div><div class="line">            &#125;</div><div class="line">         swap(a,j+<span class="number">1</span>,r);<span class="keyword">return</span> j+<span class="number">1</span>;</div><div class="line">     &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span>[] a, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123;</div><div class="line">         <span class="keyword">int</span> t = a[i];</div><div class="line">         a[i] = a[j];</div><div class="line">         a[j] = t;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>二分查找类:适配者=被适配的类</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">BinarySearch</span> </span>&#123;</div><div class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">binarySearch</span><span class="params">(<span class="keyword">int</span> array[],<span class="keyword">int</span> key)</span> </span>&#123;</div><div class="line">            <span class="keyword">int</span> low = <span class="number">0</span>;</div><div class="line">            <span class="keyword">int</span> high = array.length -<span class="number">1</span>;</div><div class="line">            <span class="keyword">while</span>(low &lt;= high) &#123;</div><div class="line">                 <span class="keyword">int</span> mid = (low + high) / <span class="number">2</span>;</div><div class="line">                 <span class="keyword">int</span> midVal = array[mid];</div><div class="line">                 <span class="keyword">if</span>(midVal &lt; key) &#123;</div><div class="line">                     low = mid +<span class="number">1</span>;</div><div class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span> (midVal &gt; key) &#123;</div><div class="line">                    high = mid -<span class="number">1</span>;</div><div class="line">                &#125;<span class="keyword">else</span> &#123;</div><div class="line">                    <span class="keyword">return</span> <span class="number">1</span>; <span class="comment">//找到元素返回1&#125;</span></div><div class="line">                &#125;</div><div class="line">                    <span class="keyword">return</span> -<span class="number">1</span>; <span class="comment">//未找到元素返回-1&#125;</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>操作适配器:适配器</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">OperationAdapter</span> <span class="keyword">implements</span> <span class="title">ScoreOperation</span> </span>&#123;</div><div class="line">     <span class="keyword">private</span> QuickSort sortObj; <span class="comment">//定义适配者QuickSort对象private    </span></div><div class="line">     BinarySearch searchObj; <span class="comment">//定义适配者BinarySearch对象</span></div><div class="line">     <span class="function"><span class="keyword">public</span> <span class="title">OperationAdapter</span><span class="params">()</span> </span>&#123;</div><div class="line">         sortObj = <span class="keyword">new</span> QuickSort();</div><div class="line">         searchObj =    <span class="keyword">new</span> BinarySearch();</div><div class="line">     &#125;</div><div class="line">     <span class="keyword">public</span> <span class="keyword">int</span>[] sort(<span class="keyword">int</span> array[]) &#123;</div><div class="line">         <span class="comment">//调用适配者类QuickSort的排序方  法</span></div><div class="line">         <span class="keyword">return</span> sortObj.quickSort(array); </div><div class="line">     &#125;</div><div class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">search</span><span class="params">(<span class="keyword">int</span> array[],<span class="keyword">int</span> key)</span> </span>&#123;</div><div class="line">         <span class="keyword">return</span> searchObj.binarySearch(array,key); <span class="comment">//调用适配者类BinarySearch的查找方法</span></div><div class="line">     &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>为了让系统具备良好的灵活性和可扩展性,我们引入了工具类 XMLUtil 和配置文件,其中,XMLUtil 类的代码如下所示:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">import javax.xml.parsers.*;</div><div class="line">import org.w3c.dom.*;</div><div class="line">import org.xml.sax.SAXException;</div><div class="line">import java.io.*;</div><div class="line">class XMLUtil &#123;</div><div class="line">     public static Object getBean() &#123;try &#123;</div><div class="line">     //创建文档对象DocumentBuilderFactory dFactory =  DocumentBuilderFactory.newInstance();</div><div class="line">     DocumentBuilder builder = dFactory.newDocumentBuilder();</div><div class="line">     Document doc;</div><div class="line">     doc = builder.parse(new File(&quot;config.xml&quot;));</div><div class="line">     //获取包含类名的文本节点</div><div class="line">     NodeList nl = doc.getElementsByTagName(&quot;className&quot;);</div><div class="line">     Node  classNode=nl.item(0).getFirstChild();</div><div class="line">     String cName=classNode.getNodeValue();</div><div class="line">     //通过类名生成实例对象并将其返回Class c=Class.forName(cName);</div><div class="line">     Object obj=c.newInstance();</div><div class="line">            return obj;</div><div class="line">      &#125;catch(Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">            return null;</div><div class="line">      &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>配置文件 config.xml 中存储了适配器类的类名,代码如下所示:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">config</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">className</span>&gt;</span>OperationAdapter<span class="tag">&lt;/<span class="name">className</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">config</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>编写如下客户端测试代码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">class Client &#123;</div><div class="line">    public static void main(String args[]) &#123;</div><div class="line">        ScoreOperation operation;  //针对抽象目标接口编程</div><div class="line">        operation = (ScoreOperation)XMLUtil.getBean(); //读取配置文件，反射生成对象</div><div class="line">        int scores[] = &#123;84,76,50,69,90,91,88,96&#125;; //定义成绩数组</div><div class="line">        int result[];</div><div class="line">        int score;</div><div class="line">        System.out.println(&quot;成绩排序结果：&quot;);</div><div class="line">        result = operation.sort(scores);</div><div class="line">        //遍历输出成绩</div><div class="line">        for(int i : scores) &#123;</div><div class="line">            System.out.print(i + &quot;,&quot;);</div><div class="line">        &#125;</div><div class="line">        System.out.println();</div><div class="line">        System.out.println(&quot;查找成绩90：&quot;);</div><div class="line">        score = operation.search(result,90);</div><div class="line">        if (score != -1) &#123;</div><div class="line">            System.out.println(&quot;找到成绩90。&quot;);</div><div class="line">        &#125;</div><div class="line">        else &#123;</div><div class="line">            System.out.println(&quot;没有找到成绩90。&quot;);</div><div class="line">        &#125;</div><div class="line">        System.out.println(&quot;查找成绩92：&quot;);</div><div class="line">        score = operation.search(result,92);</div><div class="line">        if (score != -1) &#123;</div><div class="line">            System.out.println(&quot;找到成绩92。&quot;);</div><div class="line">        &#125;</div><div class="line">        else &#123;</div><div class="line">            System.out.println(&quot;没有找到成绩92。&quot;);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>运行结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">成绩排序结果：</div><div class="line">50,69,76,84,88,90,91,96,</div><div class="line">查找成绩90：</div><div class="line">找到成绩90。</div><div class="line">查找成绩92：</div><div class="line">没有找到成绩92。</div></pre></td></tr></table></figure></p>
+<p>在本实例中使用了对象适配器模式，同时引入了配置文件，将适配器类的类名存储在配置文件中。如果需要使用其他排序算法类和查找算法类，可以增加一个新的适配器类，使用新的适配器来适配新的算法，原有代码无须修改。通过引入配置文件和反射机制，可以在不修改客户端代码的情况下使用新的适配器，无须修改源代码，符合“开闭原则”。</p>
+<h2 id="3-适配器模式分类"><a href="#3-适配器模式分类" class="headerlink" title="3.适配器模式分类"></a>3.适配器模式分类</h2><hr>
+<p><strong>3.1 对象适配器</strong><br>      上文中记录的便是对象适配器，可以参照上问来进行强化记忆。<br><strong>3.2 类适配器</strong><br>      除了对象适配器模式之外，适配器模式还有一种形式，那就是类适配器模式，类适配器模式和对象适配器模式最大的区别在于适配器和适配者之间的关系不同，对象适配器模式中适配器和适配者之间是关联关系，而类适配器模式中适配器和适配者是继承关系，类适配器模式结构如图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-33f3596ebe76cd16.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="类适配器结构图.jpg"><br>根据类适配器模式结构图，适配器类实现了抽象目标类接口 Target，并继承了适配者类，在适配器类的 request() 方法中调用所继承的适配者类的 specificRequest() 方法，实现了适配。<br>典型的类适配器代码如下所示：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Adapter</span> <span class="keyword">extends</span> <span class="title">Adaptee</span> <span class="keyword">implements</span> <span class="title">Target</span> </span>&#123;  </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">request</span><span class="params">()</span> </span>&#123;  </div><div class="line">        specificRequest();  <span class="comment">//此方法是Adaptee类中定义的实例方法</span></div><div class="line">    &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>由于<a href="http://lib.csdn.net/base/javaee" target="_blank" rel="external">Java</a>、C#等语言不支持多重类继承，因此类适配器的使用受到很多限制，例如如果目标抽象类Target不是接口，而是一个类，就无法使用类适配器；此外，如果适配者Adapter为最终(Final)类，也无法使用类适配器。在Java等面向对象编程语言中，大部分情况下我们使用的是对象适配器，类适配器较少使用。</p>
+<p><strong>3.3 缺省适配器</strong><br>      缺省适配器模式是适配器模式的一种变体，其应用也较为广泛。缺省适配器模式的定义如下： 缺省适配器模式(Default Adapter Pattern)：当不需要实现一个接口所提供的所有方法时，可先设计一个抽象类实现该接口，并为接口中每个方法提供一个默认实现（空方法），那么该抽象类的子类可以选择性地覆盖父类的某些方法来实现需求，它适用于不想使用一个接口中的所有方法的情况，又称为单接口适配器模式。<br>缺省适配器模式结构如图所示：<br><img src="http://upload-images.jianshu.io/upload_images/2836699-daaca51fe384f8d1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="缺省适配器.jpg"><br>在缺省适配器模式中，包含如下三个角色：</p>
+<ul>
+<li><strong>ServiceInterface（适配者接口）</strong>：它是一个接口，通常在该接口中声明了大量的方法。</li>
+<li><strong>AbstractServiceClass（缺省适配器类）</strong>：它是缺省适配器模式的核心类，使用空方法的形式实现了在 ServiceInterface 接口中声明的方法。通常将它定义为抽象类，因为对它进行实例化没有任何意义。</li>
+<li><strong>ConcreteServiceClass（具体业务类）</strong>：它是缺省适配器类的子类，在没有引入适配器之前，它需要实现适配者接口，因此需要实现在适配者接口中定义的所有方法，而对于一些无须使用的方法也不得不提供空实现。在有了缺省适配器之后，可以直接继承该适配器类，根据需要有选择性地覆盖在适配器类中定义的方法。</li>
+</ul>
+<h2 id="4-适配器模式优缺点总结"><a href="#4-适配器模式优缺点总结" class="headerlink" title="4.适配器模式优缺点总结"></a>4.适配器模式优缺点总结</h2><hr>
+<p><strong>无论是对象适配器模式还是类适配器模式都具有如下优点:</strong></p>
+<ul>
+<li><p>将目标类和适配者类解耦，通过引入一个适配器类来重用现有的适配者类，无须修改原有结构。</p>
+</li>
+<li><p>增加了类的透明性和复用性，将具体的业务实现过程封装在适配者类中，对于客户端类而言是透明的，而且提高了适配者的复用性，同一个适配者类可以在多个不同的系统中复用。</p>
+</li>
+<li><p>灵活性和扩展性都非常好，通过使用配置文件，可以很方便地更换适配器，也可以在不修改原有代码的基础上增加新的适配器类，完全符合“开闭原则”。</p>
+</li>
+</ul>
+<p><strong>类适配器模式还有如下优点：</strong></p>
+<ul>
+<li>由于适配器类是适配者类的子类，因此可以在适配器类中置换一些适配者的方法，使得适配器的灵活性更强。</li>
+</ul>
+<p><strong>对象适配器模式还有如下优点:</strong></p>
+<ul>
+<li><p>一个对象适配器可以把多个不同的适配者适配到同一个目标；</p>
+</li>
+<li><p>可以适配一个适配者的子类，由于适配器和适配者之间是关联关系，根据“里氏代换原则”，适配者的子类也可通过该适配器进行适配。</p>
+</li>
+</ul>
+<hr>
+<p><strong>类适配器模式的缺点：</strong></p>
+<ul>
+<li><p>对于 Java、C# 等不支持多重类继承的语言，一次最多只能适配一个适配者类，不能同时适配多个适配者；</p>
+</li>
+<li><p>适配者类不能为最终类，如在 Java 中不能为 final 类，C# 中不能为 sealed 类；</p>
+</li>
+<li>在 Java、C# 等语言中，类适配器模式中的目标抽象类只能为接口，不能为类，其使用有一定的局限性。</li>
+</ul>
+<p><strong>对象适配器模式的缺点:</strong></p>
+<ul>
+<li>与类适配器模式相比，要在适配器中置换适配者类的某些方法比较麻烦。如果一定要置换掉适配者类的一个或多个方法，可以先做一个适配者类的子类，将适配者类的方法置换掉，然后再把适配者类的子类当做真正的适配者进行适配，实现过程较为复杂。</li>
+</ul>
+<p><strong>适用场景</strong><br>在以下情况下可以考虑使用适配器模式：</p>
+<ul>
+<li>系统需要使用一些现有的类，而这些类的接口（如方法名）不符合系统的需要，甚至没有这些类的源代码。</li>
+<li>想创建一个可以重复使用的类，用于与一些彼此之间没有太大关联的一些类，包括一些可能在将来引进的类一起工作。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/path/to/your/wechatqcode ex. /uploads/wechat-qcode.jpg" alt="大坤 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>ex. subscribe to my blog by scanning my public wechat account</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Donate comment here</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="大坤 WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="大坤 Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+      <div id="bitcoin" style="display: inline-block">
+        <img id="bitcoin_qr" src="/images/bitcoin.png" alt="大坤 Bitcoin"/>
+        <p>Bitcoin</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/05/Java-Design-Pattern-Creator/" rel="next" title="创建型设计模式--建造者模式">
+                <i class="fa fa-chevron-left"></i> 创建型设计模式--建造者模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/05/IntellijIdea-Java-develop-gradle-开发环境/" rel="prev" title="使用Intellij Idea＋Gradle 搭建Java 本地开发环境">
+                使用Intellij Idea＋Gradle 搭建Java 本地开发环境 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="大坤" />
+          <p class="site-author-name" itemprop="name">大坤</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-用例引入（要解决的问题"><span class="nav-number">1.</span> <span class="nav-text">1.用例引入（要解决的问题)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-采用适配器模式解决问题"><span class="nav-number">2.</span> <span class="nav-text">2.采用适配器模式解决问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-适配器模式概念及类图表示（概念，UML类图表示"><span class="nav-number">2.0.1.</span> <span class="nav-text">2.1 适配器模式概念及类图表示（概念，UML类图表示  )</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-适配器模式详细解决方案（代码层面）"><span class="nav-number">2.0.2.</span> <span class="nav-text">2.2 适配器模式详细解决方案（代码层面）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-适配器模式分类"><span class="nav-number">3.</span> <span class="nav-text">3.适配器模式分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-适配器模式优缺点总结"><span class="nav-number">4.</span> <span class="nav-text">4.适配器模式优缺点总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">大坤</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://willxue.top/2017/11/05/Java-Design-Pattern-Adapter/';
+          this.page.identifier = '2017/11/05/Java-Design-Pattern-Adapter/';
+          this.page.title = '结构型设计模式(一) --适配器模式';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

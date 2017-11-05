@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="鱼大坤个人博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="代理简述： 代理是一个动词，动词之间会有产生关系两者。代理这个词产生关系的两者就是：realSubject(被代理者)，proxySubject（代理者）。举个例子：火车站，与火车站代售点。火车站可以进行售票工作，而火车站代售点可以实现代售车票。但是代售点还有其他的功能，比如说支持预约。这个是火车站所不具有的功能。简单理解代理模式就是：代理者代替被代理者去完成一些功能，在完成一些功能之前可以做一些">
+<meta property="og:type" content="article">
+<meta property="og:title" content="结构型设计模式--代理模式（静态&amp;动态）">
+<meta property="og:url" content="http://willxue.top/2017/11/05/Java-Design-Patter-proxy/index.html">
+<meta property="og:site_name" content="鱼大坤个人博客">
+<meta property="og:description" content="代理简述： 代理是一个动词，动词之间会有产生关系两者。代理这个词产生关系的两者就是：realSubject(被代理者)，proxySubject（代理者）。举个例子：火车站，与火车站代售点。火车站可以进行售票工作，而火车站代售点可以实现代售车票。但是代售点还有其他的功能，比如说支持预约。这个是火车站所不具有的功能。简单理解代理模式就是：代理者代替被代理者去完成一些功能，在完成一些功能之前可以做一些">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-05T12:04:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="结构型设计模式--代理模式（静态&amp;动态）">
+<meta name="twitter:description" content="代理简述： 代理是一个动词，动词之间会有产生关系两者。代理这个词产生关系的两者就是：realSubject(被代理者)，proxySubject（代理者）。举个例子：火车站，与火车站代售点。火车站可以进行售票工作，而火车站代售点可以实现代售车票。但是代售点还有其他的功能，比如说支持预约。这个是火车站所不具有的功能。简单理解代理模式就是：代理者代替被代理者去完成一些功能，在完成一些功能之前可以做一些">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://willxue.top/2017/11/05/Java-Design-Patter-proxy/"/>
+
+
+
+
+
+  <title>结构型设计模式--代理模式（静态&动态） | 鱼大坤个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">鱼大坤个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">世间皆有及困难之事，挺的过的，便是好汉！</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://willxue.top/2017/11/05/Java-Design-Patter-proxy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="大坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="鱼大坤个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">结构型设计模式--代理模式（静态&动态）</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-05T20:04:54+08:00">
+                2017-11-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/05/Java-Design-Patter-proxy/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/05/Java-Design-Patter-proxy/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="代理简述："><a href="#代理简述：" class="headerlink" title="代理简述："></a>代理简述：</h2><hr>
+<p>代理是一个动词，动词之间会有产生关系两者。代理这个词产生关系的两者就是：realSubject(被代理者)，proxySubject（代理者）。举个例子：火车站，与火车站代售点。<br>火车站可以进行售票工作，而火车站代售点可以实现代售车票。但是代售点还有其他的功能，比如说支持预约。这个是火车站所不具有的功能。<br>简单理解<strong>代理模式</strong>就是：<strong>代理者代替被代理者去完成一些功能，在完成一些功能之前可以做一些预处理，完成之后可以做一些后置处理。</strong><br>再看一个程序中的例子：<strong>AOP就是建立在代理的思想之上的，AOP面向切面编程，何为切面，就是你程序中的主要逻辑，在这些主要逻辑产生的地方设置切点，在切点的地方设置一个注入一些非主要功能，这个就是面向切面编程。面向切面编程是以动态代理为底层实现的</strong><br><a id="more"></a></p>
+<h2 id="java代理模式应用"><a href="#java代理模式应用" class="headerlink" title="java代理模式应用"></a>java代理模式应用</h2><hr>
+<p><strong>&lt;1.静态代理–继承实现：</strong><br>java中静态代理的实现方式有两种：一种基于继承思想，一种基于聚合。<br>首先描述基于继承思想的静态代理：（每段代码下方会有讲解，代码内会有注释）<br>代码如下：<br>1.定义一个接口：Moveable<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">package com.feixun.designerpattern.proxy.static_proxy;</div><div class="line"></div><div class="line">public interface Moveable &#123;</div><div class="line">      void move(); //定义抽象方法 move()，表示移动功能</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>2.定义一个<strong>被代理类</strong>Car类实现这个Moveable接口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">package com.feixun.designerpattern.proxy.static_proxy;</div><div class="line"></div><div class="line">import java.util.Random;</div><div class="line"></div><div class="line">public class Car implements Moveable&#123;</div><div class="line">       //实现move方法</div><div class="line">	@Override</div><div class="line">	public void move() &#123;</div><div class="line">		try &#123;</div><div class="line">			Thread.sleep(new Random().nextInt(1000));</div><div class="line">			System.out.println(&quot;汽车行驶中&quot;);</div><div class="line">		&#125; catch (InterruptedException e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>3.在定义一个<strong>代理类</strong>Car2继承自Car<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">package com.feixun.designerpattern.proxy.static_proxy;</div><div class="line"></div><div class="line">/**</div><div class="line"> * @author tao.liu</div><div class="line"> * 通过继承实现静态代理 丰富RealSubject的功能，Car2相当于ProxySubject</div><div class="line"> *</div><div class="line"> */</div><div class="line">public class Car2 extends Car&#123;</div><div class="line">    </div><div class="line">	@Override</div><div class="line">	public void move() &#123;</div><div class="line">		long starttime = System.currentTimeMillis();</div><div class="line">		System.out.println(&quot;汽车开始行驶&quot;);</div><div class="line">		super.move();</div><div class="line">		long endtime = System.currentTimeMillis();</div><div class="line">		System.out.println(&quot;汽车行驶结束，行驶了&quot;+(endtime-starttime)+&quot; 毫秒&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>解释：此程序在调用真实被代理类之前，对move花费的时间进行记录。</p>
+<p>4.客户端调用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">package com.feixun.designerpattern.proxy.static_proxy;</div><div class="line"></div><div class="line">public class Client &#123;</div><div class="line">   public static void main(String[] args) &#123;</div><div class="line">	 /*采用car2继承car 的方式实现代理 </div><div class="line">	  *随着功能的增加会出现更多的继承才能满足需求</div><div class="line">	  */</div><div class="line">	  Moveable moveable = new Car2();</div><div class="line">	  moveable.move();</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>程序输出结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">汽车开始行驶</div><div class="line">汽车行驶中</div><div class="line">汽车行驶结束，行驶了287 毫秒</div></pre></td></tr></table></figure></p>
+<p>此种静态代理采用的是代理类（proxySubject）<strong>继承</strong>被代理类（realSubject）而实现的。<br><strong>分析弊端：</strong><br><strong>1.</strong>假设现在我需要在汽车运行<strong>前后</strong>加上日志记录的功能，在这种方式（继承）下，我需要新建一个（Car3继承Car）的代理类完成这件事情。<br><strong>2.</strong>再假设我现在还需要在运行前加上启动汽车的功能，我们需要再建立一个（Car4继承Car）的代理类来完成这个事情。<br><strong>3.</strong>再假设，我需要在汽车运行之前先启动汽车，再进行日志记录，我们需要再建立一个Car5来继承Car3.<br>综上所述，随着功能的叠加，类的数量也会呈爆炸式增长。<br><strong>解决这个问题就需要用聚合来实现类的代理</strong></p>
+<hr>
+<p><strong>&lt;2.静态代理–聚合实现：</strong><br>代码如下：<br>建立move功能定义接口<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">package com.feixun.designerpattern.proxy.static_proxy;</div><div class="line"></div><div class="line">public interface Moveable &#123;</div><div class="line">      void move();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>建立实现move功能的Car类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">package com.feixun.designerpattern.proxy.static_proxy;</div><div class="line"></div><div class="line">import java.util.Random;</div><div class="line"></div><div class="line">public class Car implements Moveable&#123;</div><div class="line">    </div><div class="line">	@Override</div><div class="line">	public void move() &#123;</div><div class="line">		try &#123;</div><div class="line">			Thread.sleep(new Random().nextInt(1000));</div><div class="line">			System.out.println(&quot;汽车行驶中&quot;);</div><div class="line">		&#125; catch (InterruptedException e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>建立日志代理类CarLogProxy<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">package com.feixun.designerpattern.proxy.static_proxy;</div><div class="line"></div><div class="line">public class CarLogProxy implements Moveable &#123;</div><div class="line">    private Moveable moveable;//将movable 类型的对象聚合进来，其实movable是一个接口，这里用到了多态的概念。</div><div class="line">    </div><div class="line">    public CarLogProxy(Moveable moveable) &#123;</div><div class="line">    	super();</div><div class="line">    	this.moveable = moveable;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void move() &#123;</div><div class="line">		System.out.println(&quot;日志开始...&quot;);</div><div class="line">		moveable.move();</div><div class="line">		System.out.println(&quot;日志结束...&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>接着建立行驶时间CarTimeProxy代理类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">package com.feixun.designerpattern.proxy.static_proxy;</div><div class="line">//CarTimeProxy 为 属于Moveable 的类型对象的代理类</div><div class="line">//基于聚合的方式</div><div class="line">public class CarTimeProxy implements Moveable&#123;</div><div class="line">    private Moveable moveable;//同上所示</div><div class="line">    </div><div class="line">    public CarTimeProxy(Moveable moveable) &#123;</div><div class="line">    	super();</div><div class="line">    	this.moveable = moveable;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">	@Override</div><div class="line">	public void move() &#123;</div><div class="line">		long starttime = System.currentTimeMillis();</div><div class="line">		System.out.println(&quot;汽车开始行驶&quot;);</div><div class="line">		moveable.move();</div><div class="line">		long endtime = System.currentTimeMillis();</div><div class="line">		System.out.println(&quot;汽车行驶结束，行驶了&quot;+(endtime-starttime)+&quot; 毫秒&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>测试类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">package com.feixun.designerpattern.proxy.static_proxy;</div><div class="line"></div><div class="line">public class Client &#123;</div><div class="line">   public static void main(String[] args) &#123;</div><div class="line">	  Car car1 = new Car();</div><div class="line">	  CarLogProxy carLogProxy = new CarLogProxy(car1);</div><div class="line">	  CarTimeProxy carTimeProxy = new CarTimeProxy(carLogProxy);</div><div class="line">	</div><div class="line">	  carTimeProxy.move();</div><div class="line">   &#125;</div><div class="line">   </div><div class="line">   //引入问题:如果现在更多的realsubject 需要事件代理，那么现在需要新建多个代理类吗？类膨胀。</div><div class="line">   //动态产生代理，实现对不同类，不同方法的代理。</div><div class="line">   </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>运行结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">汽车开始行驶</div><div class="line">日志开始...</div><div class="line">汽车行驶中</div><div class="line">日志结束...</div><div class="line">汽车行驶结束，行驶了529 毫秒</div></pre></td></tr></table></figure></p>
+<p>现在我们这样测试：（请注意如下程序与上方程序的不同点：）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">package com.feixun.designerpattern.proxy.static_proxy;</div><div class="line"></div><div class="line">public class Client &#123;</div><div class="line">   public static void main(String[] args) &#123;</div><div class="line">	 //采用聚合的方式实现的代理，代理之间也可以互相调用</div><div class="line">	  Car car1 = new Car();</div><div class="line">	  CarTimeProxy carTimeProxy = new CarTimeProxy(car1);</div><div class="line">	  CarLogProxy carLogProxy = new CarLogProxy(carTimeProxy);</div><div class="line">	 </div><div class="line">	  carLogProxy.move();</div><div class="line">   &#125;</div><div class="line">   </div><div class="line">   //引入问题，如果现在更多的不同类型的realsubject：比如或火车的，汽车的类 需要被代理，那么现在需要新建多个代理类吗？类膨胀。</div><div class="line">   //动态产生代理，实现对不同类，不同方法的代理。</div><div class="line">   </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>运行结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">日志开始...</div><div class="line">汽车开始行驶</div><div class="line">汽车行驶中</div><div class="line">汽车行驶结束，行驶了649 毫秒</div><div class="line">日志结束...</div></pre></td></tr></table></figure></p>
+<p><strong>优点</strong>：这样的话就可以实现多个代理对象之间的相互调用相互聚合。从而比用继承方式实现的静态代理更优。减少了一个维度。</p>
+<p><strong>引入问题，如果现在更多的不同类型的realsubject：比如或火车的，汽车的类 需要被代理，那么现在需要新建多个代理类吗？类膨胀问题产生。<br>  动态产生代理，实现对不同类，不同方法的代理。</strong></p>
+<hr>
+<h2 id="动态代理"><a href="#动态代理" class="headerlink" title="动态代理"></a>动态代理</h2><p>直接上代码：<br>首先建立定义接口的Moveable:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">package com.feixun.designerpattern.proxy.dynamic_proxy;</div><div class="line"></div><div class="line">public interface Moveable &#123;</div><div class="line">    void move();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>接着定义realsubject（被代理类）：泛指所有类型的被代理类。可以是Car,Subway，etc.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">package com.feixun.designerpattern.proxy.dynamic_proxy;</div><div class="line"></div><div class="line">import java.util.Random;</div><div class="line"></div><div class="line">public class Car implements Moveable &#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public void move() &#123;</div><div class="line">		try &#123;</div><div class="line">			Thread.sleep(new Random().nextInt(1000));</div><div class="line">			System.out.println(&quot;汽车行驶中&quot;);</div><div class="line">		&#125; catch (InterruptedException e) &#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>接着建立实现（implements）InvocationHandler接口的类：<br>InvocationHandler,中定义了Object invoke(Object proxy, Method method, Object[] args) 方法。参数解释如下图代码中注释<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">package com.feixun.designerpattern.proxy.dynamic_proxy;</div><div class="line"></div><div class="line">import java.lang.reflect.InvocationHandler;</div><div class="line">import java.lang.reflect.Method;</div><div class="line"></div><div class="line">public class MyHandler implements InvocationHandler &#123;</div><div class="line">    private Object target;//被代理对象</div><div class="line">    </div><div class="line">    public MyHandler(Object target) &#123;</div><div class="line">    	this.target = target;</div><div class="line">	&#125;</div><div class="line">    </div><div class="line">	/* (non-Javadoc)</div><div class="line">	 * @see java.lang.reflect.InvocationHandler#invoke(java.lang.Object, java.lang.reflect.Method, java.lang.Object[])</div><div class="line">	 * proxy--指被代理的对象（感觉java这个参数的名字并不是很好）</div><div class="line">	 * method--被代理对象的方法</div><div class="line">	 * args:被代理对象的方法参数</div><div class="line">	 */</div><div class="line">	@Override</div><div class="line">	public Object invoke(Object proxy, Method method, Object[] args) </div><div class="line">			throws Throwable &#123;</div><div class="line">		System.out.println(&quot;汽车开始运行了...&quot;);</div><div class="line">		method.invoke(target, args);//运行被代理对象的方法，采用反射的机制。</div><div class="line">		System.out.println(&quot;汽车运行结束...&quot;);</div><div class="line">		return null;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这一步只是完成了被代理对象方法的扩充，还没有产生真实的代理对象。<br>再看测试类：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">package com.feixun.designerpattern.proxy.dynamic_proxy;</div><div class="line"></div><div class="line">import java.lang.reflect.InvocationHandler;</div><div class="line">import java.lang.reflect.Proxy;</div><div class="line"></div><div class="line">public class TestDynamicProxy &#123;</div><div class="line">   public static void main(String[] args) &#123;</div><div class="line">	  Car car = new Car();</div><div class="line">	  InvocationHandler handler = new MyHandler(car);</div><div class="line">	  Class&lt;?&gt; cs = car.getClass();</div><div class="line">	  /*</div><div class="line">	   * @param ：  classloader 被代理对象的类加载器</div><div class="line">	   * @param : interfaces 被代理对象实现的接口</div><div class="line">	   * @param ：  Invocationhandler handler /子类</div><div class="line">	   */</div><div class="line">	  Moveable moveable=(Moveable)Proxy.newProxyInstance(cs.getClassLoader(),</div><div class="line">			  cs.getInterfaces(), handler);//这一步动态生成代理对象 moveable</div><div class="line">	  moveable.move();</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>运行结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">汽车开始运行了...</div><div class="line">汽车行驶中</div><div class="line">汽车运行结束...</div></pre></td></tr></table></figure></p>
+<p><strong>可以看出：动态代理解决了对不同委托类产生代理对象的问题，假设现在我有Subway类，我要实现被代理，我只需要Subway实现Moveable，然后在测试类中更改几行代码就好，所以解决了聚合静态代理产生的问题,又将问题复杂度减少了一个维度。</strong><br><strong>但是jdk动态代理也有问题：委托类想要实现自己的代理类，必须实现接口，如果有类没有实现接口，就不能使用JDK代理。</strong><br>完</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/path/to/your/wechatqcode ex. /uploads/wechat-qcode.jpg" alt="大坤 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>ex. subscribe to my blog by scanning my public wechat account</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Donate comment here</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="大坤 WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="大坤 Alipay"/>
+        <p>Alipay</p>
+      </div>
+    
+
+    
+      <div id="bitcoin" style="display: inline-block">
+        <img id="bitcoin_qr" src="/images/bitcoin.png" alt="大坤 Bitcoin"/>
+        <p>Bitcoin</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/05/ThinkPHP-static-template-静态模板-/" rel="next" title="ThinkPHP 静态资源，公共模板引用方法">
+                <i class="fa fa-chevron-left"></i> ThinkPHP 静态资源，公共模板引用方法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/05/UML/" rel="prev" title="UML关系图">
+                UML关系图 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="大坤" />
+          <p class="site-author-name" itemprop="name">大坤</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#代理简述："><span class="nav-number">1.</span> <span class="nav-text">代理简述：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java代理模式应用"><span class="nav-number">2.</span> <span class="nav-text">java代理模式应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态代理"><span class="nav-number">3.</span> <span class="nav-text">动态代理</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">大坤</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://willxue.top/2017/11/05/Java-Design-Patter-proxy/';
+          this.page.identifier = '2017/11/05/Java-Design-Patter-proxy/';
+          this.page.title = '结构型设计模式--代理模式（静态&动态）';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
