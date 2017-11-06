@@ -96,24 +96,28 @@
 
 
 
-<meta name="description" content="node.js事件循环 Node.js 是单进程单线程应用程序，但是通过事件和回调支持并发，所以性能非常高。Node.js 的每一个 API 都是异步的，并作为一个独立线程运行，使用异步函数调用，并处理并发。Node.js 基本上所有的事件机制都是用设计模式中观察者模式实现。Node.js 单线程类似进入一个while(true)的事件循环，直到没有事件观察者退出，每个异步事件都生成一个事件观察者">
+<meta name="description" content="前言  这篇是MySQL 数据库规范的最后一篇–调优篇，旨在提供我们发现系统性能变弱、MySQL系统参数调优，SQL脚本出现问题的精准定位与调优方法。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Node.js Event-loop事件循环">
-<meta property="og:url" content="http://willxue.top/2017/11/04/node/index.html">
+<meta property="og:title" content="MySQL 数据库规范--调优篇(终结篇)">
+<meta property="og:url" content="http://willxue.top/2017/11/06/MySQL-调优/index.html">
 <meta property="og:site_name" content="鱼大坤个人博客">
-<meta property="og:description" content="node.js事件循环 Node.js 是单进程单线程应用程序，但是通过事件和回调支持并发，所以性能非常高。Node.js 的每一个 API 都是异步的，并作为一个独立线程运行，使用异步函数调用，并处理并发。Node.js 基本上所有的事件机制都是用设计模式中观察者模式实现。Node.js 单线程类似进入一个while(true)的事件循环，直到没有事件观察者退出，每个异步事件都生成一个事件观察者">
+<meta property="og:description" content="前言  这篇是MySQL 数据库规范的最后一篇–调优篇，旨在提供我们发现系统性能变弱、MySQL系统参数调优，SQL脚本出现问题的精准定位与调优方法。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-a74f8a4101189f13.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-2c7ec0cb18b05cae.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-12a5e533382cfbaf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-beae45f61ad156a1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-af84cf3cfbd2e1f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-24222c605786e2c9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-11-04T06:30:35.000Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-3363242bf7580f28.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-eb93f762efa27fad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-4f7340f695552373.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-5b92a18382f50903.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-7c1e193809259e48.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-edc69b3a3506de2f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-d7a5a33837f9cf23.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-c725007ff52e6850.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-6e0ca72ccb22c2fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-fbecd28a3290e863.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-11-06T11:38:16.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Node.js Event-loop事件循环">
-<meta name="twitter:description" content="node.js事件循环 Node.js 是单进程单线程应用程序，但是通过事件和回调支持并发，所以性能非常高。Node.js 的每一个 API 都是异步的，并作为一个独立线程运行，使用异步函数调用，并处理并发。Node.js 基本上所有的事件机制都是用设计模式中观察者模式实现。Node.js 单线程类似进入一个while(true)的事件循环，直到没有事件观察者退出，每个异步事件都生成一个事件观察者">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2836699-a74f8a4101189f13.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="MySQL 数据库规范--调优篇(终结篇)">
+<meta name="twitter:description" content="前言  这篇是MySQL 数据库规范的最后一篇–调优篇，旨在提供我们发现系统性能变弱、MySQL系统参数调优，SQL脚本出现问题的精准定位与调优方法。">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2836699-3363242bf7580f28.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -142,13 +146,13 @@
 
 
 
-  <link rel="canonical" href="http://willxue.top/2017/11/04/node/"/>
+  <link rel="canonical" href="http://willxue.top/2017/11/06/MySQL-调优/"/>
 
 
 
 
 
-  <title>Node.js Event-loop事件循环 | 鱼大坤个人博客</title>
+  <title>MySQL 数据库规范--调优篇(终结篇) | 鱼大坤个人博客</title>
   
 
 
@@ -325,7 +329,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://willxue.top/2017/11/04/node/">
+    <link itemprop="mainEntityOfPage" href="http://willxue.top/2017/11/06/MySQL-调优/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="大坤">
@@ -342,7 +346,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Node.js Event-loop事件循环</h2>
+          <h2 class="post-title" itemprop="name headline">MySQL 数据库规范--调优篇(终结篇)</h2>
         
 
         <div class="post-meta">
@@ -354,8 +358,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-04T14:30:35+08:00">
-                2017-11-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-06T19:38:16+08:00">
+                2017-11-06
               </time>
             
 
@@ -373,9 +377,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/04/node/#comments" itemprop="discussionUrl">
+                <a href="/2017/11/06/MySQL-调优/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/04/node/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/11/06/MySQL-调优/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -403,26 +407,94 @@
       
 
       
-        <h2 id="node-js事件循环"><a href="#node-js事件循环" class="headerlink" title="node.js事件循环"></a>node.js事件循环</h2><hr>
-<p>Node.js 是单进程单线程应用程序，但是通过事件和回调支持并发，所以性能非常高。<br>Node.js 的每一个 API 都是异步的，并作为一个独立线程运行，使用异步函数调用，并处理并发。<br>Node.js 基本上所有的事件机制都是用设计模式中观察者模式实现。<br>Node.js 单线程类似进入一个while(true)的事件循环，直到没有事件观察者退出，每个异步事件都生成一个事件观察者，如果有事件发生就调用该回调函数.</p>
-<h2 id="事件驱动程序"><a href="#事件驱动程序" class="headerlink" title="事件驱动程序"></a>事件驱动程序</h2><hr>
-<p>想要理解Event Loop，就要从程序的运行模式讲起。运行以后的程序叫做<a href="http://zh.wikipedia.org/wiki/%E8%BF%9B%E7%A8%8B" target="_blank" rel="external">“进程”</a>（process），一般情况下，一个进程一次只能执行一个任务。<br><a id="more"></a><br>如果有很多任务需要执行，不外乎三种解决方法。<br> <strong>（1）排队:</strong>因为一个进程一次只能执行一个任务，只好等前面的任务执行完了，再执行后面的任务。<br><strong>（2）新建进程:</strong>使用fork命令，为每个任务新建一个进程。<br><strong>（3）新建线程:</strong>因为进程太耗费资源，所以如今的程序往往允许一个进程包含多个线程，由线程去完成任务。（进程和线程的详细解释，请看<a href="http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html" target="_blank" rel="external">这里</a>。） </p>
-<p> 以JavaScript语言为例，它是一种单线程语言，所有任务都在一个线程上完成，即采用上面的第一种方法。一旦遇到大量任务或者遇到一个耗时的任务，网页就会出现”假死”，因为JavaScript停不下来，也就无法响应用户的行为。<br>你也许会问，JavaScript为什么是单线程，难道不能实现为多线程吗？<br>这跟历史有关系。JavaScript从诞生起就是单线程。原因大概是不想让浏览器变得太复杂，因为多线程需要共享资源、且有可能修改彼此的运行结果，对于一种网页脚本语言来说，这就太复杂了。后来就约定俗成，JavaScript为一种单线程语言。（Worker API可以实现多线程，但是JavaScript本身始终是单线程的。）<br>如果某个任务很耗时，比如涉及很多I/O（输入/输出）操作，那么线程的运行大概是下面的样子。<br><img src="http://upload-images.jianshu.io/upload_images/2836699-a74f8a4101189f13.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="单线程运行任务示意图"></p>
-<p>上图的绿色部分是程序的运行时间，红色部分是等待时间。可以看到，由于I/O操作很慢，所以这个线程的大部分运行时间都在空等I/O操作的返回结果。这种运行方式称为”同步模式”（synchronous I/O）或”堵塞模式”（blocking I/O）。<br>如果采用多线程，同时运行多个任务，那很可能就是下面这样。<br><img src="http://upload-images.jianshu.io/upload_images/2836699-2c7ec0cb18b05cae.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="多线程运行任务示意图"></p>
-<p>上图表明，多线程不仅占用多倍的系统资源，也闲置多倍的资源，这显然不合理。<br>Event Loop就是为了解决这个问题而提出的。<a href="http://en.wikipedia.org/wiki/Event_loop" target="_blank" rel="external">Wikipedia</a>这样定义：<br> <strong>Event Loop是一个程序结构，用于等待和发送消息和事件。（a programming construct that waits for and dispatches events or messages in a program.）</strong></p>
-<p>简单说，就是在程序中设置两个线程：一个负责程序本身的运行，称为”主线程”；另一个负责主线程与其他进程（主要是各种I/O操作）的通信，被称为”Event Loop线程”（可以译为”消息线程”）。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2836699-12a5e533382cfbaf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="事件循环示意图"></p>
-<p>上图主线程的绿色部分，还是表示运行时间，而橙色部分表示空闲时间。每当遇到I/O的时候，主线程就让Event Loop线程去通知相应的I/O程序，然后接着往后运行，所以不存在红色的等待时间。等到I/O程序完成操作，Event Loop线程再把结果返回主线程。主线程就调用事先设定的回调函数，完成整个任务。<br>可以看到，由于多出了橙色的空闲时间，所以主线程得以运行更多的任务，这就提高了效率。这种运行方式称为”<a href="http://en.wikipedia.org/wiki/Asynchronous_I/O" target="_blank" rel="external">异步模式</a>“（asynchronous I/O）或”非堵塞模式”（non-blocking mode）。<br>这正是JavaScript语言的运行方式。单线程模型虽然对JavaScript构成了很大的限制，但也因此使它具备了其他语言不具备的优势。如果部署得好，JavaScript程序是不会出现堵塞的，这就是为什么node.js平台可以用很少的资源，应付大流量访问的原因。</p>
-<h2 id="代码体现"><a href="#代码体现" class="headerlink" title="代码体现"></a>代码体现</h2><hr>
-<p>创建一个main.js文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">//引入events模块</div><div class="line">var events = require(&apos;events&apos;);</div><div class="line">//创建eventEmitter对象 内部类对象</div><div class="line">var eventEmitter = new events.EventEmitter();</div><div class="line">//创建事件处理程序</div><div class="line">var connectHandler = function connected() &#123;</div><div class="line">     console.log(&apos;连接成功&apos;)；</div><div class="line">    //触发data_received事件</div><div class="line">     evenEmitter.emit(&apos;data_received&apos;);</div><div class="line">&#125;</div><div class="line">//创建 名为connection 事件，并将事件处理程序（回调函数）绑定到事件上</div><div class="line">eventEmitter.on(&apos;connection&apos;,connectHandler);</div><div class="line">//创建名为data_reveived事件，并将匿名处理函数（回调函数）绑定到事件上</div><div class="line">eventEmitter.on(&apos;data_received&apos;,function() &#123;</div><div class="line">      console.log(&apos;数据接收成功&apos;)；</div><div class="line">&#125;)</div><div class="line">//触发connection 事件</div><div class="line">eventEmitter.emit(&apos;connection&apos;);</div><div class="line"></div><div class="line">console.log(&quot;程序执行完毕&quot;)；</div></pre></td></tr></table></figure></p>
-<p>接下来让我们执行以上代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ node main.js</div><div class="line">连接成功</div><div class="line">数据接收成功</div><div class="line">程序执行完毕</div></pre></td></tr></table></figure>
-<p>看了上面的程序如果还不懂的话，请看下面的这幅图，并结合最后一段话去理解：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2836699-beae45f61ad156a1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="node.js事件循环示意图"></p>
-<p>事件相当于一个主题(Subject)，而所有注册到这个事件上的处理函数相当于观察者(Observer)。<br>要点：<br>        <strong>1.观察者相当于事件处理程序–被回调的函数。<br>        2.事件就相当于我们认为的任务，比如程序执行期间需要等待I/O这就是一个事件。<br>        3.我们可以把node.js的主线程想像成一个来者不拒的主人，这个人遇到什么事情都不拒绝，但是他处理事情也要找其他人（I/O）帮忙。<br>          他有一个管家叫event loop线程，当事情来得时候，主人告诉管家这个事情，并让管家去找能够解决这个问题的人，然后继续接事情，当能够解决这个事情的人解决了事情，管家就把事情的结果告诉给主人，这里的回调函数可以想象成信鸽，主人将事情的结果放在信鸽身上（结果为参数，信鸽为回调函数载体），完成整个任务，这就说明node.js是异步执行的语言，非阻塞的语言，这也就是node.js性能高的原因。<br>        4.node.js使用的是javascript语法，javascript语法是单线程的，当用户触发事件，事件会产生消息，消息会进入消息列表，在消息进入列表的同时，回调函数也进入列表，当消息出队列时，回调函数被调用。整个底层过程就是这样的</strong></p>
-<h2 id="吴海星译"><a href="#吴海星译" class="headerlink" title="吴海星译"></a>吴海星译</h2><hr>
-<p><strong>谢天谢地，实际情况不是这样的。当浏览器中有I/O操作时，该操作会在事件轮询的外面执<br>行（脚本执行的主顺序之外），然后当这个I/O操作完成时，它会发出一个“事件”，①会有一个函<br>数（通常称作“回调”）处理它，如图1-1所示。</strong></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2836699-af84cf3cfbd2e1f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><img src="http://upload-images.jianshu.io/upload_images/2836699-24222c605786e2c9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
+<blockquote>
+<p>这篇是MySQL 数据库规范的最后一篇–调优篇，旨在提供我们发现系统性能变弱、MySQL系统参数调优，SQL脚本出现问题的精准定位与调优方法。<br><a id="more"></a></p>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><hr>
+<p>1.MySQL 调优金字塔理论<br>  2.MySQL 慢查询分析–mysqldumpslow、pt_query_digest工具的使用(SQL脚本层面)<br>  3.选择合适的数据类型<br>  4.去除无用的索引–pt_duplicate_key_checker工具的使用(索引层面)<br>  5.反范式化设计(表结构)<br>  6.垂直水平分表<br>  7.MySQL 重要参数调优(系统配置)</p>
+</blockquote>
+<h2 id="1-MySQL-调优金字塔理论"><a href="#1-MySQL-调优金字塔理论" class="headerlink" title="1.MySQL 调优金字塔理论"></a>1.MySQL 调优金字塔理论</h2><hr>
+<p>如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-3363242bf7580f28.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="MySQL调优金字塔理论.png"><br><strong>如上图所示:</strong></p>
+<blockquote>
+<p>数据库优化<strong>维度</strong>有四个:<br><strong>硬件</strong>、<strong>系统配置</strong>、<strong>数据库表结构</strong>、<strong>SQL及索引</strong><br>优化<strong>成本</strong>:<br><strong>硬件</strong>&gt;<strong>系统配置</strong>&gt;<strong>数据库表结构</strong>&gt;<strong>SQL及索引</strong><br>优化<strong>效果</strong>:<br><strong>硬件</strong>&lt;<strong>系统配置</strong>&lt;<strong>数据库表结构</strong>&lt;<strong>SQL及索引</strong></p>
+</blockquote>
+<h2 id="2-MySQL-慢查询分析"><a href="#2-MySQL-慢查询分析" class="headerlink" title="2.MySQL 慢查询分析"></a>2.MySQL 慢查询分析</h2><hr>
+<p>对于系统中慢查询的分析，有助于我们更高效的定位问题，分析问题。<br>mysqldumpslow、pt_query_digest是进行慢查询分析的利器。</p>
+<h2 id="前置条件"><a href="#前置条件" class="headerlink" title="前置条件"></a>前置条件</h2><p><strong>1.查看本机MySQL Server 慢查询是否打开</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">show variables like &apos;slow%&apos;;</div></pre></td></tr></table></figure></p>
+<p>慢查询打开的情况如下所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-eb93f762efa27fad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="慢查询状态"></p>
+<p>若慢查询未打开则通过如下脚本设置慢查询：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">set global slow_query_log = on;</div><div class="line">即</div><div class="line">set global [上图中选项] = [你要设置的参数值]</div><div class="line">注意 slow_query_log_file 路径要加单引号，因为路径varchar  类型的。</div></pre></td></tr></table></figure></p>
+<h2 id="2-1-mysqldumpslow分析慢查询"><a href="#2-1-mysqldumpslow分析慢查询" class="headerlink" title="2.1 mysqldumpslow分析慢查询"></a>2.1 mysqldumpslow分析慢查询</h2><p>mysqldumpslow 是MySQL自带的分析数据库慢查询的原生利器，使用方法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mysqldumpslow -t 3 /data/mysql/log/mysql_slow_query.log | more \G;</div><div class="line">-t  3 显示前3条慢查询。</div></pre></td></tr></table></figure></p>
+<p>慢查询信息及分析<br><img src="http://upload-images.jianshu.io/upload_images/2836699-4f7340f695552373.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="慢查询信息.png"><br>但是 mysqldumpslow 显示的信息比较少，比如说此条sql执行次数在整体的执行次数中占用的百分比。类似于上述信息在 mysqldumpslow 的分析结果中是不存在的。</p>
+<p>接下里我们介绍另一种工具 pt_query_digest</p>
+<h2 id="2-2-pt-query-digest分析慢查询"><a href="#2-2-pt-query-digest分析慢查询" class="headerlink" title="2.2 pt_query_digest分析慢查询"></a>2.2 pt_query_digest分析慢查询</h2><p>之所以使用 pt_query_digest 工具对慢查询日志进行分析，主要原因是上述工具分析的<strong>内容更佳丰富</strong>，更加方便我们分析慢查询。<br><strong>前置条件</strong><br>安装  pt_query_digest ,Google搜索应该一大把。</p>
+<p>确保  pt_query_digest 安装成功 执行如下操作：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pt-query-digest /data/mysql/log/mysql_slow_query.log &gt; slow_log.report</div></pre></td></tr></table></figure></p>
+<p><strong>上述命令表示分析本机慢查询，并输出报表(文件)</strong><br>接下来分析生成的报表：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tail slow_log.report</div></pre></td></tr></table></figure></p>
+<p>按如下图所示信息：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-5b92a18382f50903.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="pt_query_digest报表分析.png"></p>
+<p>我们对以上红色框图标记的报表信息进行详细描述，事实上这也是我们<strong>需要掌握的重点：</strong></p>
+<blockquote>
+<p><strong>1.pct</strong> :sql语句某执行属性占所有慢查询语句某执行属性的百分比<br><strong>1.total</strong>：sql语句某执行属性的所有属性时间。<br><strong>2.Count</strong>：sql语句执行的次数，对应的pct 表示此sql 语句执行次数占所有慢查询语句执行次数的％比。上图为25%，total:表示总共执行了1次。<br><strong>3.Exec time</strong>:sql执行时间<br><strong>4.Lock time</strong>:sql执行期间被锁定的时间<br><strong>5.Rows sent</strong>:传输的有效数据，在select 查询语句中才有值<br><strong>6.Rows examine</strong>:总共查询的数据，非目标数据。<br><strong>7.Query_time distribution</strong>:查询时间分布<br><strong>8.SQL 语句</strong>:上图中为 select  * from payment limit 10\G;</p>
+</blockquote>
+<p><strong>举例说明：加入某执行次数(count) 占比较高的sql语句，执行时间很长，Rows sent 数值很小，Rows examine 数值很大则表明(I/O较大)。那就表明有可能 sql 查询语句走了全表扫描，或者全索引扫描。那么就要建立合适索引或者优化sql语句了。</strong><br>如下很好的展示了我们在分析慢查询时需要着重分析的三点：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-7c1e193809259e48.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="慢查询分析的三个基准点.png"></p>
+<h2 id="3-选择合适的数据类型"><a href="#3-选择合适的数据类型" class="headerlink" title="3.选择合适的数据类型"></a>3.选择合适的数据类型</h2><p>可以参考<a href="http://www.jianshu.com/p/c626c7ad27bf" target="_blank" rel="external">MySQL开发规范–设计篇</a>中的<strong>1.6 数据表设计与规划</strong></p>
+<p>如下图是常用字段类型的选择建议：<br><img src="http://upload-images.jianshu.io/upload_images/2836699-edc69b3a3506de2f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="选择合适的数据类型"></p>
+<h4 id="4-去除无用的索引–pt-duplicate-key-checker工具的使用-索引层面"><a href="#4-去除无用的索引–pt-duplicate-key-checker工具的使用-索引层面" class="headerlink" title="4.去除无用的索引–pt_duplicate_key_checker工具的使用(索引层面)"></a>4.去除无用的索引–pt_duplicate_key_checker工具的使用(索引层面)</h4><p>此工具可以分析选定的 database  中的所有表中建立的index 中可能重复的索引，并给出了删除建议。</p>
+<h2 id="5-反范式化设计-表结构"><a href="#5-反范式化设计-表结构" class="headerlink" title="5.反范式化设计(表结构)"></a>5.反范式化设计(表结构)</h2><p>关于范式的理解，请参考–<a href="http://www.jianshu.com/p/c626c7ad27bf" target="_blank" rel="external">MySQL 数据库规范–设计篇</a><strong>1.1 数据库表的设计范式(三范式&amp;反范式)</strong><br>先看一个不满足第三范式的数据表设计：<br><img src="http://upload-images.jianshu.io/upload_images/2836699-d7a5a33837f9cf23.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="不满足第三范式的数据表设计.png"></p>
+<p>不满足第三范式产生的问题：<br>假如将表中属于饮料分类的数据全部删除了，那么饮料分类也就不存在了，饮料的分类描述也就没了，查询不到了。这明显是不合理的。</p>
+<p>重点：<strong>满足第三范式要求非键属性之间没有任何依赖关系</strong>，上图中分类与分类描述存在直接依赖关系。所以不符合第三范式的要求，那么要让表符合第三范式需要怎样做呢？</p>
+<p>拆分后满足第三范式的表：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-c725007ff52e6850.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="满足第三范式的表.png"></p>
+<p>我们采用一张 分类–商品名称 中间表来充当分表之后的中间桥梁。</p>
+<p>当然如果一直遵循范式化设计，什么设计都向第三范式靠拢，当查询需要连接很多表的时候，建立索引已经起不到什么作用了，因为字段都不在同一张表中，所以建立索引是无用功，那么就要考虑反范式化的设计了。</p>
+<h2 id="6-垂直、水平分表"><a href="#6-垂直、水平分表" class="headerlink" title="6.垂直、水平分表"></a>6.垂直、水平分表</h2><p>原则上当表中数据记录的数量超过3000万条，再好的索引也已经不能提高数据查询的速度了，这时候就需要将表拆分成更多的小表，来进行查询。<br>分表的机制有两种:</p>
+<blockquote>
+<p><strong>垂直分表</strong>:也就是将一部分列割裂开将数据放置在新设置的表中，优先选择字段值长度较长，类型较重的字段进行垂直分离。<br><strong>水平分表</strong>:将表中数据水平切分，可以按照范围、取模运算、hash运算进行数据切割，每张表的结构信息都是一样的。</p>
+</blockquote>
+<h2 id="7-MySQL-重要参数调优-系统配置"><a href="#7-MySQL-重要参数调优-系统配置" class="headerlink" title="7.MySQL 重要参数调优(系统配置)"></a>7.MySQL 重要参数调优(系统配置)</h2><p><strong>7.1 操作系统配置优化</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-6e0ca72ccb22c2fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="操作系统配置优化"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-fbecd28a3290e863.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="打开操作系统文件限制.png"></p>
+<p>简要介绍一下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1.tcp连接配置，超时时间配置</div><div class="line">2.linux上文件打开数量限制</div><div class="line">3.除此之外，最好在MySQL 服务器上关闭iptables,selinux 等防火墙软件。</div></pre></td></tr></table></figure></p>
+<p><strong>7. 2 MySQL 配置文件优化</strong></p>
+<blockquote>
+<p>MySQL 可以通过启动时制定配置参数和使用配置文件两种方法进行配置，在大多数情况下配置文件位于/etc/my.cnf或是/etc/mysql/my.cnf MySQL查找配置文件顺序可以通过以下方法获得：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ /usr/sbin/mysqld --verbose --help | grep -A 1 &apos;Default options&apos;</div></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>注意:如果多个位置存在配置文件，后面的会覆盖前面的</strong></p>
+<p><strong>7.2.1 innodb_buffer_pool_size</strong></p>
+<blockquote>
+<p>innodb_buffer_pool_size   是非常重要的一个参数，用户配置Innodb   的缓冲池大小。如果数据库中只有Innodb表，则推荐配置量为总内存的75%。<br>一般情况下运行如下命令，即可获得配置innodb_buffer_pool_size 参数的最佳值：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">select engine round(sum(data_length+index_length)/1024/1024,1) as </div><div class="line">&apos;total MB&apos; from information_schema.tables where table_schema not in (&quot;information_schema&quot;,&quot;performance_schema&quot;) group by engine;</div><div class="line">Innodb_buffer_pool_size &gt; Total MB;</div></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>7.2.2 innodb_buffer_pool_instance</strong></p>
+<blockquote>
+<p>MySQL  系统中有一些资源是需要独占使用的，比如缓冲去就是这样一种资源,因此如果系统中只有一个缓冲池，那么会增加阻塞的几率。我们多分成多个，则可以增加并发性能。</p>
+</blockquote>
+<p><strong>7.2.3 innodb_log_buffer_size</strong></p>
+<blockquote>
+<p>innodb log缓冲的大小，设置大小只能能容得下1s中产生的事务日志就可以。</p>
+</blockquote>
+<p><strong>7.2.4 innodb_flush_log_at_trx_commit</strong></p>
+<blockquote>
+<p>关键参数，对innodb 的I/O影响很大。默认值为1，可以去0，1，2三个值，一般建议为2，但如果数据安全性要求较高则默认使用1。</p>
+<ul>
+<li><strong>0:</strong>每隔1s中才将事务提交的变更记录刷新到磁盘</li>
+<li><strong>1:</strong>每一次事务提交都把变更日志刷新到磁盘（最安全的方式）</li>
+<li><strong>2:</strong>每一次提交将日志刷新到缓冲区，隔1s之后会将日志刷新到磁盘。</li>
+</ul>
+</blockquote>
+<p><strong>7.2.5 innodb_read_io_threads &amp;&amp; innodb_write_io_threads</strong></p>
+<blockquote>
+<p>这两个参数决定了Innodb读写的I/O进程数，默认为4。<br>决定这两个参数数值的因素也有两个：<code>cpu核数</code>、<code>应用场景中读写事务比例</code>。</p>
+</blockquote>
+<p><strong>7.2.6 innodb_file_per_table</strong></p>
+<blockquote>
+<p>关键参数，默认情况下配置为off。<br>  控制innodb每一个表使用独立的表空间，默认情况下，所有的表都会建立在共享表空间当中。<br>使用共享表空间会带来什么问题：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"> 1.多个表对共享表空间的操作，是顺序进行的，这样的话操作效率在并发情况下回降低。</div><div class="line">2.如果现在要删除一张表，会导致共享表空间先要将数据导出来，再重组。</div></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>7.2.7 innodb_stats_on_metadata</strong></p>
+<blockquote>
+<p>作用：决定了MySQL在什么情况下会刷新innodb表的统计信息。<br>保证数据库优化器能使用到最新的索引，但不能太频繁，一般设置为off。</p>
+</blockquote>
 
       
     </div>
@@ -479,8 +551,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/04/java_nio/" rel="next" title="Java NIO(一)－I/O模型： 阻塞、非阻塞、I/O复用、同步、异步">
-                <i class="fa fa-chevron-left"></i> Java NIO(一)－I/O模型： 阻塞、非阻塞、I/O复用、同步、异步
+              <a href="/2017/11/05/Java-Design-Pattern-Creator/" rel="next" title="创建型设计模式--建造者模式">
+                <i class="fa fa-chevron-left"></i> 创建型设计模式--建造者模式
               </a>
             
           </div>
@@ -488,10 +560,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/11/04/EventEmitter/" rel="prev" title="Node.js EventEmitter (触发器)">
-                Node.js EventEmitter (触发器) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -621,7 +689,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#node-js事件循环"><span class="nav-number">1.</span> <span class="nav-text">node.js事件循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事件驱动程序"><span class="nav-number">2.</span> <span class="nav-text">事件驱动程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码体现"><span class="nav-number">3.</span> <span class="nav-text">代码体现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#吴海星译"><span class="nav-number">4.</span> <span class="nav-text">吴海星译</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目录"><span class="nav-number">2.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-MySQL-调优金字塔理论"><span class="nav-number">3.</span> <span class="nav-text">1.MySQL 调优金字塔理论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-MySQL-慢查询分析"><span class="nav-number">4.</span> <span class="nav-text">2.MySQL 慢查询分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前置条件"><span class="nav-number">5.</span> <span class="nav-text">前置条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-mysqldumpslow分析慢查询"><span class="nav-number">6.</span> <span class="nav-text">2.1 mysqldumpslow分析慢查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-pt-query-digest分析慢查询"><span class="nav-number">7.</span> <span class="nav-text">2.2 pt_query_digest分析慢查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-选择合适的数据类型"><span class="nav-number">8.</span> <span class="nav-text">3.选择合适的数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-去除无用的索引–pt-duplicate-key-checker工具的使用-索引层面"><span class="nav-number">8.0.1.</span> <span class="nav-text">4.去除无用的索引–pt_duplicate_key_checker工具的使用(索引层面)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-反范式化设计-表结构"><span class="nav-number">9.</span> <span class="nav-text">5.反范式化设计(表结构)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-垂直、水平分表"><span class="nav-number">10.</span> <span class="nav-text">6.垂直、水平分表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-MySQL-重要参数调优-系统配置"><span class="nav-number">11.</span> <span class="nav-text">7.MySQL 重要参数调优(系统配置)</span></a></li></ol></div>
             
 
           </div>
@@ -771,9 +839,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://willxue.top/2017/11/04/node/';
-          this.page.identifier = '2017/11/04/node/';
-          this.page.title = 'Node.js Event-loop事件循环';
+          this.page.url = 'http://willxue.top/2017/11/06/MySQL-调优/';
+          this.page.identifier = '2017/11/06/MySQL-调优/';
+          this.page.title = 'MySQL 数据库规范--调优篇(终结篇)';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://.disqus.com/embed.js';
