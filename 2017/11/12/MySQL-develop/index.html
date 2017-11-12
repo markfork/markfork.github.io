@@ -84,7 +84,7 @@
 
 
 
-  <link rel="alternate" href="/atom.xml" title="鱼大坤个人博客" type="application/atom+xml" />
+  <link rel="alternate" href="/atom.xml" title="大坤" type="application/atom+xml" />
 
 
 
@@ -96,12 +96,12 @@
 
 
 
-<meta name="description" content="目录  1.sql语句编写  2.explain 工具的使用–重点  1.sql语句编写 SQL编写1234567891011121314151617181920212223241.执行大的delete、update、insert操作要慎重，特别是对业务繁忙的系统，要尽量避免对线上业务产生影响。  解决办法是：大操作切割为小操作，使用limit子句限制每次操作的记录数，也可以利用一些日期字段基于更">
+<meta name="description" content="目录  1.sql语句编写  2.explain 工具的使用–重点">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL 数据库规范--开发篇">
 <meta property="og:url" content="http://willxue.top/2017/11/12/MySQL-develop/index.html">
-<meta property="og:site_name" content="鱼大坤个人博客">
-<meta property="og:description" content="目录  1.sql语句编写  2.explain 工具的使用–重点  1.sql语句编写 SQL编写1234567891011121314151617181920212223241.执行大的delete、update、insert操作要慎重，特别是对业务繁忙的系统，要尽量避免对线上业务产生影响。  解决办法是：大操作切割为小操作，使用limit子句限制每次操作的记录数，也可以利用一些日期字段基于更">
+<meta property="og:site_name" content="大坤">
+<meta property="og:description" content="目录  1.sql语句编写  2.explain 工具的使用–重点">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-12bdacf45aed236c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-fb4452157a110cc3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
@@ -111,10 +111,10 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-60e0883767030340.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-e384462227a7488b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-f2d5ba4e7099c06a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-11-12T07:05:47.000Z">
+<meta property="og:updated_time" content="2017-11-12T08:10:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL 数据库规范--开发篇">
-<meta name="twitter:description" content="目录  1.sql语句编写  2.explain 工具的使用–重点  1.sql语句编写 SQL编写1234567891011121314151617181920212223241.执行大的delete、update、insert操作要慎重，特别是对业务繁忙的系统，要尽量避免对线上业务产生影响。  解决办法是：大操作切割为小操作，使用limit子句限制每次操作的记录数，也可以利用一些日期字段基于更">
+<meta name="twitter:description" content="目录  1.sql语句编写  2.explain 工具的使用–重点">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2836699-12bdacf45aed236c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -150,7 +150,7 @@
 
 
 
-  <title>MySQL 数据库规范--开发篇 | 鱼大坤个人博客</title>
+  <title>MySQL 数据库规范--开发篇 | 大坤</title>
   
 
 
@@ -186,12 +186,12 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">鱼大坤个人博客</span>
+        <span class="site-title">大坤</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
       
-        <h1 class="site-subtitle" itemprop="description">世间皆有极困难之事，挺的过的，便是好汉！</h1>
+        <h1 class="site-subtitle" itemprop="description">世间皆有极困难之事，挺的过的，便是好汉!</h1>
       
   </div>
 
@@ -336,7 +336,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="鱼大坤个人博客">
+      <meta itemprop="name" content="大坤">
     </span>
 
     
@@ -356,7 +356,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-12T15:05:47+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-12T16:10:27+08:00">
                 2017-11-12
               </time>
             
@@ -407,10 +407,10 @@
       
         <h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><hr>
 <blockquote>
-<p><strong>1.sql语句编写</strong><br>  <strong>2.explain 工具的使用–重点</strong></p>
-</blockquote>
+<p><strong>1.sql语句编写</strong><br>  <strong>2.explain 工具的使用–重点</strong><br><a id="more"></a></p>
 <h2 id="1-sql语句编写"><a href="#1-sql语句编写" class="headerlink" title="1.sql语句编写"></a>1.sql语句编写</h2><hr>
 <h4 id="SQL编写"><a href="#SQL编写" class="headerlink" title="SQL编写"></a>SQL编写</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">1.执行大的delete、update、insert操作要慎重，特别是对业务繁忙的系统，要尽量避免对线上业务产生影响。</div><div class="line">  解决办法是：大操作切割为小操作，使用limit子句限制每次操作的记录数，也可以利用一些日期字段基于更小粒度的时间范围进行操作。</div><div class="line"></div><div class="line">2.避免使用select * 语句，select语句之用于获取需要的字段。</div><div class="line"></div><div class="line">3.使用预编译语句，可以提高性能并且防范 sql注入 攻击。</div><div class="line"></div><div class="line">4.一般情况下update,delete 语句中不要使用limit。</div><div class="line"></div><div class="line">5.where 条件语句中必须使用合适的类型，避免mysql进行隐式转换。</div><div class="line"></div><div class="line">6.insert into 必须显式指明字段名称，不要使用insert into table()。</div><div class="line"></div><div class="line">7.避免在sql 语句中进行数学运算或函数运算，避免将业务逻辑和数据存储耦合在一起。</div><div class="line"></div><div class="line">8.insert 语句如果使用批量提交，如insert into table values(),()...那么values 的个数不应过多。一次性提交过多记录，会导致I/O紧张，出现慢查询。</div><div class="line"></div><div class="line">9.避免使用存储过程、触发器、函数等，这些特性会将业务逻辑与数据库耦合在一起，并且MySQL的存储过程，触发器，函数中可能存在bug。</div><div class="line"></div><div class="line">10.尽量避免使用子查询，连接。尽量将子查询转化为连接查询，mysql 查询优化器会优化连接查询，但连接的表要尽可能的少，如果很多，可以考虑反范式设计。即对设计阶段做一些改造。</div><div class="line"></div><div class="line">11.使用合理的sql语句以减少与数据库的交互次数。</div><div class="line"></div><div class="line">12.建议使用合理的分页技术以提高操作效率。</div></pre></td></tr></table></figure>
+</blockquote>
 <h2 id="2-explain-工具的使用"><a href="#2-explain-工具的使用" class="headerlink" title="2.explain 工具的使用"></a>2.explain 工具的使用</h2><hr>
 <h4 id="explain工具的作用"><a href="#explain工具的作用" class="headerlink" title="explain工具的作用"></a>explain工具的作用</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1.使用 explain 工具可以确认执行计划是否良好，查询是否走了合理的索引。</div><div class="line">2.不同版本MySQL 优化器各有不同，一些优化规则随着版本的发展可能有变化，</div><div class="line">  查询的执行计划随着数据的变化也可能发生变化，这类情况就需要使用explain 来验证自己的判断。</div></pre></td></tr></table></figure>
 <h4 id="explain-工具实操"><a href="#explain-工具实操" class="headerlink" title="explain 工具实操"></a>explain 工具实操</h4><p><strong>执行如下脚本，观察控制台输出</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">explain select name from test where id = 32;</div></pre></td></tr></table></figure></p>
@@ -537,8 +537,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/06/MySQL-调优/" rel="next" title="MySQL 数据库规范--调优篇(终结篇)">
-                <i class="fa fa-chevron-left"></i> MySQL 数据库规范--调优篇(终结篇)
+              <a href="/2017/11/12/IntellijIdea-Debug使用mac/" rel="next" title="Intellij  Idea--Debug使用（Mac）">
+                <i class="fa fa-chevron-left"></i> Intellij  Idea--Debug使用（Mac）
               </a>
             
           </div>
@@ -547,8 +547,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/11/12/MySQL-design/" rel="prev" title="MySQL 数据库规范--设计篇">
-                MySQL 数据库规范--设计篇 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/11/12/存储过程/" rel="prev" title="存储过程">
+                存储过程 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
