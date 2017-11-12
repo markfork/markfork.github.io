@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="鱼大坤个人博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="上一篇博客说到，BeanDefinition的解析,已经走到了DefaultBeanDefinitionDocumentReader里，这时候配置文件已经被加载，并解析成w3c的Document对象。这篇博客就接着介绍，DefaultBeanDefinitionDocumentReader和BeanDefinitionParserDelegate类，是怎么协同完成bean的解析和注册的。1234">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Ioc 源码分析(四)--parseBeanDefinitions()与BeanDefinitionParserDelegate">
+<meta property="og:url" content="http://willxue.top/2017/11/12/源码分析_SpringIoc容器的加载_parseBeanDefinitions_BeanDefinitionParserDelegate_4/index.html">
+<meta property="og:site_name" content="鱼大坤个人博客">
+<meta property="og:description" content="上一篇博客说到，BeanDefinition的解析,已经走到了DefaultBeanDefinitionDocumentReader里，这时候配置文件已经被加载，并解析成w3c的Document对象。这篇博客就接着介绍，DefaultBeanDefinitionDocumentReader和BeanDefinitionParserDelegate类，是怎么协同完成bean的解析和注册的。1234">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-12T07:52:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring Ioc 源码分析(四)--parseBeanDefinitions()与BeanDefinitionParserDelegate">
+<meta name="twitter:description" content="上一篇博客说到，BeanDefinition的解析,已经走到了DefaultBeanDefinitionDocumentReader里，这时候配置文件已经被加载，并解析成w3c的Document对象。这篇博客就接着介绍，DefaultBeanDefinitionDocumentReader和BeanDefinitionParserDelegate类，是怎么协同完成bean的解析和注册的。1234">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://willxue.top/2017/11/12/源码分析_SpringIoc容器的加载_parseBeanDefinitions_BeanDefinitionParserDelegate_4/"/>
+
+
+
+
+
+  <title>Spring Ioc 源码分析(四)--parseBeanDefinitions()与BeanDefinitionParserDelegate | 鱼大坤个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">鱼大坤个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">世间皆有极困难之事，挺的过的，便是好汉！</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://willxue.top/2017/11/12/源码分析_SpringIoc容器的加载_parseBeanDefinitions_BeanDefinitionParserDelegate_4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="大坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="鱼大坤个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Spring Ioc 源码分析(四)--parseBeanDefinitions()与BeanDefinitionParserDelegate</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-12T15:52:10+08:00">
+                2017-11-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/12/源码分析_SpringIoc容器的加载_parseBeanDefinitions_BeanDefinitionParserDelegate_4/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/12/源码分析_SpringIoc容器的加载_parseBeanDefinitions_BeanDefinitionParserDelegate_4/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>上一篇博客说到，BeanDefinition的解析,已经走到了DefaultBeanDefinitionDocumentR<br>eader里，这时候配置文件已经被加载，并解析成w3c的Document对象。这篇博客就接着介绍，DefaultBeanDefinitionDocumentReader和BeanDefinitionParserDelegate类，是怎么协同完成bean的解析和注册的。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">BeanDefinitionParserDelegate parent = <span class="keyword">this</span>.delegate;</div><div class="line"><span class="keyword">this</span>.delegate = createHelper(readerContext, root, parent);</div><div class="line">preProcessXml(root);</div><div class="line">parseBeanDefinitions(root, <span class="keyword">this</span>.delegate);</div><div class="line">postProcessXml(root);</div><div class="line"><span class="keyword">this</span>.delegate = parent;</div></pre></td></tr></table></figure></p>
+</blockquote>
+<a id="more"></a>
+<p>这段代码，创建了一个BeanDefinitionParserDelegate组件，然后就是preProcessXml()、parseBeanDefinitions()、postProcessXml()方法<br>其中preProcessXml()和postProcessXml()默认是空方法，接下来就看下parseBeanDefinitions()方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">parseBeanDefinitions</span><span class="params">(Element root, BeanDefinitionParserDelegate delegate)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (delegate.isDefaultNamespace(root)) &#123;</div><div class="line">            NodeList nl = root.getChildNodes();</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nl.getLength(); i++) &#123;</div><div class="line">                Node node = nl.item(i);</div><div class="line">                <span class="keyword">if</span> (node <span class="keyword">instanceof</span> Element) &#123;</div><div class="line">                    Element ele = (Element) node;</div><div class="line">                    <span class="keyword">if</span> (delegate.isDefaultNamespace(ele)) &#123;</div><div class="line">                        parseDefaultElement(ele, delegate);</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">else</span> &#123;</div><div class="line">                        delegate.parseCustomElement(ele);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            delegate.parseCustomElement(root);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>从这个方法开始，BeanDefinitionParserDelegate就开始发挥作用了，判断当前解析元素是否属于默认的命名空间，如果是的话，就调用parseDefaultElement()方法，否则调用delegate上parseCustomElement()方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public boolean isDefaultNamespace(String namespaceUri) &#123;</div><div class="line">        return (!StringUtils.hasLength(namespaceUri) || BEANS_NAMESPACE_URI.equals(namespaceUri));</div><div class="line">    &#125;</div><div class="line">    public boolean isDefaultNamespace(Node node) &#123;</div><div class="line">        return isDefaultNamespace(getNamespaceURI(node));</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>只有<strong><a href="http://www.springframework.org/schema/beans" target="_blank" rel="external">http://www.springframework.org/schema/beans</a></strong>，会被认为是默认的命名空间。也就是说，beans、bean这些元素，会认为属于默认的命名空间，而像task:scheduled这些，就认为不属于默认命名空间。<br>根节点beans的一个子节点bean，是属于默认命名空间的，所以会进入parseDefaultElement()方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">private void parseDefaultElement(Element ele, BeanDefinitionParserDelegate delegate) &#123;</div><div class="line">        if (delegate.nodeNameEquals(ele, IMPORT_ELEMENT)) &#123;</div><div class="line">            importBeanDefinitionResource(ele);</div><div class="line">        &#125;</div><div class="line">        else if (delegate.nodeNameEquals(ele, ALIAS_ELEMENT)) &#123;</div><div class="line">            processAliasRegistration(ele);</div><div class="line">        &#125;</div><div class="line">        else if (delegate.nodeNameEquals(ele, BEAN_ELEMENT)) &#123;</div><div class="line">            processBeanDefinition(ele, delegate);</div><div class="line">        &#125;</div><div class="line">        else if (delegate.nodeNameEquals(ele, NESTED_BEANS_ELEMENT)) &#123;</div><div class="line">            // recurse</div><div class="line">            doRegisterBeanDefinitions(ele);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>这里可能会有4种情况，import、alias、bean、beans，分别有一个方法与之对应，这里解析的是bean元素，所以会进入processBeanDefinition()方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">protected void processBeanDefinition(Element ele, BeanDefinitionParserDelegate delegate) &#123;</div><div class="line">        BeanDefinitionHolder bdHolder = delegate.parseBeanDefinitionElement(ele);</div><div class="line">        if (bdHolder != null) &#123;</div><div class="line">            bdHolder = delegate.decorateBeanDefinitionIfRequired(ele, bdHolder);</div><div class="line">            try &#123;</div><div class="line">                // Register the final decorated instance.</div><div class="line">                BeanDefinitionReaderUtils.registerBeanDefinition(bdHolder, getReaderContext().getRegistry());</div><div class="line">            &#125;</div><div class="line">            catch (BeanDefinitionStoreException ex) &#123;</div><div class="line">                getReaderContext().error(&quot;Failed to register bean definition with name &apos;&quot; +</div><div class="line">                        bdHolder.getBeanName() + &quot;&apos;&quot;, ele, ex);</div><div class="line">            &#125;</div><div class="line">            // Send registration event.</div><div class="line">            getReaderContext().fireComponentRegistered(new BeanComponentDefinition(bdHolder));</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>这里主要有3个步骤，先是委托delegate对bean进行解析，然后委托delegate对bean进行装饰，最后由一个工具类来完成BeanDefinition的注册<br>可以看出来，DefaultBeanDefinitionDocumentReader不负责任何具体的bean解析，它面向的是xml Document对象，根据其元素的命名空间和名称，起一个类似路由的作用（不过，命名空间的判断，也是委托给delegate来做的）。所以这个类的命名，是比较贴切的，突出了其面向Document的特性。具体的工作，是由BeanDefinitionParserDelegate来完成的<br>下面就看下parseBeanDefinitionElement()方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> BeanDefinitionHolder <span class="title">parseBeanDefinitionElement</span><span class="params">(Element ele, BeanDefinition containingBean)</span> </span>&#123;</div><div class="line">        String id = ele.getAttribute(ID_ATTRIBUTE);</div><div class="line">        String nameAttr = ele.getAttribute(NAME_ATTRIBUTE);</div><div class="line">        List&lt;String&gt; aliases = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">        <span class="keyword">if</span> (StringUtils.hasLength(nameAttr)) &#123;</div><div class="line">            String[] nameArr = StringUtils.tokenizeToStringArray(nameAttr, MULTI_VALUE_ATTRIBUTE_DELIMITERS);</div><div class="line">            aliases.addAll(Arrays.asList(nameArr));</div><div class="line">        &#125;</div><div class="line">        String beanName = id;</div><div class="line">        <span class="keyword">if</span> (!StringUtils.hasText(beanName) &amp;&amp; !aliases.isEmpty()) &#123;</div><div class="line">            beanName = aliases.remove(<span class="number">0</span>);</div><div class="line">            <span class="keyword">if</span> (logger.isDebugEnabled()) &#123;</div><div class="line">                logger.debug(<span class="string">"No XML 'id' specified - using '"</span> + beanName +</div><div class="line">                        <span class="string">"' as bean name and "</span> + aliases + <span class="string">" as aliases"</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (containingBean == <span class="keyword">null</span>) &#123;</div><div class="line">            checkNameUniqueness(beanName, aliases, ele);</div><div class="line">        &#125;</div><div class="line">        AbstractBeanDefinition beanDefinition = parseBeanDefinitionElement(ele, beanName, containingBean);</div><div class="line">        <span class="keyword">if</span> (beanDefinition != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">if</span> (!StringUtils.hasText(beanName)) &#123;</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    <span class="keyword">if</span> (containingBean != <span class="keyword">null</span>) &#123;</div><div class="line">                        beanName = BeanDefinitionReaderUtils.generateBeanName(</div><div class="line">                                beanDefinition, <span class="keyword">this</span>.readerContext.getRegistry(), <span class="keyword">true</span>);</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">else</span> &#123;</div><div class="line">                        beanName = <span class="keyword">this</span>.readerContext.generateBeanName(beanDefinition);</div><div class="line">                        <span class="comment">// Register an alias for the plain bean class name, if still possible,</span></div><div class="line">                        <span class="comment">// if the generator returned the class name plus a suffix.</span></div><div class="line">                        <span class="comment">// This is expected for Spring 1.2/2.0 backwards compatibility.</span></div><div class="line">                        String beanClassName = beanDefinition.getBeanClassName();</div><div class="line">                        <span class="keyword">if</span> (beanClassName != <span class="keyword">null</span> &amp;&amp;</div><div class="line">                                beanName.startsWith(beanClassName) &amp;&amp; beanName.length() &gt; beanClassName.length() &amp;&amp;                      !<span class="keyword">this</span>.readerContext.getRegistry().isBeanNameInUse(beanClassName)) &#123;</div><div class="line">                            aliases.add(beanClassName);</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">if</span> (logger.isDebugEnabled()) &#123;</div><div class="line">                        logger.debug(<span class="string">"Neither XML 'id' nor 'name' specified - "</span> +</div><div class="line">                                <span class="string">"using generated bean name ["</span> + beanName + <span class="string">"]"</span>);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">catch</span> (Exception ex) &#123;</div><div class="line">                    error(ex.getMessage(), ele);</div><div class="line">                    <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            String[] aliasesArray = StringUtils.toStringArray(aliases);</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> BeanDefinitionHolder(beanDefinition, beanName, aliasesArray);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>这个方法很长，可以分成三段来看<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">String id = ele.getAttribute(ID_ATTRIBUTE);</div><div class="line">        String nameAttr = ele.getAttribute(NAME_ATTRIBUTE);</div><div class="line">        List&lt;String&gt; aliases = new ArrayList&lt;String&gt;();</div><div class="line">        if (StringUtils.hasLength(nameAttr)) &#123;</div><div class="line">            String[] nameArr = StringUtils.tokenizeToStringArray(nameAttr, MULTI_VALUE_ATTRIBUTE_DELIMITERS);</div><div class="line">            aliases.addAll(Arrays.asList(nameArr));</div><div class="line">        &#125;</div><div class="line">        String beanName = id;</div><div class="line">        if (!StringUtils.hasText(beanName) &amp;&amp; !aliases.isEmpty()) &#123;</div><div class="line">            beanName = aliases.remove(0);</div><div class="line">            if (logger.isDebugEnabled()) &#123;</div><div class="line">                logger.debug(&quot;No XML &apos;id&apos; specified - using &apos;&quot; + beanName +</div><div class="line">                        &quot;&apos; as bean name and &quot; + aliases + &quot; as aliases&quot;);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        if (containingBean == null) &#123;</div><div class="line">            checkNameUniqueness(beanName, aliases, ele);</div><div class="line">        &#125;</div></pre></td></tr></table></figure></p>
+<p>这一段，主要是处理一些跟alias，id等标识相关的东西<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">AbstractBeanDefinition beanDefinition = parseBeanDefinitionElement(ele, beanName, containingBean);</div></pre></td></tr></table></figure></p>
+<p>这一行是核心，进行实际的解析<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">if (beanDefinition != null) &#123;</div><div class="line">            if (!StringUtils.hasText(beanName)) &#123;</div><div class="line">                try &#123;</div><div class="line">                    if (containingBean != null) &#123;</div><div class="line">                        beanName = BeanDefinitionReaderUtils.generateBeanName(</div><div class="line">                                beanDefinition, this.readerContext.getRegistry(), true);</div><div class="line">                    &#125;</div><div class="line">                    else &#123;</div><div class="line">                        beanName = this.readerContext.generateBeanName(beanDefinition);</div><div class="line">                        // Register an alias for the plain bean class name, if still possible,</div><div class="line">                        // if the generator returned the class name plus a suffix.</div><div class="line">                        // This is expected for Spring 1.2/2.0 backwards compatibility.</div><div class="line">                        String beanClassName = beanDefinition.getBeanClassName();</div><div class="line">                        if (beanClassName != null &amp;&amp;</div><div class="line">                                beanName.startsWith(beanClassName) &amp;&amp; beanName.length() &gt; beanClassName.length() &amp;&amp;</div><div class="line">                                !this.readerContext.getRegistry().isBeanNameInUse(beanClassName)) &#123;</div><div class="line">                            aliases.add(beanClassName);</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                    if (logger.isDebugEnabled()) &#123;</div><div class="line">                        logger.debug(&quot;Neither XML &apos;id&apos; nor &apos;name&apos; specified - &quot; +</div><div class="line">                                &quot;using generated bean name [&quot; + beanName + &quot;]&quot;);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                catch (Exception ex) &#123;</div><div class="line">                    error(ex.getMessage(), ele);</div><div class="line">                    return null;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            String[] aliasesArray = StringUtils.toStringArray(aliases);</div><div class="line">            return new BeanDefinitionHolder(beanDefinition, beanName, aliasesArray);</div><div class="line">        &#125;</div></pre></td></tr></table></figure></p>
+<p>这段是后置处理，对beanName进行处理<br>前置处理和后置处理，不是核心，就不细看了，重点看下核心的那一行调用<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> AbstractBeanDefinition <span class="title">parseBeanDefinitionElement</span><span class="params">(</span></span></div><div class="line"><span class="function"><span class="params">            Element ele, String beanName, BeanDefinition containingBean)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.parseState.push(<span class="keyword">new</span> BeanEntry(beanName));</div><div class="line">        String className = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">if</span> (ele.hasAttribute(CLASS_ATTRIBUTE)) &#123;</div><div class="line">            className = ele.getAttribute(CLASS_ATTRIBUTE).trim();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            String parent = <span class="keyword">null</span>;</div><div class="line">            <span class="keyword">if</span> (ele.hasAttribute(PARENT_ATTRIBUTE)) &#123;</div><div class="line">                parent = ele.getAttribute(PARENT_ATTRIBUTE);</div><div class="line">            &#125;</div><div class="line">            AbstractBeanDefinition bd = createBeanDefinition(className, parent);</div><div class="line">            parseBeanDefinitionAttributes(ele, beanName, containingBean, bd);</div><div class="line">            bd.setDescription(DomUtils.getChildElementValueByTagName(ele, DESCRIPTION_ELEMENT));</div><div class="line">            parseMetaElements(ele, bd);</div><div class="line">            parseLookupOverrideSubElements(ele, bd.getMethodOverrides());</div><div class="line">            parseReplacedMethodSubElements(ele,   bd.getMethodOverrides());</div><div class="line">            parseConstructorArgElements(ele, bd);</div><div class="line">            parsePropertyElements(ele, bd);</div><div class="line">            parseQualifierElements(ele, bd);</div><div class="line">            bd.setResource(<span class="keyword">this</span>.readerContext.getResource());</div><div class="line">            bd.setSource(extractSource(ele));</div><div class="line">            <span class="keyword">return</span> bd;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">catch</span> (ClassNotFoundException ex) &#123;</div><div class="line">            error(<span class="string">"Bean class ["</span> + className + <span class="string">"] not found"</span>, ele, ex);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">catch</span> (NoClassDefFoundError err) &#123;</div><div class="line">            error(<span class="string">"Class that bean class ["</span> + className + <span class="string">"] depends on not found"</span>, ele, err);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">catch</span> (Throwable ex) &#123;</div><div class="line">            error(<span class="string">"Unexpected failure during bean definition parsing"</span>, ele, ex);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">finally</span> &#123;</div><div class="line">            <span class="keyword">this</span>.parseState.pop();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>这个方法也挺长的，拆开看看<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.parseState.push(<span class="keyword">new</span> BeanEntry(beanName));</div><div class="line">        String className = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">if</span> (ele.hasAttribute(CLASS_ATTRIBUTE)) &#123;</div><div class="line">            className = ele.getAttribute(CLASS_ATTRIBUTE).trim();</div><div class="line">        &#125;</div></pre></td></tr></table></figure></p>
+<p>这段是从配置中抽取出类名。接下来的长长一段，把异常处理先抛开，看看实际的业务<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">String parent = <span class="keyword">null</span>;</div><div class="line"><span class="keyword">if</span> (ele.hasAttribute(PARENT_ATTRIBUTE)) &#123;</div><div class="line">    parent = ele.getAttribute(PARENT_ATTRIBUTE);</div><div class="line">&#125;</div><div class="line">AbstractBeanDefinition bd = createBeanDefinition(className, parent);</div><div class="line">parseBeanDefinitionAttributes(ele, beanName, containingBean, bd);                  </div><div class="line">bd.setDescription(DomUtils.getChildElementValueByTagName(ele, DESCRIPTION_ELEMENT));</div><div class="line">parseMetaElements(ele, bd);</div><div class="line">parseLookupOverrideSubElements(ele, bd.getMethodOverrides());</div><div class="line">parseReplacedMethodSubElements(ele, bd.getMethodOverrides());</div><div class="line">parseConstructorArgElements(ele, bd);</div><div class="line">parsePropertyElements(ele, bd);</div><div class="line">parseQualifierElements(ele, bd);</div><div class="line">bd.setResource(<span class="keyword">this</span>.readerContext.getResource());</div><div class="line">bd.setSource(extractSource(ele));</div><div class="line"><span class="keyword">return</span> bd;</div></pre></td></tr></table></figure></p>
+<p>这里每个方法的命名，就说明了是要干什么，可以一个个跟进去看，本文就不细说了。总之，经过这里的解析，就得到了一个完整的BeanDefinitionHolder。只是说明一下，如果在配置文件里，没有对一些属性进行设置，比如autowire-candidate等，那么这个解析生成的BeanDefinition，都会得到一个默认值<br><strong>然后，对这个Bean做一些必要的装饰</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> BeanDefinitionHolder <span class="title">decorateBeanDefinitionIfRequired</span><span class="params">(</span></span></div><div class="line"><span class="function"><span class="params">            Element ele, BeanDefinitionHolder definitionHolder, BeanDefinition containingBd)</span> </span>&#123;</div><div class="line">        BeanDefinitionHolder finalDefinition = definitionHolder;</div><div class="line">        <span class="comment">// Decorate based on custom attributes first.</span></div><div class="line">        NamedNodeMap attributes = ele.getAttributes();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; attributes.getLength(); i++) &#123;</div><div class="line">            Node node = attributes.item(i);</div><div class="line">            finalDefinition = decorateIfRequired(node, finalDefinition, containingBd);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// Decorate based on custom nested elements.</span></div><div class="line">        NodeList children = ele.getChildNodes();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; children.getLength(); i++) &#123;</div><div class="line">            Node node = children.item(i);</div><div class="line">            <span class="keyword">if</span> (node.getNodeType() == Node.ELEMENT_NODE) &#123;</div><div class="line">                finalDefinition = decorateIfRequired(node, finalDefinition, containingBd);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> finalDefinition;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>持续单步调试，代码继续运行到DefaultBeanDefinitionDocumentReader中的processBeanDefinition中的registerBeanDefinition()<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">BeanDefinitionReaderUtils.registerBeanDefinition(bdHolder, </div><div class="line">getReaderContext().getRegistry());</div></pre></td></tr></table></figure></p>
+<p>单步进入代码发现BeanDefinitionReaderUtils静态方法registerBeanDefinition()<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">registerBeanDefinition</span><span class="params">(</span></span></div><div class="line"><span class="function"><span class="params">            BeanDefinitionHolder definitionHolder, BeanDefinitionRegistry registry)</span></span></div><div class="line"><span class="function">            <span class="keyword">throws</span> BeanDefinitionStoreException </span>&#123;</div><div class="line">        <span class="comment">// Register bean definition under primary name.</span></div><div class="line">        String beanName = definitionHolder.getBeanName();</div><div class="line">        <span class="comment">// 其实调用的是DefaultListableBeanFactory中的registerBeanDefinition方法</span></div><div class="line">        registry.registerBeanDefinition(beanName, definitionHolder.getBeanDefinition());</div><div class="line">        <span class="comment">// Register aliases for bean name, if any.</span></div><div class="line">        String[] aliases = definitionHolder.getAliases();</div><div class="line">        <span class="keyword">if</span> (aliases != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">for</span> (String aliase : aliases) &#123;</div><div class="line">                registry.registerAlias(beanName, aliase);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>解释一下<strong>其实调用的是DefaultListableBeanFactory中的registerBeanDefinition方法</strong>这句话，因为DefaultListableBeanFactory实现BeanDefinitionRegistry接口，BeanDefinitionRegistry接口中定义了registerBeanDefinition()方法<br>看下DefaultListableBeanFactory中registerBeanDefinition()实例方法的具体实现：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">registerBeanDefinition</span><span class="params">(String beanName, BeanDefinition beanDefinition)</span></span></div><div class="line"><span class="function">            <span class="keyword">throws</span> BeanDefinitionStoreException </span>&#123;</div><div class="line">        Assert.hasText(beanName, <span class="string">"Bean name must not be empty"</span>);</div><div class="line">        Assert.notNull(beanDefinition, <span class="string">"BeanDefinition must not be null"</span>);</div><div class="line">        <span class="keyword">if</span> (beanDefinition <span class="keyword">instanceof</span> AbstractBeanDefinition) &#123;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                ((AbstractBeanDefinition) beanDefinition).validate();</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">catch</span> (BeanDefinitionValidationException ex) &#123;</div><div class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> BeanDefinitionStoreException(beanDefinition.getResourceDescription(), beanName,</div><div class="line">                        <span class="string">"Validation of bean definition failed"</span>, ex);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>.beanDefinitionMap) &#123;</div><div class="line">            Object oldBeanDefinition = <span class="keyword">this</span>.beanDefinitionMap.get(beanName);</div><div class="line">            <span class="keyword">if</span> (oldBeanDefinition != <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="keyword">if</span> (!<span class="keyword">this</span>.allowBeanDefinitionOverriding) &#123;</div><div class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> BeanDefinitionStoreException(beanDefinition.getResourceDescription(), beanName,</div><div class="line">                            <span class="string">"Cannot register bean definition ["</span> + beanDefinition + <span class="string">"] for bean '"</span> + beanName +</div><div class="line">                            <span class="string">"': There is already ["</span> + oldBeanDefinition + <span class="string">"] bound."</span>);</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span> &#123;</div><div class="line">                    <span class="keyword">if</span> (<span class="keyword">this</span>.logger.isInfoEnabled()) &#123;</div><div class="line">                        <span class="keyword">this</span>.logger.info(<span class="string">"Overriding bean definition for bean '"</span> + beanName +</div><div class="line">                                <span class="string">"': replacing ["</span> + oldBeanDefinition + <span class="string">"] with ["</span> + beanDefinition + <span class="string">"]"</span>);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                <span class="keyword">this</span>.beanDefinitionNames.add(beanName);</div><div class="line">                <span class="keyword">this</span>.frozenBeanDefinitionNames = <span class="keyword">null</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">this</span>.beanDefinitionMap.put(beanName, beanDefinition);</div><div class="line">            resetBeanDefinition(beanName);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>代码追溯之后发现这个方法里，最关键的是以下2行：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.beanDefinitionNames.add(beanName);</div><div class="line"><span class="keyword">this</span>.beanDefinitionMap.put(beanName, beanDefinition);</div></pre></td></tr></table></figure></p>
+<p>前者是把beanName放到队列里，后者是把BeanDefinition放到map中，到此注册就完成了。在后面实例化的时候，就是把beanDefinitionMap中的BeanDefinition取出来，逐一实例化<br>BeanFactory准备完毕之后，代码又回到了ClassPathXmlApplicationContext里<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">public void refresh() throws BeansException, IllegalStateException &#123;</div><div class="line">        synchronized (this.startupShutdownMonitor) &#123;</div><div class="line">            // Prepare this context for refreshing.</div><div class="line">            prepareRefresh();</div><div class="line">            // Tell the subclass to refresh the internal bean factory.</div><div class="line">            ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();</div><div class="line">            // Prepare the bean factory for use in this context.</div><div class="line">            prepareBeanFactory(beanFactory);</div><div class="line">            try &#123;</div><div class="line">                // Allows post-processing of the bean factory in context subclasses.</div><div class="line">                postProcessBeanFactory(beanFactory);</div><div class="line">                // Invoke factory processors registered as beans in the context.</div><div class="line">                invokeBeanFactoryPostProcessors(beanFactory);</div><div class="line">                // Register bean processors that intercept bean creation.</div><div class="line">                registerBeanPostProcessors(beanFactory);</div><div class="line">                // Initialize message source for this context.</div><div class="line">                initMessageSource();</div><div class="line">                // Initialize event multicaster for this context.</div><div class="line">                initApplicationEventMulticaster();</div><div class="line">                // Initialize other special beans in specific context subclasses.</div><div class="line">                onRefresh();</div><div class="line">                // Check for listener beans and register them.</div><div class="line">                registerListeners();</div><div class="line">                // Instantiate all remaining (non-lazy-init) singletons.</div><div class="line">                finishBeanFactoryInitialization(beanFactory);</div><div class="line">                // Last step: publish corresponding event.</div><div class="line">                finishRefresh();</div><div class="line">            &#125;</div><div class="line">            catch (BeansException ex) &#123;</div><div class="line">                // Destroy already created singletons to avoid dangling resources.</div><div class="line">                destroyBeans();</div><div class="line">                // Reset &apos;active&apos; flag.</div><div class="line">                cancelRefresh(ex);</div><div class="line">                // Propagate exception to caller.</div><div class="line">                throw ex;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>也就是obtainFreshBeanFactory()方法执行之后，再进行下面的步骤。<br>总结来说，ApplicationContext将解析配置文件的工作委托给BeanDefinitionReader，然后BeanDefinitionReader将配置文件读取为xml的Document文档之后，又委托给BeanDefinitionDocumentReader<br>BeanDefinitionDocumentReader这个组件是根据xml元素的命名空间和元素名，起到一个路由的作用，实际的解析工作，是委托给BeanDefinitionParserDelegate来完成的<br>BeanDefinitionParserDelegate的解析工作完成以后，会返回BeanDefinitionHolder给BeanDefinitionDocumentReader，在这里，会委托给DefaultListableBeanFactory完成bean的注册<br>XmlBeanDefinitionReader（计数、解析XML文档），BeanDefinitionDocumentReader（依赖xml文档，进行解析和注册），BeanDefinitionParserDelegate（实际的解析工作）。可以看出，在解析bean的过程中，这3个组件的分工是比较清晰的，各司其职，这种设计思想值得学习<br>到此为止，bean的解析、注册、spring ioc 容器的实例化过程就基本分析结束了。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="大坤 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>个人微信号，欢迎添加~</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果我的文章对您有帮助，请小小的打赏一下吧~，我将>创作更好的文章给大家！谢谢！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="大坤 Alipay"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/12/源码分析_SpringIoc容器的加载_loadBeanDefinitions/" rel="next" title="Spring Ioc 源码分析(三)--loadBeanDefinitions">
+                <i class="fa fa-chevron-left"></i> Spring Ioc 源码分析(三)--loadBeanDefinitions
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+</div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="大坤" />
+          <p class="site-author-name" itemprop="name">大坤</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">大坤</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://willxue.top/2017/11/12/源码分析_SpringIoc容器的加载_parseBeanDefinitions_BeanDefinitionParserDelegate_4/';
+          this.page.identifier = '2017/11/12/源码分析_SpringIoc容器的加载_parseBeanDefinitions_BeanDefinitionParserDelegate_4/';
+          this.page.title = 'Spring Ioc 源码分析(四)--parseBeanDefinitions()与BeanDefinitionParserDelegate';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2148159"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+     
+     
+     
+     
+     <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+     <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+     
+         <script type="text/javascript">
+             var gitment = new Gitment({
+                id: document.location.href, 
+                 owner: 'markfork',
+                 repo: 'markfork.github.io',
+                 oauth: {
+                     client_id: '2063ee4120d047efabd7',
+                     client_secret: '12b4f99424a1d3807e2beefc006d005afacfb28b',
+                 }});
+             gitment.render('gitment-container');
+         </script>
+     
+ 
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

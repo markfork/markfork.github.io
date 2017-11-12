@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="鱼大坤个人博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="应用场景  数据访问采用ORM方式（Hibernate） 直接访问数据库，在访问量小、并发性小、数据量小时，可正常访问，反之则服务响应能力低。   目标&amp;amp;要解决的问题  自定义注解&amp;amp;Spring AOP为项目加入Redis缓存依赖提高应用程序的响应能力(可重用)   项目扩充承接于http://www.jianshu.com/p/25039d901ac2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自定义注解&amp;Spring AOP实现为原程序加入Redis缓存支持(可重用)">
+<meta property="og:url" content="http://willxue.top/2017/11/12/Spring-Aop/index.html">
+<meta property="og:site_name" content="鱼大坤个人博客">
+<meta property="og:description" content="应用场景  数据访问采用ORM方式（Hibernate） 直接访问数据库，在访问量小、并发性小、数据量小时，可正常访问，反之则服务响应能力低。   目标&amp;amp;要解决的问题  自定义注解&amp;amp;Spring AOP为项目加入Redis缓存依赖提高应用程序的响应能力(可重用)   项目扩充承接于http://www.jianshu.com/p/25039d901ac2">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-12T07:36:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自定义注解&amp;Spring AOP实现为原程序加入Redis缓存支持(可重用)">
+<meta name="twitter:description" content="应用场景  数据访问采用ORM方式（Hibernate） 直接访问数据库，在访问量小、并发性小、数据量小时，可正常访问，反之则服务响应能力低。   目标&amp;amp;要解决的问题  自定义注解&amp;amp;Spring AOP为项目加入Redis缓存依赖提高应用程序的响应能力(可重用)   项目扩充承接于http://www.jianshu.com/p/25039d901ac2">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://willxue.top/2017/11/12/Spring-Aop/"/>
+
+
+
+
+
+  <title>自定义注解&Spring AOP实现为原程序加入Redis缓存支持(可重用) | 鱼大坤个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">鱼大坤个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">世间皆有极困难之事，挺的过的，便是好汉！</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://willxue.top/2017/11/12/Spring-Aop/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="大坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="鱼大坤个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">自定义注解&Spring AOP实现为原程序加入Redis缓存支持(可重用)</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-12T15:36:14+08:00">
+                2017-11-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/12/Spring-Aop/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/12/Spring-Aop/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><blockquote>
+<ul>
+<li>数据访问采用ORM方式（Hibernate） 直接访问数据库，在访问量小、并发性小、数据量小时，可正常访问，反之则服务响应能力低。</li>
+</ul>
+</blockquote>
+<h2 id="目标-amp-要解决的问题"><a href="#目标-amp-要解决的问题" class="headerlink" title="目标&amp;要解决的问题"></a>目标&amp;要解决的问题</h2><blockquote>
+<ul>
+<li>自定义注解&amp;Spring AOP为项目加入Redis缓存依赖提高应用程序的响应能力(可重用)</li>
+</ul>
+</blockquote>
+<p>项目扩充承接于<a href="http://www.jianshu.com/p/25039d901ac2" target="_blank" rel="external">http://www.jianshu.com/p/25039d901ac2</a></p>
+<a id="more"></a>
+<h2 id="难点"><a href="#难点" class="headerlink" title="难点"></a>难点</h2><blockquote>
+<p>设置缓存的失效策略，缓存数据的Struct选取，切面(Aspect)的编写</p>
+</blockquote>
+<h2 id="方法-amp-扩充步骤"><a href="#方法-amp-扩充步骤" class="headerlink" title="方法&amp;扩充步骤"></a>方法&amp;扩充步骤</h2><p><strong>1.扩充build.gradle 脚本文件</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//https://mvnrepository.com/artifact/org.springframework.data/spring-data-redis 项目添加redis支持</div><div class="line">    compile group: &apos;org.springframework.data&apos;, name: &apos;spring-data-redis&apos;, version: &apos;1.4.1.RELEASE&apos;</div><div class="line">    // https://mvnrepository.com/artifact/redis.clients/jedis redis 基于java的Redis客户端调用实现</div><div class="line">    compile group: &apos;redis.clients&apos;, name: &apos;jedis&apos;, version: &apos;2.6.1&apos;</div><div class="line">    // https://mvnrepository.com/artifact/com.alibaba/fastjson</div><div class="line">    // 采用阿里巴巴fastjson 进行对象&amp;json字符串的序列化与反序列化</div><div class="line">    compile group: &apos;com.alibaba&apos;, name: &apos;fastjson&apos;, version: &apos;1.2.21&apos;</div></pre></td></tr></table></figure></p>
+<p><strong>2.扩充Spring 配置文件，添加Redis相关Java Bean 到Ioc容器中</strong><br>为了符合开闭原则，重新创建Spring 配置文件 spring-redis.xml<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="attr">xmlns:p</span>=<span class="string">"http://www.springframework.org/schema/p"</span></span></div><div class="line"><span class="tag">       <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span></span></div><div class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"</span></span></div><div class="line"><span class="tag"><span class="string">            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd</span></span></div><div class="line"><span class="tag"><span class="string">            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"jedisPoolConfig"</span> <span class="attr">class</span>=<span class="string">"redis.clients.jedis.JedisPoolConfig"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"maxIdle"</span> <span class="attr">value</span>=<span class="string">"100"</span> /&gt;</span></div><div class="line">       <span class="comment">&lt;!-- &lt;property name="max" value="$&#123;redis.maxActive&#125;" /&gt;</span></div><div class="line"><span class="comment">        &lt;property name="maxWait" value="$&#123;redis.maxWait&#125;" /&gt;--&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"testOnBorrow"</span> <span class="attr">value</span>=<span class="string">"true"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"connectionFactory"</span> <span class="attr">class</span>=<span class="string">"org.springframework.data.redis.connection.jedis.JedisConnectionFactory"</span></span></div><div class="line"><span class="tag">          <span class="attr">p:host-name</span>=<span class="string">"127.0.0.1"</span> <span class="attr">p:port</span>=<span class="string">"6379"</span> <span class="attr">p:password</span>=<span class="string">"ls"</span>  <span class="attr">p:pool-config-ref</span>=<span class="string">"jedisPoolConfig"</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"redisTemplateForString"</span> <span class="attr">class</span>=<span class="string">"org.springframework.data.redis.core.StringRedisTemplate"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"connectionFactory"</span>   <span class="attr">ref</span>=<span class="string">"connectionFactory"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p><strong>3.自定义两个注解</strong></p>
+<blockquote>
+<ul>
+<li><strong>RedisCahe:</strong> 标识缓存 注解</li>
+<li><strong>RedisEvit:</strong> 标识缓存清除 注解</li>
+</ul>
+</blockquote>
+<p>代码如下：<br><strong>RedisCahe.java</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.fxmms.common.rediscache.redisannotation;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.lang.annotation.*;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Created by mark on 16/11/29.</span></div><div class="line"><span class="comment"> * <span class="doctag">@usage</span>  缓存注解类</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</div><div class="line"><span class="meta">@Target</span>(ElementType.METHOD)</div><div class="line"><span class="meta">@Documented</span></div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> RedisCache &#123;</div><div class="line">    <span class="function">Class <span class="title">type</span><span class="params">()</span></span>;<span class="comment">//被代理类的全类名，在之后会做为redis hash 的key</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>RedisEvit.java</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.fxmms.common.rediscache.redisannotation;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.lang.annotation.ElementType;</div><div class="line"><span class="keyword">import</span> java.lang.annotation.Retention;</div><div class="line"><span class="keyword">import</span> java.lang.annotation.RetentionPolicy;</div><div class="line"><span class="keyword">import</span> java.lang.annotation.Target;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Created by mark on 16/11/29.</span></div><div class="line"><span class="comment"> * <span class="doctag">@usage</span> 清除过期缓存注解，放置于update delete insert 类型逻辑之上</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</div><div class="line"><span class="meta">@Target</span>(ElementType.METHOD)</div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> RedisEvict &#123;</div><div class="line">    <span class="function">Class <span class="title">type</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>4.RedisCacheAspect.java 切面程序</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.fxmms.common.rediscache.redisaspect;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.fxmms.common.rediscache.redisannotation.RedisCache;</div><div class="line"><span class="keyword">import</span> com.fxmms.common.rediscache.redisannotation.RedisEvict;</div><div class="line"><span class="keyword">import</span> com.fxmms.common.util.FastJsonUtil;</div><div class="line"><span class="keyword">import</span> com.fxmms.common.util.JsonUtil;</div><div class="line"><span class="keyword">import</span> org.apache.log4j.Logger;</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.ProceedingJoinPoint;</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Around;</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Aspect;</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Pointcut;</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.reflect.MethodSignature;</div><div class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</div><div class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Qualifier;</div><div class="line"><span class="keyword">import</span> org.springframework.data.redis.core.StringRedisTemplate;</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.lang.reflect.Method;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Created by mark on 16/11/29.</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="meta">@Aspect</span></div><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="meta">@SuppressWarnings</span>(value = &#123;<span class="string">"rawtypes"</span>, <span class="string">"unchecked"</span>&#125;)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisCacheAspect</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger logger = Logger.getLogger(RedisCacheAspect.class);</div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 分隔符 生成key 格式为 类全类名|方法名|参数所属类全类名</span></div><div class="line"><span class="comment">     **/</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String DELIMITER = <span class="string">"|"</span>;</div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * spring-redis.xml配置连接池、连接工厂、Redis模板</span></div><div class="line"><span class="comment">     **/</span></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="meta">@Qualifier</span>(<span class="string">"redisTemplateForString"</span>)</div><div class="line">    StringRedisTemplate srt;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * Service层切点 使用到了我们定义的 RedisCache 作为切点表达式。</span></div><div class="line"><span class="comment">     * 而且我们可以看出此表达式基于 annotation。</span></div><div class="line"><span class="comment">     * 并且用于内建属性为查询的方法之上</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="meta">@Pointcut</span>(<span class="string">"@annotation(com.fxmms.common.rediscache.redisannotation.RedisCache)"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">redisCacheAspect</span><span class="params">()</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * Service层切点 使用到了我们定义的 RedisEvict 作为切点表达式。</span></div><div class="line"><span class="comment">     * 而且我们可以看出此表达式是基于 annotation 的。</span></div><div class="line"><span class="comment">     * 并且用于内建属性为非查询的方法之上，用于更新表</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="meta">@Pointcut</span>(<span class="string">"@annotation(com.fxmms.common.rediscache.redisannotation.RedisEvict)"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">redisCacheEvict</span><span class="params">()</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Around</span>(<span class="string">"redisCacheAspect()"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">cache</span><span class="params">(ProceedingJoinPoint joinPoint)</span> </span>&#123;</div><div class="line">        <span class="comment">// 得到类名、方法名和参数</span></div><div class="line">        String clazzName = joinPoint.getTarget().getClass().getName();</div><div class="line">        String methodName = joinPoint.getSignature().getName();</div><div class="line">        Object[] args = joinPoint.getArgs();</div><div class="line"></div><div class="line">        <span class="comment">// 根据类名、方法名和参数生成Key</span></div><div class="line">        logger.info(<span class="string">"key参数: "</span> + clazzName + <span class="string">"."</span> + methodName);</div><div class="line">        <span class="comment">//System.out.println("key参数: " + clazzName + "." + methodName);</span></div><div class="line">        String key = getKey(clazzName, methodName, args);</div><div class="line">        <span class="keyword">if</span> (logger.isInfoEnabled()) &#123;</div><div class="line">            logger.info(<span class="string">"生成key: "</span> + key);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// 得到被代理的方法</span></div><div class="line">        Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();</div><div class="line"></div><div class="line">        <span class="comment">// 得到被代理的方法上的注解</span></div><div class="line">        Class modelType = method.getAnnotation(RedisCache.class).type();</div><div class="line"></div><div class="line">        <span class="comment">// 检查Redis中是否有缓存</span></div><div class="line">        String value = (String) srt.opsForHash().get(modelType.getName(), key);</div><div class="line"></div><div class="line">        <span class="comment">// 得到被代理方法的返回值类型</span></div><div class="line">        Class returnType = ((MethodSignature) joinPoint.getSignature()).getReturnType();</div><div class="line"></div><div class="line">        <span class="comment">// result是方法的最终返回结果</span></div><div class="line">        Object result = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="keyword">if</span> (<span class="keyword">null</span> == value) &#123;</div><div class="line">                <span class="keyword">if</span> (logger.isInfoEnabled()) &#123;</div><div class="line">                    logger.info(<span class="string">"缓存未命中"</span>);</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                <span class="comment">// 调用数据库查询方法</span></div><div class="line">                result = joinPoint.proceed(args);</div><div class="line"></div><div class="line">                <span class="comment">// 序列化查询结果</span></div><div class="line">                String json = FastJsonUtil.toJsonString(result);</div><div class="line">                <span class="comment">//String json = GsonUtil.toJson(result);</span></div><div class="line">                System.out.println(<span class="string">"打印："</span>+json);</div><div class="line"></div><div class="line">                <span class="comment">// 序列化结果放入缓存</span></div><div class="line">                srt.opsForHash().put(modelType.getName(), key, json);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line"></div><div class="line">                <span class="comment">// 缓存命中</span></div><div class="line">                <span class="keyword">if</span> (logger.isInfoEnabled()) &#123;</div><div class="line">                    logger.info(<span class="string">"缓存命中, value = "</span> + value);</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                result = value;</div><div class="line">                <span class="comment">// 反序列化 从缓存中拿到的json字符串</span></div><div class="line">                result = FastJsonUtil.toObject(value, returnType);</div><div class="line">                <span class="comment">//result = GsonUtil.fromJson(value,returnType);</span></div><div class="line">                System.out.println(result.toString());</div><div class="line"></div><div class="line">                <span class="keyword">if</span> (logger.isInfoEnabled()) &#123;</div><div class="line">                    logger.info(<span class="string">"gson反序列化结果 = "</span> + result);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">catch</span> (Throwable e) &#123;</div><div class="line">            logger.error(<span class="string">"解析异常"</span>,e);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     *      * 在方法调用前清除缓存，然后调用业务方法</span></div><div class="line"><span class="comment">     *      * <span class="doctag">@param</span> joinPoint</span></div><div class="line"><span class="comment">     *      * <span class="doctag">@return</span></span></div><div class="line"><span class="comment">     *      * <span class="doctag">@throws</span> Throwable</span></div><div class="line"><span class="comment">     *      </span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="meta">@Around</span>(<span class="string">"redisCacheEvict()"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">evictCache</span><span class="params">(ProceedingJoinPoint joinPoint)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">        <span class="comment">// 得到被代理的方法</span></div><div class="line">        Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();</div><div class="line">        <span class="comment">// 得到被代理的方法上的注解</span></div><div class="line">        Class modelType = method.getAnnotation(RedisEvict.class).type();</div><div class="line">        <span class="keyword">if</span> (logger.isInfoEnabled()) &#123;</div><div class="line">            logger.info(<span class="string">"清空缓存 = "</span> + modelType.getName());</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// 清除对应缓存</span></div><div class="line">        srt.delete(modelType.getName());</div><div class="line">        <span class="keyword">return</span> joinPoint.proceed(joinPoint.getArgs());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> json</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> clazz</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> modelType</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span> 反序列化json字符串</span></div><div class="line"><span class="comment">     * Question 遇到问题，如何将复杂json字符串解析为复杂java object</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">private</span> Object <span class="title">deserialize</span><span class="params">(String json, Class clazz, Class modelType)</span> </span>&#123;</div><div class="line">        <span class="comment">// 序列化结果是List对象</span></div><div class="line">        <span class="keyword">if</span> (clazz.isAssignableFrom(List.class)) &#123;</div><div class="line">            <span class="keyword">return</span> JsonUtil.jsonToList(json, modelType);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// 序列化结果是普通对象</span></div><div class="line">        <span class="keyword">return</span> JsonUtil.jsonToPojo(json, clazz);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">serialize</span><span class="params">(Object result, Class clazz)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> JsonUtil.objectToJson(result);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     *      * 根据类名、方法名和参数生成Key</span></div><div class="line"><span class="comment">     *      * <span class="doctag">@param</span> clazzName</span></div><div class="line"><span class="comment">     *      * <span class="doctag">@param</span> methodName</span></div><div class="line"><span class="comment">     *      * <span class="doctag">@param</span> args</span></div><div class="line"><span class="comment">     *      * <span class="doctag">@return</span> key格式：全类名|方法名｜参数类型</span></div><div class="line"><span class="comment">     *      </span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">getKey</span><span class="params">(String clazzName, String methodName, Object[] args)</span> </span>&#123;</div><div class="line">        StringBuilder key = <span class="keyword">new</span> StringBuilder(clazzName);</div><div class="line">        key.append(DELIMITER);</div><div class="line">        key.append(methodName);</div><div class="line">        key.append(DELIMITER);</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (Object obj : args) &#123;</div><div class="line">            key.append(obj.getClass().getSimpleName());</div><div class="line">            key.append(DELIMITER);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> key.toString();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>5.FastJsonUtil.java</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"> <span class="keyword">package</span> com.fxmms.common.util;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSON;</div><div class="line"><span class="keyword">import</span> com.alibaba.fastjson.serializer.SerializerFeature;</div><div class="line"><span class="keyword">import</span> com.alibaba.fastjson.serializer.ValueFilter;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Created by mark on 16/11/30.</span></div><div class="line"><span class="comment"> * 采用阿里巴巴fastjson 进行对象&amp;json字符串的序列化与反序列化</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FastJsonUtil</span> </span>&#123;</div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> object</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span> 将java对象转化为json字符串</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">toJsonString</span><span class="params">(Object object)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> JSON.toJSONString(object,filter,SerializerFeature.DisableCircularReferenceDetect);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 添加过滤器使数据库中字段为NULL的字段为""</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ValueFilter filter = <span class="keyword">new</span> ValueFilter() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> Object <span class="title">process</span><span class="params">(Object obj, String s, Object v)</span> </span>&#123;</div><div class="line">            <span class="keyword">if</span> (v == <span class="keyword">null</span>)</div><div class="line">                <span class="keyword">return</span> <span class="string">""</span>;</div><div class="line">            <span class="keyword">return</span> v;</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> json</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> cla</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> &lt;T&gt;</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span> 将json字符串转化为java对象</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">T <span class="title">toObject</span><span class="params">(String json, Class&lt;T&gt; cla)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> JSON.parseObject(json, cla);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">List&lt;T&gt; <span class="title">toList</span><span class="params">(String json, Class&lt;T&gt; t)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> JSON.parseArray(json, t);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>6.业务逻辑层设置缓存即扩充service-applicationContext.xml加入切面支持</strong><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></div><div class="line"><span class="tag">       <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span></span></div><div class="line"><span class="tag">       <span class="attr">xmlns:aop</span>=<span class="string">"http://www.springframework.org/schema/aop"</span></span></div><div class="line"><span class="tag">       <span class="attr">xmlns:task</span>=<span class="string">"http://www.springframework.org/schema/task"</span></span></div><div class="line"><span class="tag">       <span class="attr">xmlns:tx</span>=<span class="string">"http://www.springframework.org/schema/tx"</span></span></div><div class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd</span></span></div><div class="line"><span class="tag"><span class="string">  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd</span></span></div><div class="line"><span class="tag"><span class="string">  http://www.springframework.org/schema/aop</span></span></div><div class="line"><span class="tag"><span class="string">  http://www.springframework.org/schema/aop/spring-aop.xsd</span></span></div><div class="line"><span class="tag"><span class="string">  http://www.springframework.org/schema/tx</span></span></div><div class="line"><span class="tag"><span class="string">  http://www.springframework.org/schema/tx/spring-tx.xsd</span></span></div><div class="line"><span class="tag"><span class="string">        http://www.springframework.org/schema/task</span></span></div><div class="line"><span class="tag"><span class="string">        http://www.springframework.org/schema/task/spring-task.xsd"</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">aop:aspectj-autoproxy</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!--设置定时任务--&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">task:annotation-driven</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"com.fxmms.www"</span> <span class="attr">use-default-filters</span>=<span class="string">"false"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">context:include-filter</span> <span class="attr">type</span>=<span class="string">"annotation"</span> <span class="attr">expression</span>=<span class="string">"org.springframework.stereotype.Service"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!--扫描日志切面--&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"com.fxmms.common.log"</span> <span class="attr">use-default-filters</span>=<span class="string">"false"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">context:include-filter</span> <span class="attr">type</span>=<span class="string">"annotation"</span> <span class="attr">expression</span>=<span class="string">"org.springframework.stereotype.Component"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!--扫描redis切面--&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"com.fxmms.common.rediscache.redisaspect"</span> <span class="attr">use-default-filters</span>=<span class="string">"false"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">context:include-filter</span> <span class="attr">type</span>=<span class="string">"annotation"</span> <span class="attr">expression</span>=<span class="string">"org.springframework.stereotype.Component"</span>&gt;</span><span class="tag">&lt;/<span class="name">context:include-filter</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!-- enable the configuration of transactional behavior based on annotations --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">tx:annotation-driven</span> <span class="attr">transaction-manager</span>=<span class="string">"txManager"</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"txManager"</span> <span class="attr">class</span>=<span class="string">"org.springframework.orm.hibernate4.HibernateTransactionManager"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"sessionFactory"</span> <span class="attr">ref</span>=<span class="string">"sessionFactory"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p><strong>7.业务逻辑层应用缓存</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div><div class="line">248</div><div class="line">249</div><div class="line">250</div><div class="line">251</div><div class="line">252</div><div class="line">253</div><div class="line">254</div><div class="line">255</div><div class="line">256</div><div class="line">257</div><div class="line">258</div><div class="line">259</div><div class="line">260</div><div class="line">261</div><div class="line">262</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.fxmms.www.service;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.fxmms.common.jniutil.GetDownloadIDUtil;</div><div class="line"><span class="keyword">import</span> com.fxmms.common.macutil.CountBetweenMacByMacStr;</div><div class="line"><span class="keyword">import</span> com.fxmms.common.poiutil.ReadExcelUtil;</div><div class="line"><span class="keyword">import</span> com.fxmms.common.rediscache.redisannotation.RedisCache;</div><div class="line"><span class="keyword">import</span> com.fxmms.common.rediscache.redisannotation.RedisEvict;</div><div class="line"><span class="keyword">import</span> com.fxmms.common.ro.ControllerResult;</div><div class="line"><span class="keyword">import</span> com.fxmms.common.ro.DtoResultWithPageInfo;</div><div class="line"><span class="keyword">import</span> com.fxmms.www.dao.AdminDao;</div><div class="line"><span class="keyword">import</span> com.fxmms.www.dao.MacDao;</div><div class="line"><span class="keyword">import</span> com.fxmms.www.dao.TaskDao;</div><div class="line"><span class="keyword">import</span> com.fxmms.www.domain.Admin;</div><div class="line"><span class="keyword">import</span> com.fxmms.www.domain.Mac;</div><div class="line"><span class="keyword">import</span> com.fxmms.www.domain.Task;</div><div class="line"><span class="keyword">import</span> com.fxmms.www.dto.MacDto;</div><div class="line"><span class="keyword">import</span> com.fxmms.www.qo.MacQo;</div><div class="line"><span class="keyword">import</span> com.fxmms.www.thunderinterfaceutil.VisitThunderInterface;</div><div class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</div><div class="line"><span class="keyword">import</span> org.springframework.transaction.annotation.Transactional;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.File;</div><div class="line"><span class="keyword">import</span> java.util.ArrayList;</div><div class="line"><span class="keyword">import</span> java.util.Date;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Created by mark on 16/11/7.</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> * <span class="doctag">@usage</span> Mac地址操作业务逻辑层</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="meta">@Service</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MacService</span> </span>&#123;</div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    MacDao macDao;</div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    AdminDao adminDao;</div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    TaskDao taskDao;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> macStr</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> username</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span> mac</span></div><div class="line"><span class="comment">     * <span class="doctag">@usage</span> 判断数据库中是否已经存储过对应的mac</span></div><div class="line"><span class="comment">     * 防止数据库中存储多个同样的mac地址</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="meta">@Transactional</span></div><div class="line">    <span class="meta">@RedisEvict</span>(type=Mac.class)</div><div class="line">    <span class="function"><span class="keyword">public</span> Mac <span class="title">doJudgementBySingleMacStr</span><span class="params">(String macStr, String username)</span> </span>&#123;</div><div class="line">        Mac mac = macDao.getByUniqueKey(<span class="string">"macAddr"</span>, macStr);</div><div class="line">        <span class="keyword">if</span> (mac == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="comment">//1.单个mac地址转化为downloadId</span></div><div class="line">            String downLoadId = GetDownloadIDUtil.getDownLoadId(macStr);</div><div class="line">            Task task = <span class="keyword">new</span> Task();<span class="comment">//单个mac所属task's id</span></div><div class="line">            task.setDate(<span class="keyword">new</span> Date());</div><div class="line">            task.setFlag(<span class="number">0</span>);<span class="comment">//录入未成功</span></div><div class="line">            taskDao.save(task);</div><div class="line">            Admin admin = adminDao.getByUniqueKey(<span class="string">"userName"</span>, username);</div><div class="line">            mac = <span class="keyword">new</span> Mac();</div><div class="line">            mac.setDownLoadId(downLoadId);</div><div class="line">            mac.setAdmin(admin);</div><div class="line">            mac.setMacAddr(macStr);</div><div class="line">            mac.setDate(<span class="keyword">new</span> Date());</div><div class="line">            <span class="comment">//设置mac状态为init状态</span></div><div class="line">            mac.setStatus(<span class="number">0</span>);</div><div class="line">            mac.setTask(task);</div><div class="line">            macDao.save(mac);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> mac;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> macStrList</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> username</span></div><div class="line"><span class="comment">     * <span class="doctag">@usage</span> 判断数据库中是否已经存储过对应的mac</span></div><div class="line"><span class="comment">     * 防止数据库中存储多个同样的mac地址</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="meta">@Transactional</span></div><div class="line">    <span class="meta">@RedisEvict</span>(type=Mac.class)</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doJudgementBySeriseMacStr</span><span class="params">(List&lt;String&gt; macStrList, String username)</span> </span>&#123;</div><div class="line">        Task task = <span class="keyword">new</span> Task();<span class="comment">//单个mac所属task's id</span></div><div class="line">        task.setDate(<span class="keyword">new</span> Date());</div><div class="line">        task.setFlag(<span class="number">0</span>);<span class="comment">//初始化task 状态为录入未成功</span></div><div class="line">        <span class="keyword">for</span> (String macStr : macStrList) &#123;</div><div class="line">            Mac mac = macDao.getByUniqueKey(<span class="string">"macAddr"</span>, macStr);</div><div class="line">            <span class="keyword">if</span> (mac == <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="comment">//1.单个mac地址转化为downloadId</span></div><div class="line">                String downLoadId = GetDownloadIDUtil.getDownLoadId(macStr);</div><div class="line">                taskDao.save(task);</div><div class="line">                Admin admin = adminDao.getByUniqueKey(<span class="string">"userName"</span>, username);</div><div class="line">                mac = <span class="keyword">new</span> Mac();</div><div class="line">                mac.setDownLoadId(downLoadId);</div><div class="line">                mac.setAdmin(admin);</div><div class="line">                mac.setMacAddr(macStr);</div><div class="line">                mac.setDate(<span class="keyword">new</span> Date());</div><div class="line">                <span class="comment">//设置mac状态为init状态</span></div><div class="line">                mac.setStatus(<span class="number">0</span>);</div><div class="line">                mac.setTask(task);</div><div class="line">                macDao.save(mac);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> macStr</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> username</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span> 1.单个mac地址转化为downloadId, 并调用迅雷方接口</span></div><div class="line"><span class="comment">     * 2.调用接口之前先将地址存储为数据库中一条记录，状态置为0-初始化状态</span></div><div class="line"><span class="comment">     * 3.调用完接口根据返回状态，将返回状态为success的数据置为1-正在录入</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="meta">@Transactional</span></div><div class="line">    <span class="meta">@RedisEvict</span>(type=Mac.class)</div><div class="line">    <span class="function"><span class="keyword">public</span> ControllerResult <span class="title">addSingleMac</span><span class="params">(String macStr, String username)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (macStr == <span class="keyword">null</span> || (<span class="string">""</span>.equals(macStr))) &#123;</div><div class="line">            <span class="keyword">return</span> ControllerResult.valueOf(ControllerResult.ERROR, <span class="string">"对不起，MAC地址不能为空"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (!CountBetweenMacByMacStr.matchMacAddrByregex(macStr)) &#123;</div><div class="line">            <span class="keyword">return</span> ControllerResult.valueOf(ControllerResult.ERROR, <span class="string">"对不起，MAC地址格式不正确"</span>);</div><div class="line">        &#125;</div><div class="line">        List&lt;String&gt; macStrList = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        macStrList.add(macStr);</div><div class="line">        Mac mac = doJudgementBySingleMacStr(macStr, username);</div><div class="line">        <span class="comment">//调用迅雷录入接口。</span></div><div class="line">        <span class="keyword">if</span> (VisitThunderInterface.addDownLoadId(macStrList)) &#123;</div><div class="line">            Admin admin = adminDao.getByUniqueKey(<span class="string">"userName"</span>, username);</div><div class="line">            <span class="keyword">if</span> (mac.getStatus() != <span class="number">2</span>) &#123;</div><div class="line">                mac.setStatus(<span class="number">1</span>);</div><div class="line">                mac.setDate(<span class="keyword">new</span> Date());</div><div class="line">                mac.setAdmin(admin);</div><div class="line">                macDao.update(mac);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> ControllerResult.valueOf(ControllerResult.SUCCESS, <span class="string">"迅雷录入接口请求成功"</span>, mac);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            Admin admin = adminDao.getByUniqueKey(<span class="string">"userName"</span>, username);</div><div class="line">            <span class="keyword">if</span> (mac.getStatus() != <span class="number">2</span>) &#123;</div><div class="line">                mac.setStatus(<span class="number">3</span>);</div><div class="line">                mac.setDate(<span class="keyword">new</span> Date());</div><div class="line">                mac.setAdmin(admin);</div><div class="line">                macDao.update(mac);</div><div class="line">                <span class="keyword">return</span> ControllerResult.valueOf(ControllerResult.ERROR, <span class="string">"对不起,请求迅雷录入接口失败!&lt;a href='admin/addsinglemac'&gt;重新录入&lt;/a&gt;"</span>);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> ControllerResult.valueOf(ControllerResult.ERROR, <span class="string">"此条mac地址已经录入成功"</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> startMacStr</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> endMacStr</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> username</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span></span></div><div class="line"><span class="comment">     * <span class="doctag">@usage</span> 批量区间录入业务逻辑方法</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="meta">@Transactional</span></div><div class="line">    <span class="meta">@RedisEvict</span>(type=Mac.class)</div><div class="line">    <span class="function"><span class="keyword">public</span> ControllerResult <span class="title">addSeriseMac</span><span class="params">(String startMacStr, String endMacStr, String username)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (startMacStr == <span class="keyword">null</span> || (<span class="string">""</span>.equals(startMacStr)) || endMacStr == <span class="keyword">null</span> || (<span class="string">""</span>.equals(endMacStr))) &#123;</div><div class="line">            <span class="keyword">return</span> ControllerResult.valueOf(ControllerResult.ERROR, <span class="string">"对不起，MAC地址不能为空"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (!CountBetweenMacByMacStr.matchMacAddrByregex(startMacStr) || !CountBetweenMacByMacStr.matchMacAddrByregex(endMacStr)) &#123;</div><div class="line">            <span class="keyword">return</span> ControllerResult.valueOf(ControllerResult.ERROR, <span class="string">"对不起，MAC地址格式不正确"</span>);</div><div class="line">        &#125;</div><div class="line">        List&lt;String&gt; macStrList = CountBetweenMacByMacStr.countBetweenMacByMacStr(startMacStr, endMacStr);</div><div class="line">        <span class="keyword">if</span> (macStrList.size() &gt; <span class="number">1000</span>) &#123;</div><div class="line">            <span class="keyword">return</span> ControllerResult.valueOf(ControllerResult.ERROR, <span class="string">"对不起，MAC区间太长，请拆分后录入。&lt;a href='admin/addserisemacs'&gt;重新录入&lt;/a&gt;"</span>);</div><div class="line">        &#125;</div><div class="line">        doJudgementBySeriseMacStr(macStrList, username);</div><div class="line">        <span class="keyword">if</span> (VisitThunderInterface.addDownLoadId(macStrList)) &#123;</div><div class="line">            <span class="keyword">for</span> (String macStr : macStrList) &#123;</div><div class="line">                Mac mac = macDao.getByUniqueKey(<span class="string">"macAddr"</span>, macStr);</div><div class="line">                Admin admin = adminDao.getByUniqueKey(<span class="string">"userName"</span>, username);</div><div class="line">                <span class="keyword">if</span> (mac.getStatus() != <span class="number">2</span>) &#123;</div><div class="line">                    mac.setStatus(<span class="number">1</span>);</div><div class="line">                    mac.setDate(<span class="keyword">new</span> Date());</div><div class="line">                    mac.setAdmin(admin);</div><div class="line">                    macDao.update(mac);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> ControllerResult.valueOf(ControllerResult.SUCCESS, <span class="string">"录入成功"</span>);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">for</span> (String macStr : macStrList) &#123;</div><div class="line">                Mac mac = macDao.getByUniqueKey(<span class="string">"macAddr"</span>, macStr);</div><div class="line">                Admin admin = adminDao.getByUniqueKey(<span class="string">"userName"</span>, username);</div><div class="line">                <span class="keyword">if</span> (mac.getStatus() != <span class="number">2</span>) &#123;</div><div class="line">                    mac.setStatus(<span class="number">3</span>);</div><div class="line">                    mac.setDate(<span class="keyword">new</span> Date());</div><div class="line">                    mac.setAdmin(admin);</div><div class="line">                    macDao.update(mac);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> ControllerResult.valueOf(ControllerResult.ERROR, <span class="string">"对不起,请求迅雷录入接口失败!&lt;a href='admin/addserisemacs'&gt;重新录入&lt;/a&gt;"</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> macQo</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span></span></div><div class="line"><span class="comment">     * <span class="doctag">@usage</span> 获取所有的mac录入状态数据业务逻辑方法</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="meta">@RedisCache</span>(type=Mac.class)</div><div class="line">    <span class="meta">@Transactional</span></div><div class="line">    <span class="function"><span class="keyword">public</span> ControllerResult <span class="title">getAllMacStatus</span><span class="params">(MacQo macQo)</span> </span>&#123;</div><div class="line">        DtoResultWithPageInfo&lt;MacDto&gt; info = macDao.queryPageListByCriteriaWithQo(macQo, MacDto.class);</div><div class="line">        <span class="keyword">return</span> ControllerResult.valueOf(ControllerResult.SUCCESS, <span class="string">"获取mac录入状态成功"</span>, info);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> serverFile</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> username</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span></span></div><div class="line"><span class="comment">     * <span class="doctag">@usage</span> 非连续mac地址录入逻辑方法</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="meta">@Transactional</span></div><div class="line">    <span class="meta">@RedisEvict</span>(type=Mac.class)</div><div class="line">    <span class="function"><span class="keyword">public</span> ControllerResult <span class="title">addNoOrderMac</span><span class="params">(File serverFile, String username)</span> </span>&#123;</div><div class="line">        ReadExcelUtil readExcelUtil = <span class="keyword">new</span> ReadExcelUtil();</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            List&lt;String&gt; macStrList = readExcelUtil.readUploadMacFile(serverFile);</div><div class="line">            <span class="keyword">if</span> (macStrList.size() == <span class="number">0</span> || macStrList == <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="keyword">return</span> ControllerResult.valueOf(ControllerResult.ERROR, <span class="string">"对不起，文件中MAC数据不能为空"</span>);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (macStrList.size() &gt; <span class="number">1000</span>) &#123;</div><div class="line">                <span class="keyword">return</span> ControllerResult.valueOf(ControllerResult.ERROR, <span class="string">"对不起，文件中数据超过1000条，请进行拆分后上传！"</span>);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">for</span> (String inFilemacStr : macStrList) &#123;</div><div class="line">                <span class="keyword">if</span> (!CountBetweenMacByMacStr.matchMacAddrByregex(inFilemacStr)) &#123;</div><div class="line">                    <span class="keyword">return</span> ControllerResult.valueOf(ControllerResult.ERROR, <span class="string">"对不起，文件中有不合法的MAC地址"</span>);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            doJudgementBySeriseMacStr(macStrList, username);</div><div class="line">            <span class="keyword">if</span> (VisitThunderInterface.addDownLoadId(macStrList)) &#123;</div><div class="line">                <span class="keyword">for</span> (String macStr : macStrList) &#123;</div><div class="line">                    Mac mac = macDao.getByUniqueKey(<span class="string">"macAddr"</span>, macStr);</div><div class="line">                    Admin admin = adminDao.getByUniqueKey(<span class="string">"userName"</span>, username);</div><div class="line">                    <span class="keyword">if</span> (mac.getStatus() != <span class="number">2</span>) &#123;</div><div class="line">                        mac.setStatus(<span class="number">1</span>);</div><div class="line">                        mac.setDate(<span class="keyword">new</span> Date());</div><div class="line">                        mac.setAdmin(admin);</div><div class="line">                        macDao.update(mac);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">return</span> ControllerResult.valueOf(ControllerResult.SUCCESS, <span class="string">"请求迅雷录入接口成功"</span>);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                <span class="keyword">for</span> (String macStr : macStrList) &#123;</div><div class="line">                    Mac mac = macDao.getByUniqueKey(<span class="string">"macAddr"</span>, macStr);</div><div class="line">                    Admin admin = adminDao.getByUniqueKey(<span class="string">"userName"</span>, username);</div><div class="line">                    <span class="keyword">if</span> (mac.getStatus() != <span class="number">2</span>) &#123;</div><div class="line">                        mac.setStatus(<span class="number">3</span>);</div><div class="line">                        mac.setAdmin(admin);</div><div class="line">                        mac.setDate(<span class="keyword">new</span> Date());</div><div class="line">                        macDao.update(mac);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">return</span> ControllerResult.valueOf(ControllerResult.ERROR, <span class="string">"对不起,请求迅雷录入接口失败!&lt;a href='admin/loadnoordermacs'&gt;重新录入&lt;/a&gt;"</span>);</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            <span class="keyword">return</span> ControllerResult.valueOf(ControllerResult.ERROR, <span class="string">"文件上传失败"</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注意：</p>
+<ul>
+<li>上述程序中为非查询方法上加上了 @RedisEvict注解，表示删除旧的缓存。</li>
+<li>上述程序中为查询方法上加上了 @RedisCache注解，表示为查询业务逻辑应用缓存，应用逻辑为：项目中缓存数据的Struct为Hash，每张表对应的实体类使用一个名为Key的Hash结构来存储数据，当访问的key 存在时，直接从缓存中取出数据，不存在时第一步先从数据库中查询数据，再生成key，并生成对应的filed与value。</li>
+</ul>
+</blockquote>
+<p>程序运行结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">2016-12-03 20:16:05,212 [INFO]-[com.fxmms.common.rediscache.redisaspect.RedisCacheAspect.cache(RedisCacheAspect.java:67)] key参数: com.fxmms.www.service.MacService.getAllMacStatus</div><div class="line">2016-12-03 20:16:05,219 [INFO]-[com.fxmms.common.rediscache.redisaspect.RedisCacheAspect.cache(RedisCacheAspect.java:71)] 生成key: com.fxmms.www.service.MacService|getAllMacStatus|MacQo|</div><div class="line">2016-12-03 20:16:05,357 [INFO]-[com.fxmms.common.rediscache.redisaspect.RedisCacheAspect.cache(RedisCacheAspect.java:108)] 缓存命中, value = &#123;&quot;msg&quot;:&quot;获取mac录入状态成功&quot;,&quot;result&quot;:&quot;success&quot;,&quot;rows&quot;:&#123;&quot;emptyResult&quot;:false,&quot;pageInfo&quot;:&#123;&quot;firstPage&quot;:true,&quot;firstResultNum&quot;:0,&quot;lastPage&quot;:false,&quot;lastResultNum&quot;:10,&quot;pageNo&quot;:1,&quot;pageSize&quot;:10,&quot;totalPage&quot;:49,&quot;totalQuantity&quot;:488&#125;,&quot;results&quot;:[&#123;&quot;admin&quot;:&#123;&quot;enable&quot;:1,&quot;id&quot;:1,&quot;isDelete&quot;:0,&quot;password&quot;:&quot;11&quot;,&quot;role&quot;:&quot;admin&quot;,&quot;userName&quot;:&quot;ls&quot;&#125;,&quot;date&quot;:1479913221000,&quot;dateStr&quot;:&quot;2016-11-23 23:00:21&quot;,&quot;deviceId&quot;:&quot;730CBAEA-6954-000A-2D77-BAF544E6F192&quot;,&quot;downLoadId&quot;:&quot;11123E566745FB30FE5C9AC094A1BAA0&quot;,&quot;id&quot;:488,&quot;macAddr&quot;:&quot;11:12:3e:56:67:45&quot;,&quot;status&quot;:2,&quot;statusStr&quot;:&quot;&lt;span class=\&quot;label label-success\&quot;&gt;录入成功&lt;/span&gt;&quot;,&quot;task&quot;:&#123;&quot;date&quot;:1479913220000,&quot;flag&quot;:1,&quot;id&quot;:29&#125;&#125;,&#123;&quot;admin&quot;:&#123;&quot;enable&quot;:1,&quot;id&quot;:1,&quot;isDelete&quot;:0,&quot;password&quot;:&quot;11&quot;,&quot;role&quot;:&quot;admin&quot;,&quot;userName&quot;:&quot;ls&quot;&#125;,&quot;date&quot;:1479448899000,&quot;dateStr&quot;:&quot;2016-11-18 14:01:39&quot;,&quot;deviceId&quot;:&quot;&quot;,&quot;downLoadId&quot;:&quot;34BDF9C0B2C1EC6B5CA3B81DCB05241D&quot;,&quot;id&quot;:487,&quot;macAddr&quot;:&quot;34:BD:F9:C0:B2:c1&quot;,&quot;status&quot;:3,&quot;statusStr&quot;:&quot;&lt;span class=\&quot;label label-danger\&quot;&gt;录入失败&lt;/span&gt;&quot;,&quot;task&quot;:&#123;&quot;date&quot;:1479448898000,&quot;flag&quot;:0,&quot;id&quot;:28&#125;&#125;,&#123;&quot;admin&quot;:&#123;&quot;enable&quot;:1,&quot;id&quot;:1,&quot;isDelete&quot;:0,&quot;password&quot;:&quot;11&quot;,&quot;role&quot;:&quot;admin&quot;,&quot;userName&quot;:&quot;ls&quot;&#125;,&quot;date&quot;:1479448476000,&quot;dateStr&quot;:&quot;2016-11-18 13:54:36&quot;,&quot;deviceId&quot;:&quot;&quot;,&quot;downLoadId&quot;:&quot;11123E586745088C6CAF8E6C2EBDB7A5&quot;,&quot;id&quot;:486,&quot;macAddr&quot;:&quot;11:12:3e:58:67:45&quot;,&quot;status&quot;:3,&quot;statusStr&quot;:&quot;&lt;span class=\&quot;label label-danger\&quot;&gt;录入失败&lt;/span&gt;&quot;,&quot;task&quot;:&#123;&quot;date&quot;:1479448476000,&quot;flag&quot;:0,&quot;id&quot;:27&#125;&#125;,&#123;&quot;admin&quot;:&#123;&quot;enable&quot;:1,&quot;id&quot;:1,&quot;isDelete&quot;:0,&quot;password&quot;:&quot;11&quot;,&quot;role&quot;:&quot;admin&quot;,&quot;userName&quot;:&quot;ls&quot;&#125;,&quot;date&quot;:1479447598000,&quot;dateStr&quot;:&quot;2016-11-18 13:39:58&quot;,&quot;deviceId&quot;:&quot;&quot;,&quot;downLoadId&quot;:&quot;34BDFAC0B2F01A731572C0BCEC4D26F0&quot;,&quot;id&quot;:485,&quot;macAddr&quot;:&quot;34:BD:FA:C0:B2:F0&quot;,&quot;status&quot;:3,&quot;statusStr&quot;:&quot;&lt;span class=\&quot;label label-danger\&quot;&gt;录入失败&lt;/span&gt;&quot;,&quot;task&quot;:&#123;&quot;date&quot;:1479447598000,&quot;flag&quot;:0,&quot;id&quot;:26&#125;&#125;,&#123;&quot;admin&quot;:&#123;&quot;enable&quot;:1,&quot;id&quot;:1,&quot;isDelete&quot;:0,&quot;password&quot;:&quot;11&quot;,&quot;role&quot;:&quot;admin&quot;,&quot;userName&quot;:&quot;ls&quot;&#125;,&quot;date&quot;:1479447575000,&quot;dateStr&quot;:&quot;2016-11-18 13:39:35&quot;,&quot;deviceId&quot;:&quot;&quot;,&quot;downLoadId&quot;:&quot;3EBDF9C0B2F02D7F2A6CAC4F2B5121E8&quot;,&quot;id&quot;:484,&quot;macAddr&quot;:&quot;3e:BD:F9:C0:B2:F0&quot;,&quot;status&quot;:3,&quot;statusStr&quot;:&quot;&lt;span class=\&quot;label label-danger\&quot;&gt;录入失败&lt;/span&gt;&quot;,&quot;task&quot;:&#123;&quot;date&quot;:1479447575000,&quot;flag&quot;:0,&quot;id&quot;:25&#125;&#125;,&#123;&quot;admin&quot;:&#123;&quot;enable&quot;:1,&quot;id&quot;:1,&quot;isDelete&quot;:0,&quot;password&quot;:&quot;11&quot;,&quot;role&quot;:&quot;admin&quot;,&quot;userName&quot;:&quot;ls&quot;&#125;,&quot;date&quot;:1479446783000,&quot;dateStr&quot;:&quot;2016-11-18 13:26:23&quot;,&quot;deviceId&quot;:&quot;&quot;,&quot;downLoadId&quot;:&quot;11128E566749F8776504253D15D8B001&quot;,&quot;id&quot;:483,&quot;macAddr&quot;:&quot;11:12:8e:56:67:49&quot;,&quot;status&quot;:3,&quot;statusStr&quot;:&quot;&lt;span class=\&quot;label label-danger\&quot;&gt;录入失败&lt;/span&gt;&quot;,&quot;task&quot;:&#123;&quot;date&quot;:1479446783000,&quot;flag&quot;:0,&quot;id&quot;:24&#125;&#125;,&#123;&quot;admin&quot;:&#123;&quot;enable&quot;:1,&quot;id&quot;:1,&quot;isDelete&quot;:0,&quot;password&quot;:&quot;11&quot;,&quot;role&quot;:&quot;admin&quot;,&quot;userName&quot;:&quot;ls&quot;&#125;,&quot;date&quot;:1479446754000,&quot;dateStr&quot;:&quot;2016-11-18 13:25:54&quot;,&quot;deviceId&quot;:&quot;&quot;,&quot;downLoadId&quot;:&quot;11128E566745B130B2E6C6AA8E52EB4A&quot;,&quot;id&quot;:482,&quot;macAddr&quot;:&quot;11:12:8e:56:67:45&quot;,&quot;status&quot;:3,&quot;statusStr&quot;:&quot;&lt;span class=\&quot;label label-danger\&quot;&gt;录入失败&lt;/span&gt;&quot;,&quot;task&quot;:&#123;&quot;date&quot;:1479446753000,&quot;flag&quot;:0,&quot;id&quot;:23&#125;&#125;,&#123;&quot;admin&quot;:&#123;&quot;enable&quot;:1,&quot;id&quot;:1,&quot;isDelete&quot;:0,&quot;password&quot;:&quot;11&quot;,&quot;role&quot;:&quot;admin&quot;,&quot;userName&quot;:&quot;ls&quot;&#125;,&quot;date&quot;:1479446736000,&quot;dateStr&quot;:&quot;2016-11-18 13:25:36&quot;,&quot;deviceId&quot;:&quot;&quot;,&quot;downLoadId&quot;:&quot;341DF9C0B2F11E391DDA8EDAB78B4162&quot;,&quot;id&quot;:481,&quot;macAddr&quot;:&quot;34:1D:F9:C0:B2:F1&quot;,&quot;status&quot;:3,&quot;statusStr&quot;:&quot;&lt;span class=\&quot;label label-danger\&quot;&gt;录入失败&lt;/span&gt;&quot;,&quot;task&quot;:&#123;&quot;date&quot;:1479446736000,&quot;flag&quot;:0,&quot;id&quot;:22&#125;&#125;,&#123;&quot;admin&quot;:&#123;&quot;enable&quot;:1,&quot;id&quot;:1,&quot;isDelete&quot;:0,&quot;password&quot;:&quot;11&quot;,&quot;role&quot;:&quot;admin&quot;,&quot;userName&quot;:&quot;ls&quot;&#125;,&quot;date&quot;:1479437904000,&quot;dateStr&quot;:&quot;2016-11-18 10:58:24&quot;,&quot;deviceId&quot;:&quot;&quot;,&quot;downLoadId&quot;:&quot;11446633889613659EE26ABE4FBE28CD&quot;,&quot;id&quot;:480,&quot;macAddr&quot;:&quot;11:44:66:33:88:96&quot;,&quot;status&quot;:3,&quot;statusStr&quot;:&quot;&lt;span class=\&quot;label label-danger\&quot;&gt;录入失败&lt;/span&gt;&quot;,&quot;task&quot;:&#123;&quot;date&quot;:1479437904000,&quot;flag&quot;:0,&quot;id&quot;:21&#125;&#125;,&#123;&quot;admin&quot;:&#123;&quot;enable&quot;:1,&quot;id&quot;:1,&quot;isDelete&quot;:0,&quot;password&quot;:&quot;11&quot;,&quot;role&quot;:&quot;admin&quot;,&quot;userName&quot;:&quot;ls&quot;&#125;,&quot;date&quot;:1479437899000,&quot;dateStr&quot;:&quot;2016-11-18 10:58:19&quot;,&quot;deviceId&quot;:&quot;&quot;,&quot;downLoadId&quot;:&quot;1144663388947CCC987231F802C72F83&quot;,&quot;id&quot;:479,&quot;macAddr&quot;:&quot;11:44:66:33:88:94&quot;,&quot;status&quot;:3,&quot;statusStr&quot;:&quot;&lt;span class=\&quot;label label-danger\&quot;&gt;录入失败&lt;/span&gt;&quot;,&quot;task&quot;:&#123;&quot;date&quot;:1479437899000,&quot;flag&quot;:0,&quot;id&quot;:20&#125;&#125;]&#125;,&quot;total&quot;:0&#125;</div><div class="line">`</div></pre></td></tr></table></figure></p>
+<p>完。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="大坤 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>个人微信号，欢迎添加~</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果我的文章对您有帮助，请小小的打赏一下吧~，我将>创作更好的文章给大家！谢谢！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="大坤 Alipay"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/12/IntelljIdea中查看类继承面板/" rel="next" title="Intellj Idea中查看类继承面板">
+                <i class="fa fa-chevron-left"></i> Intellj Idea中查看类继承面板
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/12/Spring-Aop-日志/" rel="prev" title="自定义注解&Spring AOP实现日志组件(可重用)">
+                自定义注解&Spring AOP实现日志组件(可重用) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+</div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="大坤" />
+          <p class="site-author-name" itemprop="name">大坤</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#应用场景"><span class="nav-number">1.</span> <span class="nav-text">应用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目标-amp-要解决的问题"><span class="nav-number">2.</span> <span class="nav-text">目标&要解决的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#难点"><span class="nav-number">3.</span> <span class="nav-text">难点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法-amp-扩充步骤"><span class="nav-number">4.</span> <span class="nav-text">方法&扩充步骤</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">大坤</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://willxue.top/2017/11/12/Spring-Aop/';
+          this.page.identifier = '2017/11/12/Spring-Aop/';
+          this.page.title = '自定义注解&Spring AOP实现为原程序加入Redis缓存支持(可重用)';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2148159"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+     
+     
+     
+     
+     <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+     <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+     
+         <script type="text/javascript">
+             var gitment = new Gitment({
+                id: document.location.href, 
+                 owner: 'markfork',
+                 repo: 'markfork.github.io',
+                 oauth: {
+                     client_id: '2063ee4120d047efabd7',
+                     client_secret: '12b4f99424a1d3807e2beefc006d005afacfb28b',
+                 }});
+             gitment.render('gitment-container');
+         </script>
+     
+ 
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
