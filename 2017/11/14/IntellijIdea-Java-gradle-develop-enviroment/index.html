@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="编程实操," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="鱼大坤" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/team.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Java 本地开发环境搭建 项目搭建采用技术栈为：Spring+Spring MVC+Hibernate+Jsp+Gradle＋tomcat+mysql5.6  搭建环境文档目录结构说明：       使用Intellj Idea 搭建项目过程详解    项目各配置文件讲解及部署  各层包功能讲解&amp;amp;项目搭建完毕最终效果演示图         项目中重要代码讲解 webapp文件夹下分层详解">
+<meta name="keywords" content="编程实操">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Intellij Idea＋Gradle 搭建Java 本地开发环境">
+<meta property="og:url" content="http://markfork.com/2017/11/14/IntellijIdea-Java-gradle-develop-enviroment/index.html">
+<meta property="og:site_name" content="鱼大坤">
+<meta property="og:description" content="Java 本地开发环境搭建 项目搭建采用技术栈为：Spring+Spring MVC+Hibernate+Jsp+Gradle＋tomcat+mysql5.6  搭建环境文档目录结构说明：       使用Intellj Idea 搭建项目过程详解    项目各配置文件讲解及部署  各层包功能讲解&amp;amp;项目搭建完毕最终效果演示图         项目中重要代码讲解 webapp文件夹下分层详解">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-3f16a54b594cc26b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-047b263cb73b7f24.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-ef60a1e99afe87d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-38c47fe5bfe055e1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-3bca1a837ef288a7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-4a4cfcbc6ca0804a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-c210ca9b5d193e58.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-9dfb84230a0f24bc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-0ce2f54f56f2c073.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-2fad3607490056ce.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-18e00a4c050a367d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-cfabad0cc509bce8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-1317a404f68ed96c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-26c0dbfa2caf768b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-845ceb398f2732db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-df9aea221c723ec0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-6a3c8b7bd1a2a8a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-7bfc624ba98ae300.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-adbe573aca906795.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-4165cdfd6c036090.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-3bc1d2d4fbb7ecef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-c207e3fdc657a78c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-78f1066ab3e76dd0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-463b94c93db0bac3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-0007a5982b4a4cf2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-6e94cec0a589554d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-d28e2913b5b7e007.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-3c464a313b435217.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-11-14T08:29:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用Intellij Idea＋Gradle 搭建Java 本地开发环境">
+<meta name="twitter:description" content="Java 本地开发环境搭建 项目搭建采用技术栈为：Spring+Spring MVC+Hibernate+Jsp+Gradle＋tomcat+mysql5.6  搭建环境文档目录结构说明：       使用Intellj Idea 搭建项目过程详解    项目各配置文件讲解及部署  各层包功能讲解&amp;amp;项目搭建完毕最终效果演示图         项目中重要代码讲解 webapp文件夹下分层详解">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2836699-3f16a54b594cc26b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://markfork.com/2017/11/14/IntellijIdea-Java-gradle-develop-enviroment/"/>
+
+
+
+
+
+  <title>使用Intellij Idea＋Gradle 搭建Java 本地开发环境 | 鱼大坤</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">鱼大坤</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">凡事皆有极困难之时，打得通的，便是好汉!</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/IntellijIdea-Java-gradle-develop-enviroment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="鱼大坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="鱼大坤">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">使用Intellij Idea＋Gradle 搭建Java 本地开发环境</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:29:42+08:00">
+                2017-11-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-Web/" itemprop="url" rel="index">
+                    <span itemprop="name">Java Web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/14/IntellijIdea-Java-gradle-develop-enviroment/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/14/IntellijIdea-Java-gradle-develop-enviroment/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Java-本地开发环境搭建"><a href="#Java-本地开发环境搭建" class="headerlink" title="Java 本地开发环境搭建"></a>Java 本地开发环境搭建</h2><hr>
+<p>项目搭建采用技术栈为：Spring+Spring MVC+Hibernate+Jsp+Gradle＋tomcat+mysql5.6</p>
+<blockquote>
+<p><strong>搭建环境文档目录结构说明：</strong>     </p>
+<ol>
+<li>使用Intellj Idea 搭建项目过程详解   </li>
+<li>项目各配置文件讲解及部署 </li>
+<li>各层包功能讲解&amp;项目搭建完毕最终效果演示图        </li>
+<li>项目中重要代码讲解</li>
+<li>webapp文件夹下分层详解</li>
+<li>配置tomcat 运行环境<a id="more"></a>
+<h2 id="1-使用Intellj-Idea-搭建项目过程详解"><a href="#1-使用Intellj-Idea-搭建项目过程详解" class="headerlink" title="1. 使用Intellj Idea 搭建项目过程详解"></a>1. 使用Intellj Idea 搭建项目过程详解</h2></li>
+</ol>
+<hr>
+<p><strong>1.1 打开Intellj Idea</strong>  </p>
+</blockquote>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-3f16a54b594cc26b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Intellj idea 截图"></p>
+<p><strong>1.2 操纵 Intellj Idea 工具栏 新建项目</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-047b263cb73b7f24.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="操纵idea 工具栏"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-ef60a1e99afe87d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="使用Gradle创建项目"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-38c47fe5bfe055e1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="完善项目信息"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-3bca1a837ef288a7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="设置Gradle"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-4a4cfcbc6ca0804a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="确定项目信息"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-c210ca9b5d193e58.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="选择New Window"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-9dfb84230a0f24bc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="初始化项目结构截图"></p>
+<p>需要说明的是，最初创建的项目视图是不完整的，包括webapp文件夹下没有web.xml，以及src包下缺少Java文件夹(放置java源代码文件)，Resources文件夹（放置项目配置文件）。<br>我们继续做以下操作，使得项目的结构符合web 应用项目的层级标准。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-0ce2f54f56f2c073.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="操纵工具栏为项目添加 web.xml全局配置文件"></p>
+<p>出现如下视图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-2fad3607490056ce.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="新建 web.xml文件"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-18e00a4c050a367d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="设置web.xml文件存储位置"></p>
+<p>接下来：单击main文件夹按照如下操作：<br><img src="http://upload-images.jianshu.io/upload_images/2836699-cfabad0cc509bce8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="手动创建src中main文件夹下java目录"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-1317a404f68ed96c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="输入java 文件夹名称"></p>
+<p>点击ok，再按照上图操作操作一遍，输入文件名为<strong>resources</strong><br>最终的结构图如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-26c0dbfa2caf768b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="项目最终结构图"></p>
+<h2 id="2-项目各配置文件讲解及部署"><a href="#2-项目各配置文件讲解及部署" class="headerlink" title="2. 项目各配置文件讲解及部署"></a>2. 项目各配置文件讲解及部署</h2><hr>
+<p>完成了项目的初始化结构创建，接下来我们需要来创建配置文件。<br>首先是resources文件夹下的配置文件<br><strong>2.1 resources下资源文件截图:(最终配置的结果)</strong><br><img src="http://upload-images.jianshu.io/upload_images/2836699-845ceb398f2732db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="项目所需配置文件最终配置结果"><br><strong>2.2 data-access-applicationContext.xml</strong><br>主要管理数据库访问组件<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></div><div class="line"><span class="tag">       <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span></span></div><div class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans</span></span></div><div class="line"><span class="tag"><span class="string">       http://www.springframework.org/schema/beans/spring-beans.xsd</span></span></div><div class="line"><span class="tag"><span class="string">       http://www.springframework.org/schema/context</span></span></div><div class="line"><span class="tag"><span class="string">       http://www.springframework.org/schema/context/spring-context.xsd</span></span></div><div class="line"><span class="tag"><span class="string">       "</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- 配置自动扫描的包 --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"com.fxmms"</span> <span class="attr">use-default-filters</span>=<span class="string">"false"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">context:include-filter</span> <span class="attr">type</span>=<span class="string">"regex"</span> <span class="attr">expression</span>=<span class="string">"com.fxmms.*.*.dao.*"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">context:include-filter</span> <span class="attr">type</span>=<span class="string">"regex"</span> <span class="attr">expression</span>=<span class="string">"com.fxmms.*.dao.*"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- 配置数据源 --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">context:property-placeholder</span> <span class="attr">location</span>=<span class="string">"classpath:db.properties"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"dataSource"</span> <span class="attr">class</span>=<span class="string">"org.springframework.jdbc.datasource.DriverManagerDataSource"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"driverClassName"</span> <span class="attr">value</span>=<span class="string">"$&#123;jdbc.driverClass&#125;"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"url"</span> <span class="attr">value</span>=<span class="string">"$&#123;jdbc.jdbcUrl&#125;"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">value</span>=<span class="string">"$&#123;jdbc.user&#125;"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"$&#123;jdbc.password&#125;"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!--配置hibernate SessionFactory--&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"sessionFactory"</span></span></div><div class="line"><span class="tag">          <span class="attr">class</span>=<span class="string">"org.springframework.orm.hibernate4.LocalSessionFactoryBean"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dataSource"</span> <span class="attr">ref</span>=<span class="string">"dataSource"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"hibernateProperties"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">props</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">"hibernate.dialect"</span>&gt;</span>$&#123;dataSource.hibernate.dialect&#125;<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">"hibernate.show_sql"</span>&gt;</span>$&#123;dataSource.hibernate.show_sql&#125;<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">"hibernate.format_sql"</span>&gt;</span>true<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></div><div class="line">                <span class="comment">&lt;!--负责自动创建数据表，基本上不能打开注释，否则所有的数据库中表信息都会被删除，重新创建--&gt;</span></div><div class="line">                <span class="comment">&lt;!-- &lt;prop key="hibernate.hbm2ddl.auto"&gt;create&lt;/prop&gt; --&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">props</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line">        <span class="comment">&lt;!-- &lt;property name="hibernate.jdbc.batch_size" value="50"&gt;&lt;/property&gt; --&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"packagesToScan"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">list</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">value</span>&gt;</span>com.fxmms.*.*.domain<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">value</span>&gt;</span>com.fxmms.*.domain<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">list</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!--jdbcTemplate start --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"jdbcTemplate"</span> <span class="attr">class</span>=<span class="string">"org.springframework.jdbc.core.JdbcTemplate"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dataSource"</span> <span class="attr">ref</span>=<span class="string">"dataSource"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!--Spring JDBC 中操作 LOB 数据 --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"lobHandler"</span> <span class="attr">class</span>=<span class="string">"org.springframework.jdbc.support.lob.DefaultLobHandler"</span></span></div><div class="line"><span class="tag">          <span class="attr">lazy-init</span>=<span class="string">"true"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!-- 配置JPA部分 --&gt;</span></div><div class="line">    <span class="comment">&lt;!-- 配置JPA的EntityManagerFactory --&gt;</span></div><div class="line">    <span class="comment">&lt;!-- &lt;bean id="entityManagerFactory"</span></div><div class="line"><span class="comment">           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"&gt;</span></div><div class="line"><span class="comment">         &lt;property name="dataSource" ref="dataSource"&gt;&lt;/property&gt;</span></div><div class="line"><span class="comment">         &lt;property name="jpaVendorAdapter"&gt;</span></div><div class="line"><span class="comment">             &lt;bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"&gt;&lt;/bean&gt;</span></div><div class="line"><span class="comment">         &lt;/property&gt;</span></div><div class="line"><span class="comment">         &lt;property name="packagesToScan" value="com.fxmms"&gt;&lt;/property&gt;</span></div><div class="line"><span class="comment">         &lt;property name="jpaProperties"&gt;</span></div><div class="line"><span class="comment">             &lt;props&gt;</span></div><div class="line"><span class="comment">                 &lt;prop key="hibernate.ejb.naming_strategy"&gt;org.hibernate.cfg.ImprovedNamingStrategy&lt;/prop&gt;</span></div><div class="line"><span class="comment">                 &lt;prop key="hibernate.hbm2ddl.auto"&gt;update&lt;/prop&gt;</span></div><div class="line"><span class="comment">                 &lt;prop key="hibernate.show_sql"&gt;true&lt;/prop&gt;</span></div><div class="line"><span class="comment">                 &lt;prop key="hibernate.format_sql"&gt;true&lt;/prop&gt;</span></div><div class="line"><span class="comment">                 &lt;prop key="hibernate.dialect"&gt;org.hibernate.dialect.MySQL5InnoDBDialect&lt;/prop&gt;</span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment">                 &lt;prop key="hibernate.cache.use_second_level_cache"&gt;true&lt;/prop&gt;</span></div><div class="line"><span class="comment">                 &lt;prop key="hibernate.cache.region.factory_class"&gt;org.hibernate.cache.ehcache.EhCacheRegionFactory</span></div><div class="line"><span class="comment">                 &lt;/prop&gt;</span></div><div class="line"><span class="comment">                 &lt;prop key="hibernate.cache.use_query_cache"&gt;true&lt;/prop&gt;</span></div><div class="line"><span class="comment">             &lt;/props&gt;</span></div><div class="line"><span class="comment">         &lt;/property&gt;</span></div><div class="line"><span class="comment">         &lt;!–使用二級緩存–&gt;</span></div><div class="line"><span class="comment">         &lt;property name="sharedCacheMode" value="ENABLE_SELECTIVE"&gt;&lt;/property&gt;</span></div><div class="line"><span class="comment">     &lt;/bean&gt;</span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment">     &lt;!– 配置事务 –&gt;</span></div><div class="line"><span class="comment">     &lt;bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"&gt;</span></div><div class="line"><span class="comment">         &lt;property name="entityManagerFactory" ref="entityManagerFactory"&gt;&lt;/property&gt;</span></div><div class="line"><span class="comment">     &lt;/bean&gt;--&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- &lt;!– 配置SpringData部分 –&gt;</span></div><div class="line"><span class="comment">     &lt;jpa:repositories base-package="com.fxmms"</span></div><div class="line"><span class="comment">                       entity-manager-factory-ref="entityManagerFactory"&gt;</span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment">     &lt;/jpa:repositories&gt;--&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p><strong>2.3 service-applicationContext.xml</strong><br>主要管理业务逻辑组件，包括对数据库访问的事务控制，以及定时任务。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></div><div class="line"><span class="tag">       <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span></span></div><div class="line"><span class="tag">       <span class="attr">xmlns:aop</span>=<span class="string">"http://www.springframework.org/schema/aop"</span></span></div><div class="line"><span class="tag">       <span class="attr">xmlns:task</span>=<span class="string">"http://www.springframework.org/schema/task"</span></span></div><div class="line"><span class="tag">       <span class="attr">xmlns:tx</span>=<span class="string">"http://www.springframework.org/schema/tx"</span></span></div><div class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd</span></span></div><div class="line"><span class="tag"><span class="string">  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd</span></span></div><div class="line"><span class="tag"><span class="string">  http://www.springframework.org/schema/aop</span></span></div><div class="line"><span class="tag"><span class="string">  http://www.springframework.org/schema/aop/spring-aop.xsd</span></span></div><div class="line"><span class="tag"><span class="string">  http://www.springframework.org/schema/tx</span></span></div><div class="line"><span class="tag"><span class="string">  http://www.springframework.org/schema/tx/spring-tx.xsd</span></span></div><div class="line"><span class="tag"><span class="string">        http://www.springframework.org/schema/task</span></span></div><div class="line"><span class="tag"><span class="string">        http://www.springframework.org/schema/task/spring-task.xsd"</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">aop:aspectj-autoproxy</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!--设置定时任务--&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">task:annotation-driven</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"com.fxmms.www"</span> <span class="attr">use-default-filters</span>=<span class="string">"false"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">context:include-filter</span> <span class="attr">type</span>=<span class="string">"annotation"</span> <span class="attr">expression</span>=<span class="string">"org.springframework.stereotype.Service"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- enable the configuration of transactional behavior based on annotations --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">tx:annotation-driven</span> <span class="attr">transaction-manager</span>=<span class="string">"txManager"</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"txManager"</span> <span class="attr">class</span>=<span class="string">"org.springframework.orm.hibernate4.HibernateTransactionManager"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"sessionFactory"</span> <span class="attr">ref</span>=<span class="string">"sessionFactory"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p><strong>2.4 default-servlet.xml</strong><br>设置springmvc-applicationContext.xml,前端控制器将请求转发到相应的controller层中的处理方法上。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></div><div class="line"><span class="tag">       <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span></span></div><div class="line"><span class="tag">       <span class="attr">xmlns:mvc</span>=<span class="string">"http://www.springframework.org/schema/mvc"</span></span></div><div class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans</span></span></div><div class="line"><span class="tag"><span class="string">       http://www.springframework.org/schema/beans/spring-beans.xsd</span></span></div><div class="line"><span class="tag"><span class="string">       http://www.springframework.org/schema/context</span></span></div><div class="line"><span class="tag"><span class="string">       http://www.springframework.org/schema/context/spring-context.xsd</span></span></div><div class="line"><span class="tag"><span class="string">       http://www.springframework.org/schema/mvc</span></span></div><div class="line"><span class="tag"><span class="string">       http://www.springframework.org/schema/mvc/spring-mvc.xsd"</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!----&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">mvc:annotation-driven</span>&gt;</span></div><div class="line">        <span class="comment">&lt;!--json解析--&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">mvc:message-converters</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.http.converter.StringHttpMessageConverter"</span>/&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">mvc:message-converters</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">mvc:annotation-driven</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"com.fxmms.www.controller"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">context:include-filter</span> <span class="attr">type</span>=<span class="string">"annotation"</span> <span class="attr">expression</span>=<span class="string">"org.springframework.stereotype.Controller"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!--因为web.xml中defaultDispatcherServlet对所有请求进行了拦截，所以对一些.css .jpg .html .jsp也进行了拦截，所以此配置项</span></div><div class="line"><span class="comment">    保证对对静态资源不拦截--&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">mvc:default-servlet-handler</span>/&gt;</span></div><div class="line">    <span class="comment">&lt;!--视图解析器--&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"viewResolver"</span></span></div><div class="line"><span class="tag">          <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.view.InternalResourceViewResolver"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"prefix"</span> <span class="attr">value</span>=<span class="string">"/WEB-INF/views/"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"suffix"</span> <span class="attr">value</span>=<span class="string">".jsp"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!--配置文件上上传--&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"multipartResolver"</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.multipart.commons.CommonsMultipartResolver"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"defaultEncoding"</span> <span class="attr">value</span>=<span class="string">"utf-8"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"maxUploadSize"</span> <span class="attr">value</span>=<span class="string">"10485760000"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"maxInMemorySize"</span> <span class="attr">value</span>=<span class="string">"40960"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p><strong>2.5 spring-security.xml</strong><br>设置spring－security 权限控制配置文件，项目中权限的控制统一在此配置文件中配置，包括从数据库中获取用户的相关信息，以及配置相应pattern的请求过滤规则。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line"><span class="tag">       <span class="attr">xmlns:sec</span>=<span class="string">"http://www.springframework.org/schema/security"</span></span></div><div class="line"><span class="tag">       <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span></span></div><div class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></div><div class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans</span></span></div><div class="line"><span class="tag"><span class="string">        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd</span></span></div><div class="line"><span class="tag"><span class="string">        http://www.springframework.org/schema/context</span></span></div><div class="line"><span class="tag"><span class="string">        http://www.springframework.org/schema/context/spring-context.xsd</span></span></div><div class="line"><span class="tag"><span class="string">        http://www.springframework.org/schema/security</span></span></div><div class="line"><span class="tag"><span class="string">        http://www.springframework.org/schema/security/spring-security-3.2.xsd"</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!--    &lt;sec:http pattern="/**/*.jpg" security="none"&gt;&lt;/sec:http&gt;</span></div><div class="line"><span class="comment">        &lt;sec:http pattern="/**/*.jpeg" security="none"&gt;&lt;/sec:http&gt;</span></div><div class="line"><span class="comment">        &lt;sec:http pattern="/**/*.gif" security="none"&gt;&lt;/sec:http&gt;</span></div><div class="line"><span class="comment">        &lt;sec:http pattern="/**/*.png" security="none"&gt;&lt;/sec:http&gt;s</span></div><div class="line"><span class="comment">        &lt;sec:http pattern="/getCode" security="none" /&gt;&lt;!– 不过滤验证码 –&gt;</span></div><div class="line"><span class="comment">        &lt;sec:http pattern="/test/**" security="none"&gt;&lt;/sec:http&gt;&lt;!– 不过滤测试内容 –&gt;--&gt;</span></div><div class="line">    <span class="comment">&lt;!--spring security 权限管理配置文件--&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"com.fxmms.common.security"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">context:property-placeholder</span> <span class="attr">location</span>=<span class="string">"classpath:db.properties"</span>&gt;</span><span class="tag">&lt;/<span class="name">context:property-placeholder</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!--权限控制--&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">sec:http</span> <span class="attr">auto-config</span>=<span class="string">"true"</span> <span class="attr">use-expressions</span>=<span class="string">"true"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">sec:intercept-url</span> <span class="attr">pattern</span>=<span class="string">"/superadmin/**"</span> <span class="attr">access</span>=<span class="string">"hasRole('superadmin')"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">sec:intercept-url</span> <span class="attr">pattern</span>=<span class="string">"/admin/**"</span> <span class="attr">access</span>=<span class="string">"hasRole('admin')"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">sec:intercept-url</span> <span class="attr">pattern</span>=<span class="string">"/customer/**"</span> <span class="attr">access</span>=<span class="string">"hasRole('customer')"</span>/&gt;</span></div><div class="line">        <span class="comment">&lt;!--自定义登陆页面,权限验证失败页面，登录成功页面--&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">sec:form-login</span> <span class="attr">login-page</span>=<span class="string">"/login.jsp"</span> <span class="attr">authentication-failure-url</span>=<span class="string">"/login.jsp"</span> <span class="attr">login-processing-url</span>=<span class="string">"/j_spring_security_check"</span></span></div><div class="line"><span class="tag">                        <span class="attr">authentication-success-handler-ref</span>=<span class="string">"loginSuccessHandler"</span>/&gt;</span></div><div class="line">        <span class="comment">&lt;!--用户权限不一致出现的权限不可得情况，默认情况下跳转到403页面--&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">sec:access-denied-handler</span> <span class="attr">ref</span>=<span class="string">"accessDeniedServletHandler"</span> /&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">sec:logout</span> <span class="attr">logout-success-url</span>=<span class="string">"/login.jsp"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">sec:http</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">sec:authentication-manager</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">sec:authentication-provider</span>&gt;</span></div><div class="line">            <span class="comment">&lt;!--配置从数据库查询用户权限  and isDelete = 0 and enable = 1--&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">sec:jdbc-user-service</span> <span class="attr">data-source-ref</span>=<span class="string">"dataSource"</span></span></div><div class="line"><span class="tag">                                   <span class="attr">users-by-username-query</span>=<span class="string">"select userName,password,enable  from mms_admin where userName=? and isDelete = 0 and enable = 1"</span></span></div><div class="line"><span class="tag">                                   <span class="attr">authorities-by-username-query</span>=<span class="string">"select userName,role from mms_admin where username=?"</span></span></div><div class="line"><span class="tag">            &gt;</span><span class="tag">&lt;/<span class="name">sec:jdbc-user-service</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">sec:authentication-provider</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">sec:authentication-manager</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p><strong>2.6 db.properties</strong><br>数据库访问配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">jdbc.user=root</div><div class="line">jdbc.password=feixun*123</div><div class="line">jdbc.driverClass=com.mysql.jdbc.Driver</div><div class="line">#jdbc.jdbcUrl=jdbc:mysql://localhost/fxmms?useUnicode=true&amp;characterEncoding=UTF-8</div><div class="line">jdbc.jdbcUrl=jdbc:mysql://222.73.156.132:13306/fxmms?useUnicode=true&amp;characterEncoding=UTF-8</div><div class="line"></div><div class="line">jdbc.initPoolSize=5</div><div class="line">jdbc.maxPoolSize=20</div><div class="line">dataSource.hibernate.dialect=org.hibernate.dialect.MySQL5Dialect</div><div class="line">#######################</div><div class="line">##      local        ##</div><div class="line">#######################</div><div class="line">dataSource.hibernate.show_sql=true</div></pre></td></tr></table></figure></p>
+<p><strong>2.7 log4j.properties</strong><br>配置项目日志文件，日志输出模式为Console<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">###########################################################################</div><div class="line"># Properties file for the log4j logger system</div><div class="line">#</div><div class="line">#  Note: During the uPortal build, the file at /properties/Logger.properties is copied</div><div class="line">#  to the log4j standard location /WEB-INF/classes/log4j.properties .  This means that editing the file</div><div class="line">#  at /properties/Logger.properties in a deployed uPortal will have no effect.</div><div class="line">#</div><div class="line"># Please read the instructions for the Log4J logging system at</div><div class="line"># http://jakarta.apache.org/log4j/ if you want to modify this.</div><div class="line"></div><div class="line">###########################################################################</div><div class="line"># You should probably replace the word &quot;debug&quot; with &quot;info&quot; in the</div><div class="line"># following line after everything is running.  This will turn off</div><div class="line"># the tons of debug messages, and leave only INFO, WARN, ERROR, etc.</div><div class="line">#</div><div class="line">log4j.rootLogger = info,stdout,D,E</div><div class="line"></div><div class="line">#配置stdout</div><div class="line">log4j.appender.stdout=org.apache.log4j.ConsoleAppender</div><div class="line">log4j.appender.stdout.Target=System.out</div><div class="line">log4j.appender.stdout.layout=org.apache.log4j.PatternLayout</div><div class="line">log4j.appender.stdout.layout.ConversionPattern=%d&#123;yyyy-MM-dd HH\:mm\:ss,SSS&#125; [%p]-[%l] %m%n</div><div class="line"></div><div class="line">#配置D 保存info debug级别的系统日志信息</div><div class="line">log4j.appender.D = org.apache.log4j.DailyRollingFileAppender</div><div class="line">#/Users/mark/mms/log.log 指定info debug级别日志信息存储位置</div><div class="line">log4j.appender.D.File = /Users/mark/mms/log.log</div><div class="line">log4j.appender.D.Append = true</div><div class="line">log4j.appender.D.Threshold = INFO,DEBUG</div><div class="line">log4j.appender.D.layout = org.apache.log4j.PatternLayout</div><div class="line">log4j.appender.D.layout.ConversionPattern = %d&#123;yyyy-MM-dd HH\:mm\:ss,SSS&#125; [%p]-[%l] %m%n</div><div class="line"></div><div class="line">#配置E 保存系统异常日志 </div><div class="line">log4j.appender.E = org.apache.log4j.DailyRollingFileAppender</div><div class="line">#/Users/mark/mms/error.log 指定info debug级别日志信息存储位置</div><div class="line">log4j.appender.E.File = /Users/mark/mms/error.log</div><div class="line">log4j.appender.E.Append = true</div><div class="line">log4j.appender.E.Threshold = ERROR</div><div class="line">log4j.appender.E.layout = org.apache.log4j.PatternLayout</div><div class="line">log4j.appender.E.layout.ConversionPattern = %d&#123;yyyy-MM-dd HH\:mm\:ss,SSS&#125; [%p]-[%l] %m%n</div><div class="line"></div><div class="line">#log4j.logger.org.hibernate=INFO</div><div class="line">#</div><div class="line">## Log all JDBC parameters</div><div class="line">#log4j.logger.org.hibernate.type=ALL</div><div class="line"></div><div class="line">##Hibernate begin 打印每次数据访问产生的sql语句至log.log 文件当中##</div><div class="line">log4j.logger.org.hibernate=info</div><div class="line">#配置SQL打印与输出</div><div class="line">log4j.logger.org.hibernate.SQL=DEBG</div><div class="line">log4j.logger.org.hibernate.HQL=DEGUG</div><div class="line">#log4j.logger.org.hibernate.type=ALL</div></pre></td></tr></table></figure></p>
+<p><strong>2.8 web.xml</strong><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">xmlns</span>=<span class="string">"http://xmlns.jcp.org/xml/ns/javaee"</span></span></div><div class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></div><div class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"</span></span></div><div class="line"><span class="tag">         <span class="attr">version</span>=<span class="string">"3.1"</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!--配置需要加载的spring配置文件，这些文件中的配置的类都是被&lt;context:component-scan&gt;扫描到的，比如@Repository @Component</span></div><div class="line"><span class="comment">    @Service @Controller等--&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">context-param</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>classpath:data-access-applicationContext.xml;classpath:spring-security.xml;classpath:service-applicationContext.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">context-param</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!--配置日志监听 ，如果配置文件报红，没有关系可以正常运行，这个与idea的验证规则有关--&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">context-param</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>log4jConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>classpath:log4j.properties<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">context-param</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">listener</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">listener-class</span>&gt;</span>org.springframework.web.util.Log4jConfigListener<span class="tag">&lt;/<span class="name">listener-class</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">listener</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">listener</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">listener-class</span>&gt;</span>org.springframework.web.context.ContextLoaderListener<span class="tag">&lt;/<span class="name">listener-class</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">listener</span>&gt;</span></div><div class="line"></div><div class="line">   <span class="comment">&lt;!--配置权限过滤器，注意必须配置在springmvc 之前，因为对用户访问资源的权限判断与控制是在访问特定url之前发生的--&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">filter</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>springSecurityFilterChain<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.springframework.web.filter.DelegatingFilterProxy<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">filter</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>springSecurityFilterChain<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- 配置字符编码过滤器  必须配置在所有过滤器的最前面 --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">filter</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>encoding<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>forceEncoding<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">filter</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!--超级管理员 --&gt;</span></div><div class="line">  <span class="comment">&lt;!-- &lt;filter&gt;</span></div><div class="line"><span class="comment">        &lt;filter-name&gt;superAdminFilter&lt;/filter-name&gt;</span></div><div class="line"><span class="comment">        &lt;filter-class&gt;com.fxmms.filter.SuperAdminFilter&lt;/filter-class&gt;</span></div><div class="line"><span class="comment">    &lt;/filter&gt;</span></div><div class="line"><span class="comment">    &lt;filter-mapping&gt;</span></div><div class="line"><span class="comment">        &lt;filter-name&gt;superAdminFilter&lt;/filter-name&gt;</span></div><div class="line"><span class="comment">        &lt;url-pattern&gt;/fxmms/superadmin/*&lt;/url-pattern&gt;</span></div><div class="line"><span class="comment">    &lt;/filter-mapping&gt;</span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment">    &lt;filter&gt;</span></div><div class="line"><span class="comment">        &lt;filter-name&gt;adminFilter&lt;/filter-name&gt;</span></div><div class="line"><span class="comment">        &lt;filter-class&gt;com.fxmms.filter.AdminFilter&lt;/filter-class&gt;</span></div><div class="line"><span class="comment">    &lt;/filter&gt;</span></div><div class="line"><span class="comment">    &lt;filter-mapping&gt;</span></div><div class="line"><span class="comment">        &lt;filter-name&gt;adminFilter&lt;/filter-name&gt;</span></div><div class="line"><span class="comment">        &lt;url-pattern&gt;/fxmms/admin/*&lt;/url-pattern&gt;</span></div><div class="line"><span class="comment">    &lt;/filter-mapping&gt;</span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment">    &lt;filter&gt;</span></div><div class="line"><span class="comment">        &lt;filter-name&gt;customerFilter&lt;/filter-name&gt;</span></div><div class="line"><span class="comment">        &lt;filter-class&gt;com.fxmms.filter.CustomerFilter&lt;/filter-class&gt;</span></div><div class="line"><span class="comment">    &lt;/filter&gt;</span></div><div class="line"><span class="comment">    &lt;filter-mapping&gt;</span></div><div class="line"><span class="comment">        &lt;filter-name&gt;customerFilter&lt;/filter-name&gt;</span></div><div class="line"><span class="comment">        &lt;url-pattern&gt;/fxmms/customer/*&lt;/url-pattern&gt;</span></div><div class="line"><span class="comment">    &lt;/filter-mapping&gt;</span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment">    &lt;servlet&gt;</span></div><div class="line"><span class="comment">        &lt;servlet-name&gt;LoginServlet&lt;/servlet-name&gt;</span></div><div class="line"><span class="comment">        &lt;servlet-class&gt;com.fxmms.servlet.LoginServlet&lt;/servlet-class&gt;</span></div><div class="line"><span class="comment">    &lt;/servlet&gt;</span></div><div class="line"><span class="comment">    &lt;servlet&gt;</span></div><div class="line"><span class="comment">        &lt;servlet-name&gt;InvalidateServlet&lt;/servlet-name&gt;</span></div><div class="line"><span class="comment">        &lt;servlet-class&gt;com.fxmms.servlet.InvalidateServlet&lt;/servlet-class&gt;</span></div><div class="line"><span class="comment">    &lt;/servlet&gt;-</span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment">    &lt;servlet-mapping&gt;</span></div><div class="line"><span class="comment">        &lt;servlet-name&gt;LoginServlet&lt;/servlet-name&gt;</span></div><div class="line"><span class="comment">        &lt;url-pattern&gt;/loginServlet&lt;/url-pattern&gt;</span></div><div class="line"><span class="comment">    &lt;/servlet-mapping&gt;</span></div><div class="line"><span class="comment">    &lt;servlet-mapping&gt;</span></div><div class="line"><span class="comment">    &lt;servlet-name&gt;InvalidateServlet&lt;/servlet-name&gt;</span></div><div class="line"><span class="comment">    &lt;url-pattern&gt;/invalidateServlet&lt;/url-pattern&gt;</span></div><div class="line"><span class="comment">    &lt;/servlet-mapping&gt;--&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- 配置看可以把POST请求转为PUT，DELETE请求的Filter --&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">filter</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>HiddenHttpMethodFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.springframework.web.filter.HiddenHttpMethodFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">filter</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>HiddenHttpMethodFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!--配置中央控制器，对所有请求进行拦截并做请求路径，与处理请求桩模块之间的映射--&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">servlet</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>defaultDispatcherServlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation</div><div class="line">            <span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>classpath:default-servlet.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>1<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!--这里是拦截所有--&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>defaultDispatcherServlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p><strong>2.9 build.gradle</strong><br>项目构建脚本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line">group &apos;com.fxmms&apos;</div><div class="line">version &apos;1.0-SNAPSHOT&apos;</div><div class="line"></div><div class="line">apply plugin: &apos;java&apos;</div><div class="line">apply plugin: &apos;idea&apos;</div><div class="line">apply plugin: &apos;war&apos;</div><div class="line">sourceCompatibility = 1.8</div><div class="line"></div><div class="line">repositories &#123;</div><div class="line">    maven &#123; url &quot;http://maven.aliyun.com/nexus/content/groups/public/&quot; &#125;</div><div class="line">    mavenLocal()</div><div class="line">    jcenter()</div><div class="line">    maven &#123; url &quot;http://repo.maven.apache.org/maven2/&quot;&#125;</div><div class="line">    maven &#123; url &apos;https://repo.spring.io/libs-milestone&apos;&#125;</div><div class="line">    mavenCentral()</div><div class="line">&#125;</div><div class="line"></div><div class="line">dependencies &#123;</div><div class="line">    testCompile group: &apos;junit&apos;, name: &apos;junit&apos;, version: &apos;4.12&apos;</div><div class="line">    // servlet-api</div><div class="line">    compile group: &apos;javax.servlet&apos;, name: &apos;servlet-api&apos;, version: &apos;2.5&apos;</div><div class="line">    //spring相关</div><div class="line">    compile group: &apos;org.springframework&apos;, name: &apos;spring-webmvc&apos;, version: &apos;4.3.3.RELEASE&apos;</div><div class="line">    compile group: &apos;org.springframework&apos;, name: &apos;spring-orm&apos;, version: &apos;4.3.3.RELEASE&apos;</div><div class="line">    compile group: &apos;org.springframework&apos;, name: &apos;spring-aspects&apos;, version: &apos;4.3.3.RELEASE&apos;</div><div class="line">    compile group: &apos;org.springframework.security&apos;, name: &apos;spring-security-config&apos;, version: &apos;3.2.0.RELEASE&apos;</div><div class="line">    compile group: &apos;org.springframework.security&apos;, name: &apos;spring-security-taglibs&apos;, version: &apos;3.2.0.RELEASE&apos;</div><div class="line">    compile &apos;org.springframework.security:spring-security-web:3.2.0.RELEASE&apos;</div><div class="line">    //hibernate相关</div><div class="line">    compile &apos;org.hibernate:hibernate-core:4.3.6.Final&apos;</div><div class="line">    //c3p0连接池</div><div class="line">    compile group: &apos;org.hibernate&apos;, name: &apos;hibernate-c3p0&apos;, version: &apos;4.3.6.Final&apos;</div><div class="line">    //ehcahe二级缓存</div><div class="line">    compile group: &apos;org.hibernate&apos;, name: &apos;hibernate-ehcache&apos;, version: &apos;4.3.6.Final&apos;</div><div class="line">    //mysql</div><div class="line">    compile group: &apos;mysql&apos;, name: &apos;mysql-connector-java&apos;, version: &apos;5.1.39&apos;</div><div class="line">    //springData</div><div class="line">    compile group: &apos;org.springframework.data&apos;, name: &apos;spring-data-jpa&apos;, version: &apos;1.10.3.RELEASE&apos;</div><div class="line">    // https://mvnrepository.com/artifact/log4j/log4j日志</div><div class="line">    compile group: &apos;log4j&apos;, name: &apos;log4j&apos;, version: &apos;1.2.17&apos;</div><div class="line">    //json解析相关</div><div class="line">    compile group: &apos;com.fasterxml.jackson.core&apos;, name: &apos;jackson-databind&apos;, version: &apos;2.5.4&apos;</div><div class="line">    compile group: &apos;com.fasterxml.jackson.core&apos;, name: &apos;jackson-core&apos;, version: &apos;2.5.4&apos;</div><div class="line">    //迅雷接口有关jar 包</div><div class="line">    compile &apos;org.apache.httpcomponents:httpclient:4.4&apos;</div><div class="line">    compile &apos;org.json:json:20141113&apos;</div><div class="line">    compile group: &apos;org.apache.clerezza.ext&apos;, name: &apos;org.json.simple&apos;, version: &apos;0.4&apos;</div><div class="line">    //https://mvnrepository.com/artifact/org.apache.commons/commons-io 读取文件相关</div><div class="line">    compile group: &apos;org.apache.commons&apos;, name: &apos;commons-io&apos;, version: &apos;1.3.2&apos;</div><div class="line">    // https://mvnrepository.com/artifact/org.apache.poi/poi 文件读取相关 apache-poi</div><div class="line">    compile group: &apos;org.apache.poi&apos;, name: &apos;poi&apos;, version: &apos;3.9&apos;</div><div class="line">    // https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml 解决execl 版本差异</div><div class="line">    compile group: &apos;org.apache.poi&apos;, name: &apos;poi-ooxml&apos;, version: &apos;3.9&apos;</div><div class="line">    // https://mvnrepository.com/artifact/commons-io/commons-io 文件上传</div><div class="line">    compile group: &apos;commons-io&apos;, name: &apos;commons-io&apos;, version: &apos;1.3.1&apos;</div><div class="line">    // https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload</div><div class="line">    compile group: &apos;commons-fileupload&apos;, name: &apos;commons-fileupload&apos;, version: &apos;1.2.2&apos;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="3-各层包功能讲解-amp-项目搭建完毕最终效果演示图"><a href="#3-各层包功能讲解-amp-项目搭建完毕最终效果演示图" class="headerlink" title="3. 各层包功能讲解&amp;项目搭建完毕最终效果演示图"></a>3. 各层包功能讲解&amp;项目搭建完毕最终效果演示图</h2><hr>
+<p><strong>3.1 项目中各层包功能讲解</strong><br>项目中Java源代码层级结构如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-df9aea221c723ec0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="项目中Java源代码层级结构"></p>
+<p>对于www包中的各分层，我们对照上图重点说明：</p>
+<blockquote>
+<p><strong>controller</strong>:用于路由各种HTTP访问，其中可以实现对前台页面参数的对象化绑定，这个功能的实现是依赖于spring mvc中的参数绑定功能，以及返回向前端页面返回数据。也可以实现基于Restful 风格API的编写。<br><strong>dao</strong>：用于实现对数据库的操作，包中的代码继承并实现自common中的dao 层代码，采用的是类的适配器模式实现的，这里的代码值得细细品味，可以说是整个项目的<strong>灵魂</strong>所在之处，稍后说明。<br><strong>domain</strong>:项目中的所有实体类都存在于这个包中，其中的每个具体实体类与数据库表相对应。<br><strong>dto</strong>:实现了序列化的数据传输层对象，可用于接收前台参数，前台参数被封装成dto 对象传输至后台。同时也负责对从数据库中查询数据的封装。<br><strong>qo</strong>:模糊查询对象所在的包，用于封装QBC动态查询参数。<br><strong>rowmapper</strong>：用于映射jdbcTemplate查询数据库返回对象的数据集，并将数据集依照以此对象为集合的实例进行封装。<br><strong>schedulejob</strong>：定时任务类所在的包，在此包中的类上都要加上@Service注解，因为定时任务注解配置在service-applicationContext.xml中，包扫描组件的规则是只扫描类上有@Service注解的组件类。<br><strong>service</strong>:业务逻辑层，所有的业务逻辑组件Bean都放置在这个保重，其中的类中的业务逻辑方法调用了dao实现类中的方法，并且每个有关于数据库操作的方法上都加上了@Transaction注解，用于实现对数据库操作的事务管理。@Transaction是Spring Framework对AOP 的另一种区别于拦截器的自定义注解实现。</p>
+</blockquote>
+<h2 id="4-项目中重要代码讲解"><a href="#4-项目中重要代码讲解" class="headerlink" title="4.项目中重要代码讲解"></a>4.项目中重要代码讲解</h2><hr>
+<p>主要讲解一下Dao层中代码对适配器设计模式的应用：<br>4.1 首先看下commom层中 <strong>BaseDao.java</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.fxmms.common.dao;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.fxmms.common.ro.Dto;</div><div class="line"><span class="keyword">import</span> com.fxmms.common.ro.DtoResultWithPageInfo;</div><div class="line"><span class="keyword">import</span> com.fxmms.common.ro.PageQo;</div><div class="line"><span class="keyword">import</span> org.hibernate.Criteria;</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Repository;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.Serializable;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"><span class="keyword">import</span> java.util.Map;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> * <span class="doctag">@param</span> &lt;T&gt;</span></div><div class="line"><span class="comment"> * <span class="doctag">@usage</span>  数据库公共操作接口</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="meta">@Repository</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BaseDao</span>&lt;<span class="title">T</span>&gt; </span>&#123;</div><div class="line"></div><div class="line"> <span class="comment">/**</span></div><div class="line"><span class="comment">  *</span></div><div class="line"><span class="comment">  * </span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> id</span></div><div class="line"><span class="comment">  * <span class="doctag">@usage</span> 根据id获取数据库中唯一纪录，封装成java对象并返回</span></div><div class="line"><span class="comment">  * <span class="doctag">@return</span> T</span></div><div class="line"><span class="comment">  */</span></div><div class="line"> <span class="function"><span class="keyword">public</span> T <span class="title">getById</span><span class="params">(Serializable id)</span></span>;</div><div class="line"></div><div class="line"> <span class="comment">/**</span></div><div class="line"><span class="comment">  * </span></div><div class="line"><span class="comment">  * </span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> id</span></div><div class="line"><span class="comment">  * <span class="doctag">@usage</span> 根据id懒加载数据库中唯一纪录，封装成java对象并返回</span></div><div class="line"><span class="comment">  * <span class="doctag">@return</span> T</span></div><div class="line"><span class="comment">  */</span></div><div class="line"> <span class="function"><span class="keyword">public</span> T <span class="title">load</span><span class="params">(Serializable id)</span></span>;</div><div class="line"></div><div class="line"> <span class="comment">/**</span></div><div class="line"><span class="comment">  * </span></div><div class="line"><span class="comment">  * </span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> columnName</span></div><div class="line"><span class="comment">  *            </span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> value</span></div><div class="line"><span class="comment">  *</span></div><div class="line"><span class="comment">  * <span class="doctag">@usage</span> 根据列名，以及对应的值获取数据库中惟一纪录，封装成Java对象并返回</span></div><div class="line"><span class="comment">  *          </span></div><div class="line"><span class="comment">  * <span class="doctag">@return</span></span></div><div class="line"><span class="comment">  */</span></div><div class="line"> <span class="function"><span class="keyword">public</span> T <span class="title">getByUniqueKey</span><span class="params">(String columnName, Object value)</span></span>;</div><div class="line"></div><div class="line"> <span class="comment">/**</span></div><div class="line"><span class="comment">  * </span></div><div class="line"><span class="comment">  * </span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> nameValuePairs</span></div><div class="line"><span class="comment">  *        </span></div><div class="line"><span class="comment">  * <span class="doctag">@return</span> T</span></div><div class="line"><span class="comment">  */</span></div><div class="line"> <span class="function"><span class="keyword">public</span> T <span class="title">getUniqueResult</span><span class="params">(Map&lt;String, Object&gt; nameValuePairs)</span></span>;</div><div class="line"></div><div class="line"> <span class="comment">/**</span></div><div class="line"><span class="comment">  * </span></div><div class="line"><span class="comment">  * </span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> columnName</span></div><div class="line"><span class="comment">  *            </span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> value</span></div><div class="line"><span class="comment">  *      </span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> sort</span></div><div class="line"><span class="comment">  *            </span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> order</span></div><div class="line"><span class="comment">  *            asc/desc</span></div><div class="line"><span class="comment">  * <span class="doctag">@return</span> List&lt;T&gt;</span></div><div class="line"><span class="comment">  */</span></div><div class="line"> <span class="function"><span class="keyword">public</span> List&lt;T&gt; <span class="title">getListByColumn</span><span class="params">(String columnName, Object value,</span></span></div><div class="line"><span class="function"><span class="params">                                   String sort, String order)</span></span>;</div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">public</span> List&lt;T&gt; <span class="title">getListByColumn</span><span class="params">(String columnName, Object value)</span></span>;</div><div class="line"></div><div class="line"> <span class="comment">/**</span></div><div class="line"><span class="comment">  * ͨ</span></div><div class="line"><span class="comment">  * </span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> nameValuePairs</span></div><div class="line"><span class="comment">  *            </span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> sort</span></div><div class="line"><span class="comment">  *            </span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> order</span></div><div class="line"><span class="comment">  *            asc/desc</span></div><div class="line"><span class="comment">  * <span class="doctag">@return</span> List&lt;T&gt;</span></div><div class="line"><span class="comment">  */</span></div><div class="line"> <span class="function"><span class="keyword">public</span> List&lt;T&gt; <span class="title">getListByColumns</span><span class="params">(Map&lt;String, Object&gt; nameValuePairs,</span></span></div><div class="line"><span class="function"><span class="params">                                    String sort, String order)</span></span>;</div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">public</span> List&lt;T&gt; <span class="title">getListByColumns</span><span class="params">(Map&lt;String, Object&gt; nameValuePairs)</span></span>;</div><div class="line"></div><div class="line"> <span class="comment">/**</span></div><div class="line"><span class="comment">  * </span></div><div class="line"><span class="comment">  * </span></div><div class="line"><span class="comment">  * <span class="doctag">@return</span> List&lt;T&gt;</span></div><div class="line"><span class="comment">  */</span></div><div class="line"> <span class="function"><span class="keyword">public</span> List&lt;T&gt; <span class="title">getAll</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line"> <span class="comment">/**</span></div><div class="line"><span class="comment">  * </span></div><div class="line"><span class="comment">  * </span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> t</span></div><div class="line"><span class="comment">  * <span class="doctag">@return</span> Serializable id</span></div><div class="line"><span class="comment">  */</span></div><div class="line"> <span class="function"><span class="keyword">public</span> Serializable <span class="title">save</span><span class="params">(T t)</span></span>;</div><div class="line"></div><div class="line"> <span class="comment">/**</span></div><div class="line"><span class="comment">  * </span></div><div class="line"><span class="comment">  * </span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> t</span></div><div class="line"><span class="comment">  */</span></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(T t)</span></span>;</div><div class="line"></div><div class="line"> <span class="comment">/**</span></div><div class="line"><span class="comment">  * </span></div><div class="line"><span class="comment">  * </span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> t</span></div><div class="line"><span class="comment">  */</span></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delete</span><span class="params">(T t)</span></span>;</div><div class="line"> </div><div class="line"> <span class="comment">/**</span></div><div class="line"><span class="comment">  * QBC</span></div><div class="line"><span class="comment">  * <span class="doctag">@return</span></span></div><div class="line"><span class="comment">  */</span></div><div class="line"> <span class="function"><span class="keyword">public</span> Criteria <span class="title">createCriteria</span><span class="params">()</span></span>;</div><div class="line"> </div><div class="line"> <span class="comment">/**</span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> &lt;E&gt;</span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> &lt;D&gt;</span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> criteria</span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> pageNo</span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> pageSize</span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> dtoClazz</span></div><div class="line"><span class="comment">  * <span class="doctag">@return</span></span></div><div class="line"><span class="comment">  */</span></div><div class="line"> <span class="keyword">public</span> &lt;E, D extends Dto&gt; <span class="function">DtoResultWithPageInfo&lt;D&gt; <span class="title">queryPageListByCriteria</span><span class="params">(</span></span></div><div class="line"><span class="function"><span class="params">            Criteria criteria, <span class="keyword">int</span> pageNo, <span class="keyword">int</span> pageSize, Class&lt;D&gt; dtoClazz)</span></span>;</div><div class="line"> </div><div class="line"></div><div class="line"> <span class="comment">/**</span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> &lt;E&gt;</span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> &lt;D&gt;</span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> criteria</span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> qo</span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> class1</span></div><div class="line"><span class="comment">  * <span class="doctag">@return</span></span></div><div class="line"><span class="comment">  */</span></div><div class="line"> <span class="keyword">public</span> &lt;E, D extends Dto&gt; <span class="function">DtoResultWithPageInfo&lt;D&gt; <span class="title">queryPageListByCriteriaWithQo</span><span class="params">(PageQo qo, Class&lt;D&gt; dtoClazz)</span></span>;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>其中定义了一些对数据库的抽象公共操作方法，代码中有注释，可以对照理解。</p>
+<p>4.2 <strong>看下HibernateTemplateDao.java对BaseDao.java的抽象实现</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div><div class="line">248</div><div class="line">249</div><div class="line">250</div><div class="line">251</div><div class="line">252</div><div class="line">253</div><div class="line">254</div><div class="line">255</div><div class="line">256</div><div class="line">257</div><div class="line">258</div><div class="line">259</div><div class="line">260</div><div class="line">261</div><div class="line">262</div><div class="line">263</div><div class="line">264</div><div class="line">265</div><div class="line">266</div><div class="line">267</div><div class="line">268</div><div class="line">269</div><div class="line">270</div><div class="line">271</div><div class="line">272</div><div class="line">273</div><div class="line">274</div><div class="line">275</div><div class="line">276</div><div class="line">277</div><div class="line">278</div><div class="line">279</div><div class="line">280</div><div class="line">281</div><div class="line">282</div><div class="line">283</div><div class="line">284</div><div class="line">285</div><div class="line">286</div><div class="line">287</div><div class="line">288</div><div class="line">289</div><div class="line">290</div><div class="line">291</div><div class="line">292</div><div class="line">293</div><div class="line">294</div><div class="line">295</div><div class="line">296</div><div class="line">297</div><div class="line">298</div><div class="line">299</div><div class="line">300</div><div class="line">301</div><div class="line">302</div><div class="line">303</div><div class="line">304</div><div class="line">305</div><div class="line">306</div><div class="line">307</div><div class="line">308</div><div class="line">309</div><div class="line">310</div><div class="line">311</div><div class="line">312</div><div class="line">313</div><div class="line">314</div><div class="line">315</div><div class="line">316</div><div class="line">317</div><div class="line">318</div><div class="line">319</div><div class="line">320</div><div class="line">321</div><div class="line">322</div><div class="line">323</div><div class="line">324</div><div class="line">325</div><div class="line">326</div><div class="line">327</div><div class="line">328</div><div class="line">329</div><div class="line">330</div><div class="line">331</div><div class="line">332</div><div class="line">333</div><div class="line">334</div><div class="line">335</div><div class="line">336</div><div class="line">337</div><div class="line">338</div><div class="line">339</div><div class="line">340</div><div class="line">341</div><div class="line">342</div><div class="line">343</div><div class="line">344</div><div class="line">345</div><div class="line">346</div><div class="line">347</div><div class="line">348</div><div class="line">349</div><div class="line">350</div><div class="line">351</div><div class="line">352</div><div class="line">353</div><div class="line">354</div><div class="line">355</div><div class="line">356</div><div class="line">357</div><div class="line">358</div><div class="line">359</div><div class="line">360</div><div class="line">361</div><div class="line">362</div><div class="line">363</div><div class="line">364</div><div class="line">365</div><div class="line">366</div><div class="line">367</div><div class="line">368</div><div class="line">369</div><div class="line">370</div><div class="line">371</div><div class="line">372</div><div class="line">373</div><div class="line">374</div><div class="line">375</div><div class="line">376</div><div class="line">377</div><div class="line">378</div><div class="line">379</div><div class="line">380</div><div class="line">381</div><div class="line">382</div><div class="line">383</div><div class="line">384</div><div class="line">385</div><div class="line">386</div><div class="line">387</div><div class="line">388</div><div class="line">389</div><div class="line">390</div><div class="line">391</div><div class="line">392</div><div class="line">393</div><div class="line">394</div><div class="line">395</div><div class="line">396</div><div class="line">397</div><div class="line">398</div><div class="line">399</div><div class="line">400</div><div class="line">401</div><div class="line">402</div><div class="line">403</div><div class="line">404</div><div class="line">405</div><div class="line">406</div><div class="line">407</div><div class="line">408</div><div class="line">409</div><div class="line">410</div><div class="line">411</div><div class="line">412</div><div class="line">413</div><div class="line">414</div><div class="line">415</div><div class="line">416</div><div class="line">417</div><div class="line">418</div><div class="line">419</div><div class="line">420</div><div class="line">421</div><div class="line">422</div><div class="line">423</div><div class="line">424</div><div class="line">425</div><div class="line">426</div><div class="line">427</div><div class="line">428</div><div class="line">429</div><div class="line">430</div><div class="line">431</div><div class="line">432</div><div class="line">433</div><div class="line">434</div><div class="line">435</div><div class="line">436</div><div class="line">437</div><div class="line">438</div><div class="line">439</div><div class="line">440</div><div class="line">441</div><div class="line">442</div><div class="line">443</div><div class="line">444</div><div class="line">445</div><div class="line">446</div><div class="line">447</div><div class="line">448</div><div class="line">449</div><div class="line">450</div><div class="line">451</div><div class="line">452</div><div class="line">453</div><div class="line">454</div><div class="line">455</div><div class="line">456</div><div class="line">457</div><div class="line">458</div><div class="line">459</div><div class="line">460</div><div class="line">461</div><div class="line">462</div><div class="line">463</div><div class="line">464</div><div class="line">465</div><div class="line">466</div><div class="line">467</div><div class="line">468</div><div class="line">469</div><div class="line">470</div><div class="line">471</div><div class="line">472</div><div class="line">473</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.fxmms.common.dao.hib;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.fxmms.common.dao.BaseDao;</div><div class="line"><span class="keyword">import</span> com.fxmms.common.ro.Dto;</div><div class="line"><span class="keyword">import</span> com.fxmms.common.ro.DtoResultWithPageInfo;</div><div class="line"><span class="keyword">import</span> com.fxmms.common.ro.PageInfo;</div><div class="line"><span class="keyword">import</span> com.fxmms.common.ro.PageQo;</div><div class="line"><span class="keyword">import</span> org.apache.commons.logging.Log;</div><div class="line"><span class="keyword">import</span> org.apache.commons.logging.LogFactory;</div><div class="line"><span class="keyword">import</span> org.hibernate.Criteria;</div><div class="line"><span class="keyword">import</span> org.hibernate.Session;</div><div class="line"><span class="keyword">import</span> org.hibernate.SessionFactory;</div><div class="line"><span class="keyword">import</span> org.hibernate.criterion.Order;</div><div class="line"><span class="keyword">import</span> org.hibernate.criterion.Projections;</div><div class="line"><span class="keyword">import</span> org.hibernate.criterion.Restrictions;</div><div class="line"><span class="keyword">import</span> org.springframework.beans.BeanUtils;</div><div class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</div><div class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Qualifier;</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Repository;</div><div class="line"><span class="keyword">import</span> org.springframework.util.StringUtils;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.Serializable;</div><div class="line"><span class="keyword">import</span> java.util.ArrayList;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"><span class="keyword">import</span> java.util.Map;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> * <span class="doctag">@param</span> &lt;T&gt;</span></div><div class="line"><span class="comment"> * <span class="doctag">@usage</span> 应用数据访问的灵魂，抽象出各种模型类进行数据库访问的公共操作。</span></div><div class="line"><span class="comment"> *        主要使用到QBC动态查询。主要思想是利用反射。</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="meta">@Repository</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">HibernateTemplateDao</span>&lt;<span class="title">T</span>&gt; <span class="keyword">implements</span> <span class="title">BaseDao</span>&lt;<span class="title">T</span>&gt; </span>&#123;</div><div class="line"> <span class="keyword">protected</span> <span class="keyword">static</span> <span class="keyword">final</span> Log log = LogFactory</div><div class="line">   .getLog(HibernateTemplateDao.class);</div><div class="line">    <span class="comment">//通过反射，可以实现对不同类对应的数据表的操作</span></div><div class="line"> <span class="keyword">protected</span> <span class="keyword">abstract</span> Class&lt;?&gt; getEntityClass();</div><div class="line"></div><div class="line"> </div><div class="line"> <span class="keyword">protected</span> SessionFactory sessionFactory;</div><div class="line"> </div><div class="line"> <span class="meta">@Autowired</span></div><div class="line"> <span class="meta">@Qualifier</span>(<span class="string">"sessionFactory"</span>)</div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSessionFactory</span><span class="params">(SessionFactory sessionFactory)</span> </span>&#123;</div><div class="line">  <span class="keyword">this</span>.sessionFactory = sessionFactory;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">public</span> Session <span class="title">getSession</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">return</span> sessionFactory.getCurrentSession();</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">public</span> Session <span class="title">openNewSession</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">return</span> sessionFactory.openSession();</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="meta">@Override</span></div><div class="line"> <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</div><div class="line"> <span class="function"><span class="keyword">public</span> T <span class="title">getById</span><span class="params">(Serializable id)</span> </span>&#123;</div><div class="line">  <span class="keyword">return</span> (T) getSession().get(getEntityClass(), id);</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="meta">@Override</span></div><div class="line"> <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</div><div class="line"> <span class="function"><span class="keyword">public</span> T <span class="title">getByUniqueKey</span><span class="params">(String columnName, Object value)</span> </span>&#123;</div><div class="line">  <span class="keyword">return</span> (T) getSession().createCriteria(getEntityClass())</div><div class="line">    .add(Restrictions.eq(columnName, value)).uniqueResult();</div><div class="line"> &#125;</div><div class="line"> </div><div class="line"> <span class="meta">@Override</span></div><div class="line"> <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</div><div class="line"> <span class="function"><span class="keyword">public</span> List&lt;T&gt; <span class="title">getListByColumn</span><span class="params">(String columnName, Object value,String sort,String order)</span> </span>&#123;</div><div class="line">  Criteria criteria = getSession().createCriteria(getEntityClass());</div><div class="line">  criteria.add(Restrictions.eq(columnName, value));</div><div class="line">  <span class="keyword">if</span>(StringUtils.hasText(sort) &amp;&amp; StringUtils.hasText(order))&#123;</div><div class="line">   <span class="keyword">if</span>(<span class="string">"asc"</span>.equals(order))&#123;</div><div class="line">    criteria.addOrder(Order.asc(sort));</div><div class="line">   &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="string">"desc"</span>.equals(order))&#123;</div><div class="line">    criteria.addOrder(Order.desc(sort));</div><div class="line">   &#125;   </div><div class="line">  &#125;</div><div class="line">  List&lt;T&gt; list = criteria.list();</div><div class="line">  <span class="keyword">return</span> list;</div><div class="line"> &#125;</div><div class="line"> </div><div class="line"> <span class="meta">@Override</span></div><div class="line"> <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</div><div class="line"> <span class="function"><span class="keyword">public</span> List&lt;T&gt; <span class="title">getListByColumn</span><span class="params">(String columnName, Object value)</span> </span>&#123;</div><div class="line">  Criteria criteria = getSession().createCriteria(getEntityClass());</div><div class="line">  criteria.add(Restrictions.eq(columnName, value));</div><div class="line">  List&lt;T&gt; list = criteria.list();</div><div class="line">  <span class="keyword">return</span> list;</div><div class="line"> &#125;</div><div class="line"> </div><div class="line"> <span class="meta">@Override</span></div><div class="line"> <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</div><div class="line"> <span class="function"><span class="keyword">public</span> List&lt;T&gt; <span class="title">getListByColumns</span><span class="params">(Map&lt;String, Object&gt; nameValuePairs,String sort,String order)</span></span>&#123;</div><div class="line">  Criteria criteria = getSession().createCriteria(getEntityClass());</div><div class="line">  <span class="keyword">for</span> (Map.Entry&lt;String, Object&gt; entry : nameValuePairs.entrySet()) &#123;</div><div class="line">   criteria.add(Restrictions.eq(entry.getKey(), entry.getValue()));</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">if</span>(StringUtils.hasText(sort) &amp;&amp; StringUtils.hasText(order))&#123;</div><div class="line">   <span class="keyword">if</span>(<span class="string">"asc"</span>.equals(order))&#123;</div><div class="line">    criteria.addOrder(Order.asc(sort));</div><div class="line">   &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="string">"desc"</span>.equals(order))&#123;</div><div class="line">    criteria.addOrder(Order.desc(sort));</div><div class="line">   &#125;   </div><div class="line">  &#125;</div><div class="line">  List&lt;T&gt; list = criteria.list();</div><div class="line">  <span class="keyword">return</span> list;</div><div class="line"> &#125;</div><div class="line"> </div><div class="line"> <span class="meta">@Override</span></div><div class="line"> <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</div><div class="line"> <span class="function"><span class="keyword">public</span> List&lt;T&gt; <span class="title">getListByColumns</span><span class="params">(Map&lt;String, Object&gt; nameValuePairs)</span></span>&#123;</div><div class="line">  Criteria criteria = getSession().createCriteria(getEntityClass());</div><div class="line">  <span class="keyword">for</span> (Map.Entry&lt;String, Object&gt; entry : nameValuePairs.entrySet()) &#123;</div><div class="line">   criteria.add(Restrictions.eq(entry.getKey(), entry.getValue()));</div><div class="line">  &#125;</div><div class="line">  List&lt;T&gt; list = criteria.list();</div><div class="line">  <span class="keyword">return</span> list;</div><div class="line"> &#125;</div><div class="line"> <span class="meta">@Override</span></div><div class="line"> <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</div><div class="line"> <span class="function"><span class="keyword">public</span> List&lt;T&gt; <span class="title">getAll</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">return</span> getSession().createCriteria(getEntityClass()).list();</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="meta">@Override</span></div><div class="line"> <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</div><div class="line"> <span class="function"><span class="keyword">public</span> T <span class="title">getUniqueResult</span><span class="params">(Map&lt;String, Object&gt; nameValuePairs)</span> </span>&#123;</div><div class="line">  Criteria criteria = getSession().createCriteria(getEntityClass());</div><div class="line">  <span class="keyword">for</span> (Map.Entry&lt;String, Object&gt; entry : nameValuePairs.entrySet()) &#123;</div><div class="line">   criteria.add(Restrictions.eq(entry.getKey(), entry.getValue()));</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> (T) criteria.uniqueResult();</div><div class="line"> &#125;</div><div class="line"> </div><div class="line"> <span class="meta">@Override</span></div><div class="line"> <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</div><div class="line"> <span class="function"><span class="keyword">public</span> T <span class="title">load</span><span class="params">(Serializable id)</span></span>&#123;</div><div class="line">  <span class="keyword">return</span> (T) getSession().load(getEntityClass(), id);</div><div class="line"> &#125;</div><div class="line"> </div><div class="line"> <span class="meta">@Override</span></div><div class="line"> <span class="function"><span class="keyword">public</span> Serializable <span class="title">save</span><span class="params">(T t)</span> </span>&#123;</div><div class="line">  <span class="keyword">return</span> getSession().save(t);</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="meta">@Override</span></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(T t)</span> </span>&#123;</div><div class="line">  Session session = <span class="keyword">this</span>.getSession();</div><div class="line">  session.update(t);</div><div class="line">  <span class="comment">//强制刷新缓存中数据至数据库中，防止大批量数据更新之后出现脏数据</span></div><div class="line">  session.flush();</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="meta">@Override</span></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delete</span><span class="params">(T t)</span> </span>&#123;</div><div class="line">  <span class="keyword">this</span>.getSession().delete(t);</div><div class="line"> &#125;</div><div class="line"> </div><div class="line"> <span class="comment">/**</span></div><div class="line"><span class="comment">  * QO  DtoResultWithPageInfo&lt;dtoClazz&gt;list+ҳϢ</span></div><div class="line"><span class="comment">  * </span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> page</span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> pageSize</span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> qo</span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> dtoClazz</span></div><div class="line"><span class="comment">  * <span class="doctag">@return</span></span></div><div class="line"><span class="comment">  */</span></div><div class="line"><span class="comment">/* public &lt;Q extends QueryObject, D extends Dto&gt; DtoResultWithPageInfo&lt;D&gt; queryPageListByQueryObject(</span></div><div class="line"><span class="comment">   int page, int pageSize,Q qo, Class&lt;D&gt; dtoClazz)&#123;</span></div><div class="line"><span class="comment">  Criteria criteria = QueryObjectHelper.buildCriteria(qo, getSession());</span></div><div class="line"><span class="comment">  return queryPageListByCriteria(criteria, page, pageSize, dtoClazz);</span></div><div class="line"><span class="comment"> &#125;*/</span></div><div class="line"> </div><div class="line"> <span class="comment">/**</span></div><div class="line"><span class="comment">  * QO List&lt;dtoClazz&gt;</span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> qo</span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> dtoClazz</span></div><div class="line"><span class="comment">  * <span class="doctag">@return</span></span></div><div class="line"><span class="comment">  */</span></div><div class="line"> <span class="comment">/*public &lt;Q extends QueryObject,E, D extends Dto&gt; List&lt;D&gt; queryListByQueryObject(</span></div><div class="line"><span class="comment">   Q qo, Class&lt;D&gt; dtoClazz)&#123;</span></div><div class="line"><span class="comment">  Criteria criteria = QueryObjectHelper.buildCriteria(qo, getSession()); </span></div><div class="line"><span class="comment">  @SuppressWarnings("unchecked")</span></div><div class="line"><span class="comment">  List&lt;E&gt; list = criteria.list();</span></div><div class="line"><span class="comment">  List&lt;D&gt; resultsDtoList = new ArrayList&lt;D&gt;();</span></div><div class="line"><span class="comment">  for(E entity:list)&#123;</span></div><div class="line"><span class="comment">   try &#123;</span></div><div class="line"><span class="comment">    D dto = dtoClazz.newInstance();</span></div><div class="line"><span class="comment">    BeanUtils.copyProperties(entity, dto);</span></div><div class="line"><span class="comment">    resultsDtoList.add(dto);</span></div><div class="line"><span class="comment">   &#125; catch (InstantiationException e) &#123;</span></div><div class="line"><span class="comment">    log.error("dtoʵ쳣ExMsg==&gt;"+e.getMessage());</span></div><div class="line"><span class="comment">   &#125; catch (IllegalAccessException e) &#123;</span></div><div class="line"><span class="comment">    log.error("dtoʵ쳣ExMsg==&gt;"+e.getMessage());</span></div><div class="line"><span class="comment">   &#125;</span></div><div class="line"><span class="comment">  &#125;</span></div><div class="line"><span class="comment">  return resultsDtoList;</span></div><div class="line"><span class="comment"> &#125;*/</span></div><div class="line"></div><div class="line"> <span class="comment">/**</span></div><div class="line"><span class="comment">  * queryPageListByCriteria</span></div><div class="line"><span class="comment">  * </span></div><div class="line"><span class="comment">  * ͨcriteria  DtoResultWithPageInfo&lt;dtoClazz&gt;list+ҳϢ</span></div><div class="line"><span class="comment">  * </span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> criteria</span></div><div class="line"><span class="comment">  *            ѯ</span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> pageNo</span></div><div class="line"><span class="comment">  *            ǰҳ</span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> pageSize</span></div><div class="line"><span class="comment">  *            ÿҳʾ</span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> dtoClass</span></div><div class="line"><span class="comment">  *            ݴݶclass</span></div><div class="line"><span class="comment">  * </span></div><div class="line"><span class="comment">  */</span></div><div class="line"> <span class="comment">/*public &lt;E, D extends Dto&gt; DtoResultWithPageInfo&lt;D&gt; queryPageListByCriteria(</span></div><div class="line"><span class="comment">   Criteria criteria, int pageNo, int pageSize, Class&lt;D&gt; dtoClazz) &#123;</span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment">  PageInfo pageInfo = getInstancePageInfoWithCriteria(criteria, pageNo,</span></div><div class="line"><span class="comment">    pageSize);</span></div><div class="line"><span class="comment">  criteria.setProjection(null);// ͶӰ</span></div><div class="line"><span class="comment">  criteria.setFirstResult(pageInfo.getFirstResultNum());</span></div><div class="line"><span class="comment">  criteria.setMaxResults(pageInfo.getPageSize());</span></div><div class="line"><span class="comment">  @SuppressWarnings("unchecked")</span></div><div class="line"><span class="comment">  List&lt;E&gt; resultsList = criteria.list();</span></div><div class="line"><span class="comment">  List&lt;D&gt; resultsDtoList = new ArrayList&lt;D&gt;();</span></div><div class="line"><span class="comment">  for (E result : resultsList) &#123;</span></div><div class="line"><span class="comment">   D dto;</span></div><div class="line"><span class="comment">   try &#123;</span></div><div class="line"><span class="comment">    dto = dtoClazz.newInstance();</span></div><div class="line"><span class="comment">    try &#123;</span></div><div class="line"><span class="comment">     BeanUtils.copyProperties(result, dto);</span></div><div class="line"><span class="comment">    &#125; catch (Exception e) &#123;</span></div><div class="line"><span class="comment">     log.error("ҳѯ쳣bean쳣");</span></div><div class="line"><span class="comment">     e.printStackTrace();</span></div><div class="line"><span class="comment">    &#125;</span></div><div class="line"><span class="comment">   &#125; catch (InstantiationException e) &#123;</span></div><div class="line"><span class="comment">    log.error("ҳѯ쳣dtoʼ쳣");</span></div><div class="line"><span class="comment">    e.printStackTrace();</span></div><div class="line"><span class="comment">    dto = null;</span></div><div class="line"><span class="comment">   &#125; catch (IllegalAccessException e) &#123;</span></div><div class="line"><span class="comment">    log.error("ҳѯ쳣dtoʼ쳣");</span></div><div class="line"><span class="comment">    e.printStackTrace();</span></div><div class="line"><span class="comment">    dto = null;</span></div><div class="line"><span class="comment">   &#125;</span></div><div class="line"><span class="comment">   resultsDtoList.add(dto);</span></div><div class="line"><span class="comment">  &#125;</span></div><div class="line"><span class="comment">  DtoResultWithPageInfo&lt;D&gt; resultWithPageInfo = new DtoResultWithPageInfo&lt;D&gt;(</span></div><div class="line"><span class="comment">    resultsDtoList, pageInfo);</span></div><div class="line"><span class="comment">  return resultWithPageInfo;</span></div><div class="line"><span class="comment"> &#125;*/</span></div><div class="line"> </div><div class="line"> <span class="comment">/**</span></div><div class="line"><span class="comment">  * ͨcriteria  List&lt;dtoClazz&gt;</span></div><div class="line"><span class="comment">  * </span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> criteria</span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> dtoClazz</span></div><div class="line"><span class="comment">  * <span class="doctag">@return</span></span></div><div class="line"><span class="comment">  */</span></div><div class="line"> <span class="comment">/*public &lt;E, D extends Dto&gt; List&lt;D&gt; queryListByCriteria(</span></div><div class="line"><span class="comment">   Criteria criteria,Class&lt;D&gt; dtoClazz) &#123;</span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment">  @SuppressWarnings("unchecked")</span></div><div class="line"><span class="comment">  List&lt;E&gt; resultsList = criteria.list();</span></div><div class="line"><span class="comment">  List&lt;D&gt; resultsDtoList = new ArrayList&lt;D&gt;();</span></div><div class="line"><span class="comment">  for (E result : resultsList) &#123;</span></div><div class="line"><span class="comment">   D dto;</span></div><div class="line"><span class="comment">   try &#123;</span></div><div class="line"><span class="comment">    dto = dtoClazz.newInstance();</span></div><div class="line"><span class="comment">    try &#123;</span></div><div class="line"><span class="comment">     BeanUtils.copyProperties(result, dto);</span></div><div class="line"><span class="comment">    &#125; catch (Exception e) &#123;</span></div><div class="line"><span class="comment">     log.error("ҳѯ쳣bean쳣");</span></div><div class="line"><span class="comment">     e.printStackTrace();</span></div><div class="line"><span class="comment">    &#125;</span></div><div class="line"><span class="comment">   &#125; catch (InstantiationException e) &#123;</span></div><div class="line"><span class="comment">    log.error("ҳѯ쳣dtoʼ쳣");</span></div><div class="line"><span class="comment">    e.printStackTrace();</span></div><div class="line"><span class="comment">    dto = null;</span></div><div class="line"><span class="comment">   &#125; catch (IllegalAccessException e) &#123;</span></div><div class="line"><span class="comment">    log.error("ҳѯ쳣dtoʼ쳣");</span></div><div class="line"><span class="comment">    e.printStackTrace();</span></div><div class="line"><span class="comment">    dto = null;</span></div><div class="line"><span class="comment">   &#125;</span></div><div class="line"><span class="comment">   resultsDtoList.add(dto);</span></div><div class="line"><span class="comment">  &#125;</span></div><div class="line"><span class="comment">  return resultsDtoList;</span></div><div class="line"><span class="comment"> &#125;*/</span></div><div class="line"> </div><div class="line"> <span class="comment">/*public DataTablePageList queryDataTablePageListByCriteria(</span></div><div class="line"><span class="comment">   Criteria criteria, String displayStart, String displayLength) &#123;</span></div><div class="line"><span class="comment">  // ܼ¼</span></div><div class="line"><span class="comment">  long totalRecords = 0L;</span></div><div class="line"><span class="comment">  criteria.setProjection(Projections.rowCount());</span></div><div class="line"><span class="comment">  totalRecords = (Long) criteria.uniqueResult();</span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment">  // </span></div><div class="line"><span class="comment">  criteria.setProjection(null);</span></div><div class="line"><span class="comment">  criteria.setFirstResult(Integer.parseInt(displayStart));</span></div><div class="line"><span class="comment">  criteria.setMaxResults(Integer.parseInt(displayLength));</span></div><div class="line"><span class="comment">  </span></div><div class="line"><span class="comment">  @SuppressWarnings("rawtypes")</span></div><div class="line"><span class="comment">  List resultsList = criteria.list();</span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment">  DataTablePageList dtpl = new DataTablePageList(</span></div><div class="line"><span class="comment">    String.valueOf((int) totalRecords), resultsList);</span></div><div class="line"><span class="comment">  return dtpl;</span></div><div class="line"><span class="comment"> &#125;</span></div><div class="line"><span class="comment"> */</span></div><div class="line"> </div><div class="line"></div><div class="line"> <span class="comment">/**</span></div><div class="line"><span class="comment">  * ͨѯʼҳϢ</span></div><div class="line"><span class="comment">  * </span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> criteria</span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> pageNo</span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> pageSize</span></div><div class="line"><span class="comment">  * <span class="doctag">@return</span></span></div><div class="line"><span class="comment">  */</span><span class="comment">/*</span></div><div class="line"><span class="comment"> private PageInfo getInstancePageInfoWithCriteria(Criteria criteria,</span></div><div class="line"><span class="comment">   int pageNo, int pageSize) &#123;</span></div><div class="line"><span class="comment">  long totalQuantity = 0L;</span></div><div class="line"><span class="comment">  criteria.setProjection(Projections.rowCount());</span></div><div class="line"><span class="comment">  totalQuantity = (Long) criteria.uniqueResult();</span></div><div class="line"><span class="comment">  PageInfo pageInfo = PageInfo.getInstance(pageNo, pageSize,</span></div><div class="line"><span class="comment">    totalQuantity);</span></div><div class="line"><span class="comment">  return pageInfo;</span></div><div class="line"><span class="comment"> &#125;*/</span></div><div class="line"> </div><div class="line"> <span class="meta">@Override</span></div><div class="line"> <span class="function"><span class="keyword">public</span> Criteria <span class="title">createCriteria</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="comment">// TODO Auto-generated method stub</span></div><div class="line">  <span class="keyword">return</span> getSession().createCriteria(getEntityClass());</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> </div><div class="line"> <span class="comment">/**</span></div><div class="line"><span class="comment">  * queryPageListByCriteria</span></div><div class="line"><span class="comment">  * </span></div><div class="line"><span class="comment">  * ͨcriteria  DtoResultWithPageInfo&lt;dtoClazz&gt;list+ҳϢ</span></div><div class="line"><span class="comment">  * </span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> criteria</span></div><div class="line"><span class="comment">  *            ѯ</span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> pageNo</span></div><div class="line"><span class="comment">  *            ǰҳ</span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> pageSize</span></div><div class="line"><span class="comment">  *            ÿҳʾ</span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> dtoClass</span></div><div class="line"><span class="comment">  *            ݴݶclass</span></div><div class="line"><span class="comment">  * ص DtoResultWithPageInfo </span></div><div class="line"><span class="comment">  * </span></div><div class="line"><span class="comment">  * Ϊ queryPageListByCriteria</span></div><div class="line"><span class="comment">  */</span></div><div class="line"> <span class="meta">@Override</span></div><div class="line"> <span class="keyword">public</span> &lt;E, D extends Dto&gt; <span class="function">DtoResultWithPageInfo&lt;D&gt; <span class="title">queryPageListByCriteria</span><span class="params">(</span></span></div><div class="line"><span class="function"><span class="params">   Criteria criteria, <span class="keyword">int</span> pageNo, <span class="keyword">int</span> pageSize, Class&lt;D&gt; dtoClazz)</span> </span>&#123;</div><div class="line">      <span class="comment">//˷ĵãpageinfoѾfirstResult  maxresult</span></div><div class="line">  PageInfo pageInfo = getInstancePageInfoWithCriteria(criteria, pageNo,</div><div class="line">    pageSize);</div><div class="line">  </div><div class="line">  criteria.setProjection(<span class="keyword">null</span>);<span class="comment">// ͶӰ</span></div><div class="line">  criteria.setFirstResult(pageInfo.getFirstResultNum());</div><div class="line">  criteria.setMaxResults(pageInfo.getPageSize());</div><div class="line">  <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</div><div class="line">  List&lt;E&gt; resultsList = criteria.list();</div><div class="line">  List&lt;D&gt; resultsDtoList = <span class="keyword">new</span> ArrayList&lt;D&gt;();</div><div class="line">  <span class="keyword">for</span> (E result : resultsList) &#123;</div><div class="line">   D dto;</div><div class="line">   <span class="keyword">try</span> &#123;</div><div class="line">    dto = dtoClazz.newInstance();</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">     BeanUtils.copyProperties(result, dto);</div><div class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">     log.error(<span class="string">"ҳѯ쳣bean쳣"</span>);</div><div class="line">     e.printStackTrace();</div><div class="line">    &#125;</div><div class="line">   &#125; <span class="keyword">catch</span> (InstantiationException e) &#123;</div><div class="line">    log.error(<span class="string">"ҳѯ쳣dtoʼ쳣"</span>);</div><div class="line">    e.printStackTrace();</div><div class="line">    dto = <span class="keyword">null</span>;</div><div class="line">   &#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;</div><div class="line">    log.error(<span class="string">"ҳѯ쳣dtoʼ쳣"</span>);</div><div class="line">    e.printStackTrace();</div><div class="line">    dto = <span class="keyword">null</span>;</div><div class="line">   &#125;</div><div class="line">   resultsDtoList.add(dto);</div><div class="line">  &#125;</div><div class="line">  DtoResultWithPageInfo&lt;D&gt; resultWithPageInfo = <span class="keyword">new</span> DtoResultWithPageInfo&lt;D&gt;(</div><div class="line">    resultsDtoList, pageInfo);</div><div class="line">  <span class="keyword">return</span> resultWithPageInfo;</div><div class="line"> &#125;</div><div class="line"> </div><div class="line"> <span class="comment">/**</span></div><div class="line"><span class="comment">  * queryPageListByCriteriaWithQo</span></div><div class="line"><span class="comment">  * </span></div><div class="line"><span class="comment">  * ͨcriteria  DtoResultWithPageInfo&lt;dtoClazz&gt;list+ҳϢ</span></div><div class="line"><span class="comment">  * </span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> criteria</span></div><div class="line"><span class="comment">  *            ѯ</span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> pageNo</span></div><div class="line"><span class="comment">  *            ǰҳ</span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> pageSize</span></div><div class="line"><span class="comment">  *            ÿҳʾ</span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> dtoClass</span></div><div class="line"><span class="comment">  *            ݴݶclass</span></div><div class="line"><span class="comment">  * ص DtoResultWithPageInfo </span></div><div class="line"><span class="comment">  * </span></div><div class="line"><span class="comment">  * Ϊ queryPageListByCriteria</span></div><div class="line"><span class="comment">  */</span></div><div class="line"> <span class="meta">@Override</span></div><div class="line"> <span class="keyword">public</span> &lt;E, D extends Dto&gt; <span class="function">DtoResultWithPageInfo&lt;D&gt; <span class="title">queryPageListByCriteriaWithQo</span><span class="params">(PageQo qo, Class&lt;D&gt; dtoClazz)</span> </span>&#123;</div><div class="line">      <span class="comment">//˷ĵãpageinfoѾfirstResult  maxresult</span></div><div class="line">  Criteria criteria = <span class="keyword">this</span>.createCriteria();</div><div class="line">  qo.add(criteria);</div><div class="line">  PageInfo pageInfo = getInstancePageInfoWithCriteria(criteria, qo.getPage(),qo.getRows());</div><div class="line">  </div><div class="line">  criteria.setProjection(<span class="keyword">null</span>);<span class="comment">// ͶӰ</span></div><div class="line">  criteria.setFirstResult(pageInfo.getFirstResultNum());</div><div class="line">  criteria.setMaxResults(pageInfo.getPageSize());</div><div class="line">  <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</div><div class="line">  List&lt;E&gt; resultsList = criteria.list();</div><div class="line">  List&lt;D&gt; resultsDtoList = <span class="keyword">new</span> ArrayList&lt;D&gt;();</div><div class="line">  <span class="keyword">for</span> (E result : resultsList) &#123;</div><div class="line">   D dto;</div><div class="line">   <span class="keyword">try</span> &#123;</div><div class="line">    dto = dtoClazz.newInstance();</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">     BeanUtils.copyProperties(result, dto);</div><div class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">     log.error(<span class="string">"ҳѯ쳣bean쳣"</span>);</div><div class="line">     e.printStackTrace();</div><div class="line">    &#125;</div><div class="line">   &#125; <span class="keyword">catch</span> (InstantiationException e) &#123;</div><div class="line">    log.error(<span class="string">"ҳѯ쳣dtoʼ쳣"</span>);</div><div class="line">    e.printStackTrace();</div><div class="line">    dto = <span class="keyword">null</span>;</div><div class="line">   &#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;</div><div class="line">    log.error(<span class="string">"ҳѯ쳣dtoʼ쳣"</span>);</div><div class="line">    e.printStackTrace();</div><div class="line">    dto = <span class="keyword">null</span>;</div><div class="line">   &#125;</div><div class="line">   resultsDtoList.add(dto);</div><div class="line">  &#125;</div><div class="line">  DtoResultWithPageInfo&lt;D&gt; resultWithPageInfo = <span class="keyword">new</span> DtoResultWithPageInfo&lt;D&gt;(</div><div class="line">    resultsDtoList, pageInfo);</div><div class="line">  <span class="keyword">return</span> resultWithPageInfo;</div><div class="line"> &#125;</div><div class="line"> </div><div class="line"> </div><div class="line"> </div><div class="line"> <span class="comment">/**</span></div><div class="line"><span class="comment">  * ͨѯʼҳϢ</span></div><div class="line"><span class="comment">  * </span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> criteria</span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> pageNo</span></div><div class="line"><span class="comment">  * <span class="doctag">@param</span> pageSize</span></div><div class="line"><span class="comment">  * <span class="doctag">@return</span></span></div><div class="line"><span class="comment">  */</span></div><div class="line"> <span class="function"><span class="keyword">private</span> PageInfo <span class="title">getInstancePageInfoWithCriteria</span><span class="params">(Criteria criteria,</span></span></div><div class="line"><span class="function"><span class="params">  <span class="keyword">int</span> pageNo, <span class="keyword">int</span> pageSize)</span> </span>&#123;</div><div class="line">   <span class="keyword">long</span> totalQuantity = <span class="number">0L</span>;</div><div class="line">         <span class="comment">//  ܵtotalQuality</span></div><div class="line">  criteria.setProjection(Projections.rowCount());</div><div class="line">  totalQuantity = (Long) criteria.uniqueResult();</div><div class="line">  </div><div class="line">  PageInfo pageInfo = PageInfo.getInstance(pageNo, pageSize,</div><div class="line">    totalQuantity);</div><div class="line">  <span class="keyword">return</span> pageInfo;</div><div class="line"> &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这个方法是极为重要的 <strong>protected abstract Class&lt;?&gt; getEntityClass();</strong><br>后续介绍，现在暂时有个印象。<br>在www中的dao层有与各具体类(数据表)相对应的数据库操作实现：<br><img src="http://upload-images.jianshu.io/upload_images/2836699-6a3c8b7bd1a2a8a9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2016-11-20 下午11.22.30.png"><br>上图声明了三个具体类对应的接口声明：AdminDao、MacDao、TaskDao。<br>对应三个接口有三个具体的实现类：AdminDaoImpl、MacDaoImpl、TaskDaoImpl。<br>我们以与Admin类相关的dao层操作为例：<br><strong>Admin.java</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.fxmms.www.domain;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.hibernate.annotations.GenericGenerator;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.persistence.*;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Created by mark on 16/11/2.</span></div><div class="line"><span class="comment"> * <span class="doctag">@usage</span> 管理员实体类，与数据库中表相对应</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="meta">@Entity</span></div><div class="line"><span class="meta">@Table</span>(name = <span class="string">"mms_admin"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Admin</span> </span>&#123;</div><div class="line">    <span class="meta">@Id</span></div><div class="line">    <span class="meta">@GeneratedValue</span>(generator = <span class="string">"increment"</span>)</div><div class="line">    <span class="meta">@GenericGenerator</span>(name = <span class="string">"increment"</span>, strategy = <span class="string">"increment"</span>)</div><div class="line">    <span class="meta">@Column</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> id;</div><div class="line">    <span class="meta">@Column</span></div><div class="line">    <span class="keyword">private</span> String userName;</div><div class="line">    <span class="meta">@Column</span></div><div class="line">    <span class="keyword">private</span> String password;</div><div class="line">    <span class="meta">@Column</span></div><div class="line">    <span class="keyword">private</span> String role;</div><div class="line">    <span class="meta">@Column</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> enable;</div><div class="line">    <span class="meta">@Column</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> isDelete;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getId</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> id;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(<span class="keyword">int</span> id)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.id = id;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getUserName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> userName;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUserName</span><span class="params">(String userName)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.userName = userName;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getPassword</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> password;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPassword</span><span class="params">(String password)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.password = password;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getRole</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> role;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setRole</span><span class="params">(String role)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.role = role;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getEnable</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> enable;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setEnable</span><span class="params">(<span class="keyword">int</span> enable)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.enable = enable;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getIsDelete</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> isDelete;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setIsDelete</span><span class="params">(<span class="keyword">int</span> isDelete)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.isDelete = isDelete;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>AdminDao.java</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.fxmms.www.dao;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.fxmms.common.dao.BaseDao;</div><div class="line"><span class="keyword">import</span> com.fxmms.www.domain.Admin;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Created by mark on 16/10/31.</span></div><div class="line"><span class="comment"> * <span class="doctag">@usage</span> 操作管理员数据库访问接口</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">AdminDao</span> <span class="keyword">extends</span> <span class="title">BaseDao</span>&lt;<span class="title">Admin</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>AdminDaoImpl.java</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.fxmms.www.dao.hib;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.fxmms.common.dao.hib.HibernateTemplateDao;</div><div class="line"><span class="keyword">import</span> com.fxmms.www.dao.AdminDao;</div><div class="line"><span class="keyword">import</span> com.fxmms.www.domain.Admin;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Created by mark on 16/11/2.</span></div><div class="line"><span class="comment"> * <span class="doctag">@usage</span> 使用适配器模式，将common层中定义的公共访问数据库方法实现嫁接到Admin类的接口中。</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AdminDaoImpl</span> <span class="keyword">extends</span> <span class="title">HibernateTemplateDao</span>&lt;<span class="title">Admin</span>&gt; <span class="keyword">implements</span> <span class="title">AdminDao</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="keyword">protected</span> Class&lt;?&gt; getEntityClass() &#123;</div><div class="line">        <span class="comment">// TODO Auto-generated method stub</span></div><div class="line">        <span class="keyword">return</span> Admin.class;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可以看到，在具体类相关的数据库操作实现类中，我们只需要实现HibernateTemplateDao<t>中抽象方法protected Class&lt;?&gt; getEntityClass()；即可。<br>给我们的感觉就是这个方法的实现是画龙点睛之笔。<br>回过头去看，在HibernateTemplateDao类中所有与数据库操作有关的方法：<br>例如：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</div><div class="line"><span class="function"><span class="keyword">public</span> T <span class="title">getByUniqueKey</span><span class="params">(String columnName, Object value)</span> </span>&#123;</div><div class="line"> <span class="keyword">return</span> (T) getSession().createCriteria(getEntityClass())</div><div class="line">   .add(Restrictions.eq(columnName, value)).uniqueResult();</div><div class="line">&#125;</div></pre></td></tr></table></figure></t></p>
+<p>getEntityClass()方法最终都会被具体的类所实现。这个设计真的是很巧妙。</p>
+<h2 id="5-webapp文件夹下分层详解"><a href="#5-webapp文件夹下分层详解" class="headerlink" title="5.webapp文件夹下分层详解"></a>5.webapp文件夹下分层详解</h2><hr>
+<p>webapp下有res文件夹，用于存储静态文件，WEB-INF文件夹下有view文件夹用于放置应用中jsp页面。<br>文件组织结构如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-7bfc624ba98ae300.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="webapp下静态资源以及前端页面"></p>
+<h2 id="6-配置tomcat-运行环境"><a href="#6-配置tomcat-运行环境" class="headerlink" title="6.配置tomcat 运行环境"></a>6.配置tomcat 运行环境</h2><hr>
+<p>项目搭建已经完毕，接下来需要做的就是配置项目的运行环境了，这里我们采用tomcat来充当应用服务器。<br>6.1 去官网下载<strong>tomcat 8.0</strong>：<a href="http://tomcat.apache.org/download-80.cgi" target="_blank" rel="external">http://tomcat.apache.org/download-80.cgi</a><br>6.2 配置 tomcat 服务器：<br>点击Edit Configurations<br><img src="http://upload-images.jianshu.io/upload_images/2836699-adbe573aca906795.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2016-11-20 下午11.48.58.png"><br>点击<strong>+</strong>,并选择Tomcat Server中local选项<br><img src="http://upload-images.jianshu.io/upload_images/2836699-4165cdfd6c036090.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2016-11-20 下午11.51.03.png"><br>添加启动任务名称，默认为unnamed<br><img src="http://upload-images.jianshu.io/upload_images/2836699-3bc1d2d4fbb7ecef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2016-11-21 上午9.33.39.png"><br>配置Application Server<br><img src="http://upload-images.jianshu.io/upload_images/2836699-c207e3fdc657a78c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2016-11-21 上午9.39.06.png"><br>装载开发版(exploded)应用war包,此步骤有两种方式：<br><strong>第一种方式：</strong>选择Deploy at the server startup下方的<strong>+</strong>，入下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-78f1066ab3e76dd0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2016-11-21 上午9.54.16.png"><br>接下来在Select Artifacts Deploy 弹出框中 选择 exploded 属性的war包<br><img src="http://upload-images.jianshu.io/upload_images/2836699-463b94c93db0bac3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2016-11-21 上午9.54.31.png"></p>
+<p>接下来选择apply－&gt; ok ，最终的结果是：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-0007a5982b4a4cf2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2016-11-21 上午10.05.46.png"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-6e94cec0a589554d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2016-11-21 上午10.12.55.png"><br>最终点击启动按钮启动应用<br><img src="http://upload-images.jianshu.io/upload_images/2836699-d28e2913b5b7e007.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2016-11-21 上午10.15.46.png"><br>最终的启动效果如下所示</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-3c464a313b435217.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2016-11-21 上午10.27.45.png"></p>
+<p>模板代码地址：<a href="https://coding.net/u/zongyuan/p/Java-backend-template/git" target="_blank" rel="external">https://coding.net/u/zongyuan/p/Java-backend-template/git</a><br>关于项目中应用到的JNI技术，会在后面讲解，主要侧重点是在代码层面解决JNI link library的问题。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="鱼大坤 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>个人微信号，欢迎添加~</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果我的文章对您有帮助，请小小的打赏一下吧~，我将>创作更好的文章给大家！谢谢！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="鱼大坤 Alipay"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/编程实操/" rel="tag"># 编程实操</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/14/java-jni/" rel="next" title="Java web 项目中使用JNI技术（如何在程序运行期间改变 java.library.path并生效）">
+                <i class="fa fa-chevron-left"></i> Java web 项目中使用JNI技术（如何在程序运行期间改变 java.library.path并生效）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/14/IntellijIdea-Mac-use-debug/" rel="prev" title="Intellij  Idea--Debug使用（Mac）">
+                Intellij  Idea--Debug使用（Mac） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+
+     <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTgzNS84Mzk5">
+          <!-- 来必力City版安装代码 -->
+          	<script type="text/javascript">
+             (function(d, s) {
+                 var j, e = d.getElementsByTagName(s)[0];
+
+                 if (typeof LivereTower === 'function') { return; }
+
+                 j = d.createElement(s);
+                 j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                 j.async = true;
+
+                 e.parentNode.insertBefore(j, e);
+             })(document, 'script');
+          	</script>
+      </div>
+          <!-- City版安装代码已完成 -->
+</div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="鱼大坤" />
+          <p class="site-author-name" itemprop="name">鱼大坤</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-本地开发环境搭建"><span class="nav-number">1.</span> <span class="nav-text">Java 本地开发环境搭建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-使用Intellj-Idea-搭建项目过程详解"><span class="nav-number">2.</span> <span class="nav-text">1. 使用Intellj Idea 搭建项目过程详解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-项目各配置文件讲解及部署"><span class="nav-number">3.</span> <span class="nav-text">2. 项目各配置文件讲解及部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-各层包功能讲解-amp-项目搭建完毕最终效果演示图"><span class="nav-number">4.</span> <span class="nav-text">3. 各层包功能讲解&项目搭建完毕最终效果演示图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-项目中重要代码讲解"><span class="nav-number">5.</span> <span class="nav-text">4.项目中重要代码讲解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-webapp文件夹下分层详解"><span class="nav-number">6.</span> <span class="nav-text">5.webapp文件夹下分层详解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-配置tomcat-运行环境"><span class="nav-number">7.</span> <span class="nav-text">6.配置tomcat 运行环境</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">鱼大坤</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://markfork.com/2017/11/14/IntellijIdea-Java-gradle-develop-enviroment/';
+          this.page.identifier = '2017/11/14/IntellijIdea-Java-gradle-develop-enviroment/';
+          this.page.title = '使用Intellij Idea＋Gradle 搭建Java 本地开发环境';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2148159"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.2"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/exturl.js?v=5.1.2"></script>
+
+
+</body>
+</html>

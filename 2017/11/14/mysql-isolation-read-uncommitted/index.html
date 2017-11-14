@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="数据库," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="鱼大坤" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/team.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="1.目的 1.1 合适人群12341.数据库事务特征我只是背过，并没有很深刻的理解。2.数据库事务的隔离级别只是了解，并没有深刻理解，也没有在实际工作中体验使用过。3.经常面试被人问起数据库加锁情况，一头雾水，很懵。4.在网上找过很多博客，有的写得太多没耐心看，有的写得摘抄的定义，泛泛而谈，没有实操更没有讲解。">
+<meta name="keywords" content="数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库事务特征、数据库隔离级别，以及各级别数据库加锁情况(含实操)--read uncommitted篇">
+<meta property="og:url" content="http://markfork.com/2017/11/14/mysql-isolation-read-uncommitted/index.html">
+<meta property="og:site_name" content="鱼大坤">
+<meta property="og:description" content="1.目的 1.1 合适人群12341.数据库事务特征我只是背过，并没有很深刻的理解。2.数据库事务的隔离级别只是了解，并没有深刻理解，也没有在实际工作中体验使用过。3.经常面试被人问起数据库加锁情况，一头雾水，很懵。4.在网上找过很多博客，有的写得太多没耐心看，有的写得摘抄的定义，泛泛而谈，没有实操更没有讲解。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-8653a811b9459e61.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-742f35e0e004fa38.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-e20808ef162cc8e6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-eef033408272e785.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-11e078f3609eb560.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-500f4d4182bd3808.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-d1f6c33887ad3cad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-534afe23b0f99e47.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-a8de23ba474fe228.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-46b8a807f2ca3fbb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-11-14T08:32:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据库事务特征、数据库隔离级别，以及各级别数据库加锁情况(含实操)--read uncommitted篇">
+<meta name="twitter:description" content="1.目的 1.1 合适人群12341.数据库事务特征我只是背过，并没有很深刻的理解。2.数据库事务的隔离级别只是了解，并没有深刻理解，也没有在实际工作中体验使用过。3.经常面试被人问起数据库加锁情况，一头雾水，很懵。4.在网上找过很多博客，有的写得太多没耐心看，有的写得摘抄的定义，泛泛而谈，没有实操更没有讲解。">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2836699-8653a811b9459e61.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://markfork.com/2017/11/14/mysql-isolation-read-uncommitted/"/>
+
+
+
+
+
+  <title>数据库事务特征、数据库隔离级别，以及各级别数据库加锁情况(含实操)--read uncommitted篇 | 鱼大坤</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">鱼大坤</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">凡事皆有极困难之时，打得通的，便是好汉!</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/mysql-isolation-read-uncommitted/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="鱼大坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="鱼大坤">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">数据库事务特征、数据库隔离级别，以及各级别数据库加锁情况(含实操)--read uncommitted篇</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:32:24+08:00">
+                2017-11-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/14/mysql-isolation-read-uncommitted/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/14/mysql-isolation-read-uncommitted/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-目的"><a href="#1-目的" class="headerlink" title="1.目的"></a>1.目的</h2><hr>
+<h2 id="1-1-合适人群"><a href="#1-1-合适人群" class="headerlink" title="1.1 合适人群"></a>1.1 合适人群</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1.数据库事务特征我只是背过，并没有很深刻的理解。</div><div class="line">2.数据库事务的隔离级别只是了解，并没有深刻理解，也没有在实际工作中体验使用过。</div><div class="line">3.经常面试被人问起数据库加锁情况，一头雾水，很懵。</div><div class="line">4.在网上找过很多博客，有的写得太多没耐心看，有的写得摘抄的定义，泛泛而谈，没有实操更没有讲解。</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="1-2-关于这篇分享对以上问题的解决"><a href="#1-2-关于这篇分享对以上问题的解决" class="headerlink" title="1.2 关于这篇分享对以上问题的解决"></a>1.2 关于这篇分享对以上问题的解决</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1.实践出真知，如果认真读完，并实操，实操过后反复咀嚼，相信上面的问题，除了你有没有耐心看等主观因素，其他的都能一一解决。</div><div class="line">2.希望这是理解数据库事务问题的一篇好文章。</div><div class="line">3.如果有什么问题，请评论下， 我们多交流谢谢。</div></pre></td></tr></table></figure>
+<h2 id="2-事务本质剖析"><a href="#2-事务本质剖析" class="headerlink" title="2.事务本质剖析"></a>2.事务本质剖析</h2><hr>
+<h3 id="2-1-什么是事务？"><a href="#2-1-什么是事务？" class="headerlink" title="2.1 什么是事务？"></a>2.1 什么是事务？</h3><h4 id="2-2-1-如下表格所示："><a href="#2-2-1-如下表格所示：" class="headerlink" title="2.2.1 如下表格所示："></a>2.2.1 如下表格所示：</h4><table>
+<thead>
+<tr>
+<th>事务类别(不考虑分布式事物)</th>
+<th>事务本质</th>
+<th>并发事务解决方案</th>
+<th>并发事务方案解决的问题</th>
+<th>并发事务解决方案实现原理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据库事务(狭义理解)</td>
+<td>数据库sql执行过程</td>
+<td>控制事务隔离级别</td>
+<td>确保数据完整、安全、一致性，在此基础上实现高性能访问（鱼和熊掌不可兼得）</td>
+<td>不同的加锁策略</td>
+</tr>
+<tr>
+<td>应用层事务(广义理解)</td>
+<td>业务逻辑</td>
+<td>制定多线程访问策略，如悲观锁(同步)、乐观锁（无锁，CAS思想）</td>
+<td>确保线程之间操作不会相互影响，保证各访问能保证得到期望结果，并在此基础上实现最大可能性的高性能访问</td>
+<td>不同的加锁策略</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2-2-2-对上述表格内容的解释"><a href="#2-2-2-对上述表格内容的解释" class="headerlink" title="2.2.2 对上述表格内容的解释"></a>2.2.2 对上述表格内容的解释</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">#### msyql事务</div><div class="line">1.mysql:传统理解 mysql 中的一次操作过程(sql 执行)是一次事务。</div><div class="line">2.mysql:那么多个线程 同时操作 mysql 中的数据（同一条数据，一个范围内数据）就叫并发事务。</div><div class="line">3.mysql:数据库层面使用不同的事务隔离级别来进行并发事务的控制，不同的隔离级别是因为数据库中内部锁机制的使用方式不同，例如有的是在select完成之后立马释放锁，有的是在整个事务commit 之后释放锁</div><div class="line">。</div><div class="line">--------------------------------------------------------------------------------------------------------------</div><div class="line">#### 应用层事务</div><div class="line">1.应用：其实每一个线程调用服务本质上也是事务。</div><div class="line">2.应用：多个线程同时调用服务，叫并发调用服务，也可以叫并发事务。</div><div class="line">3.应用：应用层应对并发事务(访问)解决方案有同步(悲观锁)、乐观锁(无锁CAS)。我们对并发访问做系统应用层控制也会使用到锁。</div></pre></td></tr></table></figure>
+<h4 id="个人理解这就是事务的本质。事务不应该只仅限于数据库。"><a href="#个人理解这就是事务的本质。事务不应该只仅限于数据库。" class="headerlink" title="个人理解这就是事务的本质。事务不应该只仅限于数据库。"></a>个人理解这就是事务的本质。事务不应该只仅限于数据库。</h4><h2 id="2-2-关于ACID"><a href="#2-2-关于ACID" class="headerlink" title="2.2 关于ACID"></a>2.2 关于ACID</h2><p>举例子说明<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1.A 原子性：事务可以简单理解为一次数据库操作，也就是执行sql的过程，要么执行，要么不执行，整个执行结果只有两种执行成功，执行失败。</div><div class="line">2.C 一致性：A有100块钱，转1块钱给另外一个帐户，还有99块钱，在整个事务执行过程中，钱数总是100块，不会变，这就是一致性。</div><div class="line">3.I 隔离性：事务执行过程相互隔离，不会相互之间产生影响（这只是美好的愿望）。意思是多个事务并发执行的话，结果应该与多个事务串行执行效果是一样的。但并发情况下需要考虑性能，所以就需要在隔离性上做些手脚（妥协），也就是制定不同的隔离级别达到不同的并发性能。</div><div class="line">4.D 持久性：事务每一次的执行结果都应该持久化（存储）到数据库中（磁盘数据）。想想除了select，其他的update/delete/insert都会产生这样的结果，持久化在应用场景中是必须的，除非你写了假接口。哈哈。</div></pre></td></tr></table></figure></p>
+<h2 id="3-数据库事务的隔离级别"><a href="#3-数据库事务的隔离级别" class="headerlink" title="3.数据库事务的隔离级别"></a>3.数据库事务的隔离级别</h2><hr>
+<h3 id="3-1-为什么需要隔离级别"><a href="#3-1-为什么需要隔离级别" class="headerlink" title="3.1 为什么需要隔离级别?"></a>3.1 为什么需要隔离级别?</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1.四个特性之隔离性的体现。</div><div class="line">2.对不同并发事务应用场景提供不同解决方案。解决方案本质，加锁。</div><div class="line">3.如果不需要隔离别会出现什么情况？</div><div class="line">   假设一个场景，数据库中任何数据在被并发 curd 时不设置隔开级别，也就是不加锁，情景平移，我们学习多线程时，对线程对公共变量的并发操作不加锁会导致各种异常情况的发生。所以不设置数据库隔离级别，数据的变化我们是不能祈求数据库中数据按照我们预期去改变的。</div></pre></td></tr></table></figure>
+<p>现在我们知道数据库 隔离级别 的必要性，接下来讨论不同隔离级别会带来的问题。</p>
+<h3 id="3-2-不同隔离级别带来的问题（重要！含实操部分，最好可以实践下）"><a href="#3-2-不同隔离级别带来的问题（重要！含实操部分，最好可以实践下）" class="headerlink" title="3.2 不同隔离级别带来的问题（重要！含实操部分，最好可以实践下）"></a>3.2 不同隔离级别带来的问题（重要！含实操部分，最好可以实践下）</h3><p>1.前置条件–几个概念的理解（重要）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">不同隔离级别带来的数据操作问题：</div><div class="line"> 1.脏读：两个事务，t1事务可以读取到t2事务正在做更改的数据的中间状态(t2事务执行过程中)，而这个数据的更改有可能不会被持久化(commit)，而是rollback，导致t1在同一事务内的两次读取同一行数据得到结果不同。</div><div class="line"> 2.不可重复读：t1事务在整个事务执行过程中读取某一条记录多次，发现读取的此条记录不是每次都一样。</div><div class="line"> 3.幻读：t1事务在整个事务执行过程中读取某一范围内的数据，在第二次读取时发现多了几行或者少了几行。</div><div class="line">-----------------------------------------------------------------------------------------------</div><div class="line">数据库中的几种隔离级别</div><div class="line">read uncommited--读未提交</div><div class="line">    该隔离级别指即使一个事务的更新语句没有提交,但是别的事务可以读到这个改变，几种异常情况都可能出现。极易出错，没有安全性可言，基本不会使用。</div><div class="line">read committed --读已提交</div><div class="line">    该隔离级别指一个事务只能看到其他事务的已经提交的更新，看不到未提交的更新，消除了脏读和第一类丢失更新，这是大多数数据库的默认隔离级别，如Oracle,Sqlserver。</div><div class="line">repeatable read --可重复读</div><div class="line">    该隔离级别指一个事务中进行两次或多次同样的对于数据内容的查询，得到的结果是一样的，但不保证对于数据条数的查询是一样的，只要存在读改行数据就禁止写，消除了不可重复读和第二类更新丢失，这是Mysql数据库的默认隔离级别。</div><div class="line">serializable --序列化读</div><div class="line">     意思是说这个事务执行的时候不允许别的事务并发写操作的执行.完全串行化的读，只要存在读就禁止写,但可以同时读，消除了幻读。这是事务隔离的最高级别，虽然最安全最省心，但是效率太低，一般不会用。</div><div class="line">------------------------------------------------------------------------------------------------</div><div class="line">数据库中的锁：</div><div class="line">1.共享锁（Share locks简记为S锁）：也称读锁，事务A对对象T加s锁，其他事务也只能对T加S，多个事务可以同时读，但不能有写操作，直到A释放S锁。</div><div class="line"></div><div class="line">2.排它锁（Exclusivelocks简记为X锁）：也称写锁，事务A对对象T加X锁以后，其他事务不能对T加任何锁，只有事务A可以读写对象T直到A释放X锁。</div><div class="line"></div><div class="line">3.更新锁（简记为U锁）：用来预定要对此对象施加X锁，它允许其他事务读，但不允许再施加U锁或X锁；当被读取的对象将要被更新时，则升级为X锁，主要是用来防止死锁的。因为使用共享锁时，修改数据的操作分为两步，首先获得一个共享锁，读取数据，然后将共享锁升级为排它锁，然后再执行修改操作。这样如果同时有两个或多个事务同时对一个对象申请了共享锁，在修改数据的时候，这些事务都要将共享锁升级为排它锁。这些事务都不会释放共享锁而是一直等待对方释放，这样就造成了死锁。如果一个数据在修改前直接申请更新锁，在数据修改的时候再升级为排它锁，就可以避免死锁。</div></pre></td></tr></table></figure></p>
+<p>接下来化繁为简，配合实操，来看看每种隔离级别场景。<strong>不要觉得繁琐，一定要读下去。</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">演示场景配置：</div><div class="line">数据库：mysql 5.7</div><div class="line">命令行工具：iterm2.0</div></pre></td></tr></table></figure>
+<p><strong>1.read uncommited–读未提交</strong><br>前置条件：<br>1.开启两个 mysql 客户端终端<br><img src="http://upload-images.jianshu.io/upload_images/2836699-8653a811b9459e61.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="开启客户端终端.png"><br>2.查看当前客户端事务隔离级别<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">命令为：select @@session.tx_isolation;</div></pre></td></tr></table></figure></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-742f35e0e004fa38.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2017-03-24 下午2.05.57.png"></p>
+<p>3.选择数据库，建立演示表test，并设置当前客户端事务隔离级别为read uncommitted.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">1.mysql&gt; show databases;</div><div class="line">2.mysql&gt; use 你的演示数据库</div><div class="line">3.mysql&gt; CREATE TABLE `test` (</div><div class="line">  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,</div><div class="line">  `name` varchar(11) DEFAULT NULL,</div><div class="line">  PRIMARY KEY (`id`)</div><div class="line">) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;</div><div class="line">4.insert into test values(1,&apos;张三&apos;),(2,&apos;李四&apos;),(3,&apos;王五&apos;);  </div><div class="line">4.select @@session.tx_isolation;</div><div class="line">5.set session transaction isolation level read uncommitted;</div><div class="line">6.select @@session.tx_isolation;</div></pre></td></tr></table></figure></p>
+<p>注意：两个客户端都需执行<strong>set session transaction isolation level read uncommitted;</strong></p>
+<p>4.客户端1，客户端2设置事务提交模式为 set autocommit = 0;表示关闭默认的自动提交事务功能。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">命令：set autocommit = 0;</div></pre></td></tr></table></figure></p>
+<p>5.开启事务<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">begin;</div></pre></td></tr></table></figure></p>
+<p>6.客户端1 执行 如下脚本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">select name from test where id = 1 ;</div></pre></td></tr></table></figure></p>
+<p>结果如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-e20808ef162cc8e6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2017-03-24 下午3.53.29.png"></p>
+<p>7.客户端2 执行如下脚本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">update test set name = &apos;张八&apos; where id = 1;</div></pre></td></tr></table></figure></p>
+<p>结果如下图所示：<br><img src="http://upload-images.jianshu.io/upload_images/2836699-eef033408272e785.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2017-03-24 下午3.57.05.png"><br>8.切换到客户端1执行如下脚本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">select name  from test where id = 1;</div></pre></td></tr></table></figure></p>
+<p>结果如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-11e078f3609eb560.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2017-03-24 下午3.58.28.png"><br>我们发现此时客户端1再次读id = 1的记录时，name 已经从 ‘张三’ 更改为 ‘张八’。</p>
+<p>我们继续执行下一步操作<br>9.客户端2执行回滚操作,脚本如下所示<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rollback;</div></pre></td></tr></table></figure></p>
+<p>结果如下所示：<br><img src="http://upload-images.jianshu.io/upload_images/2836699-500f4d4182bd3808.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2017-03-24 下午4.00.41.png"></p>
+<p>10.客户端1继续查看id ＝ 1的记录,如下脚本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">select name from test where id = 1;</div></pre></td></tr></table></figure></p>
+<p>结果如下所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-d1f6c33887ad3cad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2017-03-24 下午4.02.27.png"></p>
+<p>我们发现在客户端1的一次事务中id ＝ 1 的记录的name 发生了变化，这种变化就称之为<strong>脏读</strong>。<br>下面我们分析下 read uncommitted 情况下的加锁情况。<br>吐槽一句，现在网上的博客对这个隔离级别的加锁分析五花八门。<br>分为三大门派：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1.美团博客说不加锁，链接在这：http://tech.meituan.com/innodb-lock.html </div><div class="line">2.还有说读不加锁（这个我认同），写加行级共享锁。链接在这：</div><div class="line">[http://www.hollischuang.com/archives/943](http://www.hollischuang.com/archives/943)</div><div class="line">3.还有说读不加锁，写加行级排他锁（这个我也认同，我做过实践，稍后会演示），但是说写完立马释放行级排他锁。</div></pre></td></tr></table></figure></p>
+<p><strong>那么到底是什么样子呢，我们看一下</strong>：<br>演示过程，打开3个命令行终端，其中两个做演示，最后一个客户端查询当前 innodb 锁状态 设置事务隔离级别为read uncommitted。<br>做如下演示：<br>1.客户端1做如下操作：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">update test set name = &apos;fxliutao&apos; where id = 32;</div></pre></td></tr></table></figure></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-534afe23b0f99e47.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2017-03-26 下午2.53.34.png"></p>
+<p>2.客户端2做与客户端相同操作，如下所示<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">update test set name = &apos;fxliutao&apos; where id = 32;</div></pre></td></tr></table></figure></p>
+<p>我们发现update 操作并没有执行，而是静止了<br>如下图所示我们分析了在客户端2锁等待情况下的加锁情况：<br>命令为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">select * from information_schema.INNODB_LOCKS\G;</div></pre></td></tr></table></figure></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-a8de23ba474fe228.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2017-03-26 下午2.58.48.png"></p>
+<p>可以得出结论，read uncommitted 隔离级别下，写操作是有锁的，而且是 X 排他锁，可以灭掉上述两个门派。</p>
+<p>并且我们看下上述客户端2情景下的事务状态<br>如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-46b8a807f2ca3fbb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2017-03-26 下午3.04.47.png"></p>
+<p> trx_id 为208579的代表的就是客户端2的事务，trx_state代表的是锁状态，代表 客户端2的事务 处于锁等待状态，为什么是锁等待状态呢，因为 客户端2的事务在更改 id ＝ 32 的记录时在主键上添加了 X(行级排他锁) 锁，你可能会有疑问，客户端1 的更新动作不是已经完成了么，那么 客户端1 肯定已经释放了在主键 id = 32 上的排他锁了呀，要不为什么客户端2 能读到客户端1 更改  id = 32 记录后的脏数据呢？<br>但是真正的真相是客户端1在更新完后并<strong>没有释放排他锁</strong>，因为如果释放成功，那么客户端2的事务是能将 id ＝ 32 的记录更新成功的，但是并没有。那既然客户端1在更新完后并<strong>没有释放排他锁</strong>，那客户端2为什么还能读到脏数据呢，这跟排他锁的属性是相悖的呀(排他锁会阻塞除当前操作外的其他事务的所有读写操作)。<br>这就是最矛盾的问题，我再SqlServer的官网上找到这句话，事实上也正是这句话让我茅塞顿开，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Transactions running at the READ UNCOMMITTED level do not issue shared locks to prevent other transactions from modifying data read by the current transaction. READ UNCOMMITTED transactions are also not blocked by exclusive locks that would prevent the current transaction from reading rows that have been modified but not committed by other transactions. When this option is set, it is possible to read uncommitted modifications, which are called dirty reads. Values in the data can be changed and rows can appear or disappear in the data set before the end of the transaction. This option has the same effect as setting NOLOCK on all tables in all SELECT statements in a transaction. This is the least restrictive of the isolation levels.</div></pre></td></tr></table></figure></p>
+<p>翻译是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">在READ UNCOMMITTED级别运行的事务不会发出共享锁，以防止其他事务修改当前事务读取的数据。读取UNCOMMITTED事务也不被排他锁阻止，这将阻止当前事务读取已被修改但未被其他事务提交的行。设置此选项时，可以读取未提交的修改，称为脏读。可以更改数据中的值，并且行可以在事务结束之前在数据集中显示或消失。此选项与在事务中的所有SELECT语句中的所有表上设置NOLOCK具有相同的效果。这是隔离级别的最小限制。</div></pre></td></tr></table></figure></p>
+<p>看到了吧<strong>读取UNCOMMITTED事务也不被排他锁(排他锁将阻止当前事务读取已被修改但未被其他事务提交的行)阻止</strong><br>其实想想也对，应为排它锁对任何其他的事务开始之前申请的排它锁，共享锁都不兼容。但是如果我读不申请锁，就不会产生上述问题了呀。</p>
+<p>所以最终结论是：read uncommitted 读不加锁，写加排他锁，并到事务结束之后释放。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="鱼大坤 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>个人微信号，欢迎添加~</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果我的文章对您有帮助，请小小的打赏一下吧~，我将>创作更好的文章给大家！谢谢！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="鱼大坤 Alipay"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据库/" rel="tag"># 数据库</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/14/MySQL-design/" rel="next" title="MySQL 数据库规范--设计篇">
+                <i class="fa fa-chevron-left"></i> MySQL 数据库规范--设计篇
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/14/MySQL-develop/" rel="prev" title="MySQL 数据库规范--开发篇">
+                MySQL 数据库规范--开发篇 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+
+     <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTgzNS84Mzk5">
+          <!-- 来必力City版安装代码 -->
+          	<script type="text/javascript">
+             (function(d, s) {
+                 var j, e = d.getElementsByTagName(s)[0];
+
+                 if (typeof LivereTower === 'function') { return; }
+
+                 j = d.createElement(s);
+                 j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                 j.async = true;
+
+                 e.parentNode.insertBefore(j, e);
+             })(document, 'script');
+          	</script>
+      </div>
+          <!-- City版安装代码已完成 -->
+</div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="鱼大坤" />
+          <p class="site-author-name" itemprop="name">鱼大坤</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-目的"><span class="nav-number">1.</span> <span class="nav-text">1.目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-合适人群"><span class="nav-number">2.</span> <span class="nav-text">1.1 合适人群</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-关于这篇分享对以上问题的解决"><span class="nav-number">3.</span> <span class="nav-text">1.2 关于这篇分享对以上问题的解决</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-事务本质剖析"><span class="nav-number">4.</span> <span class="nav-text">2.事务本质剖析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-什么是事务？"><span class="nav-number">4.1.</span> <span class="nav-text">2.1 什么是事务？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-如下表格所示："><span class="nav-number">4.1.1.</span> <span class="nav-text">2.2.1 如下表格所示：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-对上述表格内容的解释"><span class="nav-number">4.1.2.</span> <span class="nav-text">2.2.2 对上述表格内容的解释</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#个人理解这就是事务的本质。事务不应该只仅限于数据库。"><span class="nav-number">4.1.3.</span> <span class="nav-text">个人理解这就是事务的本质。事务不应该只仅限于数据库。</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-关于ACID"><span class="nav-number">5.</span> <span class="nav-text">2.2 关于ACID</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-数据库事务的隔离级别"><span class="nav-number">6.</span> <span class="nav-text">3.数据库事务的隔离级别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-为什么需要隔离级别"><span class="nav-number">6.1.</span> <span class="nav-text">3.1 为什么需要隔离级别?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-不同隔离级别带来的问题（重要！含实操部分，最好可以实践下）"><span class="nav-number">6.2.</span> <span class="nav-text">3.2 不同隔离级别带来的问题（重要！含实操部分，最好可以实践下）</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">鱼大坤</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://markfork.com/2017/11/14/mysql-isolation-read-uncommitted/';
+          this.page.identifier = '2017/11/14/mysql-isolation-read-uncommitted/';
+          this.page.title = '数据库事务特征、数据库隔离级别，以及各级别数据库加锁情况(含实操)--read uncommitted篇';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2148159"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.2"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/exturl.js?v=5.1.2"></script>
+
+
+</body>
+</html>

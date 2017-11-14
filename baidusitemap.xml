@@ -4,6 +4,752 @@
 
     
   <url>
+    <loc>http://markfork.com/2017/11/14/UML/</loc>
+    <lastmod>2017-11-14T08:36:42.000Z</lastmod>
+    <data>
+        <display>
+        <title>UML关系图</title>
+        <pubTime>2017-11-14T08:36:42.000Z</pubTime>
+        
+        <tag>UML</tag>
+         
+         
+           
+             
+              <breadCrumb title="UML" url="http://markfork.com/categories/UML/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/ThinkPHP-static-template/</loc>
+    <lastmod>2017-11-14T08:36:26.000Z</lastmod>
+    <data>
+        <display>
+        <title>ThinkPHP 静态资源，公共模板引用方法</title>
+        <pubTime>2017-11-14T08:36:26.000Z</pubTime>
+        
+        <tag>项目实操</tag>
+         
+         
+           
+             
+              <breadCrumb title="ThinkPHP" url="http://markfork.com/categories/ThinkPHP/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/thinkphp-SeasLog/</loc>
+    <lastmod>2017-11-14T08:36:02.000Z</lastmod>
+    <data>
+        <display>
+        <title>ThinkPHP 接入 SeasLog 日志组件</title>
+        <pubTime>2017-11-14T08:36:02.000Z</pubTime>
+        
+        <tag>项目实操</tag>
+         
+         
+           
+             
+              <breadCrumb title="ThinkPHP" url="http://markfork.com/categories/ThinkPHP/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/Spring-Controller-Aop/</loc>
+    <lastmod>2017-11-14T08:35:42.000Z</lastmod>
+    <data>
+        <display>
+        <title>Spring Controller层设置AOP</title>
+        <pubTime>2017-11-14T08:35:42.000Z</pubTime>
+        
+        <tag>项目实操</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java Web" url="http://markfork.com/categories/Java-Web/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/Spring-Aop-log/</loc>
+    <lastmod>2017-11-14T08:35:24.000Z</lastmod>
+    <data>
+        <display>
+        <title>自定义注解与Spring AOP实现日志组件(可重用)</title>
+        <pubTime>2017-11-14T08:35:24.000Z</pubTime>
+        
+        <tag>项目实操</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java Web" url="http://markfork.com/categories/Java-Web/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/Spring-Aop/</loc>
+    <lastmod>2017-11-14T08:35:00.000Z</lastmod>
+    <data>
+        <display>
+        <title>自定义注解与Spring AOP实现为原程序加入Redis缓存支持(可重用)</title>
+        <pubTime>2017-11-14T08:35:00.000Z</pubTime>
+        
+        <tag>项目实操</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java Web" url="http://markfork.com/categories/Java-Web/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/simple-factory/</loc>
+    <lastmod>2017-11-14T08:34:41.000Z</lastmod>
+    <data>
+        <display>
+        <title>简单工厂模式</title>
+        <pubTime>2017-11-14T08:34:41.000Z</pubTime>
+        
+        <tag>设计模式</tag>
+         
+         
+           
+             
+              <breadCrumb title="design pattern" url="http://markfork.com/categories/design-pattern/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/original_code_Spring_anylize_springIoc_load/</loc>
+    <lastmod>2017-11-14T08:34:27.000Z</lastmod>
+    <data>
+        <display>
+        <title>Spring Ioc 源码分析(二)--refresh()</title>
+        <pubTime>2017-11-14T08:34:27.000Z</pubTime>
+        
+        <tag>源码分析</tag>
+         
+         
+           
+             
+              <breadCrumb title="源码分析" url="http://markfork.com/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/original_code_Spring_anyliz_parseBeanDefinitions_BeanDefinitionParserDelegate_4/</loc>
+    <lastmod>2017-11-14T08:34:16.000Z</lastmod>
+    <data>
+        <display>
+        <title>Spring Ioc 源码分析(四)--parseBeanDefinitions()与BeanDefinitionParserDelegate</title>
+        <pubTime>2017-11-14T08:34:16.000Z</pubTime>
+        
+        <tag>源码分析</tag>
+         
+         
+           
+             
+              <breadCrumb title="源码分析" url="http://markfork.com/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/original_code_Spring_anyliz_loadBeanDefinitions/</loc>
+    <lastmod>2017-11-14T08:34:16.000Z</lastmod>
+    <data>
+        <display>
+        <title>Spring Ioc 源码分析(三)--loadBeanDefinitions</title>
+        <pubTime>2017-11-14T08:34:16.000Z</pubTime>
+        
+        <tag>源码分析</tag>
+         
+         
+           
+             
+              <breadCrumb title="源码分析" url="http://markfork.com/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/original_code_Spring_anyliz_1/</loc>
+    <lastmod>2017-11-14T08:33:57.000Z</lastmod>
+    <data>
+        <display>
+        <title>Spring Ioc 源码分析(一)--Spring Ioc容器的加载</title>
+        <pubTime>2017-11-14T08:33:57.000Z</pubTime>
+        
+        <tag>源码分析</tag>
+         
+         
+           
+             
+              <breadCrumb title="源码分析" url="http://markfork.com/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/NoSql-Redis-transaction/</loc>
+    <lastmod>2017-11-14T08:33:39.000Z</lastmod>
+    <data>
+        <display>
+        <title>NoSql-Redis入门（事务）</title>
+        <pubTime>2017-11-14T08:33:39.000Z</pubTime>
+        
+        <tag>NoSql</tag>
+         
+         
+           
+             
+              <breadCrumb title="Redis" url="http://markfork.com/categories/Redis/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/node/</loc>
+    <lastmod>2017-11-14T08:33:31.000Z</lastmod>
+    <data>
+        <display>
+        <title>Node.js Event-loop事件循环</title>
+        <pubTime>2017-11-14T08:33:31.000Z</pubTime>
+        
+        <tag>Node</tag>
+         
+        <tag>事件循环</tag>
+         
+         
+           
+             
+              <breadCrumb title="Node.js" url="http://markfork.com/categories/Node-js/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/node-Buffer/</loc>
+    <lastmod>2017-11-14T08:33:31.000Z</lastmod>
+    <data>
+        <display>
+        <title>node.js中缓冲区--Buffer</title>
+        <pubTime>2017-11-14T08:33:31.000Z</pubTime>
+        
+        <tag>Node</tag>
+         
+         
+           
+             
+              <breadCrumb title="Node.js" url="http://markfork.com/categories/Node-js/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/NoSql-des/</loc>
+    <lastmod>2017-11-14T08:33:07.000Z</lastmod>
+    <data>
+        <display>
+        <title>NoSql入门概述</title>
+        <pubTime>2017-11-14T08:33:07.000Z</pubTime>
+        
+        <tag>NoSql</tag>
+         
+         
+           
+             
+              <breadCrumb title="Redis" url="http://markfork.com/categories/Redis/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/NoSql-Redis/</loc>
+    <lastmod>2017-11-14T08:32:56.000Z</lastmod>
+    <data>
+        <display>
+        <title>NoSql-Redis入门（事务）</title>
+        <pubTime>2017-11-14T08:32:56.000Z</pubTime>
+        
+        <tag>NoSql</tag>
+         
+         
+           
+             
+              <breadCrumb title="Redis" url="http://markfork.com/categories/Redis/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/MySQL-ReadCommitted-MVCC/</loc>
+    <lastmod>2017-11-14T08:32:24.000Z</lastmod>
+    <data>
+        <display>
+        <title>数据库事务特征、数据库隔离级别，各级别数据库加锁情况(含实操)--read committed与 MVCC</title>
+        <pubTime>2017-11-14T08:32:24.000Z</pubTime>
+        
+        <tag>数据库</tag>
+         
+         
+           
+             
+              <breadCrumb title="MySQL" url="http://markfork.com/categories/MySQL/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/MySQL-optimistic/</loc>
+    <lastmod>2017-11-14T08:32:24.000Z</lastmod>
+    <data>
+        <display>
+        <title>MySQL 数据库规范--调优篇(终结篇)</title>
+        <pubTime>2017-11-14T08:32:24.000Z</pubTime>
+        
+        <tag>数据库</tag>
+         
+         
+           
+             
+              <breadCrumb title="MySQL" url="http://markfork.com/categories/MySQL/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/MySQL-RepeatableRead-MVCC/</loc>
+    <lastmod>2017-11-14T08:32:24.000Z</lastmod>
+    <data>
+        <display>
+        <title>数据库事务特征、数据库隔离级别，各级别数据库加锁情况(含实操)--Repeatable Read与MVCC</title>
+        <pubTime>2017-11-14T08:32:24.000Z</pubTime>
+        
+        <tag>数据库</tag>
+         
+         
+           
+             
+              <breadCrumb title="MySQL" url="http://markfork.com/categories/MySQL/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/MySQL-principle/</loc>
+    <lastmod>2017-11-14T08:32:24.000Z</lastmod>
+    <data>
+        <display>
+        <title>MySQL 数据库索引原理与分类</title>
+        <pubTime>2017-11-14T08:32:24.000Z</pubTime>
+        
+        <tag>数据库</tag>
+         
+         
+           
+             
+              <breadCrumb title="MySQL" url="http://markfork.com/categories/MySQL/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/mysql-where-having/</loc>
+    <lastmod>2017-11-14T08:32:24.000Z</lastmod>
+    <data>
+        <display>
+        <title>where与having的区别</title>
+        <pubTime>2017-11-14T08:32:24.000Z</pubTime>
+        
+        <tag>数据库</tag>
+         
+         
+           
+             
+              <breadCrumb title="MySQL" url="http://markfork.com/categories/MySQL/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/MySQL-develop/</loc>
+    <lastmod>2017-11-14T08:32:24.000Z</lastmod>
+    <data>
+        <display>
+        <title>MySQL 数据库规范--开发篇</title>
+        <pubTime>2017-11-14T08:32:24.000Z</pubTime>
+        
+        <tag>数据库</tag>
+         
+         
+           
+             
+              <breadCrumb title="MySQL" url="http://markfork.com/categories/MySQL/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/MySQL-Producer/</loc>
+    <lastmod>2017-11-14T08:32:24.000Z</lastmod>
+    <data>
+        <display>
+        <title>存储过程</title>
+        <pubTime>2017-11-14T08:32:24.000Z</pubTime>
+        
+        <tag>数据库</tag>
+         
+         
+           
+             
+              <breadCrumb title="MySQL" url="http://markfork.com/categories/MySQL/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/MySQL-index-notice-issue/</loc>
+    <lastmod>2017-11-14T08:32:24.000Z</lastmod>
+    <data>
+        <display>
+        <title>MySQL 数据库索引使用场景与注意事项</title>
+        <pubTime>2017-11-14T08:32:24.000Z</pubTime>
+        
+        <tag>数据库</tag>
+         
+         
+           
+             
+              <breadCrumb title="MySQL" url="http://markfork.com/categories/MySQL/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/mysql-isolation-read-uncommitted/</loc>
+    <lastmod>2017-11-14T08:32:24.000Z</lastmod>
+    <data>
+        <display>
+        <title>数据库事务特征、数据库隔离级别，以及各级别数据库加锁情况(含实操)--read uncommitted篇</title>
+        <pubTime>2017-11-14T08:32:24.000Z</pubTime>
+        
+        <tag>数据库</tag>
+         
+         
+           
+             
+              <breadCrumb title="MySQL" url="http://markfork.com/categories/MySQL/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/MySQL-design/</loc>
+    <lastmod>2017-11-14T08:31:36.000Z</lastmod>
+    <data>
+        <display>
+        <title>MySQL 数据库规范--设计篇</title>
+        <pubTime>2017-11-14T08:31:36.000Z</pubTime>
+        
+        <tag>数据库</tag>
+         
+         
+           
+             
+              <breadCrumb title="MySQL" url="http://markfork.com/categories/MySQL/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/kcode/</loc>
+    <lastmod>2017-11-14T08:31:04.000Z</lastmod>
+    <data>
+        <display>
+        <title>k码特权中关于 Redis与MySQL DB 乐观锁应用</title>
+        <pubTime>2017-11-14T08:31:04.000Z</pubTime>
+        
+        <tag>项目实操</tag>
+         
+         
+           
+             
+              <breadCrumb title="ThinkPHP" url="http://markfork.com/categories/ThinkPHP/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/java_nio/</loc>
+    <lastmod>2017-11-14T08:30:56.000Z</lastmod>
+    <data>
+        <display>
+        <title>Java NIO(一)－I/O模型： 阻塞、非阻塞、I/O复用、同步、异步</title>
+        <pubTime>2017-11-14T08:30:56.000Z</pubTime>
+        
+        <tag>高并发</tag>
+         
+        <tag>I/O模型</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://markfork.com/categories/Java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/IntelljIdea-see-implements/</loc>
+    <lastmod>2017-11-14T08:29:48.000Z</lastmod>
+    <data>
+        <display>
+        <title>Intellj Idea中查看类继承面板</title>
+        <pubTime>2017-11-14T08:29:48.000Z</pubTime>
+        
+        <tag>编程实操</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java Web" url="http://markfork.com/categories/Java-Web/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/IntellijIdea-Mac-use-debug/</loc>
+    <lastmod>2017-11-14T08:29:42.000Z</lastmod>
+    <data>
+        <display>
+        <title>Intellij  Idea--Debug使用（Mac）</title>
+        <pubTime>2017-11-14T08:29:42.000Z</pubTime>
+        
+        <tag>编程实操</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java Web" url="http://markfork.com/categories/Java-Web/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/IntellijIdea-Java-gradle-develop-enviroment/</loc>
+    <lastmod>2017-11-14T08:29:42.000Z</lastmod>
+    <data>
+        <display>
+        <title>使用Intellij Idea＋Gradle 搭建Java 本地开发环境</title>
+        <pubTime>2017-11-14T08:29:42.000Z</pubTime>
+        
+        <tag>编程实操</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java Web" url="http://markfork.com/categories/Java-Web/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/java-jni/</loc>
+    <lastmod>2017-11-14T08:28:53.000Z</lastmod>
+    <data>
+        <display>
+        <title>Java web 项目中使用JNI技术（如何在程序运行期间改变 java.library.path并生效）</title>
+        <pubTime>2017-11-14T08:28:53.000Z</pubTime>
+        
+        <tag>编程实操</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java Web" url="http://markfork.com/categories/Java-Web/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/Java-Design-Pattern-Creator/</loc>
+    <lastmod>2017-11-14T08:28:26.000Z</lastmod>
+    <data>
+        <display>
+        <title>创建型设计模式--建造者模式</title>
+        <pubTime>2017-11-14T08:28:26.000Z</pubTime>
+        
+        <tag>设计模式</tag>
+         
+         
+           
+             
+              <breadCrumb title="design pattern" url="http://markfork.com/categories/design-pattern/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/Java-Design-Pattern-Adapter/</loc>
+    <lastmod>2017-11-14T08:28:12.000Z</lastmod>
+    <data>
+        <display>
+        <title>结构型设计模式(一) --适配器模式</title>
+        <pubTime>2017-11-14T08:28:12.000Z</pubTime>
+        
+        <tag>设计模式</tag>
+         
+         
+           
+             
+              <breadCrumb title="design pattern" url="http://markfork.com/categories/design-pattern/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/java-clone/</loc>
+    <lastmod>2017-11-14T08:28:12.000Z</lastmod>
+    <data>
+        <display>
+        <title>Java 深克隆与浅克隆</title>
+        <pubTime>2017-11-14T08:28:12.000Z</pubTime>
+        
+        <tag>设计模式</tag>
+         
+         
+           
+             
+              <breadCrumb title="design pattern" url="http://markfork.com/categories/design-pattern/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/Java-Design-Patter-proxy/</loc>
+    <lastmod>2017-11-14T08:28:12.000Z</lastmod>
+    <data>
+        <display>
+        <title>结构型设计模式--代理模式（静态与动态）</title>
+        <pubTime>2017-11-14T08:28:12.000Z</pubTime>
+        
+        <tag>设计模式</tag>
+         
+         
+           
+             
+              <breadCrumb title="design pattern" url="http://markfork.com/categories/design-pattern/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2017/11/14/EventEmitter/</loc>
+    <lastmod>2017-11-14T08:26:26.000Z</lastmod>
+    <data>
+        <display>
+        <title>Node.js EventEmitter (触发器)</title>
+        <pubTime>2017-11-14T08:26:26.000Z</pubTime>
+        
+        <tag>Node</tag>
+         
+        <tag>触发器</tag>
+         
+         
+           
+             
+              <breadCrumb title="Node.js" url="http://markfork.com/categories/Node-js/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://markfork.com/2017/11/14/consist_hash/</loc>
     <lastmod>2017-11-14T08:15:27.000Z</lastmod>
     <data>
@@ -28,582 +774,12 @@
     
     
   <url>
-    <loc>http://markfork.com/2017/11/14/kcode/</loc>
-    <lastmod>2017-11-14T02:32:10.000Z</lastmod>
-    <data>
-        <display>
-        <title>k码特权中关于 Redis与MySQL DB 乐观锁应用</title>
-        <pubTime>2017-11-14T02:32:10.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/14/java-clone/</loc>
-    <lastmod>2017-11-14T02:31:41.000Z</lastmod>
-    <data>
-        <display>
-        <title>Java 深克隆与浅克隆</title>
-        <pubTime>2017-11-14T02:31:41.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/14/Java-Design-Patter-proxy/</loc>
-    <lastmod>2017-11-14T02:27:45.000Z</lastmod>
-    <data>
-        <display>
-        <title>结构型设计模式--代理模式（静态与动态）</title>
-        <pubTime>2017-11-14T02:27:45.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/14/MySQL-index-notice-issue/</loc>
-    <lastmod>2017-11-14T02:27:15.000Z</lastmod>
-    <data>
-        <display>
-        <title>MySQL 数据库索引使用场景与注意事项</title>
-        <pubTime>2017-11-14T02:27:15.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/14/MySQL-RepeatableRead-MVCC/</loc>
-    <lastmod>2017-11-14T02:26:32.000Z</lastmod>
-    <data>
-        <display>
-        <title>数据库事务特征、数据库隔离级别，各级别数据库加锁情况(含实操)--Repeatable Read与MVCC</title>
-        <pubTime>2017-11-14T02:26:32.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/14/MySQL-ReadCommitted-MVCC/</loc>
-    <lastmod>2017-11-14T02:25:27.000Z</lastmod>
-    <data>
-        <display>
-        <title>数据库事务特征、数据库隔离级别，各级别数据库加锁情况(含实操)--read committed与 MVCC</title>
-        <pubTime>2017-11-14T02:25:27.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/14/Spring-Aop/</loc>
-    <lastmod>2017-11-14T02:24:44.000Z</lastmod>
-    <data>
-        <display>
-        <title>自定义注解与Spring AOP实现为原程序加入Redis缓存支持(可重用)</title>
-        <pubTime>2017-11-14T02:24:44.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/14/Spring-Aop-log/</loc>
-    <lastmod>2017-11-14T02:24:10.000Z</lastmod>
-    <data>
-        <display>
-        <title>自定义注解与Spring AOP实现日志组件(可重用)</title>
-        <pubTime>2017-11-14T02:24:10.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/12/MySQL-Producer/</loc>
-    <lastmod>2017-11-12T08:11:14.000Z</lastmod>
-    <data>
-        <display>
-        <title>存储过程</title>
-        <pubTime>2017-11-12T08:11:14.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/12/MySQL-develop/</loc>
-    <lastmod>2017-11-12T08:10:27.000Z</lastmod>
-    <data>
-        <display>
-        <title>MySQL 数据库规范--开发篇</title>
-        <pubTime>2017-11-12T08:10:27.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/12/IntellijIdea-Mac-use-debug/</loc>
-    <lastmod>2017-11-12T07:59:44.000Z</lastmod>
-    <data>
-        <display>
-        <title>Intellij  Idea--Debug使用（Mac）</title>
-        <pubTime>2017-11-12T07:59:44.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/12/IntelljIdea-see-implements/</loc>
-    <lastmod>2017-11-12T07:58:55.000Z</lastmod>
-    <data>
-        <display>
-        <title>Intellj Idea中查看类继承面板</title>
-        <pubTime>2017-11-12T07:58:55.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/12/original_code_Spring_anylize_springIoc_load/</loc>
-    <lastmod>2017-11-12T07:58:05.000Z</lastmod>
-    <data>
-        <display>
-        <title>Spring Ioc 源码分析(二)--refresh()</title>
-        <pubTime>2017-11-12T07:58:05.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/12/original_code_Spring_anyliz_parseBeanDefinitions_BeanDefinitionParserDelegate_4/</loc>
-    <lastmod>2017-11-12T07:52:10.000Z</lastmod>
-    <data>
-        <display>
-        <title>Spring Ioc 源码分析(四)--parseBeanDefinitions()与BeanDefinitionParserDelegate</title>
-        <pubTime>2017-11-12T07:52:10.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/12/original_code_Spring_anyliz_loadBeanDefinitions/</loc>
-    <lastmod>2017-11-12T07:50:23.000Z</lastmod>
-    <data>
-        <display>
-        <title>Spring Ioc 源码分析(三)--loadBeanDefinitions</title>
-        <pubTime>2017-11-12T07:50:23.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/12/original_code_Spring_anyliz_1/</loc>
-    <lastmod>2017-11-12T07:47:15.000Z</lastmod>
-    <data>
-        <display>
-        <title>Spring Ioc 源码分析(一)--Spring Ioc容器的加载</title>
-        <pubTime>2017-11-12T07:47:15.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/12/original_code_Spring_anylize/</loc>
-    <lastmod>2017-11-12T07:45:25.000Z</lastmod>
-    <data>
-        <display>
-        <title></title>
-        <pubTime>2017-11-12T07:45:25.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/12/Spring-Controller-Aop/</loc>
-    <lastmod>2017-11-12T07:39:50.000Z</lastmod>
-    <data>
-        <display>
-        <title>Spring Controller层设置AOP</title>
-        <pubTime>2017-11-12T07:39:50.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/12/MySQL-principle/</loc>
-    <lastmod>2017-11-12T07:24:41.000Z</lastmod>
-    <data>
-        <display>
-        <title>MySQL 数据库索引原理与分类</title>
-        <pubTime>2017-11-12T07:24:41.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/12/MySQL-design/</loc>
-    <lastmod>2017-11-12T07:18:33.000Z</lastmod>
-    <data>
-        <display>
-        <title>MySQL 数据库规范--设计篇</title>
-        <pubTime>2017-11-12T07:18:33.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/06/MySQL-optimistic/</loc>
-    <lastmod>2017-11-06T11:41:10.000Z</lastmod>
-    <data>
-        <display>
-        <title>MySQL 数据库规范--调优篇(终结篇)</title>
-        <pubTime>2017-11-06T11:41:10.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/05/Java-Design-Pattern-Creator/</loc>
-    <lastmod>2017-11-05T13:01:06.000Z</lastmod>
-    <data>
-        <display>
-        <title>创建型设计模式--建造者模式</title>
-        <pubTime>2017-11-05T13:01:06.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/05/simple-factory/</loc>
-    <lastmod>2017-11-05T13:00:35.000Z</lastmod>
-    <data>
-        <display>
-        <title>简单工厂模式</title>
-        <pubTime>2017-11-05T13:00:35.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/05/IntellijIdea-Java-gradle-develop-enviroment/</loc>
-    <lastmod>2017-11-05T13:00:01.000Z</lastmod>
-    <data>
-        <display>
-        <title>使用Intellij Idea＋Gradle 搭建Java 本地开发环境</title>
-        <pubTime>2017-11-05T13:00:01.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/05/Java-Design-Pattern-Adapter/</loc>
-    <lastmod>2017-11-05T12:11:44.000Z</lastmod>
-    <data>
-        <display>
-        <title>结构型设计模式(一) --适配器模式</title>
-        <pubTime>2017-11-05T12:11:44.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/05/UML/</loc>
-    <lastmod>2017-11-05T12:06:36.000Z</lastmod>
-    <data>
-        <display>
-        <title>UML关系图</title>
-        <pubTime>2017-11-05T12:06:36.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/05/ThinkPHP-static-template/</loc>
-    <lastmod>2017-11-05T12:00:13.000Z</lastmod>
-    <data>
-        <display>
-        <title>ThinkPHP 静态资源，公共模板引用方法</title>
-        <pubTime>2017-11-05T12:00:13.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/04/mysql-isolation-read-uncommitted/</loc>
-    <lastmod>2017-11-04T07:08:57.000Z</lastmod>
-    <data>
-        <display>
-        <title>数据库事务特征、数据库隔离级别，以及各级别数据库加锁情况(含实操)--read uncommitted篇</title>
-        <pubTime>2017-11-04T07:08:57.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/04/mysql-where-having/</loc>
-    <lastmod>2017-11-04T07:06:21.000Z</lastmod>
-    <data>
-        <display>
-        <title>where与having的区别</title>
-        <pubTime>2017-11-04T07:06:21.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/04/thinkphp-SeasLog/</loc>
-    <lastmod>2017-11-04T07:03:20.000Z</lastmod>
-    <data>
-        <display>
-        <title>ThinkPHP 接入 SeasLog 日志组件</title>
-        <pubTime>2017-11-04T07:03:20.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/04/java-jni/</loc>
-    <lastmod>2017-11-04T07:00:28.000Z</lastmod>
-    <data>
-        <display>
-        <title>Java web 项目中使用JNI技术（如何在程序运行期间改变 java.library.path并生效）</title>
-        <pubTime>2017-11-04T07:00:28.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/04/NoSql-des/</loc>
-    <lastmod>2017-11-04T06:57:30.000Z</lastmod>
-    <data>
-        <display>
-        <title>NoSql入门概述</title>
-        <pubTime>2017-11-04T06:57:30.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/04/NoSql-Redis-transaction/</loc>
-    <lastmod>2017-11-04T06:55:52.000Z</lastmod>
-    <data>
-        <display>
-        <title>NoSql-Redis入门（事务）</title>
-        <pubTime>2017-11-04T06:55:52.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://markfork.com/2017/11/04/NoSql-Redis-2/</loc>
     <lastmod>2017-11-04T06:54:39.000Z</lastmod>
     <data>
         <display>
         <title>NoSQL－Redis入门(二)</title>
         <pubTime>2017-11-04T06:54:39.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/04/NoSql-Redis/</loc>
-    <lastmod>2017-11-04T06:46:10.000Z</lastmod>
-    <data>
-        <display>
-        <title>NoSql-Redis入门（事务）</title>
-        <pubTime>2017-11-04T06:46:10.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/04/node-Buffer/</loc>
-    <lastmod>2017-11-04T06:43:32.000Z</lastmod>
-    <data>
-        <display>
-        <title>node.js中缓冲区--Buffer</title>
-        <pubTime>2017-11-04T06:43:32.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/04/EventEmitter/</loc>
-    <lastmod>2017-11-04T06:40:46.000Z</lastmod>
-    <data>
-        <display>
-        <title>Node.js EventEmitter (触发器)</title>
-        <pubTime>2017-11-04T06:40:46.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/04/node/</loc>
-    <lastmod>2017-11-04T06:30:35.000Z</lastmod>
-    <data>
-        <display>
-        <title>Node.js Event-loop事件循环</title>
-        <pubTime>2017-11-04T06:30:35.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://markfork.com/2017/11/04/java_nio/</loc>
-    <lastmod>2017-11-04T04:53:49.000Z</lastmod>
-    <data>
-        <display>
-        <title>Java NIO(一)－I/O模型： 阻塞、非阻塞、I/O复用、同步、异步</title>
-        <pubTime>2017-11-04T04:53:49.000Z</pubTime>
         
          
            

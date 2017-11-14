@@ -85,7 +85,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="数据库," />
 
 
 
@@ -104,6 +104,7 @@
 
 
 <meta name="description" content="上节回顾   上篇记录了我对MySQL 事务 隔离级别 read uncommitted 的理解。这篇记录我对 MySQL 事务隔离级别 read committed &amp;amp; MVCC 的理解。">
+<meta name="keywords" content="数据库">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据库事务特征、数据库隔离级别，各级别数据库加锁情况(含实操)--read committed与 MVCC">
 <meta property="og:url" content="http://markfork.com/2017/11/14/MySQL-ReadCommitted-MVCC/index.html">
@@ -115,7 +116,7 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-970dcf17cbe0d6f9.gif?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-4d2849cd6570c260.gif?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-9e8ae7fb3d92fe55.gif?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-11-14T02:25:27.000Z">
+<meta property="og:updated_time" content="2017-11-14T08:32:24.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库事务特征、数据库隔离级别，各级别数据库加锁情况(含实操)--read committed与 MVCC">
 <meta name="twitter:description" content="上节回顾   上篇记录了我对MySQL 事务 隔离级别 read uncommitted 的理解。这篇记录我对 MySQL 事务隔离级别 read committed &amp;amp; MVCC 的理解。">
@@ -364,7 +365,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T10:25:27+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:32:24+08:00">
                 2017-11-14
               </time>
             
@@ -374,6 +375,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -551,6 +574,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/数据库/" rel="tag"># 数据库</a>
+          
+        </div>
+      
 
       
       
@@ -560,8 +589,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/14/Spring-Aop/" rel="next" title="自定义注解与Spring AOP实现为原程序加入Redis缓存支持(可重用)">
-                <i class="fa fa-chevron-left"></i> 自定义注解与Spring AOP实现为原程序加入Redis缓存支持(可重用)
+              <a href="/2017/11/14/MySQL-RepeatableRead-MVCC/" rel="next" title="数据库事务特征、数据库隔离级别，各级别数据库加锁情况(含实操)--Repeatable Read与MVCC">
+                <i class="fa fa-chevron-left"></i> 数据库事务特征、数据库隔离级别，各级别数据库加锁情况(含实操)--Repeatable Read与MVCC
               </a>
             
           </div>
@@ -570,8 +599,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/11/14/MySQL-RepeatableRead-MVCC/" rel="prev" title="数据库事务特征、数据库隔离级别，各级别数据库加锁情况(含实操)--Repeatable Read与MVCC">
-                数据库事务特征、数据库隔离级别，各级别数据库加锁情况(含实操)--Repeatable Read与MVCC <i class="fa fa-chevron-right"></i>
+              <a href="/2017/11/14/MySQL-Producer/" rel="prev" title="存储过程">
+                存储过程 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -665,7 +694,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-count">39</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -676,7 +705,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -687,7 +716,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

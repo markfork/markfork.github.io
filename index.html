@@ -327,7 +327,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/consist_hash/">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/UML/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鱼大坤">
@@ -346,7 +346,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/11/14/consist_hash/" itemprop="url">一致性哈希算法在分布式缓存中的应用</a></h2>
+                <a class="post-title-link" href="/2017/11/14/UML/" itemprop="url">UML关系图</a></h2>
         
 
         <div class="post-meta">
@@ -358,7 +358,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:15:27+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:36:42+08:00">
                 2017-11-14
               </time>
             
@@ -381,8 +381,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/分布式/" itemprop="url" rel="index">
-                    <span itemprop="name">分布式</span>
+                  <a href="/categories/UML/" itemprop="url" rel="index">
+                    <span itemprop="name">UML</span>
                   </a>
                 </span>
 
@@ -399,9 +399,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/14/consist_hash/#comments" itemprop="discussionUrl">
+                <a href="/2017/11/14/UML/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/14/consist_hash/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/11/14/UML/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -430,19 +430,11 @@
 
       
         
-          <h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><hr>
-<blockquote>
-<p>介绍一致性hash算法（Consistent Hashing）及其在分布式缓存中的应用，以及对一致性hash算法原理的介绍。</p>
-</blockquote>
-<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><hr>
-<blockquote>
-<p>假设我们有一个网站，最近发现随着流量增加，服务器压力越来越大，之前直接读写数据库的方式不太给力了，于是我们想引入Redis作为缓存机制。现在我们一共有三台机器可以作为Redis服务器，如下图所示。<br><img src="http://upload-images.jianshu.io/upload_images/2836699-18cba017e9d428b5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="分布式缓存示意图.png"></p>
-</blockquote>
-<h2 id="要解决的问题"><a href="#要解决的问题" class="headerlink" title="要解决的问题"></a>要解决的问题</h2><hr>
-<p>一般来说我们在大规模访问，大并发流量下都会使用到分布式缓存，即将廉价机器部署在同一个子网内，形成多机器集群，然后通过负载均衡以及一定的路由规则进行读请求的分流，将请求映射到<br>对应的缓存服务器上。如何对<strong>请求与缓存服务器之间进行精准映射,以及优雅的扩展，剔除缓存服务器</strong>是分布式缓存部署的痛点。<br>接下来我们会对解决以上问题的一些传统做法进行分析。<br>
+          <h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><hr>
+<p>指的是一个类（称为子类、子接口）继承另外的一个类（称为父类、父接口）的功能，并可以增加它自己的新功能的能力，继承是类与类或者接口与接口之间最常见的关系；在Java中此类关系通过关键字extends明确标识，在设计时一般没有争议性；<br><img src="http://upload-images.jianshu.io/upload_images/2836699-3d8208926b18a88d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="继承.jpg"><br>注意：实心线条，实心三角箭头<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/14/consist_hash/#more" rel="contents">
+            <a class="btn" href="/2017/11/14/UML/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -493,7 +485,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/kcode/">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/ThinkPHP-static-template/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鱼大坤">
@@ -512,7 +504,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/11/14/kcode/" itemprop="url">k码特权中关于 Redis与MySQL DB 乐观锁应用</a></h2>
+                <a class="post-title-link" href="/2017/11/14/ThinkPHP-static-template/" itemprop="url">ThinkPHP 静态资源，公共模板引用方法</a></h2>
         
 
         <div class="post-meta">
@@ -524,7 +516,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T10:32:10+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:36:26+08:00">
                 2017-11-14
               </time>
             
@@ -535,6 +527,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ThinkPHP/" itemprop="url" rel="index">
+                    <span itemprop="name">ThinkPHP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -543,9 +557,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/14/kcode/#comments" itemprop="discussionUrl">
+                <a href="/2017/11/14/ThinkPHP-static-template/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/14/kcode/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/11/14/ThinkPHP-static-template/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -574,19 +588,11 @@
 
       
         
-          <h2 id="1-【背景】"><a href="#1-【背景】" class="headerlink" title="1.【背景】"></a>1.【背景】</h2><hr>
-<blockquote>
-<p>斐讯路由App 需要新增k码特权模块。</p>
-</blockquote>
-<h2 id="2-【需求】"><a href="#2-【需求】" class="headerlink" title="2.【需求】"></a>2.【需求】</h2><blockquote>
-<p>1.已通过k码激活状态验证的用户可免费领取k码特权商品<br>2.每个用户每天只能领取一张k码特权奖品</p>
-</blockquote>
-<h2 id="3-【应用场景及难点分析】"><a href="#3-【应用场景及难点分析】" class="headerlink" title="3.【应用场景及难点分析】"></a>3.【应用场景及难点分析】</h2><blockquote>
-<p><strong>1.接口数据安全性要求：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">1.1 当某k码特权商品数据量为1，且高并发情况下，</div><div class="line">1.2 如何防止超卖(即多个用户都抢到了剩余的一个商品)</div></pre></td></tr></table></figure></p>
-</blockquote>
+          <h2 id="ThinkPHP-静态资源引入"><a href="#ThinkPHP-静态资源引入" class="headerlink" title="ThinkPHP 静态资源引入"></a>ThinkPHP 静态资源引入</h2><hr>
+<p>ThinkPHP 项目中静态资源一般放置在项目root目录下的Public文件夹下：<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/14/kcode/#more" rel="contents">
+            <a class="btn" href="/2017/11/14/ThinkPHP-static-template/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -637,7 +643,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/java-clone/">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/thinkphp-SeasLog/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鱼大坤">
@@ -656,7 +662,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/11/14/java-clone/" itemprop="url">Java 深克隆与浅克隆</a></h2>
+                <a class="post-title-link" href="/2017/11/14/thinkphp-SeasLog/" itemprop="url">ThinkPHP 接入 SeasLog 日志组件</a></h2>
         
 
         <div class="post-meta">
@@ -668,7 +674,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T10:31:41+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:36:02+08:00">
                 2017-11-14
               </time>
             
@@ -679,6 +685,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ThinkPHP/" itemprop="url" rel="index">
+                    <span itemprop="name">ThinkPHP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -687,9 +715,168 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/14/java-clone/#comments" itemprop="discussionUrl">
+                <a href="/2017/11/14/thinkphp-SeasLog/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/14/java-clone/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/11/14/thinkphp-SeasLog/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>##【背景】</p>
+<hr>
+<p>  为实现开发前期联调bug 定位、线上bug快速定位、快速响应，遂暂为斐讯路由后台 Api 模块添加日志记录支持。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/11/14/thinkphp-SeasLog/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/Spring-Controller-Aop/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="鱼大坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="鱼大坤">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/14/Spring-Controller-Aop/" itemprop="url">Spring Controller层设置AOP</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:35:42+08:00">
+                2017-11-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-Web/" itemprop="url" rel="index">
+                    <span itemprop="name">Java Web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/14/Spring-Controller-Aop/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/14/Spring-Controller-Aop/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -719,11 +906,10 @@
       
         
           <blockquote>
-<p>Java 深克隆(DeepClone)与浅克隆(ShallowClone)是原型设计模式的灵魂。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">记录结构：</div><div class="line">            --什么是浅克隆？</div><div class="line">            --实现浅克隆</div><div class="line">            --什么是深克隆？</div><div class="line">            --实现深克隆</div></pre></td></tr></table></figure></p>
-</blockquote>
+<p>近期公司需要做一个web项目，项目中有需求是需要记录特定管理员的操作。操作属性包括：操作时间、操作人、触发数据量等。<br>自然而然的就想到了<strong>面向切面编程(AOP)</strong>。<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/14/java-clone/#more" rel="contents">
+            <a class="btn" href="/2017/11/14/Spring-Controller-Aop/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -774,7 +960,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/Java-Design-Patter-proxy/">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/Spring-Aop-log/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鱼大坤">
@@ -793,7 +979,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/11/14/Java-Design-Patter-proxy/" itemprop="url">结构型设计模式--代理模式（静态与动态）</a></h2>
+                <a class="post-title-link" href="/2017/11/14/Spring-Aop-log/" itemprop="url">自定义注解与Spring AOP实现日志组件(可重用)</a></h2>
         
 
         <div class="post-meta">
@@ -805,7 +991,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T10:27:45+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:35:24+08:00">
                 2017-11-14
               </time>
             
@@ -816,6 +1002,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-Web/" itemprop="url" rel="index">
+                    <span itemprop="name">Java Web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -824,9 +1032,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/14/Java-Design-Patter-proxy/#comments" itemprop="discussionUrl">
+                <a href="/2017/11/14/Spring-Aop-log/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/14/Java-Design-Patter-proxy/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/11/14/Spring-Aop-log/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -855,425 +1063,14 @@
 
       
         
-          <h2 id="代理简述："><a href="#代理简述：" class="headerlink" title="代理简述："></a>代理简述：</h2><hr>
-<p>代理是一个动词，动词之间会有产生关系两者。代理这个词产生关系的两者就是：realSubject(被代理者)，proxySubject（代理者）。举个例子：火车站，与火车站代售点。<br>火车站可以进行售票工作，而火车站代售点可以实现代售车票。但是代售点还有其他的功能，比如说支持预约。这个是火车站所不具有的功能。<br>简单理解<strong>代理模式</strong>就是：<strong>代理者代替被代理者去完成一些功能，在完成一些功能之前可以做一些预处理，完成之后可以做一些后置处理。</strong><br>再看一个程序中的例子：<strong>AOP就是建立在代理的思想之上的，AOP面向切面编程，何为切面，就是你程序中的主要逻辑，在这些主要逻辑产生的地方设置切点，在切点的地方设置一个注入一些非主要功能，这个就是面向切面编程。面向切面编程是以动态代理为底层实现的</strong><br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/14/Java-Design-Patter-proxy/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/MySQL-index-notice-issue/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="鱼大坤">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="鱼大坤">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/14/MySQL-index-notice-issue/" itemprop="url">MySQL 数据库索引使用场景与注意事项</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T10:27:15+08:00">
-                2017-11-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/11/14/MySQL-index-notice-issue/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/14/MySQL-index-notice-issue/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><blockquote>
-<p>1.何种查询支持索引？<br>  2.注意事项和建议</p>
-</blockquote>
-<h2 id="一-何种查询支持索引？"><a href="#一-何种查询支持索引？" class="headerlink" title="一 何种查询支持索引？"></a>一 何种查询支持索引？</h2>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/14/MySQL-index-notice-issue/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/MySQL-RepeatableRead-MVCC/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="鱼大坤">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="鱼大坤">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/14/MySQL-RepeatableRead-MVCC/" itemprop="url">数据库事务特征、数据库隔离级别，各级别数据库加锁情况(含实操)--Repeatable Read与MVCC</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T10:26:32+08:00">
-                2017-11-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/11/14/MySQL-RepeatableRead-MVCC/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/14/MySQL-RepeatableRead-MVCC/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><strong>上节回顾</strong></p>
-<hr>
+          <h2 id="项目需求"><a href="#项目需求" class="headerlink" title="项目需求"></a>项目需求</h2><hr>
 <blockquote>
-<p>上两篇记录了我对MySQL 事务 隔离级别<strong> <a href="http://www.jianshu.com/p/d75fcdeb07a3" target="_blank" rel="external">read uncommitted</a> </strong>、MySQL 事务隔离级别 <strong><a href="http://www.jianshu.com/p/fd51cb8dc03b" target="_blank" rel="external">read committed</a>＋MVCC</strong> 的理解。<br>这篇记录我对 Repeatable Read 的理解。<br>
+<p><strong>需求1: </strong>web项目一般而言都需要日志记录，比较常用的是实用log4j来记录项目的异常日志，将日志单独存储于文件当中，这样有利于我们快速进行bug 排解。<br><strong>需求2: </strong>异常的记录一般就是将异常的堆栈保存在文件中，这样文件大小会急剧上升，有效异常信息也不能被立即定位，有没有一种方式可以可以让我们重写异常记录，并保存在异常日志文件当中呢。<br><strong>需求3: </strong>在异常日志之上，我们一般还需要对系统中各角色的各个重要操作进行一些日志记录，以方便我们找到操作人，以及责任人。</p>
+</blockquote>
+<p>针对1中的需求，我们大家熟悉的是实用log4j进行日志记录。配置简单，实现快速。<br>针对2，3中的需求我们一般采用的是基于拦截器实现（Aop思想的一种实现方式）在方法操作之前进行一定的处理，获取操作人、操作方法名、操作参数，异常捕获与记录，这样实现也是完全可以的。<br>今天记录的是基于<strong>自定义注解</strong>和<strong>面向切面(AOP)</strong>进行统一<strong>操作日志</strong>以及<strong>异常日志</strong>记录的实现。<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/14/MySQL-RepeatableRead-MVCC/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/MySQL-ReadCommitted-MVCC/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="鱼大坤">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="鱼大坤">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/14/MySQL-ReadCommitted-MVCC/" itemprop="url">数据库事务特征、数据库隔离级别，各级别数据库加锁情况(含实操)--read committed与 MVCC</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T10:25:27+08:00">
-                2017-11-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/11/14/MySQL-ReadCommitted-MVCC/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/14/MySQL-ReadCommitted-MVCC/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><strong>上节回顾</strong></p>
-<hr>
-<blockquote>
-<p>上篇记录了我对MySQL 事务 隔离级别<strong> <a href="http://www.jianshu.com/p/d75fcdeb07a3" target="_blank" rel="external">read uncommitted</a> </strong>的理解。<br>这篇记录我对 MySQL 事务隔离级别 <strong><a href="http://www.jianshu.com/p/fd51cb8dc03b" target="_blank" rel="external">read committed &amp; MVCC</a></strong> 的理解。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/14/MySQL-ReadCommitted-MVCC/#more" rel="contents">
+            <a class="btn" href="/2017/11/14/Spring-Aop-log/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1355,7 +1152,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T10:24:44+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:35:00+08:00">
                 2017-11-14
               </time>
             
@@ -1365,6 +1162,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-Web/" itemprop="url" rel="index">
+                    <span itemprop="name">Java Web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -1469,7 +1288,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/Spring-Aop-log/">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/simple-factory/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鱼大坤">
@@ -1488,7 +1307,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/11/14/Spring-Aop-log/" itemprop="url">自定义注解与Spring AOP实现日志组件(可重用)</a></h2>
+                <a class="post-title-link" href="/2017/11/14/simple-factory/" itemprop="url">简单工厂模式</a></h2>
         
 
         <div class="post-meta">
@@ -1500,7 +1319,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T10:24:10+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:34:41+08:00">
                 2017-11-14
               </time>
             
@@ -1511,6 +1330,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/design-pattern/" itemprop="url" rel="index">
+                    <span itemprop="name">design pattern</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -1519,9 +1360,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/14/Spring-Aop-log/#comments" itemprop="discussionUrl">
+                <a href="/2017/11/14/simple-factory/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/14/Spring-Aop-log/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/11/14/simple-factory/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1550,14 +1391,22 @@
 
       
         
-          <h2 id="项目需求"><a href="#项目需求" class="headerlink" title="项目需求"></a>项目需求</h2><hr>
-<blockquote>
-<p><strong>需求1: </strong>web项目一般而言都需要日志记录，比较常用的是实用log4j来记录项目的异常日志，将日志单独存储于文件当中，这样有利于我们快速进行bug 排解。<br><strong>需求2: </strong>异常的记录一般就是将异常的堆栈保存在文件中，这样文件大小会急剧上升，有效异常信息也不能被立即定位，有没有一种方式可以可以让我们重写异常记录，并保存在异常日志文件当中呢。<br><strong>需求3: </strong>在异常日志之上，我们一般还需要对系统中各角色的各个重要操作进行一些日志记录，以方便我们找到操作人，以及责任人。</p>
-</blockquote>
-<p>针对1中的需求，我们大家熟悉的是实用log4j进行日志记录。配置简单，实现快速。<br>针对2，3中的需求我们一般采用的是基于拦截器实现（Aop思想的一种实现方式）在方法操作之前进行一定的处理，获取操作人、操作方法名、操作参数，异常捕获与记录，这样实现也是完全可以的。<br>今天记录的是基于<strong>自定义注解</strong>和<strong>面向切面(AOP)</strong>进行统一<strong>操作日志</strong>以及<strong>异常日志</strong>记录的实现。<br>
+          <p>创建型设计模式：</p>
+<p>简单工厂模式、工厂方法模式、抽象工厂模式、单例模式、原型模式和建造者模式。 统共六种。</p>
+<p>本此分享三种工厂模式中的简单工厂模式。</p>
+<p>记录结构：</p>
+<p>–1.实际问题引入（需求）</p>
+<p>–2.传统解决办法</p>
+<p>–3.传统解决办法带来的问题</p>
+<p>–4.使用xx模式解决问题</p>
+<p>–4.1xx模式简述</p>
+<p>–4.2xx模式类图表示</p>
+<p>–4.3xx模式完整解决方案</p>
+<p>–5.方案改进</p>
+<p>–6.模式总结<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/14/Spring-Aop-log/#more" rel="contents">
+            <a class="btn" href="/2017/11/14/simple-factory/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1608,7 +1457,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/12/MySQL-Producer/">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/original_code_Spring_anylize_springIoc_load/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鱼大坤">
@@ -1627,7 +1476,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/11/12/MySQL-Producer/" itemprop="url">存储过程</a></h2>
+                <a class="post-title-link" href="/2017/11/14/original_code_Spring_anylize_springIoc_load/" itemprop="url">Spring Ioc 源码分析(二)--refresh()</a></h2>
         
 
         <div class="post-meta">
@@ -1639,8 +1488,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-12T16:11:14+08:00">
-                2017-11-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:34:27+08:00">
+                2017-11-14
               </time>
             
 
@@ -1650,6 +1499,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/源码分析/" itemprop="url" rel="index">
+                    <span itemprop="name">源码分析</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -1658,9 +1529,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/12/MySQL-Producer/#comments" itemprop="discussionUrl">
+                <a href="/2017/11/14/original_code_Spring_anylize_springIoc_load/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/12/MySQL-Producer/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/11/14/original_code_Spring_anylize_springIoc_load/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1689,11 +1560,328 @@
 
       
         
-          <h4 id="存储过程简介"><a href="#存储过程简介" class="headerlink" title="存储过程简介"></a>存储过程简介</h4><hr>
-<p>　存储过程（Stored Procedure）是数据库系统中，一组为了完成特定功能的SQL 语句集，经编译后存储在数据库中，用户通过指定存储过程的名字并给出参数（如果该存储过程带有参数）来执行它。在数据库系统中，存储过程和触发器具有很重要的作用。<strong>无论是存储过程还是触发器，都是SQL 语句和流程控制语句的集合。</strong><br>
+          <blockquote>
+<p><strong>1.目标：</strong><br>这篇记录debug 追溯源码的过程，大概分三个篇幅，这是第一篇，现整体了解一下运行流程，定位资源加载，资源解析，bean 注册发生的位置。<br>  2.<strong>记录结构：</strong><br>      1.调试栈截图<br>      2.整体流程<br>      3.bean.xml的处理<br><strong>每段代码下面有相应的讲解</strong><br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/12/MySQL-Producer/#more" rel="contents">
+            <a class="btn" href="/2017/11/14/original_code_Spring_anylize_springIoc_load/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/original_code_Spring_anyliz_parseBeanDefinitions_BeanDefinitionParserDelegate_4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="鱼大坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="鱼大坤">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/14/original_code_Spring_anyliz_parseBeanDefinitions_BeanDefinitionParserDelegate_4/" itemprop="url">Spring Ioc 源码分析(四)--parseBeanDefinitions()与BeanDefinitionParserDelegate</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:34:16+08:00">
+                2017-11-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/源码分析/" itemprop="url" rel="index">
+                    <span itemprop="name">源码分析</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/14/original_code_Spring_anyliz_parseBeanDefinitions_BeanDefinitionParserDelegate_4/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/14/original_code_Spring_anyliz_parseBeanDefinitions_BeanDefinitionParserDelegate_4/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>上一篇博客说到，BeanDefinition的解析,已经走到了DefaultBeanDefinitionDocumentR<br>eader里，这时候配置文件已经被加载，并解析成w3c的Document对象。这篇博客就接着介绍，DefaultBeanDefinitionDocumentReader和BeanDefinitionParserDelegate类，是怎么协同完成bean的解析和注册的。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">BeanDefinitionParserDelegate parent = <span class="keyword">this</span>.delegate;</div><div class="line"><span class="keyword">this</span>.delegate = createHelper(readerContext, root, parent);</div><div class="line">preProcessXml(root);</div><div class="line">parseBeanDefinitions(root, <span class="keyword">this</span>.delegate);</div><div class="line">postProcessXml(root);</div><div class="line"><span class="keyword">this</span>.delegate = parent;</div></pre></td></tr></table></figure></p>
+</blockquote>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/11/14/original_code_Spring_anyliz_parseBeanDefinitions_BeanDefinitionParserDelegate_4/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/original_code_Spring_anyliz_loadBeanDefinitions/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="鱼大坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="鱼大坤">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/14/original_code_Spring_anyliz_loadBeanDefinitions/" itemprop="url">Spring Ioc 源码分析(三)--loadBeanDefinitions</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:34:16+08:00">
+                2017-11-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/源码分析/" itemprop="url" rel="index">
+                    <span itemprop="name">源码分析</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/14/original_code_Spring_anyliz_loadBeanDefinitions/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/14/original_code_Spring_anyliz_loadBeanDefinitions/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>上一篇博客说到，ApplicationContext将解析BeanDefinition的工作委托给BeanDefinitionReader组件，这篇就接着分析一下BeanDefinition的解析过程。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/11/14/original_code_Spring_anyliz_loadBeanDefinitions/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1781,7 +1969,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-count">39</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1792,7 +1980,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1803,7 +1991,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
