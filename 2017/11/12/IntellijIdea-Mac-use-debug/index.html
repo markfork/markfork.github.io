@@ -96,13 +96,29 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="鱼大坤">
-<meta property="og:url" content="http://markfork.com/archives/index.html">
+<meta name="description" content="前言：本文的核心是记录debug的使用，与具体的操作系统无关。 1.什么是Debug Debug是程序的一种运行模式。用来发掘程序的走向，以及程序在运行过程中参数的变化。 2.Debug的作用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Intellij  Idea--Debug使用（Mac）">
+<meta property="og:url" content="http://markfork.com/2017/11/12/IntellijIdea-Mac-use-debug/index.html">
 <meta property="og:site_name" content="鱼大坤">
+<meta property="og:description" content="前言：本文的核心是记录debug的使用，与具体的操作系统无关。 1.什么是Debug Debug是程序的一种运行模式。用来发掘程序的走向，以及程序在运行过程中参数的变化。 2.Debug的作用">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-79b3cf7f01cc394d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-68b977fd49fb317e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-101f61c51b8dcd94.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-d19254229e35d473.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-1edc095aa3f10352.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-315063bc344067be.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-8f747ce7e7ecdcc6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-dfaf5f36fdc71db1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-893093247a3639dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-cfeff4a100a8fc59.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-044a231775e86d28.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-11-12T07:59:44.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="鱼大坤">
+<meta name="twitter:title" content="Intellij  Idea--Debug使用（Mac）">
+<meta name="twitter:description" content="前言：本文的核心是记录debug的使用，与具体的操作系统无关。 1.什么是Debug Debug是程序的一种运行模式。用来发掘程序的走向，以及程序在运行过程中参数的变化。 2.Debug的作用">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2836699-79b3cf7f01cc394d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -131,13 +147,13 @@
 
 
 
-  <link rel="canonical" href="http://markfork.com/archives/"/>
+  <link rel="canonical" href="http://markfork.com/2017/11/12/IntellijIdea-Mac-use-debug/"/>
 
 
 
 
 
-  <title>归档 | 鱼大坤</title>
+  <title>Intellij  Idea--Debug使用（Mac） | 鱼大坤</title>
   
 
 
@@ -162,7 +178,7 @@
     
   
 
-  <div class="container sidebar-position-left  page-archive  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -300,410 +316,198 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
 
-      <span class="archive-page-counter">
-        
-        
-         
-        
-        OK! 目前共计 40 篇日志。 继续努力。
-      </span>
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/12/IntellijIdea-Mac-use-debug/">
 
-      
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="鱼大坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="鱼大坤">
+    </span>
+
+    
+      <header class="post-header">
 
         
         
+          <h2 class="post-title" itemprop="name headline">Intellij  Idea--Debug使用（Mac）</h2>
         
 
-        
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-12T15:59:44+08:00">
+                2017-11-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-          <div class="collection-title">
-            <h2 class="archive-year motion-element" id="archive-year-2017">2017</h2>
-          </div>
-        
-        
 
-        
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/12/IntellijIdea-Mac-use-debug/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/12/IntellijIdea-Mac-use-debug/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
 
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/12/MySQL-Producer/" itemprop="url">
-              
-                <span itemprop="name">存储过程</span>
-              
-            </a>
-        
-      </h3>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-12T16:11:14+08:00"
-              content="2017-11-12" >
-          11-12
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+          
 
+        </div>
+      </header>
+    
 
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/12/MySQL-develop/" itemprop="url">
-              
-                <span itemprop="name">MySQL 数据库规范--开发篇</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-12T16:10:27+08:00"
-              content="2017-11-12" >
-          11-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/12/IntellijIdea-Mac-use-debug/" itemprop="url">
-              
-                <span itemprop="name">Intellij  Idea--Debug使用（Mac）</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-12T15:59:44+08:00"
-              content="2017-11-12" >
-          11-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/12/IntelljIdea-see-implements/" itemprop="url">
-              
-                <span itemprop="name">Intellj Idea中查看类继承面板</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-12T15:58:55+08:00"
-              content="2017-11-12" >
-          11-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p><strong>前言：</strong>本文的核心是记录debug的使用，与具体的操作系统无关。</p>
+<h2 id="1-什么是Debug"><a href="#1-什么是Debug" class="headerlink" title="1.什么是Debug"></a>1.什么是Debug</h2><hr>
+<p>Debug是程序的一种运行模式。用来发掘程序的走向，以及程序在运行过程中参数的变化。</p>
+<h2 id="2-Debug的作用"><a href="#2-Debug的作用" class="headerlink" title="2.Debug的作用"></a>2.Debug的作用</h2><a id="more"></a>
+<hr>
+<p>debug用来追溯代码的运行流程，通常在程序运行跟预期结果不符合的时（程序运行时出现异常），那么启动debug模式可以分析定位异常发生的位置，帮助程序员更好的fix bug</p>
+<h2 id="3-Debug的使用"><a href="#3-Debug的使用" class="headerlink" title="3.Debug的使用"></a>3.Debug的使用</h2><hr>
+<p>主要讲解intellj中debug的使用 ，此篇不会讲解debug时可用的快捷键。<br>配合idea中图形界面来进行讲解。</p>
+<blockquote>
+<p><strong>3.1.程序打上断点</strong><br>首先为程序打上断点，我采用的是spring demo，因为这样可以演示给第三方spring jar包如何打上断点。<br>主程序上断点如下图所示：<br><img src="http://upload-images.jianshu.io/upload_images/2836699-79b3cf7f01cc394d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="程序打上断点.png"><br>第三方jar包反编译源代码断点如下图所示：<br><img src="http://upload-images.jianshu.io/upload_images/2836699-68b977fd49fb317e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2016-10-26 下午3.09.44.png"><br><strong>3.2单步调试</strong><br><strong>3.2.1 Step Over:</strong><br>点击红色箭头指向的按钮，程序向下执行一行。<br><img src="http://upload-images.jianshu.io/upload_images/2836699-101f61c51b8dcd94.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2016-10-26 下午3.21.02.png"><br>但有一种情况需要注意，如果在一个顺序执行的程序文件中打上断点，而第一行被打上断点的代码调用了其他方法，而且这个被调用的方法上也有断点，那么这样单步执行的顺序是，先祝程序文件中第一行被打断点的程序运行，接下来是被调用方法中打了断点的那一行代码，最后接着顺序运行此主程序文件中其它被打了断点的代码。<br><strong>3.2.2 Step Into:</strong><br>点击红色箭头指向的按钮，程序向下执行一行。如果该行有自定义方法，则运行进入自定义方法,如果有第三方类库方法，则在idea 中可以进入第三方代码中。具体步骤如下：<br><img src="http://upload-images.jianshu.io/upload_images/2836699-d19254229e35d473.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2016-10-26 下午3.41.02.png"><br>在程序第十三行设置断点，然后点击上图中红色箭头指向的按钮，程序运行至第三方类库当中代码，代码如下图所示：<br><img src="http://upload-images.jianshu.io/upload_images/2836699-1edc095aa3f10352.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2016-10-26 下午3.45.08.png"><br><strong>3.2.3 step out</strong><br><img src="http://upload-images.jianshu.io/upload_images/2836699-315063bc344067be.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2016-10-26 下午3.48.30.png"><br>如果在调试的时候你进入了一个方法，并觉得该方法没有问题，你就可以使用stepout跳出该方法，返回到该方法被调用处的下一行语句。值得注意的是，该方法已执行完毕。<br><strong>3.2.4 Drop frame</strong><br><img src="http://upload-images.jianshu.io/upload_images/2836699-8f747ce7e7ecdcc6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2016-10-26 下午3.50.50.png"><br>点击该按钮后，你将返回到当前方法的调用处（如上图，程序会回到main()中）重新执行，并且所有上下文变量的值也回到那个时候。只要调用链中还有上级方法，可以跳到其中的任何一个方法。<br><strong>3.2.5 纯断点运行</strong><br>所谓纯断点运行表示：程序只在断点处停留。<br><img src="http://upload-images.jianshu.io/upload_images/2836699-dfaf5f36fdc71db1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2016-10-26 下午3.55.53.png"><br>发现上述两个按钮都可以实现效果<br><strong>3.2.6 查看断点</strong><br>按如下按钮可以查看程序中所有的断点：<br><img src="http://upload-images.jianshu.io/upload_images/2836699-893093247a3639dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2016-10-26 下午3.58.03.png"><br>效果图如下所示：<br><img src="http://upload-images.jianshu.io/upload_images/2836699-cfeff4a100a8fc59.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2016-10-26 下午3.59.29.png"><br>你可以从中删除不想要的断点。重新debug<br><strong>3.2.7 变量值查看</strong><br>idea中变量值的查看非常简单如下图：<br><img src="http://upload-images.jianshu.io/upload_images/2836699-044a231775e86d28.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2016-10-26 下午4.07.20.png"><br>两个红色箭头所指的地方都可以查看debug过程中变量值的变化情况。</p>
+</blockquote>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/12/original_code_Spring_anylize_springIoc_load/" itemprop="url">
-              
-                <span itemprop="name">Spring Ioc 源码分析(二)--refresh()</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-12T15:58:05+08:00"
-              content="2017-11-12" >
-          11-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/12/consist_hash/" itemprop="url">
-              
-                <span itemprop="name">一致性哈希算法在分布式缓存中的应用</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-12T15:57:04+08:00"
-              content="2017-11-12" >
-          11-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/12/original_code_Spring_anyliz_parseBeanDefinitions_BeanDefinitionParserDelegate_4/" itemprop="url">
-              
-                <span itemprop="name">Spring Ioc 源码分析(四)--parseBeanDefinitions()与BeanDefinitionParserDelegate</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-12T15:52:10+08:00"
-              content="2017-11-12" >
-          11-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/12/original_code_Spring_anyliz_loadBeanDefinitions/" itemprop="url">
-              
-                <span itemprop="name">Spring Ioc 源码分析(三)--loadBeanDefinitions</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-12T15:50:23+08:00"
-              content="2017-11-12" >
-          11-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/12/original_code_Spring_anyliz_1/" itemprop="url">
-              
-                <span itemprop="name">Spring Ioc 源码分析(一)--Spring Ioc容器的加载</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-12T15:47:15+08:00"
-              content="2017-11-12" >
-          11-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/12/original_code_Spring_anylize/" itemprop="url">
-              
-                <span itemprop="name">未命名</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-12T15:45:25+08:00"
-              content="2017-11-12" >
-          11-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="鱼大坤 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>个人微信号，欢迎添加~</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果我的文章对您有帮助，请小小的打赏一下吧~，我将>创作更好的文章给大家！谢谢！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="鱼大坤 Alipay"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/12/IntelljIdea-see-implements/" rel="next" title="Intellj Idea中查看类继承面板">
+                <i class="fa fa-chevron-left"></i> Intellj Idea中查看类继承面板
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/12/MySQL-develop/" rel="prev" title="MySQL 数据库规范--开发篇">
+                MySQL 数据库规范--开发篇 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/4/">4</a><a class="extend next" rel="next" href="/archives/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -711,6 +515,17 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+</div>
+
 
         </div>
         
@@ -731,8 +546,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -783,6 +607,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-什么是Debug"><span class="nav-number">1.</span> <span class="nav-text">1.什么是Debug</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Debug的作用"><span class="nav-number">2.</span> <span class="nav-text">2.Debug的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Debug的使用"><span class="nav-number">3.</span> <span class="nav-text">3.Debug的使用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -903,11 +743,9 @@
 
 
   
-  
-    <script type="text/javascript" id="motion.page.archive">
-      $('.archive-year').velocity('transition.slideLeftIn');
-    </script>
-  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
 
 
   
@@ -927,6 +765,18 @@
     
 
     
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://markfork.com/2017/11/12/IntellijIdea-Mac-use-debug/';
+          this.page.identifier = '2017/11/12/IntellijIdea-Mac-use-debug/';
+          this.page.title = 'Intellij  Idea--Debug使用（Mac）';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
 
   
 
@@ -942,6 +792,10 @@
   
     
 
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2148159"></script>
+      <!-- UY END -->
     
   
 

@@ -96,13 +96,26 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="鱼大坤">
-<meta property="og:url" content="http://markfork.com/archives/index.html">
+<meta name="description" content="目的  介绍一致性hash算法（Consistent Hashing）及其在分布式缓存中的应用，以及对一致性hash算法原理的介绍。  应用场景  假设我们有一个网站，最近发现随着流量增加，服务器压力越来越大，之前直接读写数据库的方式不太给力了，于是我们想引入Redis作为缓存机制。现在我们一共有三台机器可以作为Redis服务器，如下图所示。  要解决的问题 一般来说我们在大规模访问，大并发流量下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一致性哈希算法在分布式缓存中的应用">
+<meta property="og:url" content="http://markfork.com/2017/11/12/consist_hash/index.html">
 <meta property="og:site_name" content="鱼大坤">
+<meta property="og:description" content="目的  介绍一致性hash算法（Consistent Hashing）及其在分布式缓存中的应用，以及对一致性hash算法原理的介绍。  应用场景  假设我们有一个网站，最近发现随着流量增加，服务器压力越来越大，之前直接读写数据库的方式不太给力了，于是我们想引入Redis作为缓存机制。现在我们一共有三台机器可以作为Redis服务器，如下图所示。  要解决的问题 一般来说我们在大规模访问，大并发流量下">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-18cba017e9d428b5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-761c7ac38078a2e5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-cdb684dc8afcafbe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-99c54dadceb7f18b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-10c77e305faab998.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-620c26159a2f672d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-c1d68874c041557d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-03901e612ee8c8fe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-11-12T07:57:04.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="鱼大坤">
+<meta name="twitter:title" content="一致性哈希算法在分布式缓存中的应用">
+<meta name="twitter:description" content="目的  介绍一致性hash算法（Consistent Hashing）及其在分布式缓存中的应用，以及对一致性hash算法原理的介绍。  应用场景  假设我们有一个网站，最近发现随着流量增加，服务器压力越来越大，之前直接读写数据库的方式不太给力了，于是我们想引入Redis作为缓存机制。现在我们一共有三台机器可以作为Redis服务器，如下图所示。  要解决的问题 一般来说我们在大规模访问，大并发流量下">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2836699-18cba017e9d428b5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -131,13 +144,13 @@
 
 
 
-  <link rel="canonical" href="http://markfork.com/archives/"/>
+  <link rel="canonical" href="http://markfork.com/2017/11/12/consist_hash/"/>
 
 
 
 
 
-  <title>归档 | 鱼大坤</title>
+  <title>一致性哈希算法在分布式缓存中的应用 | 鱼大坤</title>
   
 
 
@@ -162,7 +175,7 @@
     
   
 
-  <div class="container sidebar-position-left  page-archive  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -300,410 +313,234 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
 
-      <span class="archive-page-counter">
-        
-        
-         
-        
-        OK! 目前共计 40 篇日志。 继续努力。
-      </span>
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/12/consist_hash/">
 
-      
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="鱼大坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="鱼大坤">
+    </span>
+
+    
+      <header class="post-header">
 
         
         
+          <h2 class="post-title" itemprop="name headline">一致性哈希算法在分布式缓存中的应用</h2>
         
 
-        
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-12T15:57:04+08:00">
+                2017-11-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-          <div class="collection-title">
-            <h2 class="archive-year motion-element" id="archive-year-2017">2017</h2>
-          </div>
-        
-        
 
-        
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/12/consist_hash/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/12/consist_hash/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
 
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/12/MySQL-Producer/" itemprop="url">
-              
-                <span itemprop="name">存储过程</span>
-              
-            </a>
-        
-      </h3>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-12T16:11:14+08:00"
-              content="2017-11-12" >
-          11-12
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+          
 
+        </div>
+      </header>
+    
 
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/12/MySQL-develop/" itemprop="url">
-              
-                <span itemprop="name">MySQL 数据库规范--开发篇</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-12T16:10:27+08:00"
-              content="2017-11-12" >
-          11-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/12/IntellijIdea-Mac-use-debug/" itemprop="url">
-              
-                <span itemprop="name">Intellij  Idea--Debug使用（Mac）</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-12T15:59:44+08:00"
-              content="2017-11-12" >
-          11-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/12/IntelljIdea-see-implements/" itemprop="url">
-              
-                <span itemprop="name">Intellj Idea中查看类继承面板</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-12T15:58:55+08:00"
-              content="2017-11-12" >
-          11-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><hr>
+<blockquote>
+<p>介绍一致性hash算法（Consistent Hashing）及其在分布式缓存中的应用，以及对一致性hash算法原理的介绍。</p>
+</blockquote>
+<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><hr>
+<blockquote>
+<p>假设我们有一个网站，最近发现随着流量增加，服务器压力越来越大，之前直接读写数据库的方式不太给力了，于是我们想引入Redis作为缓存机制。现在我们一共有三台机器可以作为Redis服务器，如下图所示。<br><img src="http://upload-images.jianshu.io/upload_images/2836699-18cba017e9d428b5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="分布式缓存示意图.png"></p>
+</blockquote>
+<h2 id="要解决的问题"><a href="#要解决的问题" class="headerlink" title="要解决的问题"></a>要解决的问题</h2><hr>
+<p>一般来说我们在大规模访问，大并发流量下都会使用到分布式缓存，即将廉价机器部署在同一个子网内，形成多机器集群，然后通过负载均衡以及一定的路由规则进行读请求的分流，将请求映射到<br>对应的缓存服务器上。如何对<strong>请求与缓存服务器之间进行精准映射,以及优雅的扩展，剔除缓存服务器</strong>是分布式缓存部署的痛点。<br>接下来我们会对解决以上问题的一些传统做法进行分析。<br><a id="more"></a></p>
+<blockquote>
+<p><strong>1.请求与缓存服务器之间精准映射问题.</strong></p>
+<ul>
+<li>最简策略-随机选取：<br>含义：将每一次Redis请求随机发送到一台Redis服务器.<br>产生的问题： <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1.同一份数据可能被存在不同的机器上而造成数据冗余。</div><div class="line">2.有可能某数据已经被缓存但是访问却没有命中，因为无法保证对相同key的所有访问都被发送到相同的服务器。</div><div class="line">  因此，随机策略无论是时间效率还是空间效率都非常不好。</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li>解决保证相同key每次访问同一台Redis服务器-计算哈希：<br>含义：保证对相同key的访问会被发送到相同的服务器。<br>方案描述：<br>对于每次访问，可以按如下算法计算其哈希值：<br>h = Hash(key) % 3<br>其中Hash是一个从字符串到正整数的哈希映射函数。这样，如果我们将Redis Server分别编号为0、1、2，那么就可以根据上式和key计算出服务器编号h，然后去访问。<br>这个方法虽然解决了上面提到的两个问题，但是存在一些其它的问题。如果将上述方法抽象，可以认为通过：<br>h = Hash(key) % N<br>这个算式计算每个key的请求应该被发送到哪台服务器，其中N为服务器的台数，并且服务器按照0 – (N-1)编号。</li>
+</ul>
+<blockquote>
+<p><strong>2.优雅的扩展，剔除缓存服务器问题</strong><br>     对于根据请求的key进行hash 运算定位Redis缓存服务器产生的问题： 容错性和扩展性将会变得极差.</p>
+<ul>
+<li>容错性：指当系统中某一个或几个服务器变得不可用时，整个系统是否可以正确高效运行；</li>
+<li>扩展性：指当加入新的服务器后，整个系统是否可以正确高效运行。<br>现假设有一台服务器宕机了，那么为了填补空缺，要将宕机的服务器从编号列表中移除，后面的服务器按顺序前移一位并将其编号<br>值减一，此时每个key就要按h = Hash(key) % (N-1)重新计算；同样，如果新增了一台服务器，虽然原有服务器编号不用改变，<br>但是要按h = Hash(key) % (N+1)重新计算哈希值。因此系统中一旦有服务器变更，大量的key会被<br>重定位到不同的服务器从而造成大量的缓存不命中。<br>而这种情况在分布式系统中是非常糟糕的。</li>
+</ul>
+</blockquote>
+<p>一个设计良好的分布式哈希方案应该具有良好的单调性，即服务节点的增减不会造成大量哈希重定位。一致性hash算法就是这样一种hash方案。</p>
+<h2 id="解决方法－一致性hash算法"><a href="#解决方法－一致性hash算法" class="headerlink" title="解决方法－一致性hash算法"></a>解决方法－一致性hash算法</h2><hr>
+<p><strong>算法简述</strong><br>一致性哈希算法（Consistent Hashing）最早在论文《<a href="http://www.akamai.com/dl/technical_publications/ConsistenHashingandRandomTreesDistributedCachingprotocolsforrelievingHotSpotsontheworldwideweb.pdf" target="_blank" rel="external">Consistent Hashing and Random Trees: Distributed Caching Protocols for Relieving Hot Spots on the World Wide Web</a>》中被提出。简单来说，一致性哈希将整个哈希值空间组织成一个虚拟的圆环，如假设某哈希函数H的值空间为0 - 2的32次方<br>-1（即哈希值是一个32位无符号整形），整个哈希空间环如下：<br><img src="http://upload-images.jianshu.io/upload_images/2836699-761c7ac38078a2e5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="一致性hash函数值空间.png"></p>
+<p>整个空间按顺时针方向组织。0和232-1在零点中方向重合。</p>
+<p>下一步将各个服务器使用H进行一个哈希，具体可以选择服务器的ip或主机名作为关键字进行哈希，这样每台机器就能确定其在哈希环上的位置，这里假设将上文中三台服务器使用ip地址哈希后在环空间的位置如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-cdb684dc8afcafbe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="一致性hash函数值空间 (1).png"></p>
+<p>接下来使用如下算法定位数据访问到相应服务器：将数据key使用相同的函数H计算出哈希值h，通根据h确定此数据在环上的位置，<strong>从此位置沿环顺时针“行走”</strong>，第一台遇到的服务器就是其应该定位到的服务器。</p>
+<p>例如我们缓存服务器中有A、B、C、D四个key对应的数据对象，经过哈希计算后，在环空间上的位置如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-99c54dadceb7f18b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="一致性hash函数值空间 (2).png"></p>
+<p>截止到现在似乎还没有什么觉得神奇的地方，请往下看：<br><strong>容错性与可扩展性分析</strong><br>下面分析一致性哈希算法的容错性和可扩展性。现假设Redis-2宕机了：<br><img src="http://upload-images.jianshu.io/upload_images/2836699-10c77e305faab998.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="一致性hash函数值空间 (3).png"><br>我们可以看到ACD节点并不受影响，只有B节点被重定向至Redis-0。</p>
+<p>下面考虑另外一种情况，如果我们在系统中增加一台服务器Redis-3 Server：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-620c26159a2f672d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="一致性hash函数值空间 (4).png"><br>可以发现对于C这个key，重新定位至Redis-3 服务器，其他非C的key均不受影响。</p>
+<p>综上所述，一致性哈希算法对于节点的增减都只需重定位环空间中的一小部分数据，具有较好的容错性和可扩展性。</p>
+<h2 id="数据倾斜问题"><a href="#数据倾斜问题" class="headerlink" title="数据倾斜问题"></a>数据倾斜问题</h2><hr>
+<p><strong>解决办法-虚拟节点</strong><br>一致性哈希算法在服务节点太少时，容易因为节点分部不均匀而造成数据倾斜问题。例如我们的系统中有两台服务器，其环分布如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-c1d68874c041557d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="一致性hash函数值空间 (5).png"></p>
+<p>此时必然造成大量数据集中到Redis-1上，而只有极少量会定位到Redis-0上。为了解决这种数据倾斜问题，一致性哈希算法引入了虚拟节点机制，即对每一个服务节点计算多个哈希，每个计算结果位置都放置一个此服务节点，称为虚拟节点。具体做法可以在服务器ip或主机名的后面增加编号来实现。例如上面的情况，我们决定为每台服务器计算三个虚拟节点，于是可以分别计算“Redis-1 #1”、“Redis-1 #2”、“Redis-1 #3”、“Redis-0 #1”、“Redis-0 #2”、“Redis-0 #3”的哈希值，于是形成六个虚拟节点：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-03901e612ee8c8fe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="一致性hash函数值空间 (6).png"></p>
+<p>同时数据定位算法不变，只是多了一步虚拟节点到实际节点的映射，例如定位到“Redis-1#1”、“Redis-1#2”、“Redis-1#3”三个虚拟节点的数据均定位到Redis-1上。这样就解决了服务节点少时数据倾斜的问题。在实际应用中，通常将虚拟节点数设置为32甚至更大，因此即使很少的服务节点也能做到相对均匀的数据分布。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>目前一致性哈希基本成为了分布式系统组件的标准配置，例如Redis的各种客户端都提供内置的一致性哈希支持。本文只是简要介绍了这个算法的思想，以及在分布式应用中的应用场景。</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/12/original_code_Spring_anylize_springIoc_load/" itemprop="url">
-              
-                <span itemprop="name">Spring Ioc 源码分析(二)--refresh()</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-12T15:58:05+08:00"
-              content="2017-11-12" >
-          11-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/12/consist_hash/" itemprop="url">
-              
-                <span itemprop="name">一致性哈希算法在分布式缓存中的应用</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-12T15:57:04+08:00"
-              content="2017-11-12" >
-          11-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/12/original_code_Spring_anyliz_parseBeanDefinitions_BeanDefinitionParserDelegate_4/" itemprop="url">
-              
-                <span itemprop="name">Spring Ioc 源码分析(四)--parseBeanDefinitions()与BeanDefinitionParserDelegate</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-12T15:52:10+08:00"
-              content="2017-11-12" >
-          11-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/12/original_code_Spring_anyliz_loadBeanDefinitions/" itemprop="url">
-              
-                <span itemprop="name">Spring Ioc 源码分析(三)--loadBeanDefinitions</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-12T15:50:23+08:00"
-              content="2017-11-12" >
-          11-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/12/original_code_Spring_anyliz_1/" itemprop="url">
-              
-                <span itemprop="name">Spring Ioc 源码分析(一)--Spring Ioc容器的加载</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-12T15:47:15+08:00"
-              content="2017-11-12" >
-          11-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/12/original_code_Spring_anylize/" itemprop="url">
-              
-                <span itemprop="name">未命名</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-12T15:45:25+08:00"
-              content="2017-11-12" >
-          11-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="鱼大坤 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>个人微信号，欢迎添加~</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果我的文章对您有帮助，请小小的打赏一下吧~，我将>创作更好的文章给大家！谢谢！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="鱼大坤 Alipay"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/12/original_code_Spring_anyliz_parseBeanDefinitions_BeanDefinitionParserDelegate_4/" rel="next" title="Spring Ioc 源码分析(四)--parseBeanDefinitions()与BeanDefinitionParserDelegate">
+                <i class="fa fa-chevron-left"></i> Spring Ioc 源码分析(四)--parseBeanDefinitions()与BeanDefinitionParserDelegate
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/12/original_code_Spring_anylize_springIoc_load/" rel="prev" title="Spring Ioc 源码分析(二)--refresh()">
+                Spring Ioc 源码分析(二)--refresh() <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/4/">4</a><a class="extend next" rel="next" href="/archives/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -711,6 +548,17 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+</div>
+
 
         </div>
         
@@ -731,8 +579,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -783,6 +640,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#目的"><span class="nav-number">1.</span> <span class="nav-text">目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应用场景"><span class="nav-number">2.</span> <span class="nav-text">应用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#要解决的问题"><span class="nav-number">3.</span> <span class="nav-text">要解决的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方法－一致性hash算法"><span class="nav-number">4.</span> <span class="nav-text">解决方法－一致性hash算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据倾斜问题"><span class="nav-number">5.</span> <span class="nav-text">数据倾斜问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -903,11 +776,9 @@
 
 
   
-  
-    <script type="text/javascript" id="motion.page.archive">
-      $('.archive-year').velocity('transition.slideLeftIn');
-    </script>
-  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
 
 
   
@@ -927,6 +798,18 @@
     
 
     
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://markfork.com/2017/11/12/consist_hash/';
+          this.page.identifier = '2017/11/12/consist_hash/';
+          this.page.title = '一致性哈希算法在分布式缓存中的应用';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
 
   
 
@@ -942,6 +825,10 @@
   
     
 
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2148159"></script>
+      <!-- UY END -->
     
   
 

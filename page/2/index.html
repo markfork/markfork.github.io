@@ -316,7 +316,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/12/Spring-Aop-日志/">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/12/Spring-Controller-Aop/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鱼大坤">
@@ -335,7 +335,143 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/11/12/Spring-Aop-日志/" itemprop="url">自定义注解&Spring AOP实现日志组件(可重用)</a></h2>
+                <a class="post-title-link" href="/2017/11/12/Spring-Controller-Aop/" itemprop="url">Spring Controller层设置AOP</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-12T15:39:50+08:00">
+                2017-11-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/12/Spring-Controller-Aop/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/12/Spring-Controller-Aop/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>近期公司需要做一个web项目，项目中有需求是需要记录特定管理员的操作。操作属性包括：操作时间、操作人、触发数据量等。<br>自然而然的就想到了<strong>面向切面编程(AOP)</strong>。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/11/12/Spring-Controller-Aop/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/12/Spring-Aop-log/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="鱼大坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="鱼大坤">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/12/Spring-Aop-log/" itemprop="url">自定义注解&Spring AOP实现日志组件(可重用)</a></h2>
         
 
         <div class="post-meta">
@@ -366,9 +502,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/12/Spring-Aop-日志/#comments" itemprop="discussionUrl">
+                <a href="/2017/11/12/Spring-Aop-log/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/12/Spring-Aop-日志/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/11/12/Spring-Aop-log/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -404,7 +540,7 @@
 <p>针对1中的需求，我们大家熟悉的是实用log4j进行日志记录。配置简单，实现快速。<br>针对2，3中的需求我们一般采用的是基于拦截器实现（Aop思想的一种实现方式）在方法操作之前进行一定的处理，获取操作人、操作方法名、操作参数，异常捕获与记录，这样实现也是完全可以的。<br>今天记录的是基于<strong>自定义注解</strong>和<strong>面向切面(AOP)</strong>进行统一<strong>操作日志</strong>以及<strong>异常日志</strong>记录的实现。<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/12/Spring-Aop-日志/#more" rel="contents">
+            <a class="btn" href="/2017/11/12/Spring-Aop-log/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1292,7 +1428,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/06/MySQL-调优/">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/06/MySQL-optimistic/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鱼大坤">
@@ -1311,7 +1447,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/11/06/MySQL-调优/" itemprop="url">MySQL 数据库规范--调优篇(终结篇)</a></h2>
+                <a class="post-title-link" href="/2017/11/06/MySQL-optimistic/" itemprop="url">MySQL 数据库规范--调优篇(终结篇)</a></h2>
         
 
         <div class="post-meta">
@@ -1342,9 +1478,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/06/MySQL-调优/#comments" itemprop="discussionUrl">
+                <a href="/2017/11/06/MySQL-optimistic/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/06/MySQL-调优/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/11/06/MySQL-optimistic/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1378,7 +1514,7 @@
 <p>这篇是MySQL 数据库规范的最后一篇–调优篇，旨在提供我们发现系统性能变弱、MySQL系统参数调优，SQL脚本出现问题的精准定位与调优方法。<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/06/MySQL-调优/#more" rel="contents">
+            <a class="btn" href="/2017/11/06/MySQL-optimistic/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1523,153 +1659,6 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/11/05/Java-Design-Pattern-Creator/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/05/simple-factory/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="鱼大坤">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="鱼大坤">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/05/simple-factory/" itemprop="url">简单工厂模式</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-05T21:00:35+08:00">
-                2017-11-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/11/05/simple-factory/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/05/simple-factory/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>创建型设计模式：</p>
-<p>简单工厂模式、工厂方法模式、抽象工厂模式、单例模式、原型模式和建造者模式。 统共六种。</p>
-<p>本此分享三种工厂模式中的简单工厂模式。</p>
-<p>记录结构：</p>
-<p>–1.实际问题引入（需求）</p>
-<p>–2.传统解决办法</p>
-<p>–3.传统解决办法带来的问题</p>
-<p>–4.使用xx模式解决问题</p>
-<p>–4.1xx模式简述</p>
-<p>–4.2xx模式类图表示</p>
-<p>–4.3xx模式完整解决方案</p>
-<p>–5.方案改进</p>
-<p>–6.模式总结<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/05/simple-factory/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
