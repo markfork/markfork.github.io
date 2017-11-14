@@ -96,13 +96,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="鱼大坤">
-<meta property="og:url" content="http://markfork.com/archives/page/4/index.html">
+<meta name="description" content="上节回顾   上两篇记录了我对MySQL 事务 隔离级别 read uncommitted 、MySQL 事务隔离级别 read committed＋MVCC 的理解。这篇记录我对 Repeatable Read 的理解。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库事务特征、数据库隔离级别，各级别数据库加锁情况(含实操)--Repeatable Read与MVCC">
+<meta property="og:url" content="http://markfork.com/2017/11/14/MySQL-RepeatableRead-MVCC/index.html">
 <meta property="og:site_name" content="鱼大坤">
+<meta property="og:description" content="上节回顾   上两篇记录了我对MySQL 事务 隔离级别 read uncommitted 、MySQL 事务隔离级别 read committed＋MVCC 的理解。这篇记录我对 Repeatable Read 的理解。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-14T02:26:32.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="鱼大坤">
+<meta name="twitter:title" content="数据库事务特征、数据库隔离级别，各级别数据库加锁情况(含实操)--Repeatable Read与MVCC">
+<meta name="twitter:description" content="上节回顾   上两篇记录了我对MySQL 事务 隔离级别 read uncommitted 、MySQL 事务隔离级别 read committed＋MVCC 的理解。这篇记录我对 Repeatable Read 的理解。">
 
 
 
@@ -131,13 +135,13 @@
 
 
 
-  <link rel="canonical" href="http://markfork.com/archives/page/4/"/>
+  <link rel="canonical" href="http://markfork.com/2017/11/14/MySQL-RepeatableRead-MVCC/"/>
 
 
 
 
 
-  <title>归档 | 鱼大坤</title>
+  <title>数据库事务特征、数据库隔离级别，各级别数据库加锁情况(含实操)--Repeatable Read与MVCC | 鱼大坤</title>
   
 
 
@@ -162,7 +166,7 @@
     
   
 
-  <div class="container sidebar-position-left  page-archive  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -300,410 +304,210 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
 
-      <span class="archive-page-counter">
-        
-        
-         
-        
-        OK! 目前共计 40 篇日志。 继续努力。
-      </span>
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/MySQL-RepeatableRead-MVCC/">
 
-      
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="鱼大坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="鱼大坤">
+    </span>
+
+    
+      <header class="post-header">
 
         
         
+          <h2 class="post-title" itemprop="name headline">数据库事务特征、数据库隔离级别，各级别数据库加锁情况(含实操)--Repeatable Read与MVCC</h2>
         
 
-        
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T10:26:32+08:00">
+                2017-11-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-          <div class="collection-title">
-            <h2 class="archive-year motion-element" id="archive-year-2017">2017</h2>
-          </div>
-        
-        
 
-        
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/14/MySQL-RepeatableRead-MVCC/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/14/MySQL-RepeatableRead-MVCC/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
 
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/04/thinkphp-SeasLog/" itemprop="url">
-              
-                <span itemprop="name">ThinkPHP 接入 SeasLog 日志组件</span>
-              
-            </a>
-        
-      </h3>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-04T15:03:20+08:00"
-              content="2017-11-04" >
-          11-04
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+          
 
+        </div>
+      </header>
+    
 
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/04/java-jni/" itemprop="url">
-              
-                <span itemprop="name">Java web 项目中使用JNI技术（如何在程序运行期间改变 java.library.path并生效）</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-04T15:00:28+08:00"
-              content="2017-11-04" >
-          11-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/04/NoSql-des/" itemprop="url">
-              
-                <span itemprop="name">NoSql入门概述</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-04T14:57:30+08:00"
-              content="2017-11-04" >
-          11-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/04/NoSql-Redis-transaction/" itemprop="url">
-              
-                <span itemprop="name">NoSql-Redis入门（事务）</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-04T14:55:52+08:00"
-              content="2017-11-04" >
-          11-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p><strong>上节回顾</strong></p>
+<hr>
+<blockquote>
+<p>上两篇记录了我对MySQL 事务 隔离级别<strong> <a href="http://www.jianshu.com/p/d75fcdeb07a3" target="_blank" rel="external">read uncommitted</a> </strong>、MySQL 事务隔离级别 <strong><a href="http://www.jianshu.com/p/fd51cb8dc03b" target="_blank" rel="external">read committed</a>＋MVCC</strong> 的理解。<br>这篇记录我对 Repeatable Read 的理解。<br><a id="more"></a><br><strong>前言</strong></p>
+<hr>
+<p>MySQL在 <strong>read committed</strong>、<strong>Repeatable Read </strong> 两个级别下都会使用到MVCC, 并且只在这两个级别下使用。</p>
+</blockquote>
+<p><strong>目录</strong></p>
+<hr>
+<blockquote>
+<p>1.单纯加锁是怎么实现  Repeatable Read  的?<br>2.真实的情况是什么样子的？</p>
+</blockquote>
+<p><strong>1.单纯加锁是怎么实现  Repeatable Read  的</strong></p>
+<hr>
+<blockquote>
+<p>1.多线程同时更新同一条记录，加X锁。所以并发场景下的 update 是串行执行的。<br>  2.工业定义上的 select 一条记录，这个时候会在记录上加读共享锁(S锁)，并到事务结束，因为在这种情况下才能实现记录在事务时间跨度上的可重复读。在读的时候不允许其他事务修改这条记录。<br>  3.update 一条语句，这个时候会在记录上加行级排他锁(X锁)，并到事务结束，这中场景下，其他读事务会被阻塞。</p>
+</blockquote>
+<p><strong>2.真实的情况是什么样子的？</strong></p>
+<hr>
+<p>读不影响写，写不影响读。</p>
+<blockquote>
+<p>1.读不影响写：事务以排他锁的形式修改原始数据，<strong>读时不加锁</strong>，因为 MySQL 在事务隔离级别Read committed 、Repeatable Read下，InnoDB  存储引擎采用非锁定性一致读－－即读取不占用和等待表上的锁。即采用的是MVCC中一致性非锁定读模式。因读时不加锁，所以不会阻塞其他事物在相同记录上加 X锁来更改这行记录。<br>2.写不影响读：事务以排他锁的形式修改原始数据，当读取的行正在执行 delete  或者 update 操作，这时读取操作不会因此去等待行上锁的释放。相反地，InnoDB 存储引擎会去读取行的一个快照数据。</p>
+</blockquote>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/04/NoSql-Redis-2/" itemprop="url">
-              
-                <span itemprop="name">NoSQL－Redis入门(二)</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-04T14:54:39+08:00"
-              content="2017-11-04" >
-          11-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/04/NoSql-Redis/" itemprop="url">
-              
-                <span itemprop="name">NoSql-Redis入门（事务）</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-04T14:46:10+08:00"
-              content="2017-11-04" >
-          11-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/04/node-Buffer/" itemprop="url">
-              
-                <span itemprop="name">node.js中缓冲区--Buffer</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-04T14:43:32+08:00"
-              content="2017-11-04" >
-          11-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/04/EventEmitter/" itemprop="url">
-              
-                <span itemprop="name">Node.js EventEmitter (触发器)</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-04T14:40:46+08:00"
-              content="2017-11-04" >
-          11-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/04/node/" itemprop="url">
-              
-                <span itemprop="name">Node.js Event-loop事件循环</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-04T14:30:35+08:00"
-              content="2017-11-04" >
-          11-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/04/java_nio/" itemprop="url">
-              
-                <span itemprop="name">Java NIO(一)－I/O模型： 阻塞、非阻塞、I/O复用、同步、异步</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-04T12:53:49+08:00"
-              content="2017-11-04" >
-          11-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="鱼大坤 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>个人微信号，欢迎添加~</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果我的文章对您有帮助，请小小的打赏一下吧~，我将>创作更好的文章给大家！谢谢！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="鱼大坤 Alipay"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/14/MySQL-ReadCommitted-MVCC/" rel="next" title="数据库事务特征、数据库隔离级别，各级别数据库加锁情况(含实操)--read committed与 MVCC">
+                <i class="fa fa-chevron-left"></i> 数据库事务特征、数据库隔离级别，各级别数据库加锁情况(含实操)--read committed与 MVCC
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/14/MySQL-index-notice-issue/" rel="prev" title="MySQL 数据库索引使用场景与注意事项">
+                MySQL 数据库索引使用场景与注意事项 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/3/">3</a><span class="page-number current">4</span>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -711,6 +515,17 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+</div>
+
 
         </div>
         
@@ -903,11 +718,9 @@
 
 
   
-  
-    <script type="text/javascript" id="motion.page.archive">
-      $('.archive-year').velocity('transition.slideLeftIn');
-    </script>
-  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
 
 
   
@@ -927,6 +740,18 @@
     
 
     
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://markfork.com/2017/11/14/MySQL-RepeatableRead-MVCC/';
+          this.page.identifier = '2017/11/14/MySQL-RepeatableRead-MVCC/';
+          this.page.title = '数据库事务特征、数据库隔离级别，各级别数据库加锁情况(含实操)--Repeatable Read与MVCC';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
 
   
 
@@ -942,6 +767,10 @@
   
     
 
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2148159"></script>
+      <!-- UY END -->
     
   
 
