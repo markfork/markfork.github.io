@@ -327,6 +327,164 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/mysql-where-having/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="鱼大坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="鱼大坤">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/14/mysql-where-having/" itemprop="url">where与having的区别</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:32:24+08:00">
+                2017-11-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/14/mysql-where-having/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/14/mysql-where-having/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="区别概述："><a href="#区别概述：" class="headerlink" title="区别概述："></a>区别概述：</h2><hr>
+<p>1.<strong>where是一个约束声明</strong>，使用where约束来自数据库的数据，where是在结果集返回之前起作用的，where中不能使用聚合函数。<strong>注意：返回结果集之前起作用</strong><br>2.<strong>having是一个过滤声明</strong>，是在查询返回结果集以后对查询结果进行过滤操作，在Having中可以使聚合函数。<strong>注意：返回结果集之后起作用</strong><br>3.在查询过程中<strong>where子句</strong>、<strong>聚合语句</strong>、<strong>having子句</strong>，的执行优先级为<strong>where&gt;group by&gt;聚合语句(sum、count、avg、max、min)&gt;having子句</strong><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/11/14/mysql-where-having/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/MySQL-develop/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -646,165 +804,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/MySQL-optimistic/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="鱼大坤">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="鱼大坤">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/14/MySQL-optimistic/" itemprop="url">MySQL 数据库规范--调优篇(终结篇)</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:32:24+08:00">
-                2017-11-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MySQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MySQL</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/11/14/MySQL-optimistic/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/14/MySQL-optimistic/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
-<blockquote>
-<p>这篇是MySQL 数据库规范的最后一篇–调优篇，旨在提供我们发现系统性能变弱、MySQL系统参数调优，SQL脚本出现问题的精准定位与调优方法。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/14/MySQL-optimistic/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/mysql-isolation-read-uncommitted/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -963,7 +962,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/MySQL-index-notice-issue/">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/MySQL-principle/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鱼大坤">
@@ -982,7 +981,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/11/14/MySQL-index-notice-issue/" itemprop="url">MySQL 数据库索引使用场景与注意事项</a></h2>
+                <a class="post-title-link" href="/2017/11/14/MySQL-principle/" itemprop="url">MySQL 数据库索引原理与分类</a></h2>
         
 
         <div class="post-meta">
@@ -1035,9 +1034,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/14/MySQL-index-notice-issue/#comments" itemprop="discussionUrl">
+                <a href="/2017/11/14/MySQL-principle/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/14/MySQL-index-notice-issue/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/11/14/MySQL-principle/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1066,13 +1065,16 @@
 
       
         
-          <h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><blockquote>
-<p>1.何种查询支持索引？<br>  2.注意事项和建议</p>
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
+<blockquote>
+<p>数据库索引本质上是一种数据结构(存储结构+算法)，目的是为了加快目标数据检索的速度。</p>
 </blockquote>
-<h2 id="一-何种查询支持索引？"><a href="#一-何种查询支持索引？" class="headerlink" title="一 何种查询支持索引？"></a>一 何种查询支持索引？</h2>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><hr>
+<blockquote>
+<p>1.索引的本质与原理？<br>2.索引的分类？<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/14/MySQL-index-notice-issue/#more" rel="contents">
+            <a class="btn" href="/2017/11/14/MySQL-principle/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1123,7 +1125,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/mysql-where-having/">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/MySQL-ReadCommitted-MVCC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鱼大坤">
@@ -1142,7 +1144,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/11/14/mysql-where-having/" itemprop="url">where与having的区别</a></h2>
+                <a class="post-title-link" href="/2017/11/14/MySQL-ReadCommitted-MVCC/" itemprop="url">数据库事务特征、数据库隔离级别，各级别数据库加锁情况(含实操)--read committed与 MVCC</a></h2>
         
 
         <div class="post-meta">
@@ -1195,9 +1197,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/14/mysql-where-having/#comments" itemprop="discussionUrl">
+                <a href="/2017/11/14/MySQL-ReadCommitted-MVCC/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/14/mysql-where-having/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/11/14/MySQL-ReadCommitted-MVCC/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1226,11 +1228,13 @@
 
       
         
-          <h2 id="区别概述："><a href="#区别概述：" class="headerlink" title="区别概述："></a>区别概述：</h2><hr>
-<p>1.<strong>where是一个约束声明</strong>，使用where约束来自数据库的数据，where是在结果集返回之前起作用的，where中不能使用聚合函数。<strong>注意：返回结果集之前起作用</strong><br>2.<strong>having是一个过滤声明</strong>，是在查询返回结果集以后对查询结果进行过滤操作，在Having中可以使聚合函数。<strong>注意：返回结果集之后起作用</strong><br>3.在查询过程中<strong>where子句</strong>、<strong>聚合语句</strong>、<strong>having子句</strong>，的执行优先级为<strong>where&gt;group by&gt;聚合语句(sum、count、avg、max、min)&gt;having子句</strong><br>
+          <p><strong>上节回顾</strong></p>
+<hr>
+<blockquote>
+<p>上篇记录了我对MySQL 事务 隔离级别<strong> <a href="http://www.jianshu.com/p/d75fcdeb07a3" target="_blank" rel="external">read uncommitted</a> </strong>的理解。<br>这篇记录我对 MySQL 事务隔离级别 <strong><a href="http://www.jianshu.com/p/fd51cb8dc03b" target="_blank" rel="external">read committed &amp; MVCC</a></strong> 的理解。<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/14/mysql-where-having/#more" rel="contents">
+            <a class="btn" href="/2017/11/14/MySQL-ReadCommitted-MVCC/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1764,7 +1768,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/IntellijIdea-Mac-use-debug/">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/IntellijIdea-Java-gradle-develop-enviroment/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鱼大坤">
@@ -1783,7 +1787,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/11/14/IntellijIdea-Mac-use-debug/" itemprop="url">Intellij  Idea--Debug使用（Mac）</a></h2>
+                <a class="post-title-link" href="/2017/11/14/IntellijIdea-Java-gradle-develop-enviroment/" itemprop="url">使用Intellij Idea＋Gradle 搭建Java 本地开发环境</a></h2>
         
 
         <div class="post-meta">
@@ -1836,9 +1840,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/14/IntellijIdea-Mac-use-debug/#comments" itemprop="discussionUrl">
+                <a href="/2017/11/14/IntellijIdea-Java-gradle-develop-enviroment/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/14/IntellijIdea-Mac-use-debug/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/11/14/IntellijIdea-Java-gradle-develop-enviroment/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1867,13 +1871,20 @@
 
       
         
-          <p><strong>前言：</strong>本文的核心是记录debug的使用，与具体的操作系统无关。</p>
-<h2 id="1-什么是Debug"><a href="#1-什么是Debug" class="headerlink" title="1.什么是Debug"></a>1.什么是Debug</h2><hr>
-<p>Debug是程序的一种运行模式。用来发掘程序的走向，以及程序在运行过程中参数的变化。</p>
-<h2 id="2-Debug的作用"><a href="#2-Debug的作用" class="headerlink" title="2.Debug的作用"></a>2.Debug的作用</h2>
+          <h2 id="Java-本地开发环境搭建"><a href="#Java-本地开发环境搭建" class="headerlink" title="Java 本地开发环境搭建"></a>Java 本地开发环境搭建</h2><hr>
+<p>项目搭建采用技术栈为：Spring+Spring MVC+Hibernate+Jsp+Gradle＋tomcat+mysql5.6</p>
+<blockquote>
+<p><strong>搭建环境文档目录结构说明：</strong>     </p>
+<ol>
+<li>使用Intellj Idea 搭建项目过程详解   </li>
+<li>项目各配置文件讲解及部署 </li>
+<li>各层包功能讲解&amp;项目搭建完毕最终效果演示图        </li>
+<li>项目中重要代码讲解</li>
+<li>webapp文件夹下分层详解</li>
+<li>配置tomcat 运行环境
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/14/IntellijIdea-Mac-use-debug/#more" rel="contents">
+            <a class="btn" href="/2017/11/14/IntellijIdea-Java-gradle-develop-enviroment/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
