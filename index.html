@@ -1781,7 +1781,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/original_code_Spring_anyliz_loadBeanDefinitions/">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/original_code_Spring_anyliz_parseBeanDefinitions_BeanDefinitionParserDelegate_4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鱼大坤">
@@ -1800,7 +1800,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/11/14/original_code_Spring_anyliz_loadBeanDefinitions/" itemprop="url">Spring Ioc 源码分析(三)--loadBeanDefinitions</a></h2>
+                <a class="post-title-link" href="/2017/11/14/original_code_Spring_anyliz_parseBeanDefinitions_BeanDefinitionParserDelegate_4/" itemprop="url">Spring Ioc 源码分析(四)--parseBeanDefinitions()与BeanDefinitionParserDelegate</a></h2>
         
 
         <div class="post-meta">
@@ -1853,9 +1853,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/14/original_code_Spring_anyliz_loadBeanDefinitions/#comments" itemprop="discussionUrl">
+                <a href="/2017/11/14/original_code_Spring_anyliz_parseBeanDefinitions_BeanDefinitionParserDelegate_4/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/14/original_code_Spring_anyliz_loadBeanDefinitions/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/11/14/original_code_Spring_anyliz_parseBeanDefinitions_BeanDefinitionParserDelegate_4/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1885,10 +1885,11 @@
       
         
           <blockquote>
-<p>上一篇博客说到，ApplicationContext将解析BeanDefinition的工作委托给BeanDefinitionReader组件，这篇就接着分析一下BeanDefinition的解析过程。<br>
+<p>上一篇博客说到，BeanDefinition的解析,已经走到了DefaultBeanDefinitionDocumentR<br>eader里，这时候配置文件已经被加载，并解析成w3c的Document对象。这篇博客就接着介绍，DefaultBeanDefinitionDocumentReader和BeanDefinitionParserDelegate类，是怎么协同完成bean的解析和注册的。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">BeanDefinitionParserDelegate parent = <span class="keyword">this</span>.delegate;</div><div class="line"><span class="keyword">this</span>.delegate = createHelper(readerContext, root, parent);</div><div class="line">preProcessXml(root);</div><div class="line">parseBeanDefinitions(root, <span class="keyword">this</span>.delegate);</div><div class="line">postProcessXml(root);</div><div class="line"><span class="keyword">this</span>.delegate = parent;</div></pre></td></tr></table></figure></p>
+</blockquote>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/14/original_code_Spring_anyliz_loadBeanDefinitions/#more" rel="contents">
+            <a class="btn" href="/2017/11/14/original_code_Spring_anyliz_parseBeanDefinitions_BeanDefinitionParserDelegate_4/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>

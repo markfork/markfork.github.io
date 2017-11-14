@@ -327,7 +327,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/original_code_Spring_anyliz_parseBeanDefinitions_BeanDefinitionParserDelegate_4/">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/original_code_Spring_anyliz_loadBeanDefinitions/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鱼大坤">
@@ -346,7 +346,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/11/14/original_code_Spring_anyliz_parseBeanDefinitions_BeanDefinitionParserDelegate_4/" itemprop="url">Spring Ioc 源码分析(四)--parseBeanDefinitions()与BeanDefinitionParserDelegate</a></h2>
+                <a class="post-title-link" href="/2017/11/14/original_code_Spring_anyliz_loadBeanDefinitions/" itemprop="url">Spring Ioc 源码分析(三)--loadBeanDefinitions</a></h2>
         
 
         <div class="post-meta">
@@ -399,9 +399,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/14/original_code_Spring_anyliz_parseBeanDefinitions_BeanDefinitionParserDelegate_4/#comments" itemprop="discussionUrl">
+                <a href="/2017/11/14/original_code_Spring_anyliz_loadBeanDefinitions/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/14/original_code_Spring_anyliz_parseBeanDefinitions_BeanDefinitionParserDelegate_4/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/11/14/original_code_Spring_anyliz_loadBeanDefinitions/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -431,11 +431,10 @@
       
         
           <blockquote>
-<p>上一篇博客说到，BeanDefinition的解析,已经走到了DefaultBeanDefinitionDocumentR<br>eader里，这时候配置文件已经被加载，并解析成w3c的Document对象。这篇博客就接着介绍，DefaultBeanDefinitionDocumentReader和BeanDefinitionParserDelegate类，是怎么协同完成bean的解析和注册的。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">BeanDefinitionParserDelegate parent = <span class="keyword">this</span>.delegate;</div><div class="line"><span class="keyword">this</span>.delegate = createHelper(readerContext, root, parent);</div><div class="line">preProcessXml(root);</div><div class="line">parseBeanDefinitions(root, <span class="keyword">this</span>.delegate);</div><div class="line">postProcessXml(root);</div><div class="line"><span class="keyword">this</span>.delegate = parent;</div></pre></td></tr></table></figure></p>
-</blockquote>
+<p>上一篇博客说到，ApplicationContext将解析BeanDefinition的工作委托给BeanDefinitionReader组件，这篇就接着分析一下BeanDefinition的解析过程。<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/14/original_code_Spring_anyliz_parseBeanDefinitions_BeanDefinitionParserDelegate_4/#more" rel="contents">
+            <a class="btn" href="/2017/11/14/original_code_Spring_anyliz_loadBeanDefinitions/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1441,7 +1440,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/MySQL-index-notice-issue/">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/MySQL-principle/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鱼大坤">
@@ -1460,7 +1459,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/11/14/MySQL-index-notice-issue/" itemprop="url">MySQL 数据库索引使用场景与注意事项</a></h2>
+                <a class="post-title-link" href="/2017/11/14/MySQL-principle/" itemprop="url">MySQL 数据库索引原理与分类</a></h2>
         
 
         <div class="post-meta">
@@ -1513,9 +1512,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/14/MySQL-index-notice-issue/#comments" itemprop="discussionUrl">
+                <a href="/2017/11/14/MySQL-principle/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/14/MySQL-index-notice-issue/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/11/14/MySQL-principle/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1544,13 +1543,16 @@
 
       
         
-          <h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><blockquote>
-<p>1.何种查询支持索引？<br>  2.注意事项和建议</p>
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
+<blockquote>
+<p>数据库索引本质上是一种数据结构(存储结构+算法)，目的是为了加快目标数据检索的速度。</p>
 </blockquote>
-<h2 id="一-何种查询支持索引？"><a href="#一-何种查询支持索引？" class="headerlink" title="一 何种查询支持索引？"></a>一 何种查询支持索引？</h2>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><hr>
+<blockquote>
+<p>1.索引的本质与原理？<br>2.索引的分类？<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/14/MySQL-index-notice-issue/#more" rel="contents">
+            <a class="btn" href="/2017/11/14/MySQL-principle/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1761,7 +1763,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/MySQL-optimistic/">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/MySQL-Producer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鱼大坤">
@@ -1780,7 +1782,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/11/14/MySQL-optimistic/" itemprop="url">MySQL 数据库规范--调优篇(终结篇)</a></h2>
+                <a class="post-title-link" href="/2017/11/14/MySQL-Producer/" itemprop="url">存储过程</a></h2>
         
 
         <div class="post-meta">
@@ -1833,9 +1835,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/14/MySQL-optimistic/#comments" itemprop="discussionUrl">
+                <a href="/2017/11/14/MySQL-Producer/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/14/MySQL-optimistic/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/11/14/MySQL-Producer/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1864,12 +1866,11 @@
 
       
         
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
-<blockquote>
-<p>这篇是MySQL 数据库规范的最后一篇–调优篇，旨在提供我们发现系统性能变弱、MySQL系统参数调优，SQL脚本出现问题的精准定位与调优方法。<br>
+          <h4 id="存储过程简介"><a href="#存储过程简介" class="headerlink" title="存储过程简介"></a>存储过程简介</h4><hr>
+<p>　存储过程（Stored Procedure）是数据库系统中，一组为了完成特定功能的SQL 语句集，经编译后存储在数据库中，用户通过指定存储过程的名字并给出参数（如果该存储过程带有参数）来执行它。在数据库系统中，存储过程和触发器具有很重要的作用。<strong>无论是存储过程还是触发器，都是SQL 语句和流程控制语句的集合。</strong><br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/14/MySQL-optimistic/#more" rel="contents">
+            <a class="btn" href="/2017/11/14/MySQL-Producer/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
