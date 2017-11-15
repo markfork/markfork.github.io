@@ -127,9 +127,9 @@
       author: '博主'
     },
     algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
+      applicationID: 'W9MGG13GHC',
+      apiKey: '29336d607a7eda6978a2fe32635f903d',
+      indexName: 'yudakun-article-index',
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     }
@@ -327,6 +327,164 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/original_code_Spring_anyliz_loadBeanDefinitions/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="鱼大坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="鱼大坤">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/14/original_code_Spring_anyliz_loadBeanDefinitions/" itemprop="url">Spring Ioc 源码分析(三)--loadBeanDefinitions</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:34:16+08:00">
+                2017-11-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/源码分析/" itemprop="url" rel="index">
+                    <span itemprop="name">源码分析</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/14/original_code_Spring_anyliz_loadBeanDefinitions/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/14/original_code_Spring_anyliz_loadBeanDefinitions/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p>上一篇博客说到，ApplicationContext将解析BeanDefinition的工作委托给BeanDefinitionReader组件，这篇就接着分析一下BeanDefinition的解析过程。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/11/14/original_code_Spring_anyliz_loadBeanDefinitions/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/original_code_Spring_anyliz_parseBeanDefinitions_BeanDefinitionParserDelegate_4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -436,164 +594,6 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/11/14/original_code_Spring_anyliz_parseBeanDefinitions_BeanDefinitionParserDelegate_4/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/original_code_Spring_anyliz_loadBeanDefinitions/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="鱼大坤">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="鱼大坤">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/14/original_code_Spring_anyliz_loadBeanDefinitions/" itemprop="url">Spring Ioc 源码分析(三)--loadBeanDefinitions</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:34:16+08:00">
-                2017-11-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/源码分析/" itemprop="url" rel="index">
-                    <span itemprop="name">源码分析</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/11/14/original_code_Spring_anyliz_loadBeanDefinitions/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/14/original_code_Spring_anyliz_loadBeanDefinitions/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>上一篇博客说到，ApplicationContext将解析BeanDefinition的工作委托给BeanDefinitionReader组件，这篇就接着分析一下BeanDefinition的解析过程。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/14/original_code_Spring_anyliz_loadBeanDefinitions/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1599,7 +1599,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/MySQL-RepeatableRead-MVCC/">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/MySQL-optimistic/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鱼大坤">
@@ -1618,7 +1618,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/11/14/MySQL-RepeatableRead-MVCC/" itemprop="url">数据库事务特征、数据库隔离级别，各级别数据库加锁情况(含实操)--Repeatable Read与MVCC</a></h2>
+                <a class="post-title-link" href="/2017/11/14/MySQL-optimistic/" itemprop="url">MySQL 数据库规范--调优篇(终结篇)</a></h2>
         
 
         <div class="post-meta">
@@ -1671,9 +1671,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/14/MySQL-RepeatableRead-MVCC/#comments" itemprop="discussionUrl">
+                <a href="/2017/11/14/MySQL-optimistic/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/14/MySQL-RepeatableRead-MVCC/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/11/14/MySQL-optimistic/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1702,13 +1702,12 @@
 
       
         
-          <p><strong>上节回顾</strong></p>
-<hr>
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
 <blockquote>
-<p>上两篇记录了我对MySQL 事务 隔离级别<strong> <a href="http://www.jianshu.com/p/d75fcdeb07a3" target="_blank" rel="external">read uncommitted</a> </strong>、MySQL 事务隔离级别 <strong><a href="http://www.jianshu.com/p/fd51cb8dc03b" target="_blank" rel="external">read committed</a>＋MVCC</strong> 的理解。<br>这篇记录我对 Repeatable Read 的理解。<br>
+<p>这篇是MySQL 数据库规范的最后一篇–调优篇，旨在提供我们发现系统性能变弱、MySQL系统参数调优，SQL脚本出现问题的精准定位与调优方法。<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/14/MySQL-RepeatableRead-MVCC/#more" rel="contents">
+            <a class="btn" href="/2017/11/14/MySQL-optimistic/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1759,7 +1758,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/MySQL-principle/">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/MySQL-develop/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鱼大坤">
@@ -1778,7 +1777,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/11/14/MySQL-principle/" itemprop="url">MySQL 数据库索引原理与分类</a></h2>
+                <a class="post-title-link" href="/2017/11/14/MySQL-develop/" itemprop="url">MySQL 数据库规范--开发篇</a></h2>
         
 
         <div class="post-meta">
@@ -1831,9 +1830,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/14/MySQL-principle/#comments" itemprop="discussionUrl">
+                <a href="/2017/11/14/MySQL-develop/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/14/MySQL-principle/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/11/14/MySQL-develop/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1862,16 +1861,12 @@
 
       
         
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
+          <h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><hr>
 <blockquote>
-<p>数据库索引本质上是一种数据结构(存储结构+算法)，目的是为了加快目标数据检索的速度。</p>
-</blockquote>
-<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><hr>
-<blockquote>
-<p>1.索引的本质与原理？<br>2.索引的分类？<br>
+<p><strong>1.sql语句编写</strong><br>  <strong>2.explain 工具的使用–重点</strong><br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/14/MySQL-principle/#more" rel="contents">
+            <a class="btn" href="/2017/11/14/MySQL-develop/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
