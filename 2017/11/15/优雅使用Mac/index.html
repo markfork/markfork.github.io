@@ -85,7 +85,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="数据库," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -103,24 +103,24 @@
 
 
 
-<meta name="description" content="上节回顾   上篇记录了我对MySQL 事务 隔离级别 read uncommitted 的理解。这篇记录我对 MySQL 事务隔离级别 read committed &amp;amp; MVCC 的理解。">
-<meta name="keywords" content="数据库">
+<meta name="description" content="【教程大纲】如下所示： 【操作手势设置】使用Mac后，可以不再使用鼠标，依靠不同手势动作即可方便操作电脑。 1.点击系统偏好设置 2.点击触控板设置像我一样设置就好了。 3.设置光标与点按像我一样设置就好了。 4.设置滚动缩放像我一样设置就好了。 5.更多手势像我一样设置就好了。 手势设置完后，可以先自己尝试10分钟左右，熟悉之后，俺们进行下一步。 【操作系统简介】MacOS内核为unix,是区别">
 <meta property="og:type" content="article">
-<meta property="og:title" content="数据库事务特征、数据库隔离级别，各级别数据库加锁情况(含实操)--read committed与 MVCC">
-<meta property="og:url" content="http://markfork.com/2017/11/14/MySQL-ReadCommitted-MVCC/index.html">
+<meta property="og:title" content="鱼大坤">
+<meta property="og:url" content="http://markfork.com/2017/11/15/优雅使用Mac/index.html">
 <meta property="og:site_name" content="鱼大坤">
-<meta property="og:description" content="上节回顾   上篇记录了我对MySQL 事务 隔离级别 read uncommitted 的理解。这篇记录我对 MySQL 事务隔离级别 read committed &amp;amp; MVCC 的理解。">
+<meta property="og:description" content="【教程大纲】如下所示： 【操作手势设置】使用Mac后，可以不再使用鼠标，依靠不同手势动作即可方便操作电脑。 1.点击系统偏好设置 2.点击触控板设置像我一样设置就好了。 3.设置光标与点按像我一样设置就好了。 4.设置滚动缩放像我一样设置就好了。 5.更多手势像我一样设置就好了。 手势设置完后，可以先自己尝试10分钟左右，熟悉之后，俺们进行下一步。 【操作系统简介】MacOS内核为unix,是区别">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-3d9925da1d59e956.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-b6c46003ced6462c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-970dcf17cbe0d6f9.gif?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-4d2849cd6570c260.gif?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-9e8ae7fb3d92fe55.gif?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-11-14T08:32:24.000Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-f4af12f668e37ab8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-c1b5531cf2cd0e2e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-e8779b6e3cf2f644.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-472973f0a785a90a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-aec46af9777d3309.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-928906c87527cd96.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-11-15T07:52:18.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="数据库事务特征、数据库隔离级别，各级别数据库加锁情况(含实操)--read committed与 MVCC">
-<meta name="twitter:description" content="上节回顾   上篇记录了我对MySQL 事务 隔离级别 read uncommitted 的理解。这篇记录我对 MySQL 事务隔离级别 read committed &amp;amp; MVCC 的理解。">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2836699-3d9925da1d59e956.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="鱼大坤">
+<meta name="twitter:description" content="【教程大纲】如下所示： 【操作手势设置】使用Mac后，可以不再使用鼠标，依靠不同手势动作即可方便操作电脑。 1.点击系统偏好设置 2.点击触控板设置像我一样设置就好了。 3.设置光标与点按像我一样设置就好了。 4.设置滚动缩放像我一样设置就好了。 5.更多手势像我一样设置就好了。 手势设置完后，可以先自己尝试10分钟左右，熟悉之后，俺们进行下一步。 【操作系统简介】MacOS内核为unix,是区别">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2836699-f4af12f668e37ab8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -149,13 +149,13 @@
 
 
 
-  <link rel="canonical" href="http://markfork.com/2017/11/14/MySQL-ReadCommitted-MVCC/"/>
+  <link rel="canonical" href="http://markfork.com/2017/11/15/优雅使用Mac/"/>
 
 
 
 
 
-  <title>数据库事务特征、数据库隔离级别，各级别数据库加锁情况(含实操)--read committed与 MVCC | 鱼大坤</title>
+  <title> | 鱼大坤</title>
   
 
 
@@ -336,7 +336,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/MySQL-ReadCommitted-MVCC/">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/15/优雅使用Mac/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鱼大坤">
@@ -353,7 +353,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">数据库事务特征、数据库隔离级别，各级别数据库加锁情况(含实操)--read committed与 MVCC</h2>
+          <h2 class="post-title" itemprop="name headline"></h2>
         
 
         <div class="post-meta">
@@ -365,8 +365,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:32:24+08:00">
-                2017-11-14
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-15T15:52:18+08:00">
+                2017-11-15
               </time>
             
 
@@ -376,28 +376,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MySQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MySQL</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -406,9 +384,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/14/MySQL-ReadCommitted-MVCC/#comments" itemprop="discussionUrl">
+                <a href="/2017/11/15/优雅使用Mac/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/14/MySQL-ReadCommitted-MVCC/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/11/15/优雅使用Mac/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -441,92 +419,17 @@
       
 
       
-        <p><strong>上节回顾</strong></p>
+        <h2 id="【教程大纲】"><a href="#【教程大纲】" class="headerlink" title="【教程大纲】"></a>【教程大纲】</h2><p>如下所示：<br><img src="http://upload-images.jianshu.io/upload_images/2836699-f4af12f668e37ab8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h2 id="【操作手势设置】"><a href="#【操作手势设置】" class="headerlink" title="【操作手势设置】"></a>【操作手势设置】</h2><p>使用Mac后，可以不再使用鼠标，依靠不同手势动作即可方便操作电脑。</p>
+<p><strong>1.点击系统偏好设置</strong><br><img src="http://upload-images.jianshu.io/upload_images/2836699-c1b5531cf2cd0e2e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><strong>2.点击触控板设置</strong><br><img src="http://upload-images.jianshu.io/upload_images/2836699-e8779b6e3cf2f644.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png">像我一样设置就好了。</p>
+<p><strong>3.设置光标与点按</strong><br><img src="http://upload-images.jianshu.io/upload_images/2836699-472973f0a785a90a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>像我一样设置就好了。</p>
+<p><strong>4.设置滚动缩放</strong><br><img src="http://upload-images.jianshu.io/upload_images/2836699-aec46af9777d3309.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>像我一样设置就好了。</p>
+<p><strong>5.更多手势</strong><br><img src="http://upload-images.jianshu.io/upload_images/2836699-928906c87527cd96.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>像我一样设置就好了。</p>
+<p><strong>手势设置完后，可以先自己尝试10分钟左右，熟悉之后，俺们进行下一步。</strong></p>
+<h2 id="【操作系统简介】"><a href="#【操作系统简介】" class="headerlink" title="【操作系统简介】"></a>【操作系统简介】</h2><p>MacOS内核为unix,是区别于windows的一种操作系统内核。</p>
+<h2 id="【软件安装】"><a href="#【软件安装】" class="headerlink" title="【软件安装】"></a>【软件安装】</h2><p><strong>输入法安装</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1.打开链接：pinyin.sougou.com/mac/</div><div class="line">2.点击立即下载，下载完后是dmg文件</div><div class="line">3.双击dmg文件，</div></pre></td></tr></table></figure></p>
 <hr>
-<blockquote>
-<p>上篇记录了我对MySQL 事务 隔离级别<strong> <a href="http://www.jianshu.com/p/d75fcdeb07a3" target="_blank" rel="external">read uncommitted</a> </strong>的理解。<br>这篇记录我对 MySQL 事务隔离级别 <strong><a href="http://www.jianshu.com/p/fd51cb8dc03b" target="_blank" rel="external">read committed &amp; MVCC</a></strong> 的理解。<br><a id="more"></a><br><strong>前言</strong></p>
-<hr>
-<p>可以很负责人的跟大家说，MySQL 中的此隔离级别<strong>不单单是通过加锁实现的</strong>，实际上还有repeatable read 隔离级别，其实这两个隔离级别效果的实现还需要一个辅助，这个辅助就是<strong>MVCC</strong>-多版本并发控制，但其实它又不是严格意义上的多版本并发控制，是不是很懵，没关系，我们一一剖析。</p>
-</blockquote>
-<p><strong>目录</strong></p>
-<hr>
-<blockquote>
-<p>1.单纯加锁是怎么实现 read committed 的?<br>2.真实的演示情况是什么样子的？<br>3.MVCC 实现原理？<br>4.对于InnoDB MVCC 实现原理的反思</p>
-</blockquote>
-<p><strong>1.单纯加锁是怎么实现 read committed 的?</strong></p>
-<hr>
-<p>   从此隔离级别效果入手：事务只能读其他事务已提交的的记录。<br>  数据库事务隔离级别的实现，InnoDB 支持行级锁，写时加的是行级排他锁(X lock)，那么当其他事务访问另一个事务正在update (除select操作外其他操作本质上都是写操作)的同一条记录时，事务的读操作会被阻塞。所以只能等到记录(<strong>其实是索引上的锁</strong>)上的排他锁释放后才能进行访问，也就是事务提交的时候。这样确实能实现read commited隔离级别效果。<br>   数据库这样做确实可以实现 <strong>事务只能读其他事务已提交的的记录</strong> 的效果，但是这是很低效的一种做法，为什么呢？因为对于大部分应用来说，读操作是多于写操作的，当写操作加锁时，那么读操作全部被阻塞，这样会导致应用的相应能力受数据库的牵制。</p>
-<p><strong>2.真实的演示情况是什么样子的？</strong></p>
-<hr>
-<p>看如下操作：<br>1.开启两个客户端实例,设置事务隔离级别为read committed，并各自开启事务。<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">set transaction isolation level read committed;</div><div class="line">set autocommit = 0;</div><div class="line">begin；</div></pre></td></tr></table></figure></p>
-<p>2.客户端1做更新操作：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">update test set name = &apos;测试&apos; where id =32;</div></pre></td></tr></table></figure></p>
-<p>结果如下图所示：<br><img src="http://upload-images.jianshu.io/upload_images/2836699-3d9925da1d59e956.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2017-03-28 下午1.39.44.png"></p>
-<p>3.客户端2做查询操作：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">select name from test where id = 32;</div></pre></td></tr></table></figure></p>
-<p>结果如下所示：<br><img src="http://upload-images.jianshu.io/upload_images/2836699-b6c46003ced6462c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2017-03-28 下午1.41.23.png"></p>
-<p>这时估计你有疑问了，正在 被客户端1 upate  的记录，客户端2还能无阻塞的读到，而且读到的是未更改之前的数据。<br>那就是 InnoDB 的辅助打得好，因为内部使用了 MVCC 机制，实现了一致性非阻塞读，大大提高了并发读写效率，写不影响读，且读到的事记录的镜像版本。</p>
-<p>下面开始介绍 MVCC  原理。</p>
-<p><strong>3.MVCC 实现原理</strong></p>
-<hr>
-<p>网上对  MVCC 实现原理  的讲述五花八门，良莠不齐。<br>包括《高性能MySQL》对 MVCC 的讲解只是停留在表象，并没有结合源码去分析。当然绝大多数人还是相信这本书的，从来没有进行深剖，思考。<br>如下是 《高性能MySQL》对 MVCC实现原理 的描述：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&quot;InnoDB的 MVCC ，是通过在每行记录的后面保存两个隐藏的列来实现的。这两个列，</div><div class="line">一个保存了行的创建时间，一个保存了行的过期时间，</div><div class="line">当然存储的并不是实际的时间值，而是系统版本号。&quot;</div></pre></td></tr></table></figure></p>
-<p><strong>就是这本书，蒙蔽了真理，害人不浅。</strong></p>
-<p><strong>我们还是看源码吧：</strong></p>
-<hr>
-<p><strong>1.记录的隐藏列</strong><br>其实有三列<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">在Mysql中MVCC是在Innodb存储引擎中得到支持的，Innodb为每行记录都实现了三个隐藏字段：</div><div class="line"></div><div class="line">6字节的事务ID（DB_TRX_ID）</div><div class="line"></div><div class="line">7字节的回滚指针（DB_ROLL_PTR）</div><div class="line"></div><div class="line">隐藏的ID</div><div class="line"></div><div class="line">6字节的事物ID用来标识该行所述的事务，7字节的回滚指针需要了解下Innodb的事务模型。</div></pre></td></tr></table></figure></p>
-<p><strong>2.MVCC 实现的依赖项</strong><br>MVCC  在mysql 中的实现依赖的是 undo log 与 read view。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">1.undo log: undo log中记录的是数据表记录行的多个版本，也就是事务执行过程中的回滚段,其实就是MVCC 中的一行原始数据的多个版本镜像数据。</div><div class="line">2.read view: 主要用来判断当前版本数据的可见性。</div></pre></td></tr></table></figure></p>
-<p><strong>3.undo log</strong></p>
-<blockquote>
-<p>undo log是为回滚而用，具体内容就是copy事务前的数据库内容（行）到undo buffer，在适合的时间把undo buffer中的内容刷新到磁盘。undo buffer与redo buffer一样，也是环形缓冲，但当缓冲满的时候，undo buffer中的内容会也会被刷新到磁盘；与redo log不同的是，磁盘上不存在单独的undo log文件，所有的undo log均存放在主ibd数据文件中（表空间），即使客户端设置了每表一个数据文件也是如此。</p>
-</blockquote>
-<p>我们通过行的更新过程来看下undo log 是如何形成的？</p>
-<p><strong>3.1  行的更新过程</strong><br>下面演示下事务对某行记录的更新过程：</p>
-<ol>
-<li>初始数据行<br><img src="http://upload-images.jianshu.io/upload_images/2836699-970dcf17cbe0d6f9.gif?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>F1～F6是某行列的名字，1～6是其对应的数据。后面三个隐含字段分别对应该行的事务号和回滚指针，假如这条数据是刚INSERT的，可以认为ID为1，其他两个字段为空。<br>2.事务1更改该行的各字段的值<br><img src="http://upload-images.jianshu.io/upload_images/2836699-4d2849cd6570c260.gif?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>当事务1更改该行的值时，会进行如下操作：<br>用排他锁锁定该行<br>记录redo log<br>把该行修改前的值Copy到undo log，即上图中下面的行<br>修改当前行的值，填写事务编号，使回滚指针指向undo log中的修改前的行<br>3.事务2修改该行的值<br><img src="http://upload-images.jianshu.io/upload_images/2836699-9e8ae7fb3d92fe55.gif?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>与事务1相同，此时undo log，中有有两行记录，并且通过回滚指针连在一起。</li>
-</ol>
-<p><strong>4.read view 判断当前版本数据项是否可见</strong></p>
-<blockquote>
-<p>在innodb中，创建一个新事务的时候，innodb会将当前系统中的活跃事务列表（trx_sys-&gt;trx_list）创建一个副本（read view），副本中保存的是系统当前不应该被本事务看到的其他事务id列表。当用户在这个事务中要读取该行记录的时候，innodb会将该行当前的版本号与该read view进行比较。<br>具体的算法如下:</p>
-<ol>
-<li>设该行的当前事务id为trx_id_0，read view中最早的事务id为trx_id_1, 最迟的事务id为trx_id_2。</li>
-<li>如果trx_id_0&lt; trx_id_1的话，那么表明该行记录所在的事务已经在本次新事务创建之前就提交了，所以该行记录的当前值是可见的。跳到步骤6.</li>
-<li>如果trx_id_0&gt;trx_id_2的话，那么表明该行记录所在的事务在本次新事务创建之后才开启，所以该行记录的当前值不可见.跳到步骤5。</li>
-<li>如果trx_id_1&lt;=trx_id_0&lt;=trx_id_2, 那么表明该行记录所在事务在本次新事务创建的时候处于活动状态，从trx_id_1到trx_id_2进行遍历，如果trx_id_0等于他们之中的某个事务id的话，那么不可见。跳到步骤5.</li>
-<li>从该行记录的DB_ROLL_PTR指针所指向的回滚段中取出最新的undo-log的版本号，将它赋值该trx_id_0，然后跳到步骤2.</li>
-<li>将该可见行的值返回。</li>
-</ol>
-</blockquote>
-<p><strong>需要注意的是，新建事务(当前事务)与正在内存中commit 的事务不在活跃事务链表中。</strong></p>
-<p>对应代码如下：</p>
-<blockquote>
-<p>函数：read_view_sees_trx_id。<br>read_view中保存了当前全局的事务的范围：<br>【low_limit_id， up_limit_id】<br><strong>1. 当行记录的事务ID小于当前系统的最小活动id，就是可见的。</strong><br>　　if (trx_id &lt; view-&gt;up_limit_id) {<br>　　　　return(TRUE);<br>　　}<br><strong>2. 当行记录的事务ID大于当前系统的最大活动id，就是不可见的。</strong><br>　　if (trx_id &gt;= view-&gt;low_limit_id) {<br>　　　　return(FALSE);<br>　　}<br><strong>3. 当行记录的事务ID在活动范围之中时，判断是否在活动链表中，如果在就不可见，如果不在就是可见的。</strong><br>　　for (i = 0; i &lt; n_ids; i++) {<br>　　　　trx_id_t view_trx_id<br>　　　　　　= read_view_get_nth_trx_id(view, n_ids - i - 1);<br>　　　　if (trx_id &lt;= view_trx_id) {<br>　　　　return(trx_id != view_trx_id);<br>　　　　}<br>　　}</p>
-</blockquote>
-<p><strong>5 事务隔离级别的影响</strong></p>
-<blockquote>
-<p>但是：对于两张不同的事务隔离级别<br>　　tx_isolation=’READ-COMMITTED’: 语句级别的一致性：只要当前语句执行前已经提交的数据都是可见的。<br>　　tx_isolation=’REPEATABLE-READ’; 语句级别的一致性：只要是当前事务执行前已经提交的数据都是可见的。<br>针对这两张事务的隔离级别，使用相同的可见性判断逻辑是如何做到不同的可见性的呢？</p>
-</blockquote>
-<p><strong>6.不同隔离级别下read view的生成原则</strong></p>
-<blockquote>
-<p>这里就要看看read_view的生成机制：<br><strong>1. read-commited:</strong><br>　　函数：ha_innobase::external_lock<br>　　if (trx-&gt;isolation_level &lt;= TRX_ISO_READ_COMMITTED<br>　　　　&amp;&amp; trx-&gt;global_read_view) {<br>　　　　/<em> At low transaction isolation levels we let<br>　　　　each consistent read set its own snapshot </em>/<br>　　read_view_close_for_mysql(trx);<br>即：在每次语句执行的过程中，都关闭read_view, 重新在row_search_for_mysql函数中创建当前的一份read_view。<br>这样就可以根据当前的全局事务链表创建read_view的事务区间，实现read committed隔离级别。<br><strong>2. repeatable read：</strong><br>　　在repeatable read的隔离级别下，创建事务trx结构的时候，就生成了当前的global read view。<br>　　使用trx_assign_read_view函数创建，一直维持到事务结束，这样就实现了repeatable read隔离级别。</p>
-</blockquote>
-<p><strong>正是因为6中的read view 生成原则，导致在不同隔离级别()下,read committed 总是读最新一份快照数据，而repeatable read 读事务开始时的行数据版本。</strong></p>
-<p><strong>4.InnoDB MVCC 实现原理的深刻反思</strong></p>
-<hr>
-<blockquote>
-<p>上述更新前建立undo log，根据各种策略读取时非阻塞就是MVCC，undo log中的行就是MVCC中的多版本，这个可能与我们所理解的MVCC有较大的出入。</p>
-</blockquote>
-<p>一般我们认为MVCC有下面几个特点：</p>
-<blockquote>
-<p>每行数据都存在一个版本，每次数据更新时都更新该版本<br>修改时Copy出当前版本随意修改，个事务之间无干扰<br>保存时比较版本号，如果成功（commit），则覆盖原记录；失败则放弃copy（rollback）<br>就是每行都有版本号，保存时根据版本号决定是否成功，听起来含有乐观锁的味道。。。，而</p>
-</blockquote>
-<p>Innodb的实现方式是：</p>
-<blockquote>
-<p>事务以排他锁的形式修改原始数据<br>把修改前的数据存放于undo log，通过回滚指针与主数据关联<br>修改成功（commit）啥都不做，失败则恢复undo log中的数据（rollback）</p>
-</blockquote>
-<p><strong>二者最本质的区别是，当修改数据时是否要排他锁定，如果锁定了还算不算是MVCC？</strong></p>
-<blockquote>
-<p><strong>Innodb的实现真算不上MVCC</strong>，因为并没有实现核心的多版本共存，undo<br>log中的内容只是串行化的结果，记录了多个事务的过程，不属于多版本共存。但理想的MVCC是难以实现的，当事务仅修改一行记录使用理想的MVCC模式<br>是没有问题的，可以通过比较版本号进行回滚；但当事务影响到多行数据时，理想的MVCC据无能为力了。</p>
-<p>比如，如果Transaciton1执行理想的MVCC，修改Row1成功，而修改Row2失败，此时需要回滚Row1，但因为Row1没有被<br>锁定，其数据可能又被Transaction2所修改，如果此时回滚Row1的内容，则会破坏Transaction2的修改结果，导致<br>Transaction2违反ACID。</p>
-<p>理想MVCC难以实现的根本原因在于企图通过乐观锁代替二段提交。修改两行数据，但为了保证其一致性，与修改两个分布式系统中的数据并无区别，<br>而二提交是目前这种场景保证一致性的唯一手段。二段提交的本质是锁定，乐观锁的本质是消除锁定，二者矛盾，故理想的MVCC难以真正在实际中被应<br>用，Innodb只是借了MVCC这个名字，提供了读的非阻塞而已。</p>
-</blockquote>
 
       
     </div>
@@ -574,12 +477,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/数据库/" rel="tag"># 数据库</a>
-          
-        </div>
-      
 
       
       
@@ -589,8 +486,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/14/MySQL-design/" rel="next" title="MySQL 数据库规范--设计篇">
-                <i class="fa fa-chevron-left"></i> MySQL 数据库规范--设计篇
+              <a href="/2017/11/14/kcode/" rel="next" title="k码特权中关于 Redis与MySQL DB 乐观锁应用">
+                <i class="fa fa-chevron-left"></i> k码特权中关于 Redis与MySQL DB 乐观锁应用
               </a>
             
           </div>
@@ -598,10 +495,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/11/14/mysql-isolation-read-uncommitted/" rel="prev" title="数据库事务特征、数据库隔离级别，以及各级别数据库加锁情况(含实操)--read uncommitted篇">
-                数据库事务特征、数据库隔离级别，以及各级别数据库加锁情况(含实操)--read uncommitted篇 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -678,8 +571,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -748,6 +650,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#【教程大纲】"><span class="nav-number">1.</span> <span class="nav-text">【教程大纲】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#【操作手势设置】"><span class="nav-number">2.</span> <span class="nav-text">【操作手势设置】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#【操作系统简介】"><span class="nav-number">3.</span> <span class="nav-text">【操作系统简介】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#【软件安装】"><span class="nav-number">4.</span> <span class="nav-text">【软件安装】</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -912,9 +830,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://markfork.com/2017/11/14/MySQL-ReadCommitted-MVCC/';
-          this.page.identifier = '2017/11/14/MySQL-ReadCommitted-MVCC/';
-          this.page.title = '数据库事务特征、数据库隔离级别，各级别数据库加锁情况(含实操)--read committed与 MVCC';
+          this.page.url = 'http://markfork.com/2017/11/15/优雅使用Mac/';
+          this.page.identifier = '2017/11/15/优雅使用Mac/';
+          this.page.title = '';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://.disqus.com/embed.js';
