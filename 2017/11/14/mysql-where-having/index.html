@@ -508,8 +508,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/14/MySQL-index-notice-issue/" rel="next" title="MySQL 数据库索引使用场景与注意事项">
-                <i class="fa fa-chevron-left"></i> MySQL 数据库索引使用场景与注意事项
+              <a href="/2017/11/14/MySQL-design/" rel="next" title="MySQL 数据库规范--设计篇">
+                <i class="fa fa-chevron-left"></i> MySQL 数据库规范--设计篇
               </a>
             
           </div>
@@ -518,8 +518,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/11/14/MySQL-develop/" rel="prev" title="MySQL 数据库规范--开发篇">
-                MySQL 数据库规范--开发篇 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/11/14/MySQL-optimistic/" rel="prev" title="MySQL 数据库规范--调优篇(终结篇)">
+                MySQL 数据库规范--调优篇(终结篇) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -909,7 +909,7 @@
     var isfetched = false;
     var isXml = true;
     // Search DB path;
-    var search_path = "";
+    var search_path = "search.xml";
     if (search_path.length === 0) {
       search_path = "search.xml";
     } else if (/json$/i.test(search_path)) {
