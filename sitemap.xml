@@ -107,14 +107,14 @@
   </url>
   
   <url>
-    <loc>http://markfork.com/2017/11/14/node/</loc>
+    <loc>http://markfork.com/2017/11/14/node-Buffer/</loc>
     
     <lastmod>2017-11-14T08:33:31.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://markfork.com/2017/11/14/node-Buffer/</loc>
+    <loc>http://markfork.com/2017/11/14/node/</loc>
     
     <lastmod>2017-11-14T08:33:31.000Z</lastmod>
     
@@ -135,7 +135,21 @@
   </url>
   
   <url>
-    <loc>http://markfork.com/2017/11/14/MySQL-develop/</loc>
+    <loc>http://markfork.com/2017/11/14/MySQL-ReadCommitted-MVCC/</loc>
+    
+    <lastmod>2017-11-14T08:32:24.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://markfork.com/2017/11/14/MySQL-Producer/</loc>
+    
+    <lastmod>2017-11-14T08:32:24.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://markfork.com/2017/11/14/mysql-isolation-read-uncommitted/</loc>
     
     <lastmod>2017-11-14T08:32:24.000Z</lastmod>
     
@@ -143,6 +157,20 @@
   
   <url>
     <loc>http://markfork.com/2017/11/14/MySQL-optimistic/</loc>
+    
+    <lastmod>2017-11-14T08:32:24.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://markfork.com/2017/11/14/MySQL-develop/</loc>
+    
+    <lastmod>2017-11-14T08:32:24.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://markfork.com/2017/11/14/mysql-where-having/</loc>
     
     <lastmod>2017-11-14T08:32:24.000Z</lastmod>
     
@@ -163,35 +191,7 @@
   </url>
   
   <url>
-    <loc>http://markfork.com/2017/11/14/MySQL-Producer/</loc>
-    
-    <lastmod>2017-11-14T08:32:24.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://markfork.com/2017/11/14/mysql-where-having/</loc>
-    
-    <lastmod>2017-11-14T08:32:24.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://markfork.com/2017/11/14/mysql-isolation-read-uncommitted/</loc>
-    
-    <lastmod>2017-11-14T08:32:24.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://markfork.com/2017/11/14/MySQL-RepeatableRead-MVCC/</loc>
-    
-    <lastmod>2017-11-14T08:32:24.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://markfork.com/2017/11/14/MySQL-ReadCommitted-MVCC/</loc>
     
     <lastmod>2017-11-14T08:32:24.000Z</lastmod>
     
@@ -219,14 +219,14 @@
   </url>
   
   <url>
-    <loc>http://markfork.com/2017/11/14/IntellijIdea-Java-gradle-develop-enviroment/</loc>
+    <loc>http://markfork.com/2017/11/14/IntellijIdea-Mac-use-debug/</loc>
     
     <lastmod>2017-11-14T08:29:42.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://markfork.com/2017/11/14/IntellijIdea-Mac-use-debug/</loc>
+    <loc>http://markfork.com/2017/11/14/IntellijIdea-Java-gradle-develop-enviroment/</loc>
     
     <lastmod>2017-11-14T08:29:42.000Z</lastmod>
     
@@ -282,14 +282,14 @@
   </url>
   
   <url>
-    <loc>http://markfork.com/categories/index.html</loc>
+    <loc>http://markfork.com/tags/index.html</loc>
     
     <lastmod>2017-11-14T08:14:02.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://markfork.com/tags/index.html</loc>
+    <loc>http://markfork.com/categories/index.html</loc>
     
     <lastmod>2017-11-14T08:14:02.000Z</lastmod>
     
