@@ -1599,7 +1599,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/MySQL-index-notice-issue/">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/MySQL-optimistic/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鱼大坤">
@@ -1618,7 +1618,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/11/14/MySQL-index-notice-issue/" itemprop="url">MySQL 数据库索引使用场景与注意事项</a></h2>
+                <a class="post-title-link" href="/2017/11/14/MySQL-optimistic/" itemprop="url">MySQL 数据库规范--调优篇(终结篇)</a></h2>
         
 
         <div class="post-meta">
@@ -1671,9 +1671,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/14/MySQL-index-notice-issue/#comments" itemprop="discussionUrl">
+                <a href="/2017/11/14/MySQL-optimistic/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/14/MySQL-index-notice-issue/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/11/14/MySQL-optimistic/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1702,13 +1702,12 @@
 
       
         
-          <h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><blockquote>
-<p>1.何种查询支持索引？<br>  2.注意事项和建议</p>
-</blockquote>
-<h2 id="一-何种查询支持索引？"><a href="#一-何种查询支持索引？" class="headerlink" title="一 何种查询支持索引？"></a>一 何种查询支持索引？</h2>
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
+<blockquote>
+<p>这篇是MySQL 数据库规范的最后一篇–调优篇，旨在提供我们发现系统性能变弱、MySQL系统参数调优，SQL脚本出现问题的精准定位与调优方法。<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/14/MySQL-index-notice-issue/#more" rel="contents">
+            <a class="btn" href="/2017/11/14/MySQL-optimistic/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1759,7 +1758,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/MySQL-RepeatableRead-MVCC/">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/MySQL-ReadCommitted-MVCC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鱼大坤">
@@ -1778,7 +1777,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/11/14/MySQL-RepeatableRead-MVCC/" itemprop="url">数据库事务特征、数据库隔离级别，各级别数据库加锁情况(含实操)--Repeatable Read与MVCC</a></h2>
+                <a class="post-title-link" href="/2017/11/14/MySQL-ReadCommitted-MVCC/" itemprop="url">数据库事务特征、数据库隔离级别，各级别数据库加锁情况(含实操)--read committed与 MVCC</a></h2>
         
 
         <div class="post-meta">
@@ -1831,9 +1830,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/14/MySQL-RepeatableRead-MVCC/#comments" itemprop="discussionUrl">
+                <a href="/2017/11/14/MySQL-ReadCommitted-MVCC/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/14/MySQL-RepeatableRead-MVCC/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/11/14/MySQL-ReadCommitted-MVCC/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1865,10 +1864,10 @@
           <p><strong>上节回顾</strong></p>
 <hr>
 <blockquote>
-<p>上两篇记录了我对MySQL 事务 隔离级别<strong> <a href="http://www.jianshu.com/p/d75fcdeb07a3" target="_blank" rel="external">read uncommitted</a> </strong>、MySQL 事务隔离级别 <strong><a href="http://www.jianshu.com/p/fd51cb8dc03b" target="_blank" rel="external">read committed</a>＋MVCC</strong> 的理解。<br>这篇记录我对 Repeatable Read 的理解。<br>
+<p>上篇记录了我对MySQL 事务 隔离级别<strong> <a href="http://www.jianshu.com/p/d75fcdeb07a3" target="_blank" rel="external">read uncommitted</a> </strong>的理解。<br>这篇记录我对 MySQL 事务隔离级别 <strong><a href="http://www.jianshu.com/p/fd51cb8dc03b" target="_blank" rel="external">read committed &amp; MVCC</a></strong> 的理解。<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/14/MySQL-RepeatableRead-MVCC/#more" rel="contents">
+            <a class="btn" href="/2017/11/14/MySQL-ReadCommitted-MVCC/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1967,7 +1966,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1978,7 +1977,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
