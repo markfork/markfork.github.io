@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="数据库," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="鱼大坤" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/team.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="前言  这篇是MySQL 数据库规范的最后一篇–调优篇，旨在提供我们发现系统性能变弱、MySQL系统参数调优，SQL脚本出现问题的精准定位与调优方法。">
+<meta name="keywords" content="数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL 数据库规范--调优篇(终结篇)">
+<meta property="og:url" content="http://markfork.com/2017/11/14/MySQL-调优/index.html">
+<meta property="og:site_name" content="鱼大坤">
+<meta property="og:description" content="前言  这篇是MySQL 数据库规范的最后一篇–调优篇，旨在提供我们发现系统性能变弱、MySQL系统参数调优，SQL脚本出现问题的精准定位与调优方法。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-3363242bf7580f28.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-eb93f762efa27fad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-4f7340f695552373.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-5b92a18382f50903.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-7c1e193809259e48.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-edc69b3a3506de2f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-d7a5a33837f9cf23.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-c725007ff52e6850.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-6e0ca72ccb22c2fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-fbecd28a3290e863.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-11-14T08:32:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL 数据库规范--调优篇(终结篇)">
+<meta name="twitter:description" content="前言  这篇是MySQL 数据库规范的最后一篇–调优篇，旨在提供我们发现系统性能变弱、MySQL系统参数调优，SQL脚本出现问题的精准定位与调优方法。">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2836699-3363242bf7580f28.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'W9MGG13GHC',
+      apiKey: '29336d607a7eda6978a2fe32635f903d',
+      indexName: 'yudakun-article-index',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://markfork.com/2017/11/14/MySQL-调优/"/>
+
+
+
+
+
+  <title>MySQL 数据库规范--调优篇(终结篇) | 鱼大坤</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">鱼大坤</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">凡事皆有极困难之时，打得通的，便是好汉!</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/MySQL-调优/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="鱼大坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="鱼大坤">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">MySQL 数据库规范--调优篇(终结篇)</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:32:24+08:00">
+                2017-11-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/14/MySQL-调优/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/14/MySQL-调优/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-eye"></i>浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
+<blockquote>
+<p>这篇是MySQL 数据库规范的最后一篇–调优篇，旨在提供我们发现系统性能变弱、MySQL系统参数调优，SQL脚本出现问题的精准定位与调优方法。<br><a id="more"></a></p>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><hr>
+<p>1.MySQL 调优金字塔理论<br>  2.MySQL 慢查询分析–mysqldumpslow、pt_query_digest工具的使用(SQL脚本层面)<br>  3.选择合适的数据类型<br>  4.去除无用的索引–pt_duplicate_key_checker工具的使用(索引层面)<br>  5.反范式化设计(表结构)<br>  6.垂直水平分表<br>  7.MySQL 重要参数调优(系统配置)</p>
+</blockquote>
+<h2 id="1-MySQL-调优金字塔理论"><a href="#1-MySQL-调优金字塔理论" class="headerlink" title="1.MySQL 调优金字塔理论"></a>1.MySQL 调优金字塔理论</h2><hr>
+<p>如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-3363242bf7580f28.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="MySQL调优金字塔理论.png"><br><strong>如上图所示:</strong></p>
+<blockquote>
+<p>数据库优化<strong>维度</strong>有四个:<br><strong>硬件</strong>、<strong>系统配置</strong>、<strong>数据库表结构</strong>、<strong>SQL及索引</strong><br>优化<strong>成本</strong>:<br><strong>硬件</strong>&gt;<strong>系统配置</strong>&gt;<strong>数据库表结构</strong>&gt;<strong>SQL及索引</strong><br>优化<strong>效果</strong>:<br><strong>硬件</strong>&lt;<strong>系统配置</strong>&lt;<strong>数据库表结构</strong>&lt;<strong>SQL及索引</strong></p>
+</blockquote>
+<h2 id="2-MySQL-慢查询分析"><a href="#2-MySQL-慢查询分析" class="headerlink" title="2.MySQL 慢查询分析"></a>2.MySQL 慢查询分析</h2><hr>
+<p>对于系统中慢查询的分析，有助于我们更高效的定位问题，分析问题。<br>mysqldumpslow、pt_query_digest是进行慢查询分析的利器。</p>
+<h2 id="前置条件"><a href="#前置条件" class="headerlink" title="前置条件"></a>前置条件</h2><p><strong>1.查看本机MySQL Server 慢查询是否打开</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">show variables like &apos;slow%&apos;;</div></pre></td></tr></table></figure></p>
+<p>慢查询打开的情况如下所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-eb93f762efa27fad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="慢查询状态"></p>
+<p>若慢查询未打开则通过如下脚本设置慢查询：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">set global slow_query_log = on;</div><div class="line">即</div><div class="line">set global [上图中选项] = [你要设置的参数值]</div><div class="line">注意 slow_query_log_file 路径要加单引号，因为路径varchar  类型的。</div></pre></td></tr></table></figure></p>
+<h2 id="2-1-mysqldumpslow分析慢查询"><a href="#2-1-mysqldumpslow分析慢查询" class="headerlink" title="2.1 mysqldumpslow分析慢查询"></a>2.1 mysqldumpslow分析慢查询</h2><p>mysqldumpslow 是MySQL自带的分析数据库慢查询的原生利器，使用方法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mysqldumpslow -t 3 /data/mysql/log/mysql_slow_query.log | more \G;</div><div class="line">-t  3 显示前3条慢查询。</div></pre></td></tr></table></figure></p>
+<p>慢查询信息及分析<br><img src="http://upload-images.jianshu.io/upload_images/2836699-4f7340f695552373.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="慢查询信息.png"><br>但是 mysqldumpslow 显示的信息比较少，比如说此条sql执行次数在整体的执行次数中占用的百分比。类似于上述信息在 mysqldumpslow 的分析结果中是不存在的。</p>
+<p>接下里我们介绍另一种工具 pt_query_digest</p>
+<h2 id="2-2-pt-query-digest分析慢查询"><a href="#2-2-pt-query-digest分析慢查询" class="headerlink" title="2.2 pt_query_digest分析慢查询"></a>2.2 pt_query_digest分析慢查询</h2><p>之所以使用 pt_query_digest 工具对慢查询日志进行分析，主要原因是上述工具分析的<strong>内容更佳丰富</strong>，更加方便我们分析慢查询。<br><strong>前置条件</strong><br>安装  pt_query_digest ,Google搜索应该一大把。</p>
+<p>确保  pt_query_digest 安装成功 执行如下操作：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pt-query-digest /data/mysql/log/mysql_slow_query.log &gt; slow_log.report</div></pre></td></tr></table></figure></p>
+<p><strong>上述命令表示分析本机慢查询，并输出报表(文件)</strong><br>接下来分析生成的报表：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tail slow_log.report</div></pre></td></tr></table></figure></p>
+<p>按如下图所示信息：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-5b92a18382f50903.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="pt_query_digest报表分析.png"></p>
+<p>我们对以上红色框图标记的报表信息进行详细描述，事实上这也是我们<strong>需要掌握的重点：</strong></p>
+<blockquote>
+<p><strong>1.pct</strong> :sql语句某执行属性占所有慢查询语句某执行属性的百分比<br><strong>1.total</strong>：sql语句某执行属性的所有属性时间。<br><strong>2.Count</strong>：sql语句执行的次数，对应的pct 表示此sql 语句执行次数占所有慢查询语句执行次数的％比。上图为25%，total:表示总共执行了1次。<br><strong>3.Exec time</strong>:sql执行时间<br><strong>4.Lock time</strong>:sql执行期间被锁定的时间<br><strong>5.Rows sent</strong>:传输的有效数据，在select 查询语句中才有值<br><strong>6.Rows examine</strong>:总共查询的数据，非目标数据。<br><strong>7.Query_time distribution</strong>:查询时间分布<br><strong>8.SQL 语句</strong>:上图中为 select  * from payment limit 10\G;</p>
+</blockquote>
+<p><strong>举例说明：加入某执行次数(count) 占比较高的sql语句，执行时间很长，Rows sent 数值很小，Rows examine 数值很大则表明(I/O较大)。那就表明有可能 sql 查询语句走了全表扫描，或者全索引扫描。那么就要建立合适索引或者优化sql语句了。</strong><br>如下很好的展示了我们在分析慢查询时需要着重分析的三点：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-7c1e193809259e48.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="慢查询分析的三个基准点.png"></p>
+<h2 id="3-选择合适的数据类型"><a href="#3-选择合适的数据类型" class="headerlink" title="3.选择合适的数据类型"></a>3.选择合适的数据类型</h2><p>可以参考<a href="http://www.jianshu.com/p/c626c7ad27bf" target="_blank" rel="external">MySQL开发规范–设计篇</a>中的<strong>1.6 数据表设计与规划</strong></p>
+<p>如下图是常用字段类型的选择建议：<br><img src="http://upload-images.jianshu.io/upload_images/2836699-edc69b3a3506de2f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="选择合适的数据类型"></p>
+<h4 id="4-去除无用的索引–pt-duplicate-key-checker工具的使用-索引层面"><a href="#4-去除无用的索引–pt-duplicate-key-checker工具的使用-索引层面" class="headerlink" title="4.去除无用的索引–pt_duplicate_key_checker工具的使用(索引层面)"></a>4.去除无用的索引–pt_duplicate_key_checker工具的使用(索引层面)</h4><p>此工具可以分析选定的 database  中的所有表中建立的index 中可能重复的索引，并给出了删除建议。</p>
+<h2 id="5-反范式化设计-表结构"><a href="#5-反范式化设计-表结构" class="headerlink" title="5.反范式化设计(表结构)"></a>5.反范式化设计(表结构)</h2><p>关于范式的理解，请参考–<a href="http://www.jianshu.com/p/c626c7ad27bf" target="_blank" rel="external">MySQL 数据库规范–设计篇</a><strong>1.1 数据库表的设计范式(三范式&amp;反范式)</strong><br>先看一个不满足第三范式的数据表设计：<br><img src="http://upload-images.jianshu.io/upload_images/2836699-d7a5a33837f9cf23.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="不满足第三范式的数据表设计.png"></p>
+<p>不满足第三范式产生的问题：<br>假如将表中属于饮料分类的数据全部删除了，那么饮料分类也就不存在了，饮料的分类描述也就没了，查询不到了。这明显是不合理的。</p>
+<p>重点：<strong>满足第三范式要求非键属性之间没有任何依赖关系</strong>，上图中分类与分类描述存在直接依赖关系。所以不符合第三范式的要求，那么要让表符合第三范式需要怎样做呢？</p>
+<p>拆分后满足第三范式的表：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-c725007ff52e6850.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="满足第三范式的表.png"></p>
+<p>我们采用一张 分类–商品名称 中间表来充当分表之后的中间桥梁。</p>
+<p>当然如果一直遵循范式化设计，什么设计都向第三范式靠拢，当查询需要连接很多表的时候，建立索引已经起不到什么作用了，因为字段都不在同一张表中，所以建立索引是无用功，那么就要考虑反范式化的设计了。</p>
+<h2 id="6-垂直、水平分表"><a href="#6-垂直、水平分表" class="headerlink" title="6.垂直、水平分表"></a>6.垂直、水平分表</h2><p>原则上当表中数据记录的数量超过3000万条，再好的索引也已经不能提高数据查询的速度了，这时候就需要将表拆分成更多的小表，来进行查询。<br>分表的机制有两种:</p>
+<blockquote>
+<p><strong>垂直分表</strong>:也就是将一部分列割裂开将数据放置在新设置的表中，优先选择字段值长度较长，类型较重的字段进行垂直分离。<br><strong>水平分表</strong>:将表中数据水平切分，可以按照范围、取模运算、hash运算进行数据切割，每张表的结构信息都是一样的。</p>
+</blockquote>
+<h2 id="7-MySQL-重要参数调优-系统配置"><a href="#7-MySQL-重要参数调优-系统配置" class="headerlink" title="7.MySQL 重要参数调优(系统配置)"></a>7.MySQL 重要参数调优(系统配置)</h2><p><strong>7.1 操作系统配置优化</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-6e0ca72ccb22c2fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="操作系统配置优化"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2836699-fbecd28a3290e863.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="打开操作系统文件限制.png"></p>
+<p>简要介绍一下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1.tcp连接配置，超时时间配置</div><div class="line">2.linux上文件打开数量限制</div><div class="line">3.除此之外，最好在MySQL 服务器上关闭iptables,selinux 等防火墙软件。</div></pre></td></tr></table></figure></p>
+<p><strong>7. 2 MySQL 配置文件优化</strong></p>
+<blockquote>
+<p>MySQL 可以通过启动时制定配置参数和使用配置文件两种方法进行配置，在大多数情况下配置文件位于/etc/my.cnf或是/etc/mysql/my.cnf MySQL查找配置文件顺序可以通过以下方法获得：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ /usr/sbin/mysqld --verbose --help | grep -A 1 &apos;Default options&apos;</div></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>注意:如果多个位置存在配置文件，后面的会覆盖前面的</strong></p>
+<p><strong>7.2.1 innodb_buffer_pool_size</strong></p>
+<blockquote>
+<p>innodb_buffer_pool_size   是非常重要的一个参数，用户配置Innodb   的缓冲池大小。如果数据库中只有Innodb表，则推荐配置量为总内存的75%。<br>一般情况下运行如下命令，即可获得配置innodb_buffer_pool_size 参数的最佳值：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">select engine round(sum(data_length+index_length)/1024/1024,1) as </div><div class="line">&apos;total MB&apos; from information_schema.tables where table_schema not in (&quot;information_schema&quot;,&quot;performance_schema&quot;) group by engine;</div><div class="line">Innodb_buffer_pool_size &gt; Total MB;</div></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>7.2.2 innodb_buffer_pool_instance</strong></p>
+<blockquote>
+<p>MySQL  系统中有一些资源是需要独占使用的，比如缓冲去就是这样一种资源,因此如果系统中只有一个缓冲池，那么会增加阻塞的几率。我们多分成多个，则可以增加并发性能。</p>
+</blockquote>
+<p><strong>7.2.3 innodb_log_buffer_size</strong></p>
+<blockquote>
+<p>innodb log缓冲的大小，设置大小只能能容得下1s中产生的事务日志就可以。</p>
+</blockquote>
+<p><strong>7.2.4 innodb_flush_log_at_trx_commit</strong></p>
+<blockquote>
+<p>关键参数，对innodb 的I/O影响很大。默认值为1，可以去0，1，2三个值，一般建议为2，但如果数据安全性要求较高则默认使用1。</p>
+<ul>
+<li><strong>0:</strong>每隔1s中才将事务提交的变更记录刷新到磁盘</li>
+<li><strong>1:</strong>每一次事务提交都把变更日志刷新到磁盘（最安全的方式）</li>
+<li><strong>2:</strong>每一次提交将日志刷新到缓冲区，隔1s之后会将日志刷新到磁盘。</li>
+</ul>
+</blockquote>
+<p><strong>7.2.5 innodb_read_io_threads &amp;&amp; innodb_write_io_threads</strong></p>
+<blockquote>
+<p>这两个参数决定了Innodb读写的I/O进程数，默认为4。<br>决定这两个参数数值的因素也有两个：<code>cpu核数</code>、<code>应用场景中读写事务比例</code>。</p>
+</blockquote>
+<p><strong>7.2.6 innodb_file_per_table</strong></p>
+<blockquote>
+<p>关键参数，默认情况下配置为off。<br>  控制innodb每一个表使用独立的表空间，默认情况下，所有的表都会建立在共享表空间当中。<br>使用共享表空间会带来什么问题：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"> 1.多个表对共享表空间的操作，是顺序进行的，这样的话操作效率在并发情况下回降低。</div><div class="line">2.如果现在要删除一张表，会导致共享表空间先要将数据导出来，再重组。</div></pre></td></tr></table></figure></p>
+</blockquote>
+<p><strong>7.2.7 innodb_stats_on_metadata</strong></p>
+<blockquote>
+<p>作用：决定了MySQL在什么情况下会刷新innodb表的统计信息。<br>保证数据库优化器能使用到最新的索引，但不能太频繁，一般设置为off。</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="鱼大坤 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>个人微信号，欢迎添加~</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果我的文章对您有帮助，请小小的打赏一下吧~，我将>创作更好的文章给大家！谢谢！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="鱼大坤 Alipay"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据库/" rel="tag"># 数据库</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/14/mysql-where-having/" rel="next" title="where与having的区别">
+                <i class="fa fa-chevron-left"></i> where与having的区别
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/14/mysql-isolation-read-uncommitted/" rel="prev" title="数据库事务特征、数据库隔离级别，以及各级别数据库加锁情况(含实操)--read uncommitted篇">
+                数据库事务特征、数据库隔离级别，以及各级别数据库加锁情况(含实操)--read uncommitted篇 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+
+     <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTgzNS84Mzk5">
+          <!-- 来必力City版安装代码 -->
+          	<script type="text/javascript">
+             (function(d, s) {
+                 var j, e = d.getElementsByTagName(s)[0];
+
+                 if (typeof LivereTower === 'function') { return; }
+
+                 j = d.createElement(s);
+                 j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                 j.async = true;
+
+                 e.parentNode.insertBefore(j, e);
+             })(document, 'script');
+          	</script>
+      </div>
+          <!-- City版安装代码已完成 -->
+</div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="鱼大坤" />
+          <p class="site-author-name" itemprop="name">鱼大坤</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目录"><span class="nav-number">2.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-MySQL-调优金字塔理论"><span class="nav-number">3.</span> <span class="nav-text">1.MySQL 调优金字塔理论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-MySQL-慢查询分析"><span class="nav-number">4.</span> <span class="nav-text">2.MySQL 慢查询分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前置条件"><span class="nav-number">5.</span> <span class="nav-text">前置条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-mysqldumpslow分析慢查询"><span class="nav-number">6.</span> <span class="nav-text">2.1 mysqldumpslow分析慢查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-pt-query-digest分析慢查询"><span class="nav-number">7.</span> <span class="nav-text">2.2 pt_query_digest分析慢查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-选择合适的数据类型"><span class="nav-number">8.</span> <span class="nav-text">3.选择合适的数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-去除无用的索引–pt-duplicate-key-checker工具的使用-索引层面"><span class="nav-number">8.0.1.</span> <span class="nav-text">4.去除无用的索引–pt_duplicate_key_checker工具的使用(索引层面)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-反范式化设计-表结构"><span class="nav-number">9.</span> <span class="nav-text">5.反范式化设计(表结构)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-垂直、水平分表"><span class="nav-number">10.</span> <span class="nav-text">6.垂直、水平分表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-MySQL-重要参数调优-系统配置"><span class="nav-number">11.</span> <span class="nav-text">7.MySQL 重要参数调优(系统配置)</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">鱼大坤</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://markfork.com/2017/11/14/MySQL-调优/';
+          this.page.identifier = '2017/11/14/MySQL-调优/';
+          this.page.title = 'MySQL 数据库规范--调优篇(终结篇)';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2148159"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.2"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/exturl.js?v=5.1.2"></script>
+
+
+</body>
+</html>
