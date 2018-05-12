@@ -327,7 +327,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/MySQL-优化/">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/NoSql-Redis/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鱼大坤">
@@ -346,7 +346,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/11/14/MySQL-优化/" itemprop="url">MySQL 数据库索引原理与分类</a></h2>
+                <a class="post-title-link" href="/2017/11/14/NoSql-Redis/" itemprop="url">NoSql-Redis入门（事务）</a></h2>
         
 
         <div class="post-meta">
@@ -358,7 +358,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:32:24+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:32:56+08:00">
                 2017-11-14
               </time>
             
@@ -381,8 +381,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MySQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MySQL</span>
+                  <a href="/categories/Redis/" itemprop="url" rel="index">
+                    <span itemprop="name">Redis</span>
                   </a>
                 </span>
 
@@ -399,9 +399,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/14/MySQL-优化/#comments" itemprop="discussionUrl">
+                <a href="/2017/11/14/NoSql-Redis/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/14/MySQL-优化/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/11/14/NoSql-Redis/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -430,175 +430,15 @@
 
       
         
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
-<blockquote>
-<p>数据库索引本质上是一种数据结构(存储结构+算法)，目的是为了加快目标数据检索的速度。</p>
+          <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><blockquote>
+<p>Redis 事务可以一次执行多个命令， 并且带有以下两个重要的保证：<br>1.<strong>事务是一个单独的隔离操作：</strong>事务中的所有命令都会序列化、按顺序地执行。事务在执行的过程中，不会被其他客户端发送来的命令请求所打断。<br>2.<strong>事务是一个原子操作：</strong>事务中的命令要么全部被执行，要么全部都不执行。</p>
 </blockquote>
-<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><hr>
+<p>一个事务从开始到执行会经历以下三个阶段：</p>
 <blockquote>
-<p>1.索引的本质与原理？<br>2.索引的分类？<br>
+<p>1.<strong>开始事务。</strong><br>2.<strong>命令入队。</strong><br>3.<strong>执行事务。</strong><br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/14/MySQL-优化/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/MySQL-调优/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="鱼大坤">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="鱼大坤">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/14/MySQL-调优/" itemprop="url">MySQL 数据库规范--调优篇(终结篇)</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:32:24+08:00">
-                2017-11-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MySQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MySQL</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/11/14/MySQL-调优/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/14/MySQL-调优/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
-<blockquote>
-<p>这篇是MySQL 数据库规范的最后一篇–调优篇，旨在提供我们发现系统性能变弱、MySQL系统参数调优，SQL脚本出现问题的精准定位与调优方法。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/14/MySQL-调优/#more" rel="contents">
+            <a class="btn" href="/2017/11/14/NoSql-Redis/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -809,165 +649,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/MySQL-develop/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="鱼大坤">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="鱼大坤">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/14/MySQL-develop/" itemprop="url">MySQL 数据库规范--开发篇</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:32:24+08:00">
-                2017-11-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MySQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MySQL</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/11/14/MySQL-develop/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/14/MySQL-develop/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><hr>
-<blockquote>
-<p><strong>1.sql语句编写</strong><br>  <strong>2.explain 工具的使用–重点</strong><br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/14/MySQL-develop/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/MySQL-ReadCommitted-MVCC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1078,322 +759,6 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/11/14/MySQL-ReadCommitted-MVCC/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/mysql-isolation-read-uncommitted/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="鱼大坤">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="鱼大坤">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/14/mysql-isolation-read-uncommitted/" itemprop="url">数据库事务特征、数据库隔离级别，以及各级别数据库加锁情况(含实操)--read uncommitted篇</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:32:24+08:00">
-                2017-11-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MySQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MySQL</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/11/14/mysql-isolation-read-uncommitted/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/14/mysql-isolation-read-uncommitted/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="1-目的"><a href="#1-目的" class="headerlink" title="1.目的"></a>1.目的</h2><hr>
-<h2 id="1-1-合适人群"><a href="#1-1-合适人群" class="headerlink" title="1.1 合适人群"></a>1.1 合适人群</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1.数据库事务特征我只是背过，并没有很深刻的理解。</div><div class="line">2.数据库事务的隔离级别只是了解，并没有深刻理解，也没有在实际工作中体验使用过。</div><div class="line">3.经常面试被人问起数据库加锁情况，一头雾水，很懵。</div><div class="line">4.在网上找过很多博客，有的写得太多没耐心看，有的写得摘抄的定义，泛泛而谈，没有实操更没有讲解。</div></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/14/mysql-isolation-read-uncommitted/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/mysql-where-having/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="鱼大坤">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="鱼大坤">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/14/mysql-where-having/" itemprop="url">where与having的区别</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:32:24+08:00">
-                2017-11-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MySQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MySQL</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/11/14/mysql-where-having/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/14/mysql-where-having/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="区别概述："><a href="#区别概述：" class="headerlink" title="区别概述："></a>区别概述：</h2><hr>
-<p>1.<strong>where是一个约束声明</strong>，使用where约束来自数据库的数据，where是在结果集返回之前起作用的，where中不能使用聚合函数。<strong>注意：返回结果集之前起作用</strong><br>2.<strong>having是一个过滤声明</strong>，是在查询返回结果集以后对查询结果进行过滤操作，在Having中可以使聚合函数。<strong>注意：返回结果集之后起作用</strong><br>3.在查询过程中<strong>where子句</strong>、<strong>聚合语句</strong>、<strong>having子句</strong>，的执行优先级为<strong>where&gt;group by&gt;聚合语句(sum、count、avg、max、min)&gt;having子句</strong><br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/14/mysql-where-having/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1604,7 +969,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/MySQL-design/">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/MySQL-存储过程/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鱼大坤">
@@ -1623,7 +988,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/11/14/MySQL-design/" itemprop="url">MySQL 数据库规范--设计篇</a></h2>
+                <a class="post-title-link" href="/2017/11/14/MySQL-存储过程/" itemprop="url">存储过程</a></h2>
         
 
         <div class="post-meta">
@@ -1635,7 +1000,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:31:36+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:32:24+08:00">
                 2017-11-14
               </time>
             
@@ -1676,9 +1041,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/14/MySQL-design/#comments" itemprop="discussionUrl">
+                <a href="/2017/11/14/MySQL-存储过程/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/14/MySQL-design/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/11/14/MySQL-存储过程/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1707,12 +1072,11 @@
 
       
         
-          <h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><hr>
-<blockquote>
-<p><strong>1.<a href="http://www.jianshu.com/p/c626c7ad27bf" target="_blank" rel="external">设计阶段</a></strong><br>  <strong>2.<a href="http://www.jianshu.com/p/72ca2ed48304" target="_blank" rel="external">开发阶段</a></strong><br>  <strong>3.调优阶段(未开发，pt_query_digest、show_slow_log、查询优化等)</strong><br>
+          <h4 id="存储过程简介"><a href="#存储过程简介" class="headerlink" title="存储过程简介"></a>存储过程简介</h4><hr>
+<p>　存储过程（Stored Procedure）是数据库系统中，一组为了完成特定功能的SQL 语句集，经编译后存储在数据库中，用户通过指定存储过程的名字并给出参数（如果该存储过程带有参数）来执行它。在数据库系统中，存储过程和触发器具有很重要的作用。<strong>无论是存储过程还是触发器，都是SQL 语句和流程控制语句的集合。</strong><br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/14/MySQL-design/#more" rel="contents">
+            <a class="btn" href="/2017/11/14/MySQL-存储过程/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1763,7 +1127,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/java_nio/">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/MySQL-调优/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鱼大坤">
@@ -1782,7 +1146,7 @@
         
           <h2 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/11/14/java_nio/" itemprop="url">Java NIO(一)－I/O模型： 阻塞、非阻塞、I/O复用、同步、异步</a></h2>
+                <a class="post-title-link" href="/2017/11/14/MySQL-调优/" itemprop="url">MySQL 数据库规范--调优篇(终结篇)</a></h2>
         
 
         <div class="post-meta">
@@ -1794,7 +1158,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:30:56+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:32:24+08:00">
                 2017-11-14
               </time>
             
@@ -1817,8 +1181,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
                   </a>
                 </span>
 
@@ -1835,9 +1199,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/14/java_nio/#comments" itemprop="discussionUrl">
+                <a href="/2017/11/14/MySQL-调优/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/14/java_nio/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/11/14/MySQL-调优/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1866,18 +1230,650 @@
 
       
         
-          <h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><blockquote>
-<p>为后期学习 Netty框架打好理论基础，并且在分布式RPC 服务中对客户端与服务端之间服务的调用，底层数据通讯可以使用Netty 进行封装。 </p>
-</blockquote>
-<h2 id="记录结构"><a href="#记录结构" class="headerlink" title="记录结构"></a>记录结构</h2><hr>
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
 <blockquote>
-<ul>
-<li>Java NIO(一)–I/O模型： 阻塞、非阻塞、I/O复用、同步、异步<br>地址：<a href="http://www.jianshu.com/writer#/notebooks/5970279/notes/7531041/preview" target="_blank" rel="external">http://www.jianshu.com/writer#/notebooks/5970279/notes/7531041/preview</a></li>
-<li>Java NIO(二)–Channel、Buffer、Selector<br>地址：待定</li>
-<li>Java NIO(三)–多路复用之TCP传输中的NIO应用<br>地址：待定
+<p>这篇是MySQL 数据库规范的最后一篇–调优篇，旨在提供我们发现系统性能变弱、MySQL系统参数调优，SQL脚本出现问题的精准定位与调优方法。<br>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/11/14/java_nio/#more" rel="contents">
+            <a class="btn" href="/2017/11/14/MySQL-调优/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/MySQL-优化/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="鱼大坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="鱼大坤">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/14/MySQL-优化/" itemprop="url">MySQL 数据库索引原理与分类</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:32:24+08:00">
+                2017-11-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/14/MySQL-优化/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/14/MySQL-优化/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
+<blockquote>
+<p>数据库索引本质上是一种数据结构(存储结构+算法)，目的是为了加快目标数据检索的速度。</p>
+</blockquote>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><hr>
+<blockquote>
+<p>1.索引的本质与原理？<br>2.索引的分类？<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/11/14/MySQL-优化/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/mysql-where-having/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="鱼大坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="鱼大坤">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/14/mysql-where-having/" itemprop="url">where与having的区别</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:32:24+08:00">
+                2017-11-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/14/mysql-where-having/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/14/mysql-where-having/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="区别概述："><a href="#区别概述：" class="headerlink" title="区别概述："></a>区别概述：</h2><hr>
+<p>1.<strong>where是一个约束声明</strong>，使用where约束来自数据库的数据，where是在结果集返回之前起作用的，where中不能使用聚合函数。<strong>注意：返回结果集之前起作用</strong><br>2.<strong>having是一个过滤声明</strong>，是在查询返回结果集以后对查询结果进行过滤操作，在Having中可以使聚合函数。<strong>注意：返回结果集之后起作用</strong><br>3.在查询过程中<strong>where子句</strong>、<strong>聚合语句</strong>、<strong>having子句</strong>，的执行优先级为<strong>where&gt;group by&gt;聚合语句(sum、count、avg、max、min)&gt;having子句</strong><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/11/14/mysql-where-having/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/mysql-isolation-read-uncommitted/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="鱼大坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="鱼大坤">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/14/mysql-isolation-read-uncommitted/" itemprop="url">数据库事务特征、数据库隔离级别，以及各级别数据库加锁情况(含实操)--read uncommitted篇</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:32:24+08:00">
+                2017-11-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/14/mysql-isolation-read-uncommitted/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/14/mysql-isolation-read-uncommitted/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="1-目的"><a href="#1-目的" class="headerlink" title="1.目的"></a>1.目的</h2><hr>
+<h2 id="1-1-合适人群"><a href="#1-1-合适人群" class="headerlink" title="1.1 合适人群"></a>1.1 合适人群</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1.数据库事务特征我只是背过，并没有很深刻的理解。</div><div class="line">2.数据库事务的隔离级别只是了解，并没有深刻理解，也没有在实际工作中体验使用过。</div><div class="line">3.经常面试被人问起数据库加锁情况，一头雾水，很懵。</div><div class="line">4.在网上找过很多博客，有的写得太多没耐心看，有的写得摘抄的定义，泛泛而谈，没有实操更没有讲解。</div></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/11/14/mysql-isolation-read-uncommitted/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/MySQL-develop/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="鱼大坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="鱼大坤">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/14/MySQL-develop/" itemprop="url">MySQL 数据库规范--开发篇</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:32:24+08:00">
+                2017-11-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/14/MySQL-develop/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/14/MySQL-develop/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><hr>
+<blockquote>
+<p><strong>1.sql语句编写</strong><br>  <strong>2.explain 工具的使用–重点</strong><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/11/14/MySQL-develop/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1965,7 +1961,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-count">43</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1976,7 +1972,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1987,7 +1983,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -2036,7 +2032,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
