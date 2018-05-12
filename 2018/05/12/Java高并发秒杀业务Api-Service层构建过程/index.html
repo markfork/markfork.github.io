@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="秒杀,MVC," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="鱼大坤" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/team.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="章节目录 秒杀Service 接口开发工作 秒杀业务逻辑编写 spring-IOC 管理 service 组件 context:component-scan    Spring 声明式事务 junit测试">
+<meta name="keywords" content="秒杀,MVC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java高并发秒杀业务Api-Service层构建过程">
+<meta property="og:url" content="http://markfork.com/2018/05/12/Java高并发秒杀业务Api-Service层构建过程/index.html">
+<meta property="og:site_name" content="鱼大坤">
+<meta property="og:description" content="章节目录 秒杀Service 接口开发工作 秒杀业务逻辑编写 spring-IOC 管理 service 组件 context:component-scan    Spring 声明式事务 junit测试">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2836699-4041fe3160a71904.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2836699-ea948e3a9099eee1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-05-12T13:54:47.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java高并发秒杀业务Api-Service层构建过程">
+<meta name="twitter:description" content="章节目录 秒杀Service 接口开发工作 秒杀业务逻辑编写 spring-IOC 管理 service 组件 context:component-scan    Spring 声明式事务 junit测试">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/2836699-4041fe3160a71904.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'W9MGG13GHC',
+      apiKey: '29336d607a7eda6978a2fe32635f903d',
+      indexName: 'yudakun-article-index',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://markfork.com/2018/05/12/Java高并发秒杀业务Api-Service层构建过程/"/>
+
+
+
+
+
+  <title>Java高并发秒杀业务Api-Service层构建过程 | 鱼大坤</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">鱼大坤</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">凡事皆有极困难之时，打得通的，便是好汉!</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2018/05/12/Java高并发秒杀业务Api-Service层构建过程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="鱼大坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="鱼大坤">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Java高并发秒杀业务Api-Service层构建过程</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-12T21:54:47+08:00">
+                2018-05-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/12/Java高并发秒杀业务Api-Service层构建过程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/05/12/Java高并发秒杀业务Api-Service层构建过程/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-eye"></i>浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="章节目录"><a href="#章节目录" class="headerlink" title="章节目录"></a>章节目录</h2><ul>
+<li>秒杀Service 接口开发工作<ul>
+<li>秒杀业务逻辑编写</li>
+<li>spring-IOC 管理 service 组件<ul>
+<li>context:component-scan </li>
+</ul>
+</li>
+<li>Spring 声明式事务</li>
+<li>junit测试<a id="more"></a>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="创建基本的代码包层"><a href="#创建基本的代码包层" class="headerlink" title="创建基本的代码包层"></a>创建基本的代码包层</h4><p><strong>1.创建DTO - 数据传输层对象</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">网络数据到达Controller 层后会使用框架自带的数据绑定 以及反序列化为dto对</div><div class="line">象，并作为参数传递至service层进行处理。</div></pre></td></tr></table></figure></p>
+<p><strong>2.业务接口实现</strong><br>注意：业务接口的实现需要站在使用者的角度去设计接口</p>
+<ul>
+<li>方法定义粒度-非常明确，参数简练，直接，不要一个大map对象去传递，return 还可以抛出异常。</li>
+</ul>
+<p>代码如下:<br><strong>业务逻辑接口声明类 SecKillService.java</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">package org.seckill.service;</div><div class="line"></div><div class="line">import org.seckill.domain.SecKill;</div><div class="line">import org.seckill.dto.Exposer;</div><div class="line">import org.seckill.dto.SecKillExcution;</div><div class="line">import org.seckill.exception.RepeatKillException;</div><div class="line">import org.seckill.exception.SecKillCloseException;</div><div class="line">import org.seckill.exception.SecKillException;</div><div class="line"></div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">/**</div><div class="line"> * 业务接口的实现需要站在使用者的角度去设计接口</div><div class="line"> * 三个方面：方法定义粒度、参数、返回类型 dto就可以</div><div class="line"> */</div><div class="line">public interface SecKillService &#123;</div><div class="line"></div><div class="line"></div><div class="line">    /**</div><div class="line">     * 返回秒杀商品列表</div><div class="line">     *</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    List&lt;SecKill&gt; getSecKillList();</div><div class="line"></div><div class="line"></div><div class="line">    /**</div><div class="line">     * 查询秒杀商品单条记录</div><div class="line">     *</div><div class="line">     * @param secKillId</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    SecKill getSecKillById(long secKillId);</div><div class="line"></div><div class="line"></div><div class="line">    /**</div><div class="line">     * 秒杀开启时,输出秒杀接口的地址,否则输出系统时间,和秒杀时间</div><div class="line">     *</div><div class="line">     * @param secKillId</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    Exposer exportSecKillUrl(long secKillId);</div><div class="line"></div><div class="line"></div><div class="line">    /**</div><div class="line">     * 执行秒杀操作</div><div class="line">     * 验证当前的excuteSecKill id 与 传递过来的md5是否相同</div><div class="line">     *</div><div class="line">     * @param secKillId</div><div class="line">     * @param userPhone</div><div class="line">     * @param md5</div><div class="line">     */</div><div class="line">    SecKillExcution excuteSecKill(long secKillId, String userPhone, String md5)</div><div class="line">            throws SecKillException, RepeatKillException, SecKillCloseException;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>业务逻辑接口实现类-SecKillServiceImpl</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div></pre></td><td class="code"><pre><div class="line">package org.seckill.service.impl;</div><div class="line"></div><div class="line">import org.seckill.dao.SecKillDao;</div><div class="line">import org.seckill.dao.SuccessKilledDao;</div><div class="line">import org.seckill.domain.SecKill;</div><div class="line">import org.seckill.domain.SuccessKilled;</div><div class="line">import org.seckill.dto.Exposer;</div><div class="line">import org.seckill.dto.SecKillExcution;</div><div class="line">import org.seckill.enums.SecKillStateEnum;</div><div class="line">import org.seckill.exception.RepeatKillException;</div><div class="line">import org.seckill.exception.SecKillCloseException;</div><div class="line">import org.seckill.exception.SecKillException;</div><div class="line">import org.seckill.service.SecKillService;</div><div class="line">import org.slf4j.Logger;</div><div class="line">import org.slf4j.LoggerFactory;</div><div class="line">import org.springframework.util.DigestUtils;</div><div class="line"></div><div class="line">import java.util.Date;</div><div class="line">import java.util.List;</div><div class="line">@Service</div><div class="line">public class SecKillServiceImpl implements SecKillService &#123;</div><div class="line">    //在业务逻辑层打日志</div><div class="line">    private Logger logger = LoggerFactory.getLogger(this.getClass());</div><div class="line"></div><div class="line">    @Autowire</div><div class="line">    private SecKillDao secKillDao;</div><div class="line">    @Autowire</div><div class="line">    private SuccessKilledDao successKilledDao;</div><div class="line"></div><div class="line">    //md5加盐，混淆加密</div><div class="line">    private final String salt = &quot;asdasd8Zy*&amp;ZCY87ywer7t678tzt67wer&quot;;</div><div class="line"></div><div class="line">    public List&lt;SecKill&gt; getSecKillList() &#123;</div><div class="line">        return secKillDao.queryAll(0, 4);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public SecKill getSecKillById(long secKillId) &#123;</div><div class="line">        return secKillDao.queryById(secKillId);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public Exposer exportSecKillUrl(long secKillId) &#123;</div><div class="line">        SecKill secKill = secKillDao.queryById(secKillId);</div><div class="line">        if (secKill == null) &#123;</div><div class="line">            return new Exposer(false, secKillId);//没有相关产品的秒杀活动</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        Date startTime = secKill.getStartTime();</div><div class="line">        Date endTime = secKill.getEndTime();</div><div class="line">        Date nowTime = new Date();</div><div class="line"></div><div class="line">        if (nowTime.getTime() &lt; startTime.getTime() || nowTime.getTime() &gt; endTime.getTime()) &#123;</div><div class="line">            return new Exposer(false, secKillId, nowTime.getTime(), startTime.getTime(), endTime.getTime());//没有相关产品的秒杀活动</div><div class="line">        &#125;</div><div class="line">        //转化特定字符串的过程，不可逆</div><div class="line">        String md5 = null;</div><div class="line">        return new Exposer(secKillId, md5, true);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 生成对应秒杀商品的md5值，做参数校验</div><div class="line">     * 保证可重用</div><div class="line">     *</div><div class="line">     * @param secKillId</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    private String getMD5(long secKillId) &#123;</div><div class="line">        String base = secKillId + &quot;/&quot; + salt;//用户不知道salt</div><div class="line">        String md5 = DigestUtils.md5DigestAsHex(base.getBytes());</div><div class="line">        return md5;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 执行秒杀</div><div class="line">     *</div><div class="line">     * @param secKillId</div><div class="line">     * @param userPhone</div><div class="line">     * @param md5</div><div class="line">     * @return</div><div class="line">     * @throws SecKillException</div><div class="line">     * @throws RepeatKillException</div><div class="line">     * @throws SecKillCloseException</div><div class="line">     */</div><div class="line">    public SecKillExcution excuteSecKill(long secKillId, String userPhone, String md5) throws SecKillException, RepeatKillException, SecKillCloseException &#123;</div><div class="line">        try &#123;</div><div class="line">            //1.用户输入的md5值验证</div><div class="line">            if (md5 == null || !md5.equals(getMD5(secKillId))) &#123;</div><div class="line">                throw new SecKillException(&quot;seckill data rewrite&quot;);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            //2.减库存、执行秒杀逻辑+记录购买行为，执行秒杀时间</div><div class="line">            Date nowTime = new Date();</div><div class="line">            int updateCount = secKillDao.reduceStock(secKillId, nowTime);</div><div class="line">            if (updateCount &lt;= 0) &#123;</div><div class="line">                //没有更新到记录,秒杀结束</div><div class="line">                throw new SecKillCloseException(&quot;seckill is closed&quot;);</div><div class="line">            &#125; else &#123;</div><div class="line">                //3.记录购买行为 insertSuccessKilled 可能出现数据库连接超时等问题，所以需要外层try</div><div class="line">                int insertCount = successKilledDao.insertSuccessKilled(secKillId, userPhone);</div><div class="line">                //唯一验证，secKillId + userPhone</div><div class="line">                if (insertCount &lt;= 0) &#123;//数据库联合主键冲突</div><div class="line">                    throw new RepeatKillException(&quot;seckill repeated&quot;);</div><div class="line">                &#125; else &#123;//秒杀成功，返回秒杀成功的实体</div><div class="line">                    SuccessKilled successKilled = successKilledDao.queryByIdWithSecKill(secKillId, userPhone);</div><div class="line">                    //不优雅的实现方式，在多处需要用到提示信息时，我们可以采用统一的常量去返回，这样待客户端提示语改变时，我们可以统一进行更改。</div><div class="line">//                    return new SecKillExcution(secKillId, 1, &quot;秒杀成功&quot;, successKilled);</div><div class="line"></div><div class="line">                    return new SecKillExcution(secKillId, SecKillStateEnum.SUCCESS, successKilled);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125; catch (SecKillCloseException e1) &#123;</div><div class="line">            throw e1;//还是要回滚</div><div class="line">        &#125; catch (RepeatKillException e2) &#123;</div><div class="line">            throw e2;//还是要回滚</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            logger.error(e.getMessage());</div><div class="line">            //所有异常最终会转化为 运行时异常，spring 的声明式事务会帮我们做rollback。</div><div class="line">            throw new SecKillException(&quot;seckill inner error&quot; + e.getMessage());</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>数据传输层类- Exposer</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div></pre></td><td class="code"><pre><div class="line">package org.seckill.dto;</div><div class="line"></div><div class="line">/**</div><div class="line"> * 暴露秒杀接口</div><div class="line"> */</div><div class="line">public class Exposer &#123;</div><div class="line">    private boolean exposed;//秒杀是否开启标志位</div><div class="line">    private String md5;     //加密措施，暴露地址包括一个md5值</div><div class="line">    private long now;       //系统当前时间(毫秒)，方便浏览器计算距离服务器秒杀开启时间</div><div class="line">    private long secKillId; //秒杀商品的id</div><div class="line">    private long start;</div><div class="line">    private long end;</div><div class="line"></div><div class="line">    //秒杀正在进行</div><div class="line">    public Exposer(long secKillId, String md5, boolean exposed) &#123;</div><div class="line">        this.secKillId = secKillId;</div><div class="line">        this.md5 = md5;</div><div class="line">        this.exposed = exposed;</div><div class="line">    &#125;</div><div class="line">    //秒杀结束或还没开启</div><div class="line">    public Exposer(boolean exposed, long secKillId, long now, long start, long end) &#123;</div><div class="line">        this.exposed = exposed;</div><div class="line">        this.secKillId = secKillId;</div><div class="line">        this.now = now;</div><div class="line">        this.start = start;</div><div class="line">        this.end = end;</div><div class="line">    &#125;</div><div class="line">    //没有相关商品秒杀活动</div><div class="line">    public Exposer(boolean exposed, long secKillId) &#123;</div><div class="line">        this.exposed = exposed;</div><div class="line">        this.secKillId = secKillId;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public boolean isExposed() &#123;</div><div class="line">        return exposed;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setExposed(boolean exposed) &#123;</div><div class="line">        this.exposed = exposed;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getMd5() &#123;</div><div class="line">        return md5;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setMd5(String md5) &#123;</div><div class="line">        this.md5 = md5;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public long getNow() &#123;</div><div class="line">        return now;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setNow(long now) &#123;</div><div class="line">        this.now = now;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public long getStart() &#123;</div><div class="line">        return start;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setStart(long start) &#123;</div><div class="line">        this.start = start;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public long getEnd() &#123;</div><div class="line">        return end;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setEnd(long end) &#123;</div><div class="line">        this.end = end;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public long getSecKillId() &#123;</div><div class="line">        return secKillId;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setSecKillId(long secKillId) &#123;</div><div class="line">        this.secKillId = secKillId;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String toString() &#123;</div><div class="line">        return &quot;Exposer&#123;&quot; +</div><div class="line">                &quot;exposed=&quot; + exposed +</div><div class="line">                &quot;, md5=&apos;&quot; + md5 + &apos;\&apos;&apos; +</div><div class="line">                &quot;, now=&quot; + now +</div><div class="line">                &quot;, secKillId=&quot; + secKillId +</div><div class="line">                &quot;, start=&quot; + start +</div><div class="line">                &quot;, end=&quot; + end +</div><div class="line">                &apos;&#125;&apos;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>数据传输层-SecKillExcution</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div></pre></td><td class="code"><pre><div class="line">package org.seckill.dto;</div><div class="line"></div><div class="line">import org.seckill.domain.SuccessKilled;</div><div class="line">import org.seckill.enums.SecKillStateEnum;</div><div class="line"></div><div class="line">/**</div><div class="line"> * 执行秒杀之后的结果</div><div class="line"> */</div><div class="line">public class SecKillExcution &#123;</div><div class="line">    private long secKillId;</div><div class="line"></div><div class="line">    private int state;//状态的标识</div><div class="line"></div><div class="line">    private String stateInfo;//状态表示</div><div class="line"></div><div class="line">    private SuccessKilled successSecKilled;//秒杀成功对象</div><div class="line"></div><div class="line">    //成功 jakson 在转化枚举的时候会出现问题，不支持枚举序列化</div><div class="line">    public SecKillExcution(long secKillId, SecKillStateEnum secKillStateEnum, SuccessKilled successSecKilled) &#123;</div><div class="line">        this.secKillId = secKillId;</div><div class="line">        this.state = secKillStateEnum.getState();</div><div class="line">        this.stateInfo = secKillStateEnum.getStateInfo();</div><div class="line">        this.successSecKilled = successSecKilled;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //失败,使用到枚举</div><div class="line">    public SecKillExcution(long secKillId, SecKillStateEnum secKillStateEnum) &#123;</div><div class="line">        this.secKillId = secKillId;</div><div class="line">        this.state = secKillStateEnum.getState();</div><div class="line">        this.stateInfo = secKillStateEnum.getStateInfo();</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    public long getSecKillId() &#123;</div><div class="line">        return secKillId;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setSecKillId(long secKillId) &#123;</div><div class="line">        this.secKillId = secKillId;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public int getState() &#123;</div><div class="line">        return state;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setState(int state) &#123;</div><div class="line">        this.state = state;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getStateInfo() &#123;</div><div class="line">        return stateInfo;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setStateInfo(String stateInfo) &#123;</div><div class="line">        this.stateInfo = stateInfo;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public SuccessKilled getSuccessSecKilled() &#123;</div><div class="line">        return successSecKilled;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setSuccessSecKilled(SuccessKilled successSecKilled) &#123;</div><div class="line">        this.successSecKilled = successSecKilled;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String toString() &#123;</div><div class="line">        return &quot;SecKillExcution&#123;&quot; +</div><div class="line">                &quot;secKillId=&quot; + secKillId +</div><div class="line">                &quot;, state=&quot; + state +</div><div class="line">                &quot;, stateInfo=&apos;&quot; + stateInfo + &apos;\&apos;&apos; +</div><div class="line">                &quot;, successSecKilled=&quot; + successSecKilled +</div><div class="line">                &apos;&#125;&apos;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>业务运行时异常类-SecKillException、RepeatKillException、SecKillCloseException</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">package org.seckill.exception;</div><div class="line"></div><div class="line">/**</div><div class="line"> * 秒杀相关业务异常</div><div class="line"> */</div><div class="line">public class SecKillException extends RuntimeException &#123;</div><div class="line">    public SecKillException(String message) &#123;</div><div class="line">        super(message);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public SecKillException(String message, Throwable cause) &#123;</div><div class="line">        super(message, cause);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">package org.seckill.exception;</div><div class="line"></div><div class="line">/**</div><div class="line"> * 重复秒杀的异常(运行时异常)</div><div class="line"> * 声明式事务，只接收运行时异常</div><div class="line"> */</div><div class="line">public class RepeatKillException extends SecKillException &#123;</div><div class="line"></div><div class="line">    public RepeatKillException(String message) &#123;</div><div class="line">        super(message);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public RepeatKillException(String message, Throwable cause) &#123;</div><div class="line">        super(message, cause);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">package org.seckill.exception;</div><div class="line"></div><div class="line">/**</div><div class="line"> * 秒杀关闭异常-友好响应给用户</div><div class="line"> */</div><div class="line">public class SecKillCloseException extends SecKillException &#123;</div><div class="line">    public SecKillCloseException(String message) &#123;</div><div class="line">        super(message);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public SecKillCloseException(String message, Throwable cause) &#123;</div><div class="line">        super(message, cause);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="spring-IOC管理-service-组件"><a href="#spring-IOC管理-service-组件" class="headerlink" title="spring-IOC管理 service 组件"></a>spring-IOC管理 service 组件</h4><p><strong>spring-service.xml 配置</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</div><div class="line">       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">       xmlns:context=&quot;http://www.springframework.org/schema/context&quot; xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot;</div><div class="line">       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans</div><div class="line">        http://www.springframework.org/schema/beans/spring-beans.xsd</div><div class="line">        http://www.springframework.org/schema/context</div><div class="line">        http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd&quot;&gt;</div><div class="line"></div><div class="line">    &lt;!-- 扫描service包下所有使用注解的类型--&gt;</div><div class="line">    &lt;context:component-scan base-package=&quot;org.seckill.service&quot; /&gt;</div><div class="line"></div><div class="line">    &lt;!-- 配置事务管理器--&gt;</div><div class="line">    &lt;bean id=&quot;transactionManager&quot; class=&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;&gt;</div><div class="line">        &lt;!-- 注入数据库连接池--&gt;</div><div class="line">        &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot; /&gt;</div><div class="line">    &lt;/bean&gt;</div><div class="line"></div><div class="line">    &lt;!-- 配置基于注解的声明式事务</div><div class="line">         默认使用注解来管理事务行为</div><div class="line">    --&gt;</div><div class="line">    &lt;tx:annotation-driven transaction-manager=&quot;transactionManager&quot; /&gt;</div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure></p>
+<h4 id="Spring-声明式事务"><a href="#Spring-声明式事务" class="headerlink" title="Spring 声明式事务"></a>Spring 声明式事务</h4><p><strong>什么是声明式事务</strong><br><img src="https://upload-images.jianshu.io/upload_images/2836699-4041fe3160a71904.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="声明式事务"><br>底层原理：采用动态代理的方式为我们的事务核心逻辑添加开启事务、回滚提交事务的控制操作</p>
+<p><strong>声明式事务使用方式</strong><br><img src="https://upload-images.jianshu.io/upload_images/2836699-ea948e3a9099eee1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="声明式事务"></p>
+<p>推荐使用@Transactional </p>
+<p><strong>声明式事务的传播行为</strong><br>定义：即事务方法的嵌套<br>一个业务需要调用多个声明了事务控制的方法，那么最新组合的事务是重新启动一个事务，还是说沿用老的事务呢？<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">默认的事务传播行为:</div><div class="line">propagation_required</div><div class="line">浅析如下：</div><div class="line">ServiceA &#123;  </div><div class="line">         </div><div class="line">     void methodA() &#123;  </div><div class="line">         ServiceB.methodB();  </div><div class="line">     &#125;  </div><div class="line">    </div><div class="line">&#125;  </div><div class="line">    </div><div class="line">ServiceB &#123;  </div><div class="line">         </div><div class="line">     void methodB() &#123;  </div><div class="line">     &#125;  </div><div class="line">         </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>比如说ServiceB.methodB 事务传播行为定义为<strong>PROPAGATION_REQUIRED</strong>，</p>
+<ul>
+<li>那么当ServiceA.methodA 调用 ServiceB.methodB  时，methodA起了新的事<br>务，那么ServiceB.methodB看到自己已经运行在ServiceA.methodA的事务内<br>部，就不再起新的事务。</li>
+<li>而假如ServiceA.methodA运行的时候发现自己没有在事务中，他就会为自己<br>分配一个事务。这样，在ServiceA.methodA或者在ServiceB.methodB内的任何<br>地方出现异常，事务都会被回滚。即使ServiceB.methodB的事务已经被提交，<br>但是ServiceA.methodA在接下来fail要回滚，ServiceB.methodB也要回滚</li>
+</ul>
+<p><strong>相当于 methodB 通过自己的事务传播行为告诉methodA 自己使用事务的原<br>则，告诉methodA 你要有事务我methodB就用你的，如果methodA没有事务，<br>那你methodA就需要创建一个事务。</strong></p>
+<p><strong>什么时候回滚事务</strong><br>当业务方法抛出运行时异常(RuntimeException)的时候spring 事务管理器会进行commit</p>
+<p><strong>配置事务管理器</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;bean id=&quot;transactionManager&quot; class=&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;&gt;</div><div class="line">    &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot;&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure></p>
+<p><strong>配置基于注解的声明式事务</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;tx:annotation-driven transaction-manager=&quot;transactionManager&quot;/&gt;</div></pre></td></tr></table></figure></p>
+<p><strong>使用注解控制事务方法的优点</strong></p>
+<ul>
+<li>开发团队达成一致约定，约定明确标注事务方法的编程风格</li>
+<li>保证事务方法的执行时间尽可能的短，不要穿插其他的网络操作，RPC/HTTP请求，如果必须需要的话，那么将这些请求剥离出来，形成一个干净的方法调用。不要混合编写和外部系统进行网络通信的代码。</li>
+<li>不是所有的方法都需要事务，select、insert操作，单条语句的insert、update都不需要事务操作、不需要并发控制&amp;多个操作联合形成一个事务时，不需要设置事务，因为mysql有autocommit=1的设置。</li>
+</ul>
+<p>上述是性能杀手啊 ，注意再注意。</p>
+<h4 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line">package org.seckill.service;</div><div class="line"></div><div class="line">import org.junit.Test;</div><div class="line">import org.junit.runner.RunWith;</div><div class="line">import org.seckill.domain.SecKill;</div><div class="line">import org.seckill.dto.Exposer;</div><div class="line">import org.seckill.dto.SecKillExcution;</div><div class="line">import org.slf4j.Logger;</div><div class="line">import org.slf4j.LoggerFactory;</div><div class="line">import org.springframework.beans.factory.annotation.Autowired;</div><div class="line">import org.springframework.test.context.ContextConfiguration;</div><div class="line">import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;</div><div class="line"></div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">@RunWith(SpringJUnit4ClassRunner.class)</div><div class="line">@ContextConfiguration(&#123;&quot;classpath:spring/spring-dao.xml&quot;,</div><div class="line">        &quot;classpath:spring/spring-service.xml&quot;&#125;)</div><div class="line">public class SecKillServiceTest &#123;</div><div class="line">    private final Logger logger = LoggerFactory.getLogger(this.getClass());</div><div class="line"></div><div class="line">    @Autowired</div><div class="line">    private SecKillService secKillService;</div><div class="line"></div><div class="line">    @Test</div><div class="line">    public void getSecKillList() throws Exception &#123;</div><div class="line">        List&lt;SecKill&gt; secKillList = secKillService.getSecKillList();</div><div class="line">        logger.info(&quot;list&#123;&#125;&quot;, secKillList);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Test</div><div class="line">    public void getSecKillById() throws Exception &#123;</div><div class="line">        long secKillId = 1000L;</div><div class="line">        SecKill secKill = secKillService.getSecKillById(secKillId);</div><div class="line">        logger.info(&quot;seckill&#123;&#125;&quot;, secKill);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Test</div><div class="line">    public void exportSecKillUrl() throws Exception &#123;</div><div class="line">        long secKillId = 1000L;</div><div class="line">        Exposer exposer = secKillService.exportSecKillUrl(secKillId);</div><div class="line">        logger.info(&quot;exposer&#123;&#125;&quot;, exposer);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Test</div><div class="line">    public void excuteSecKill() throws Exception &#123;</div><div class="line">        long secKillId = 1000L;</div><div class="line">        String userPhone = &quot;15300815981&quot;;</div><div class="line">        String md5 = &quot;6e3cc65f3b42e656bdbc55a6a381f5d0&quot;;</div><div class="line">        SecKillExcution secKillExcution = secKillService.excuteSecKill(secKillId, userPhone, md5);</div><div class="line">        logger.info(&quot;secKillExcution&#123;&#125;&quot;, secKillExcution);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>intellj idea 下单元测试快捷键：ctrl+shift+t</strong></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="鱼大坤 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>个人微信号，欢迎添加~</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果我的文章对您有帮助，请小小的打赏一下吧~，我将>创作更好的文章给大家！谢谢！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="鱼大坤 Alipay"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/秒杀/" rel="tag"># 秒杀</a>
+          
+            <a href="/tags/MVC/" rel="tag"># MVC</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/12/Java高并发秒杀Api-业务分析与DAO层构建2/" rel="next" title="Java高并发秒杀Api-业务分析与DAO层构建2">
+                <i class="fa fa-chevron-left"></i> Java高并发秒杀Api-业务分析与DAO层构建2
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/12/Java高并发秒杀Api-业务分析与DAO层构建3/" rel="prev" title="Java高并发秒杀Api-业务分析与DAO层构建3">
+                Java高并发秒杀Api-业务分析与DAO层构建3 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+
+     <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTgzNS84Mzk5">
+          <!-- 来必力City版安装代码 -->
+          	<script type="text/javascript">
+             (function(d, s) {
+                 var j, e = d.getElementsByTagName(s)[0];
+
+                 if (typeof LivereTower === 'function') { return; }
+
+                 j = d.createElement(s);
+                 j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                 j.async = true;
+
+                 e.parentNode.insertBefore(j, e);
+             })(document, 'script');
+          	</script>
+      </div>
+          <!-- City版安装代码已完成 -->
+</div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="鱼大坤" />
+          <p class="site-author-name" itemprop="name">鱼大坤</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">64</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#章节目录"><span class="nav-number">1.</span> <span class="nav-text">章节目录</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建基本的代码包层"><span class="nav-number">1.0.1.</span> <span class="nav-text">创建基本的代码包层</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#spring-IOC管理-service-组件"><span class="nav-number">1.0.2.</span> <span class="nav-text">spring-IOC管理 service 组件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-声明式事务"><span class="nav-number">1.0.3.</span> <span class="nav-text">Spring 声明式事务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#单元测试"><span class="nav-number">1.0.4.</span> <span class="nav-text">单元测试</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">鱼大坤</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://markfork.com/2018/05/12/Java高并发秒杀业务Api-Service层构建过程/';
+          this.page.identifier = '2018/05/12/Java高并发秒杀业务Api-Service层构建过程/';
+          this.page.title = 'Java高并发秒杀业务Api-Service层构建过程';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2148159"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.2"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/exturl.js?v=5.1.2"></script>
+
+
+</body>
+</html>

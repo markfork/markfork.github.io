@@ -4,6 +4,284 @@
 
     
   <url>
+    <loc>http://markfork.com/2018/05/12/Java-%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A7%92%E6%9D%80-%E7%B3%BB%E7%BB%9F%E4%BC%98%E5%8C%96%EF%BC%88%E9%87%8D%E8%A6%81%EF%BC%89/</loc>
+    <lastmod>2018-05-12T14:02:29.000Z</lastmod>
+    <data>
+        <display>
+        <title>Java高并发秒杀业务Api-系统优化</title>
+        <pubTime>2018-05-12T14:02:29.000Z</pubTime>
+        
+        <tag>秒杀</tag>
+         
+        <tag>MVC</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://markfork.com/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2018/05/12/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A7%92%E6%9D%80Api-web-%E5%B1%82/</loc>
+    <lastmod>2018-05-12T13:57:05.000Z</lastmod>
+    <data>
+        <display>
+        <title>Java高并发秒杀Api-web-层</title>
+        <pubTime>2018-05-12T13:57:05.000Z</pubTime>
+        
+        <tag>秒杀</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://markfork.com/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2018/05/12/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A7%92%E6%9D%80Api-%E4%B8%9A%E5%8A%A1%E5%88%86%E6%9E%90%E4%B8%8EDAO%E5%B1%82%E6%9E%84%E5%BB%BA3/</loc>
+    <lastmod>2018-05-12T13:55:51.000Z</lastmod>
+    <data>
+        <display>
+        <title>Java高并发秒杀Api-业务分析与DAO层构建3</title>
+        <pubTime>2018-05-12T13:55:51.000Z</pubTime>
+        
+        <tag>秒杀</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://markfork.com/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2018/05/12/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A7%92%E6%9D%80%E4%B8%9A%E5%8A%A1Api-Service%E5%B1%82%E6%9E%84%E5%BB%BA%E8%BF%87%E7%A8%8B/</loc>
+    <lastmod>2018-05-12T13:54:47.000Z</lastmod>
+    <data>
+        <display>
+        <title>Java高并发秒杀业务Api-Service层构建过程</title>
+        <pubTime>2018-05-12T13:54:47.000Z</pubTime>
+        
+        <tag>秒杀</tag>
+         
+        <tag>MVC</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://markfork.com/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2018/05/12/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A7%92%E6%9D%80Api-%E4%B8%9A%E5%8A%A1%E5%88%86%E6%9E%90%E4%B8%8EDAO%E5%B1%82%E6%9E%84%E5%BB%BA2/</loc>
+    <lastmod>2018-05-12T13:52:50.000Z</lastmod>
+    <data>
+        <display>
+        <title>Java高并发秒杀Api-业务分析与DAO层构建2</title>
+        <pubTime>2018-05-12T13:52:50.000Z</pubTime>
+        
+        <tag>秒杀</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://markfork.com/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2018/05/12/Java%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A7%92%E6%9D%80Api-%E4%B8%9A%E5%8A%A1%E5%88%86%E6%9E%90%E4%B8%8EDAO%E5%B1%82%E6%9E%84%E5%BB%BA1/</loc>
+    <lastmod>2018-05-12T13:51:57.000Z</lastmod>
+    <data>
+        <display>
+        <title>Java高并发秒杀Api-业务分析与DAO层构建1</title>
+        <pubTime>2018-05-12T13:51:57.000Z</pubTime>
+        
+        <tag>秒杀</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://markfork.com/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2018/05/12/Java%E5%B9%B6%E5%8F%91%E6%9C%BA%E5%88%B6%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%EF%BC%8D%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/</loc>
+    <lastmod>2018-05-12T13:51:57.000Z</lastmod>
+    <data>
+        <display>
+        <title>Java并发机制底层实现原理－原子操作的实现原理</title>
+        <pubTime>2018-05-12T13:51:57.000Z</pubTime>
+        
+        <tag>Java并发编程的艺术</tag>
+         
+        <tag>原子操作的实现原理</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://markfork.com/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2018/05/12/Java-%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B-%E9%94%81%E7%9A%84%E5%86%85%E5%AD%98%E8%AF%AD%E4%B9%89/</loc>
+    <lastmod>2018-05-12T13:48:27.000Z</lastmod>
+    <data>
+        <display>
+        <title>并发编程的挑战</title>
+        <pubTime>2018-05-12T13:48:27.000Z</pubTime>
+        
+        <tag>Java并发编程的艺术</tag>
+         
+        <tag>锁的内存语义</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://markfork.com/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2018/05/12/Java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B-volatile%E5%86%85%E5%AD%98%E8%AF%AD%E4%B9%89/</loc>
+    <lastmod>2018-05-12T13:46:29.000Z</lastmod>
+    <data>
+        <display>
+        <title>Java内存模型-volatile内存语义</title>
+        <pubTime>2018-05-12T13:46:29.000Z</pubTime>
+        
+        <tag>Java并发编程的艺术</tag>
+         
+        <tag>volatile内存语义</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://markfork.com/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2018/05/12/Java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B-%E6%8C%87%E4%BB%A4%E9%87%8D%E6%8E%92%E5%BA%8F-%E9%A1%BA%E5%BA%8F%E4%B8%80%E8%87%B4%E6%80%A7/</loc>
+    <lastmod>2018-05-12T13:44:31.000Z</lastmod>
+    <data>
+        <display>
+        <title>Java内存模型-指令重排序-顺序一致性</title>
+        <pubTime>2018-05-12T13:44:31.000Z</pubTime>
+        
+        <tag>Java并发编程的艺术</tag>
+         
+        <tag>重排序、顺序一致性</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://markfork.com/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2018/05/12/Java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B-Java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%9F%BA%E7%A1%801/</loc>
+    <lastmod>2018-05-12T13:44:02.000Z</lastmod>
+    <data>
+        <display>
+        <title>Java内存模型-Java内存模型的基础1</title>
+        <pubTime>2018-05-12T13:44:02.000Z</pubTime>
+        
+        <tag>Java并发编程的艺术</tag>
+         
+        <tag>Java内存模型</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://markfork.com/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2018/05/12/Java%E5%B9%B6%E5%8F%91%E6%9C%BA%E5%88%B6%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86-synchronized/</loc>
+    <lastmod>2018-05-12T13:39:09.000Z</lastmod>
+    <data>
+        <display>
+        <title>Java并发机制底层实现原理-synchronized</title>
+        <pubTime>2018-05-12T13:39:09.000Z</pubTime>
+        
+        <tag>Java并发编程的艺术</tag>
+         
+        <tag>synchronized 底层实现原理</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://markfork.com/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://markfork.com/2018/05/12/Java%E5%B9%B6%E5%8F%91%E6%9C%BA%E5%88%B6%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86-volatile/</loc>
+    <lastmod>2018-05-12T13:39:09.000Z</lastmod>
+    <data>
+        <display>
+        <title>Java并发机制底层实现原理-volatile</title>
+        <pubTime>2018-05-12T13:39:09.000Z</pubTime>
+        
+        <tag>Java并发编程的艺术</tag>
+         
+        <tag>volatile 底层实现原理</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://markfork.com/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://markfork.com/2018/05/12/nginx-%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4/</loc>
     <lastmod>2018-05-12T13:33:24.000Z</lastmod>
     <data>
@@ -445,11 +723,11 @@
 
     
   <url>
-    <loc>http://markfork.com/2017/11/14/original_code_Spring_anyliz_loadBeanDefinitions/</loc>
+    <loc>http://markfork.com/2017/11/14/original_code_Spring_anyliz_parseBeanDefinitions_BeanDefinitionParserDelegate_4/</loc>
     <lastmod>2017-11-14T08:34:16.000Z</lastmod>
     <data>
         <display>
-        <title>Spring Ioc 源码分析(三)--loadBeanDefinitions</title>
+        <title>Spring Ioc 源码分析(四)--parseBeanDefinitions()与BeanDefinitionParserDelegate</title>
         <pubTime>2017-11-14T08:34:16.000Z</pubTime>
         
         <tag>源码分析</tag>
@@ -465,11 +743,11 @@
 
     
   <url>
-    <loc>http://markfork.com/2017/11/14/original_code_Spring_anyliz_parseBeanDefinitions_BeanDefinitionParserDelegate_4/</loc>
+    <loc>http://markfork.com/2017/11/14/original_code_Spring_anyliz_loadBeanDefinitions/</loc>
     <lastmod>2017-11-14T08:34:16.000Z</lastmod>
     <data>
         <display>
-        <title>Spring Ioc 源码分析(四)--parseBeanDefinitions()与BeanDefinitionParserDelegate</title>
+        <title>Spring Ioc 源码分析(三)--loadBeanDefinitions</title>
         <pubTime>2017-11-14T08:34:16.000Z</pubTime>
         
         <tag>源码分析</tag>
@@ -525,16 +803,14 @@
 
     
   <url>
-    <loc>http://markfork.com/2017/11/14/node/</loc>
+    <loc>http://markfork.com/2017/11/14/node-Buffer/</loc>
     <lastmod>2017-11-14T08:33:31.000Z</lastmod>
     <data>
         <display>
-        <title>Node.js Event-loop事件循环</title>
+        <title>node.js中缓冲区--Buffer</title>
         <pubTime>2017-11-14T08:33:31.000Z</pubTime>
         
         <tag>Node</tag>
-         
-        <tag>事件循环</tag>
          
          
            
@@ -547,14 +823,16 @@
 
     
   <url>
-    <loc>http://markfork.com/2017/11/14/node-Buffer/</loc>
+    <loc>http://markfork.com/2017/11/14/node/</loc>
     <lastmod>2017-11-14T08:33:31.000Z</lastmod>
     <data>
         <display>
-        <title>node.js中缓冲区--Buffer</title>
+        <title>Node.js Event-loop事件循环</title>
         <pubTime>2017-11-14T08:33:31.000Z</pubTime>
         
         <tag>Node</tag>
+         
+        <tag>事件循环</tag>
          
          
            
@@ -607,11 +885,11 @@
 
     
   <url>
-    <loc>http://markfork.com/2017/11/14/MySQL-ReadCommitted-MVCC/</loc>
+    <loc>http://markfork.com/2017/11/14/MySQL-%E8%B0%83%E4%BC%98/</loc>
     <lastmod>2017-11-14T08:32:24.000Z</lastmod>
     <data>
         <display>
-        <title>数据库事务特征、数据库隔离级别，各级别数据库加锁情况(含实操)--read committed与 MVCC</title>
+        <title>MySQL 数据库规范--调优篇(终结篇)</title>
         <pubTime>2017-11-14T08:32:24.000Z</pubTime>
         
         <tag>数据库</tag>
@@ -627,11 +905,11 @@
 
     
   <url>
-    <loc>http://markfork.com/2017/11/14/MySQL-index-notice-issue/</loc>
+    <loc>http://markfork.com/2017/11/14/MySQL-%E4%BC%98%E5%8C%96/</loc>
     <lastmod>2017-11-14T08:32:24.000Z</lastmod>
     <data>
         <display>
-        <title>MySQL 数据库索引使用场景与注意事项</title>
+        <title>MySQL 数据库索引原理与分类</title>
         <pubTime>2017-11-14T08:32:24.000Z</pubTime>
         
         <tag>数据库</tag>
@@ -687,11 +965,11 @@
 
     
   <url>
-    <loc>http://markfork.com/2017/11/14/MySQL-%E4%BC%98%E5%8C%96/</loc>
+    <loc>http://markfork.com/2017/11/14/MySQL-ReadCommitted-MVCC/</loc>
     <lastmod>2017-11-14T08:32:24.000Z</lastmod>
     <data>
         <display>
-        <title>MySQL 数据库索引原理与分类</title>
+        <title>数据库事务特征、数据库隔离级别，各级别数据库加锁情况(含实操)--read committed与 MVCC</title>
         <pubTime>2017-11-14T08:32:24.000Z</pubTime>
         
         <tag>数据库</tag>
@@ -727,11 +1005,11 @@
 
     
   <url>
-    <loc>http://markfork.com/2017/11/14/mysql-where-having/</loc>
+    <loc>http://markfork.com/2017/11/14/MySQL-index-notice-issue/</loc>
     <lastmod>2017-11-14T08:32:24.000Z</lastmod>
     <data>
         <display>
-        <title>where与having的区别</title>
+        <title>MySQL 数据库索引使用场景与注意事项</title>
         <pubTime>2017-11-14T08:32:24.000Z</pubTime>
         
         <tag>数据库</tag>
@@ -747,11 +1025,11 @@
 
     
   <url>
-    <loc>http://markfork.com/2017/11/14/MySQL-%E8%B0%83%E4%BC%98/</loc>
+    <loc>http://markfork.com/2017/11/14/mysql-where-having/</loc>
     <lastmod>2017-11-14T08:32:24.000Z</lastmod>
     <data>
         <display>
-        <title>MySQL 数据库规范--调优篇(终结篇)</title>
+        <title>where与having的区别</title>
         <pubTime>2017-11-14T08:32:24.000Z</pubTime>
         
         <tag>数据库</tag>
@@ -849,11 +1127,11 @@
 
     
   <url>
-    <loc>http://markfork.com/2017/11/14/IntellijIdea-Mac-use-debug/</loc>
+    <loc>http://markfork.com/2017/11/14/IntellijIdea-JavaWEB%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/</loc>
     <lastmod>2017-11-14T08:29:42.000Z</lastmod>
     <data>
         <display>
-        <title>Intellij  Idea--Debug使用（Mac）</title>
+        <title>使用Intellij Idea＋Gradle 搭建Java 本地开发环境</title>
         <pubTime>2017-11-14T08:29:42.000Z</pubTime>
         
         <tag>编程实操</tag>
@@ -869,11 +1147,11 @@
 
     
   <url>
-    <loc>http://markfork.com/2017/11/14/IntellijIdea-JavaWEB%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/</loc>
+    <loc>http://markfork.com/2017/11/14/IntellijIdea-Mac-use-debug/</loc>
     <lastmod>2017-11-14T08:29:42.000Z</lastmod>
     <data>
         <display>
-        <title>使用Intellij Idea＋Gradle 搭建Java 本地开发环境</title>
+        <title>Intellij  Idea--Debug使用（Mac）</title>
         <pubTime>2017-11-14T08:29:42.000Z</pubTime>
         
         <tag>编程实操</tag>

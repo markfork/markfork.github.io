@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="秒杀," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="鱼大坤" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/team.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="章节目录 DAO 设计编码 数据库设计与编码 DAO层实体和接口编码 基于mybatis实现DAO理论 基于mybatis实现DAO接口-1 mybatis整合Spring DAO层编码解析">
+<meta name="keywords" content="秒杀">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java高并发秒杀Api-业务分析与DAO层构建2">
+<meta property="og:url" content="http://markfork.com/2018/05/12/Java高并发秒杀Api-业务分析与DAO层构建2/index.html">
+<meta property="og:site_name" content="鱼大坤">
+<meta property="og:description" content="章节目录 DAO 设计编码 数据库设计与编码 DAO层实体和接口编码 基于mybatis实现DAO理论 基于mybatis实现DAO接口-1 mybatis整合Spring DAO层编码解析">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2836699-c7bc3f80113372df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2836699-9fce83e2c8a521a6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2836699-988c57660171d3dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2836699-57a9b346101e6a40.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-05-12T13:52:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java高并发秒杀Api-业务分析与DAO层构建2">
+<meta name="twitter:description" content="章节目录 DAO 设计编码 数据库设计与编码 DAO层实体和接口编码 基于mybatis实现DAO理论 基于mybatis实现DAO接口-1 mybatis整合Spring DAO层编码解析">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/2836699-c7bc3f80113372df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'W9MGG13GHC',
+      apiKey: '29336d607a7eda6978a2fe32635f903d',
+      indexName: 'yudakun-article-index',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://markfork.com/2018/05/12/Java高并发秒杀Api-业务分析与DAO层构建2/"/>
+
+
+
+
+
+  <title>Java高并发秒杀Api-业务分析与DAO层构建2 | 鱼大坤</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">鱼大坤</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">凡事皆有极困难之时，打得通的，便是好汉!</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2018/05/12/Java高并发秒杀Api-业务分析与DAO层构建2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="鱼大坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="鱼大坤">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Java高并发秒杀Api-业务分析与DAO层构建2</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-12T21:52:50+08:00">
+                2018-05-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/12/Java高并发秒杀Api-业务分析与DAO层构建2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/05/12/Java高并发秒杀Api-业务分析与DAO层构建2/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-eye"></i>浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="章节目录"><a href="#章节目录" class="headerlink" title="章节目录"></a>章节目录</h2><ul>
+<li>DAO 设计编码<ul>
+<li>数据库设计与编码</li>
+<li>DAO层实体和接口编码</li>
+<li>基于mybatis实现DAO理论</li>
+<li>基于mybatis实现DAO接口-1</li>
+<li>mybatis整合Spring</li>
+<li>DAO层编码解析<a id="more"></a>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="Dao-设计编码"><a href="#Dao-设计编码" class="headerlink" title="Dao 设计编码"></a>Dao 设计编码</h4><p><strong>1.pom.xml 引入项目依赖的包</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div></pre></td><td class="code"><pre><div class="line">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;&gt;</div><div class="line">    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;</div><div class="line">    &lt;groupId&gt;org.seckill&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;seckill&lt;/artifactId&gt;</div><div class="line">    &lt;packaging&gt;war&lt;/packaging&gt;</div><div class="line">    &lt;version&gt;1.0&lt;/version&gt;</div><div class="line">    &lt;name&gt;seckill Maven Webapp&lt;/name&gt;</div><div class="line">    &lt;url&gt;http://maven.apache.org&lt;/url&gt;</div><div class="line">    &lt;dependencies&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;junit&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;junit&lt;/artifactId&gt;</div><div class="line">            &lt;!--使用注解方式运行junit--&gt;</div><div class="line">            &lt;version&gt;4.11&lt;/version&gt;</div><div class="line">            &lt;scope&gt;test&lt;/scope&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line">        &lt;!--补全项目依赖--&gt;</div><div class="line">        &lt;!--日志--&gt;</div><div class="line">        &lt;!--1.日志 java日志，slf4j,log4j,logback,common-logging--&gt;</div><div class="line">        &lt;!--2.</div><div class="line">              slf4j 是规范、接口</div><div class="line">              日志实现 log4j,logback,common-logging</div><div class="line">              使用slf4j+logback</div><div class="line">        --&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.slf4j&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;1.7.12&lt;/version&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line"></div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;ch.qos.logback&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;logback-core&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;1.1.2&lt;/version&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line">        &lt;!--实现slf4j接口并实现，直接通过slf4j来进行日志记录--&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;ch.qos.logback&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;logback-classic&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;1.1.2&lt;/version&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line"></div><div class="line">        &lt;!--数据库依赖--&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;mysql&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;5.1.35&lt;/version&gt;</div><div class="line">            &lt;scope&gt;runtime&lt;/scope&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line">        &lt;!--数据库连接池--&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;c3p0&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;c3p0&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;0.9.1.2&lt;/version&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line">        &lt;!--dao层依赖:MyBatis--&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.mybatis&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;mybatis&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;3.3.0&lt;/version&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line"></div><div class="line">        &lt;!--mybatis自身实现的spring依赖--&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.mybatis&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;mybatis-spring&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;1.2.3&lt;/version&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line"></div><div class="line">        &lt;!--servlet web相关依赖--&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;taglibs&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;standard&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;1.1.2&lt;/version&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;jstl&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;jstl&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;1.2&lt;/version&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;jackson-databind&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;2.5.4&lt;/version&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;javax.servlet&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;javax.servlet-api&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;3.1.0&lt;/version&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line"></div><div class="line">        &lt;!--end  java web 相关依赖--&gt;</div><div class="line">        &lt;!--spring 依赖--&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;spring-core&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;4.1.7.RELEASE&lt;/version&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;spring-beans&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;4.1.7.RELEASE&lt;/version&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;spring-context&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;4.1.7.RELEASE&lt;/version&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line">        &lt;!--spring dao层依赖 --&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;spring-jdbc&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;4.1.7.RELEASE&lt;/version&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line">        &lt;!--spring 声明式事务--&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;spring-tx&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;4.1.7.RELEASE&lt;/version&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line"></div><div class="line">        &lt;!--spring web 相关依赖 servlet容器加载spring ioc spring  aop  启动spring 的工厂--&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;spring-web&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;4.1.7.RELEASE&lt;/version&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line"></div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;4.1.7.RELEASE&lt;/version&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line"></div><div class="line">        &lt;!--junit相关依赖--&gt;</div><div class="line">        &lt;dependency&gt;</div><div class="line">            &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">            &lt;artifactId&gt;spring-test&lt;/artifactId&gt;</div><div class="line">            &lt;version&gt;4.1.7.RELEASE&lt;/version&gt;</div><div class="line">        &lt;/dependency&gt;</div><div class="line"></div><div class="line"></div><div class="line">    &lt;/dependencies&gt;</div><div class="line">    &lt;build&gt;</div><div class="line">        &lt;finalName&gt;seckill&lt;/finalName&gt;</div><div class="line">    &lt;/build&gt;</div><div class="line">&lt;/project&gt;</div></pre></td></tr></table></figure></p>
+<p><strong>2.数据库设计与编码</strong><br>数据库脚本如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">--数据库初始化脚本</div><div class="line"></div><div class="line">--创建数据库</div><div class="line">CREATE DATABASE seckill;</div><div class="line"></div><div class="line">--使用数据库</div><div class="line">use seckill;</div><div class="line"></div><div class="line">--创建秒杀库存表</div><div class="line">CREATE TABLE seckill(</div><div class="line">   `seckill_id` bigint not null AUTO_INCREMENT COMMENT &apos;商品库存id&apos;,</div><div class="line">   `name` VARCHAR (120) not null COMMENT &apos;商品名称&apos;,</div><div class="line">   `stock` int not null COMMENT &apos;库存数量&apos;,</div><div class="line">   `start_time` TIMESTAMP NOT  NULL COMMENT &apos;秒杀开始时间&apos;,</div><div class="line">   `end_time` TIMESTAMP  NOT NULL COMMENT &apos;秒杀结束时间&apos;,</div><div class="line">   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT &apos;创建时间&apos;,</div><div class="line">   PRIMARY KEY (seckill_id),</div><div class="line">   key idx_start_time(start_time),</div><div class="line">   key idx_end_time(end_time),</div><div class="line">   key idx_create_time(create_time)</div><div class="line">) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT=&apos;秒杀库存表&apos;;</div><div class="line"></div><div class="line">--初始化数据</div><div class="line">INSERT  INTO seckill(name,stock,start_time,end_time)</div><div class="line">VALUES (&apos;1000元秒杀iphone x&apos;,&apos;100&apos;,&apos;2018-05-04 00:00:00&apos;,&apos;2018-05-05 00:00:00&apos;),</div><div class="line">       (&apos;500元秒杀ipad x&apos;,&apos;200&apos;,&apos;2018-05-04 00:00:00&apos;,&apos;2018-05-05 00:00:00&apos;),</div><div class="line">       (&apos;300元秒杀小米4&apos;,&apos;300&apos;,&apos;2018-05-04 00:00:00&apos;,&apos;2018-05-05 00:00:00&apos;),</div><div class="line">       (&apos;200元秒杀小米note&apos;,&apos;400&apos;,&apos;2018-05-04 00:00:00&apos;,&apos;2018-05-05 00:00:00&apos;);</div><div class="line"></div><div class="line">--秒杀成功明细表</div><div class="line">CREATE TABLE success_killed(</div><div class="line">  `seckill_id` bigint NOT NULL COMMENT &apos;秒杀商品id&apos;,</div><div class="line">  `user_phone` VARCHAR(11) NOT NULL COMMENT &apos;用户手机号&apos;,</div><div class="line">  `state` tinyint NOT NULL DEFAULT -1 COMMENT &apos;状态标志:-1:无效 0:成功 1:已付款&apos;,</div><div class="line">  `create_time` TIMESTAMP NOT NULL COMMENT &apos;创建时间&apos;,</div><div class="line">  PRIMARY KEY (seckill_id,user_phone),/*联合主键*/</div><div class="line">  key idx_create_time(create_time)</div><div class="line">) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT=&apos;秒杀成功明细表&apos;;</div><div class="line"></div><div class="line">--连接数据库的控制台</div><div class="line">mysql -u root -p</div></pre></td></tr></table></figure></p>
+<p><strong>3.DAO层实体与接口编码</strong><br><img src="https://upload-images.jianshu.io/upload_images/2836699-c7bc3f80113372df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="数据库与实体类映射"></p>
+<p><strong>3.1MyBatis 实现DAO接口的方式</strong></p>
+<ul>
+<li>Mapper自动实现DAO接口<br>sql直接编写，注解sql(sql更改，原代码需要重新编译)，xml方式，单独更新sql,源文件不需要重新编译。</li>
+<li>API 编程方式自动实现DAO 接口</li>
+</ul>
+<p><strong>3.2 基于mybatis实现DAO接口-1</strong></p>
+<ul>
+<li><p>全局mybatis-conf.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;!DOCTYPE configuration</div><div class="line">        PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;</div><div class="line">        &quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;&gt;</div><div class="line">&lt;!--配置全局属性--&gt;</div><div class="line">&lt;configuration&gt;</div><div class="line">    &lt;settings&gt;</div><div class="line">        &lt;!-- changes from the defaults for testing --&gt;</div><div class="line">        &lt;setting name=&quot;cacheEnabled&quot; value=&quot;false&quot; /&gt;</div><div class="line">        &lt;!--使用jdbc 的getGeneratedKeys 获取数据库自增主键值--&gt;</div><div class="line">        &lt;setting name=&quot;useGeneratedKeys&quot; value=&quot;true&quot; /&gt;</div><div class="line">        &lt;!--使用列别名 替换列名 默认true 复制到对应的entity属性中</div><div class="line">          select name as tile from table</div><div class="line">        --&gt;</div><div class="line">        &lt;setting name=&quot;useColumnLable&quot; value=&quot;true&quot;/&gt;</div><div class="line">        &lt;!--开启驼峰命名转化--&gt;</div><div class="line">        &lt;setting name=&quot;mapUnderscoreCameCase&quot; value=&quot;true&quot;/&gt;</div><div class="line">        &lt;!--REUSE 执行器会重用预处理语句--&gt;</div><div class="line">        &lt;setting name=&quot;defaultExecutorType&quot; value=&quot;REUSE&quot; /&gt;</div><div class="line">    &lt;/settings&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>SecKillDao.xml编写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</div><div class="line">&lt;!DOCTYPE mapper</div><div class="line">        PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</div><div class="line">        &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;</div><div class="line">&lt;mapper namespace=&quot;org.seckill.dao.SecKillDao&quot;&gt;</div><div class="line">    &lt;!--目的：为DAO方法提供SQL语句配置</div><div class="line">        parameter-type不用给</div><div class="line">        #与$的区别</div><div class="line">        预编译</div><div class="line">        1.#&#123;&#125; 解析为一个 JDBC 预编译语句（prepared statement）的参数标记符。</div><div class="line">        会被解析为 ?占位符 动态SQL-会对SQL进行动态解析，解析为一个BoundSql对象</div><div class="line"></div><div class="line">        变量替换</div><div class="line">        2.$&#123;&#125; 仅仅为一个纯粹的 string 替换，在动态 SQL 解析阶段将会进行变量替换</div><div class="line">        3.#&#123;&#125;的变量的替换是在 DBMS 中。</div><div class="line"></div><div class="line">        4.$&#123;&#125; 在预编译之前已经被变量替换了，这会存在 sql 注入问题</div><div class="line">        5.表名是不能带&apos;&apos;号的，所以使用$&#123;&#125; 防止出现变量替换后表名带&apos;&apos;</div><div class="line"></div><div class="line">    --&gt;</div><div class="line">    &lt;update id=&quot;reduceStock&quot;&gt;</div><div class="line">        &lt;!--具体sql--&gt;</div><div class="line">        UPDATE</div><div class="line">        seckill</div><div class="line">        SET</div><div class="line">        stock = stock - 1</div><div class="line">        WHERE</div><div class="line">        seckill_id = #&#123;secKillId&#125;</div><div class="line">        AND</div><div class="line">        start_time &lt;![CDATA[&lt;=]]&gt; #&#123;killTime&#125;</div><div class="line">        AND</div><div class="line">        end_time &gt;= #&#123;killTime&#125;</div><div class="line">        and stock &gt; 0</div><div class="line">    &lt;/update&gt;</div><div class="line"></div><div class="line">    &lt;select id=&quot;queryById&quot; resultType=&quot;SecKill&quot; parameterType=&quot;long&quot;&gt;</div><div class="line">         SELECT</div><div class="line">         seckill_id as seckillId,name,stock,start_time,end_time,create_time</div><div class="line">         from seckill</div><div class="line">         where</div><div class="line">         seckill_id = #&#123;secKillId&#125;</div><div class="line">    &lt;/select&gt;</div><div class="line"></div><div class="line">    &lt;select id=&quot;queryAll&quot; resultType=&quot;SecKill&quot; parameterType=&quot;int&quot;&gt;</div><div class="line">         SELECT</div><div class="line">         seckill_id as seckillId,name,stock,start_time,end_time,create_time</div><div class="line">         from seckill</div><div class="line">         order by create_time desc</div><div class="line">         limit #&#123;offset&#125;,$&#123;limit&#125;</div><div class="line">    &lt;/select&gt;</div><div class="line"></div><div class="line">&lt;/mapper&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>SuccessKilledDao.xml 编写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</div><div class="line">&lt;!DOCTYPE mapper</div><div class="line">        PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</div><div class="line">        &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;</div><div class="line">&lt;mapper namespace=&quot;org.seckill.dao.SuccessKilledDao&quot;&gt;</div><div class="line">   &lt;insert id=&quot;insertSuccessKilled&quot; &gt;</div><div class="line">      &lt;!--如果出现重复，主键冲突，直接产生一个错误--&gt;</div><div class="line">      INSERT ignore INTO</div><div class="line">      success_killed(seckill_id,user_phone)</div><div class="line">      VALUES</div><div class="line">      (#&#123;secKillId&#125;,#&#123;userPhone&#125;)</div><div class="line">   &lt;/insert&gt;</div><div class="line"></div><div class="line">    &lt;select id=&quot;queryByIdWithSecKill&quot; resultType=&quot;SuccessKilled&quot; &gt;</div><div class="line">        &lt;!--根据id查询SuccessKilled并携带SecKill实体--&gt;</div><div class="line">        &lt;!--如何告诉mybatis 把结果映射到SuccessKilled的同时映射secKill 属性--&gt;</div><div class="line">        &lt;!--可以自由控制SQL 优化等--&gt;</div><div class="line">        SELECT</div><div class="line">        sk.seckill_id,</div><div class="line">        sk.user_phone,</div><div class="line">        sk.create_time,</div><div class="line">        sk.state,</div><div class="line">        sc.seckill_id as &quot;secKill.seckill_id&quot;,</div><div class="line">        sc.name as &quot;secKill.name&quot;,</div><div class="line">        sc.stock as &quot;secKill.stock&quot;,</div><div class="line">        sc.start_time as &quot;secKill.start_time&quot;,</div><div class="line">        sc.end_time as &quot;sceKill.end_time&quot;,</div><div class="line">        sc.create_time as &quot;secKill.create_time&quot;</div><div class="line">        FROM</div><div class="line">        success_killed sk</div><div class="line">        INNER  JOIN</div><div class="line">        seckill sc on sk.seckill_id = sc.seckill_id</div><div class="line">        WHERE sk.seckill_id = #&#123;secKillId&#125;</div><div class="line"></div><div class="line">    &lt;/select&gt;</div><div class="line">&lt;/mapper&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>entity实体层实现-SecKill、SuccessKilled</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div></pre></td><td class="code"><pre><div class="line">package org.seckill.domain;</div><div class="line"></div><div class="line">import java.util.Date;</div><div class="line"></div><div class="line">/**</div><div class="line"> * 秒杀-库存表 entity</div><div class="line"> */</div><div class="line">public class SecKill &#123;</div><div class="line">    private long seckillId; //秒杀-商品id</div><div class="line">    private String name;    //秒杀-商品名字</div><div class="line">    private int stock;      //秒杀-商品库存</div><div class="line">    private Date startTime; //秒杀-开始时间</div><div class="line">    private Date endTime;   //秒杀-结束时间</div><div class="line">    private Date createTime; //秒杀-商品新建时间</div><div class="line"></div><div class="line">    public long getSeckillId() &#123;</div><div class="line">        return seckillId;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setSeckillId(long seckillId) &#123;</div><div class="line">        this.seckillId = seckillId;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getName() &#123;</div><div class="line">        return name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setName(String name) &#123;</div><div class="line">        this.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public int getStock() &#123;</div><div class="line">        return stock;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setStock(int stock) &#123;</div><div class="line">        this.stock = stock;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public Date getStartTime() &#123;</div><div class="line">        return startTime;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setStartTime(Date startTime) &#123;</div><div class="line">        this.startTime = startTime;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public Date getEndTime() &#123;</div><div class="line">        return endTime;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setEndTime(Date endTime) &#123;</div><div class="line">        this.endTime = endTime;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public Date getCreateTime() &#123;</div><div class="line">        return createTime;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setCreateTime(Date createTime) &#123;</div><div class="line">        this.createTime = createTime;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String toString() &#123;</div><div class="line">        return &quot;SecKill&#123;&quot; +</div><div class="line">                &quot;seckillId=&quot; + seckillId +</div><div class="line">                &quot;, name=&apos;&quot; + name + &apos;\&apos;&apos; +</div><div class="line">                &quot;, stock=&quot; + stock +</div><div class="line">                &quot;, startTime=&quot; + startTime +</div><div class="line">                &quot;, endTime=&quot; + endTime +</div><div class="line">                &quot;, createTime=&quot; + createTime +</div><div class="line">                &apos;&#125;&apos;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div></pre></td><td class="code"><pre><div class="line">package org.seckill.domain;</div><div class="line"></div><div class="line">import java.util.Date;</div><div class="line"></div><div class="line">/**</div><div class="line"> * 成功秒杀明细表-SuccessKilled</div><div class="line"> */</div><div class="line">public class SuccessKilled &#123;</div><div class="line">    private long secKillId;    //秒杀-成功的商品id</div><div class="line">    private String userPhone;  //秒杀-成功的用户手机号</div><div class="line">    private short state;       //秒杀-明细状态</div><div class="line">    private Date createTime;   //秒杀-秒杀成功的时间</div><div class="line"></div><div class="line">    //one(被秒杀商品)-to-many(秒杀记录)</div><div class="line">    private SecKill secKill;</div><div class="line"></div><div class="line">    public long getSecKillId() &#123;</div><div class="line">        return secKillId;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setSecKillId(long secKillId) &#123;</div><div class="line">        this.secKillId = secKillId;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getUserPhone() &#123;</div><div class="line">        return userPhone;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setUserPhone(String userPhone) &#123;</div><div class="line">        this.userPhone = userPhone;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public short getState() &#123;</div><div class="line">        return state;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setState(short state) &#123;</div><div class="line">        this.state = state;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public Date getCreateTime() &#123;</div><div class="line">        return createTime;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setCreateTime(Date createTime) &#123;</div><div class="line">        this.createTime = createTime;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public SecKill getSecKill() &#123;</div><div class="line">        return secKill;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setSecKill(SecKill secKill) &#123;</div><div class="line">        this.secKill = secKill;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String toString() &#123;</div><div class="line">        return &quot;SuccessKilled&#123;&quot; +</div><div class="line">                &quot;secKillId=&quot; + secKillId +</div><div class="line">                &quot;, userPhone=&apos;&quot; + userPhone + &apos;\&apos;&apos; +</div><div class="line">                &quot;, state=&quot; + state +</div><div class="line">                &quot;, createTime=&quot; + createTime +</div><div class="line">                &apos;&#125;&apos;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>DAO层接口功能声明-SecKillDao、SuccessKilledDao</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">package org.seckill.dao;</div><div class="line"></div><div class="line">import org.seckill.domain.SecKill;</div><div class="line"></div><div class="line">import java.util.Date;</div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">/**</div><div class="line"> * 常用的操作</div><div class="line"> */</div><div class="line"></div><div class="line">public interface SecKillDao &#123;</div><div class="line">    /**</div><div class="line">     * 功能:减库存</div><div class="line">     * @param secKillId</div><div class="line">     * @param killTime create_time?</div><div class="line">     * @return 如果影响行数&gt;1，表示更新的记录行数</div><div class="line">     */</div><div class="line">    int reduceStock(long secKillId,Date killTime);</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 根据秒杀商品id查询秒杀商品详情</div><div class="line">     * @param secKillId</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    SecKill queryById(long secKillId);</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 根据偏移量查询秒杀商品列表，</div><div class="line">     * @param offset</div><div class="line">     * @param limit</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    List&lt;SecKill&gt; queryAll(int offset,int limit);</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">package org.seckill.dao;</div><div class="line"></div><div class="line">import org.seckill.domain.SuccessKilled;</div><div class="line"></div><div class="line">public interface SuccessKilledDao &#123;</div><div class="line">    /**</div><div class="line">     * 功能：新增用户秒杀明细</div><div class="line">     * @param secKillId</div><div class="line">     * @param userPhone</div><div class="line">     * @return 插入的行数，禁止插入表示插入失败 则返回0</div><div class="line">     */</div><div class="line">    int insertSuccessKilled(long secKillId,long userPhone);</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 功能：根据明细id查询具体的秒杀明细并携带秒杀商品对象</div><div class="line">     * @param secKillId</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    SuccessKilled queryByIdWithSecKill(long secKillId);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="MyBatis整合Spring"><a href="#MyBatis整合Spring" class="headerlink" title="MyBatis整合Spring"></a>MyBatis整合Spring</h4><blockquote>
+<p>整合的目标:</p>
+<ul>
+<li>更少的编码</li>
+<li>更少的配置</li>
+<li>足够的灵活性<br><strong>1.mybatis优点</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">更少的编码、只写接口、不写实现</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<p><strong>2.DAO层接口声明能显示说明很多事情</strong><br><img src="https://upload-images.jianshu.io/upload_images/2836699-9fce83e2c8a521a6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="轻量级显式接口声明"></p>
+<p><strong>更少的配置-别名</strong></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/2836699-988c57660171d3dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>使用spring 提供的package-scan 扫描实体包下的所有实体类。可以简写resultType</p>
+<p><strong>更少的配置-配置扫描</strong></p>
+<ul>
+<li>单独使用mybatis的场景下，配置文件扫描方式</li>
+</ul>
+<p><mapper resource="mapper/SecKillDao.xml">….</mapper></p>
+<ul>
+<li><p>使用spring 整合 mybatis 自动扫描配置文件，采用通配符的方式。</p>
+</li>
+<li><p>自动实现DAO接口，DAO接口的实现类是自动注入至Spring 容器</p>
+</li>
+</ul>
+<p><strong>足够的灵活性</strong></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/2836699-57a9b346101e6a40.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h4 id="DAO层接口设计与SQL编写的反思"><a href="#DAO层接口设计与SQL编写的反思" class="headerlink" title="DAO层接口设计与SQL编写的反思"></a>DAO层接口设计与SQL编写的反思</h4><blockquote>
+<p>DAO - data access object 数据访问层的简称<br>这一层我们主要做的是核心数据操作的接口声明，以及SQL编写，并没有涉及到Service 业务逻辑层代码的编写。这样做的好处是什么呢？<br>主要有以下三点</p>
+<ul>
+<li>代码分层，DAO层只关注于核心数据操作的接口声明&amp;SQL编写</li>
+<li>代码和SQL的分离，方便代码review</li>
+<li>业务逻辑层主要做事务控制、事务中完成DAO层的代码组合与拼接。每一层都可以做单元测试。</li>
+</ul>
+</blockquote>
+<p>接下来详解mybatis 与 spring 整合编码的过程</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="鱼大坤 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>个人微信号，欢迎添加~</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果我的文章对您有帮助，请小小的打赏一下吧~，我将>创作更好的文章给大家！谢谢！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="鱼大坤 Alipay"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/秒杀/" rel="tag"># 秒杀</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/12/Java高并发秒杀Api-业务分析与DAO层构建1/" rel="next" title="Java高并发秒杀Api-业务分析与DAO层构建1">
+                <i class="fa fa-chevron-left"></i> Java高并发秒杀Api-业务分析与DAO层构建1
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/12/Java高并发秒杀业务Api-Service层构建过程/" rel="prev" title="Java高并发秒杀业务Api-Service层构建过程">
+                Java高并发秒杀业务Api-Service层构建过程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+
+     <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTgzNS84Mzk5">
+          <!-- 来必力City版安装代码 -->
+          	<script type="text/javascript">
+             (function(d, s) {
+                 var j, e = d.getElementsByTagName(s)[0];
+
+                 if (typeof LivereTower === 'function') { return; }
+
+                 j = d.createElement(s);
+                 j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                 j.async = true;
+
+                 e.parentNode.insertBefore(j, e);
+             })(document, 'script');
+          	</script>
+      </div>
+          <!-- City版安装代码已完成 -->
+</div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="鱼大坤" />
+          <p class="site-author-name" itemprop="name">鱼大坤</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">64</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#章节目录"><span class="nav-number">1.</span> <span class="nav-text">章节目录</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Dao-设计编码"><span class="nav-number">1.0.1.</span> <span class="nav-text">Dao 设计编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MyBatis整合Spring"><span class="nav-number">1.0.2.</span> <span class="nav-text">MyBatis整合Spring</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DAO层接口设计与SQL编写的反思"><span class="nav-number">1.0.3.</span> <span class="nav-text">DAO层接口设计与SQL编写的反思</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">鱼大坤</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Gemini
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://markfork.com/2018/05/12/Java高并发秒杀Api-业务分析与DAO层构建2/';
+          this.page.identifier = '2018/05/12/Java高并发秒杀Api-业务分析与DAO层构建2/';
+          this.page.title = 'Java高并发秒杀Api-业务分析与DAO层构建2';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+
+    
+      <!-- UY BEGIN -->
+      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2148159"></script>
+      <!-- UY END -->
+    
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.2"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/exturl.js?v=5.1.2"></script>
+
+
+</body>
+</html>
