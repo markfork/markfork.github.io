@@ -85,7 +85,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="数据库," />
+  <meta name="keywords" content="redis,缓存中间件," />
 
 
 
@@ -103,21 +103,18 @@
 
 
 
-<meta name="description" content="前言  数据库索引本质上是一种数据结构(存储结构+算法)，目的是为了加快目标数据检索的速度。  目录  1.索引的本质与原理？2.索引的分类？">
-<meta name="keywords" content="数据库">
+<meta name="description" content="教程大纲1234在虚拟机中安装CentOS在每个CentOS中都安装Java和Perl在4个虚拟机中安装CentOS集群配置4台CentOS为ssh免密码互相通信">
+<meta name="keywords" content="redis,缓存中间件">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MySQL 数据库索引原理与分类">
-<meta property="og:url" content="http://markfork.com/2017/11/14/MySQL-优化/index.html">
+<meta property="og:title" content="redis－伪分布式集群">
+<meta property="og:url" content="http://markfork.com/2018/05/12/Redis专题-伪集群安装/index.html">
 <meta property="og:site_name" content="鱼大坤">
-<meta property="og:description" content="前言  数据库索引本质上是一种数据结构(存储结构+算法)，目的是为了加快目标数据检索的速度。  目录  1.索引的本质与原理？2.索引的分类？">
+<meta property="og:description" content="教程大纲1234在虚拟机中安装CentOS在每个CentOS中都安装Java和Perl在4个虚拟机中安装CentOS集群配置4台CentOS为ssh免密码互相通信">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-b7e385be57e97b94.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2836699-d062eac68af5cd31?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-11-14T08:32:24.000Z">
+<meta property="og:updated_time" content="2018-05-12T12:43:03.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MySQL 数据库索引原理与分类">
-<meta name="twitter:description" content="前言  数据库索引本质上是一种数据结构(存储结构+算法)，目的是为了加快目标数据检索的速度。  目录  1.索引的本质与原理？2.索引的分类？">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2836699-b7e385be57e97b94.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:title" content="redis－伪分布式集群">
+<meta name="twitter:description" content="教程大纲1234在虚拟机中安装CentOS在每个CentOS中都安装Java和Perl在4个虚拟机中安装CentOS集群配置4台CentOS为ssh免密码互相通信">
 
 
 
@@ -146,13 +143,13 @@
 
 
 
-  <link rel="canonical" href="http://markfork.com/2017/11/14/MySQL-优化/"/>
+  <link rel="canonical" href="http://markfork.com/2018/05/12/Redis专题-伪集群安装/"/>
 
 
 
 
 
-  <title>MySQL 数据库索引原理与分类 | 鱼大坤</title>
+  <title>redis－伪分布式集群 | 鱼大坤</title>
   
 
 
@@ -333,7 +330,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2017/11/14/MySQL-优化/">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2018/05/12/Redis专题-伪集群安装/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鱼大坤">
@@ -350,7 +347,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">MySQL 数据库索引原理与分类</h2>
+          <h2 class="post-title" itemprop="name headline">redis－伪分布式集群</h2>
         
 
         <div class="post-meta">
@@ -362,8 +359,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T16:32:24+08:00">
-                2017-11-14
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-12T20:43:03+08:00">
+                2018-05-12
               </time>
             
 
@@ -385,8 +382,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MySQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MySQL</span>
+                  <a href="/categories/Redis/" itemprop="url" rel="index">
+                    <span itemprop="name">Redis</span>
                   </a>
                 </span>
 
@@ -403,9 +400,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/14/MySQL-优化/#comments" itemprop="discussionUrl">
+                <a href="/2018/05/12/Redis专题-伪集群安装/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/14/MySQL-优化/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/05/12/Redis专题-伪集群安装/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -438,57 +435,24 @@
       
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><hr>
-<blockquote>
-<p>数据库索引本质上是一种数据结构(存储结构+算法)，目的是为了加快目标数据检索的速度。</p>
-</blockquote>
-<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><hr>
-<blockquote>
-<p>1.索引的本质与原理？<br>2.索引的分类？<br><a id="more"></a></p>
-<h2 id="1-索引的本质与原理"><a href="#1-索引的本质与原理" class="headerlink" title="1.索引的本质与原理"></a>1.索引的本质与原理</h2><hr>
-<p>我们先看一个问题：<br>假设现在有100000条从0到10000且从大到小排列的整型数据，1条数据的大小假设(真的只是假设)是1KB,操作系统的每次I/O数据块(页)大小是8KB。<br>如果现在我要查找其中 50001 这个数据值，有如下几个方式：<br>1.最蠢的方式，遍历，每次遍历到一个值，就用这个值跟目标值做对比，如果不等于那么查找下一个。这样的话那么每次I/O是8条数据，目标数据在50001/8 约6600多次I/O 才能找到目标数据。<br>2.二分查找，最好一次性将100000条数据全部读到内存，这样查找也是很快的。</p>
-</blockquote>
-<p>但是即使二分查找很快，但这些数据也不能单单通过一次I/O全部进入内存，进行运算。</p>
-<p>那么怎样在I/O 块大小 的限制下快速利用二分查找找到目标值呢？我们得引入新的数据结构，B+树正好可以解决上述I/O块大小的限制，解决限制不是说增大了限制范围，而是我们在此限制上改变了数据的存储结构，即在同等限制条件下，快速检索到目标数据，如下是B+树的原理讲解：</p>
-<p><strong>注意，我们主要讲解索引的原理，没有必要过于纠结B+树的各种操作，及代码实现</strong></p>
-<p><strong>1.1 B+ 树</strong><br><img src="http://upload-images.jianshu.io/upload_images/2836699-b7e385be57e97b94.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="B+树图示"><br>根据上图所示，及其论文定义：</p>
-<blockquote>
-<p> 1.图上蓝色的块为关键字，我们发现所有的关键字最终都会被包含在叶子节点当中。<br>       图上的黄色区块表示的是子树的指针域，比如根节点下的P2指向的就是28-65之间的索引。</p>
-<hr>
-<p>   2.所有的叶子结点中包含了全部关键字的信息，及指向含有这些关键字记录的指针，<br>且叶子结点本身依关键字的大小自小而大的顺序链接。 (而B 树的叶子节点并没有包括全部需要查找的信息)</p>
-<hr>
-<p>  3.所有的非终端结点可以看成是索引部分，结点中仅含有其子树根结点中最大（或最小）关键字。 (而B 树的非终节点也包含需要查找的有效信息)</p>
-</blockquote>
-<p>现在我们来看下查找数据 60 的 查找过程，如下所示:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1.I/O第一次：读入5、28、65 数据块，在此同级别节点块上，60在28到65之间(其实是二分查找)，那走P2指针指向的子树。</div><div class="line">2.I/O第二次：读入28、35、56 数据块，在此同级别节点块上，60大于56，所以走P3指针指向的子树(上图中就是叶子节点)。</div><div class="line">3.I/O第三次：读入叶子节点，在这个叶子节点中，使用二分查找算法找到目标值60。</div></pre></td></tr></table></figure></p>
-<p>由上述查找过程所示统共需要三次I/O就能查到目标值，性能大大提升。</p>
-<h2 id="2-索引的分类？"><a href="#2-索引的分类？" class="headerlink" title="2.索引的分类？"></a>2.索引的分类？</h2><hr>
-<h4 id="2-1-聚簇索引-amp-非聚簇索引"><a href="#2-1-聚簇索引-amp-非聚簇索引" class="headerlink" title="2.1 聚簇索引 &amp; 非聚簇索引"></a>2.1 聚簇索引 &amp; 非聚簇索引</h4><blockquote>
-<p>InnoDB 主键使用的是聚簇索引，MyISAM  不管是主键索引，还是二级索引使用的都是非聚簇索引。</p>
-</blockquote>
-<p>下图形象说明了聚簇索引表(InnoDB)和非聚簇索引(MyISAM)的区别：<br><img src="http://upload-images.jianshu.io/upload_images/2836699-d062eac68af5cd31?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="聚簇索引与非聚簇索引"></p>
-<blockquote>
-<p>1.对于非聚簇索引表来说（右图），表数据和索引是分成两部分存储的，主键索引和二级索引存储上没有任何区别。使用的是B+树作为索引的存储结构，所有的节点都是索引，叶子节点存储的是索引+索引对应的记录的地址。</p>
-<hr>
-<p>2.对于聚簇索引表来说（左图），表数据是和主键一起存储的，主键索引的叶结点存储行数据(包含了主键值)，二级索引的叶结点存储行的主键值。使用的是B+树作为索引的存储结构，非叶子节点都是索引关键字，但非叶子节点中的关键字中不存储对应记录的具体内容或内容地址。叶子节点上的数据是主键与具体记录(数据内容)。</p>
-</blockquote>
-<p><strong>聚簇索引的优点</strong></p>
-<blockquote>
-<p>1.当你需要取出一定范围内的数据时<br>，用<a href="http://baike.baidu.com/view/1028053.htm" target="_blank" rel="external">聚簇索引</a>也比用<a href="http://baike.baidu.com/view/1615249.htm" target="_blank" rel="external">非聚簇索引</a>好。<br> 2.当通过聚簇索引查找目标数据时理论上比非聚簇索引要快，因为非聚簇索引定位到对应主键时还要多一次目标记录寻址,即多一次I/O。</p>
-</blockquote>
-<p><strong>聚簇索引的缺点</strong></p>
-<blockquote>
-<p>1.插入速度严重依赖于插入顺序，按照主键的顺序插入是最快的方式，否则将会出现页分裂，严重影响性能。因此，对于InnoDB表，我们一般都会定义一个自增的ID列为主键。<br>2.更新主键的代价很高，因为将会导致被更新的行移动。因此，对于InnoDB表，我们一般定义主键为不可更新。<br>3.二级索引访问需要两次索引查找，第一次找到主键值，第二次根据主键值找到行数据。<br>二级索引的叶节点存储的是主键值，而不是行指针（非聚簇索引存储的是指针或者说是地址），这是为了减少当出现行移动或数据页分裂时二级索引的维护工作，但会让二级索引占用更多的空间。<br>4.采用聚簇索引插入新值比采用非聚簇索引插入新值的速度要慢很多，因为插入要保证主键不能重复，判断主键不能重复，采用的方式在不同的索引下面会有很大的性能差距，聚簇索引遍历所有的叶子节点，非聚簇索引也判断所有的叶子节点，但是聚簇索引的叶子节点除了带有主键还有记录值，记录的大小往往比主键要大的多。这样就会导致聚簇索引在判定新记录携带的主键是否重复时进行昂贵的I/O代价。</p>
-</blockquote>
-<p><strong>唯一索引</strong></p>
-<blockquote>
-<p>主键就是唯一索引，但是唯一索引不一定是主键，唯一索引可以为空，但是空值只能有一个，主键不能为空。<br>普通唯一索引：单个字段上建立唯一索引，需要此字段所在的列上不能有重复的值，属于二级索引。<br>复合唯一索引：多个字段上联合建立唯一索引，属于二级索引。</p>
-</blockquote>
-<p><strong>覆盖索引</strong></p>
-<blockquote>
-<p>查找的目标数据， 包含在索引中，如建立idx_colum1_colum2.<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">select colum1 from table where colum1 = ? and colum2 &gt; ?</div></pre></td></tr></table></figure></p>
-</blockquote>
-<p>通过查询索引就能确定最终的数据，不用再利用叶子节点中存储的主键值去查询对应的数据。<br>覆盖索引的性能是极高的。</p>
-<p>索引原理篇讲述完，下一篇讲解索引的优化，以及 explain 工具的使用。</p>
+        <h2 id="教程大纲"><a href="#教程大纲" class="headerlink" title="教程大纲"></a>教程大纲</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">在虚拟机中安装CentOS</div><div class="line">在每个CentOS中都安装Java和Perl</div><div class="line">在4个虚拟机中安装CentOS集群</div><div class="line">配置4台CentOS为ssh免密码互相通信</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">从零开始，纯手工，一步一步搭建出一个4个节点的CentOS集群。</div><div class="line">为我们后面的课程做准备，后面会讲解大型的分布式的redis集群架构，一步一步纯手工搭建redis集群，集群部署，主从架构，分布式集群架构。</div><div class="line">后面的课程，会讲解一些实时计算技术的应用，包括storm，讲解一下storm的基础知识，对于java工程师来说，会用就可以了，用一些storm最基本的分布式实时计算的feature就ok了，搭建一个storm的集群。</div><div class="line">部署我们整套的系统，nginx，tomcat+java web应用，mysql。</div><div class="line">尽量以真实的网络拓扑的环境，去给大家演示一下整套系统的部署，不要所有东西，redis集群+storm集群+nginx+tomcat+mysql，全部放在一个节点上玩儿，也可以去试一试，但是作为课程来说，效果不是太理想。</div><div class="line">redis集群，独立的一套机器</div><div class="line">storm集群，独立的一套机器</div><div class="line">nginx，独立部署</div><div class="line">tomcat + java web应用，独立部署</div><div class="line">mysql，独立部署</div><div class="line">十几个机器，去部署整套系统，我在自己的笔记本电脑上来讲课的，这么玩儿撑不住的。</div><div class="line">i5，8G+Mac OS 凶他</div><div class="line">4台虚拟机，每台虚拟机是1G的内存，电脑基本还能撑住</div><div class="line">电脑本身就6个G内存的话，学习这种大型的系统架构的课程，是有点吃力，给大家建议，几个G的内存条，也就几百块钱，给自己最好加个内存条，至少到8G以上</div><div class="line">16G凑合，玩的很嗨。</div><div class="line">纯手工，从零开始。</div><div class="line">很多视频课程，里面讲师都是现成的虚拟机，自己都装好了，包括各种必要的软件</div><div class="line">讲课的时候直接基于自己的虚拟机就开始讲解了</div><div class="line">很多同学就会发现，想要做到跟讲师一样的环境都很难，自己可能照着样子装了个环境，但是发现，各种问题，各种报错，环境起不来。</div><div class="line">学习课程的过程很艰难</div><div class="line">学视频课程，肯定是要跟着视频的所有的东西自己去做一做，练一练，结果你却因为环境问题，做不了，连不了，那就太惨了</div><div class="line">从centos的镜像文件，到所有的需要使用的软件，全都给你，在自己电脑上，下载一个虚拟机管理软件，virtual box，就可以跟着玩儿了</div><div class="line">如果你一步一步跟着视频做，搭建起整个环境，应该问题不大</div><div class="line">环境问题，给大家弄成傻瓜式的。</div></pre></td></tr></table></figure>
+<h2 id="1、在虚拟机中安装CentOS"><a href="#1、在虚拟机中安装CentOS" class="headerlink" title="1、在虚拟机中安装CentOS"></a>1、在虚拟机中安装CentOS</h2><p>动一个virtual box虚拟机管理软件（vmware，我早些年，发现不太稳定，主要是当时搭建一个hadoop大数据的集群，发现每次休眠以后再重启，集群就挂掉了）<br>virtual box，发现很稳定，集群从来不会随便乱挂，所以就一直用virtual box了.</p>
+<h4 id="1-使用课程提供的CentOS-6-5镜像即可，CentOS-6-5-i386-minimal-iso。"><a href="#1-使用课程提供的CentOS-6-5镜像即可，CentOS-6-5-i386-minimal-iso。" class="headerlink" title="1.使用课程提供的CentOS 6.5镜像即可，CentOS-6.5-i386-minimal.iso。"></a>1.使用课程提供的CentOS 6.5镜像即可，CentOS-6.5-i386-minimal.iso。</h4><h4 id="2-创建虚拟机："><a href="#2-创建虚拟机：" class="headerlink" title="2.创建虚拟机："></a>2.创建虚拟机：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">打开Virtual Box</div><div class="line">点击“新建”按钮</div><div class="line">点击“下一步”</div><div class="line">输入虚拟机名称为eshop-cache01</div><div class="line">选择操作系统为Linux，选择版本为Red Hat，分配1024MB内存，后面的选项全部用默认。</div><div class="line">在Virtual Disk File location and size中，一定要自己选择一个目录来存放虚拟机文件，最后点击“create”按钮，</div><div class="line">开始创建虚拟机。</div></pre></td></tr></table></figure>
+<h4 id="3-设置虚拟机网卡："><a href="#3-设置虚拟机网卡：" class="headerlink" title="3.设置虚拟机网卡："></a>3.设置虚拟机网卡：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">选择创建好的虚拟机，点击“设置”按钮，在网络一栏中，连接方式中，选择“Bridged Adapter”。</div></pre></td></tr></table></figure>
+<h4 id="4-安装虚拟机中的CentOS"><a href="#4-安装虚拟机中的CentOS" class="headerlink" title="4.安装虚拟机中的CentOS"></a>4.安装虚拟机中的CentOS</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">6.5操作系统：选择创建好的虚拟机，点击“开始”按钮，选择安装介质（即本地的CentOS 6.5镜像文件），选择第一项开始安装-Skip-欢迎界面Next-选择默认语言-Baisc Storage Devices-Yes, discard any data-主机名:spark2upgrade01-选择时区-设置初始密码为hadoop-Replace Existing Linux System-Write changes to disk-CentOS 6.5自己开始安装。</div></pre></td></tr></table></figure>
+<h4 id="5-Reboot"><a href="#5-Reboot" class="headerlink" title="5.Reboot"></a>5.Reboot</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">安装完以后，CentOS会提醒你要重启一下，就是reboot，你就reboot就可以了。</div></pre></td></tr></table></figure>
+<h4 id="6-配置网络"><a href="#6-配置网络" class="headerlink" title="6.配置网络"></a>6.配置网络</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi /etc/sysconfig/network-scripts/ifcfg-eth0</div></pre></td></tr></table></figure>
+<p>配置内容如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">DEVICE=eth0</div><div class="line">TYPE=Ethernet</div><div class="line">ONBOOT=yes</div><div class="line">BOOTPROTO=dhcp</div><div class="line">service network restart</div><div class="line">ifconfig</div><div class="line"></div><div class="line">BOOTPROTO=static</div><div class="line">IPADDR=192.168.0.X</div><div class="line">NETMASK=255.255.255.0</div><div class="line">GATEWAY=192.168.0.1</div><div class="line">service network restart</div></pre></td></tr></table></figure></p>
+<h4 id="7-配置hosts"><a href="#7-配置hosts" class="headerlink" title="7.配置hosts"></a>7.配置hosts</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">vi /etc/hosts</div><div class="line">配置本机的hostname到ip地址的映射</div></pre></td></tr></table></figure>
+<h4 id="8-关闭防火墙"><a href="#8-关闭防火墙" class="headerlink" title="8.关闭防火墙"></a>8.关闭防火墙</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">service iptables stop</div><div class="line">service ip6tables stop</div><div class="line">chkconfig iptables off</div><div class="line">chkconfig ip6tables off</div><div class="line"></div><div class="line">vi /etc/selinux/config</div><div class="line">SELINUX=disabled</div><div class="line"></div><div class="line">注意：一定要关闭本地宿主机上的防火墙。</div><div class="line">后面要搭建集群，有的大数据技术的集群之间需要通信，在本地你设置了防火墙的话，可能会导致集群之前没办法互相连接，相互通讯，会导致搭建失败。</div></pre></td></tr></table></figure>
+<h4 id="9-配置yum"><a href="#9-配置yum" class="headerlink" title="9.配置yum"></a>9.配置yum</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">yum clean all</div><div class="line">yum makecache</div><div class="line">yum install wget</div></pre></td></tr></table></figure>
+<h2 id="2、在每个CentOS中都安装Java和Perl"><a href="#2、在每个CentOS中都安装Java和Perl" class="headerlink" title="2、在每个CentOS中都安装Java和Perl"></a>2、在每个CentOS中都安装Java和Perl</h2><h4 id="1-安装JDK"><a href="#1-安装JDK" class="headerlink" title="1.安装JDK"></a>1.安装JDK</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">1、将jdk-7u60-linux-i586.rpm通过WinSCP上传到虚拟机中</div><div class="line">2、安装JDK：rpm -ivh jdk-7u65-linux-i586.rpm</div><div class="line">3、配置jdk相关的环境变量</div><div class="line">vi .bashrc</div><div class="line">export JAVA_HOME=/usr/java/latest</div><div class="line">export PATH=$PATH:$JAVA_HOME/bin</div><div class="line">source .bashrc</div><div class="line">4、测试jdk安装是否成功：java -version</div></pre></td></tr></table></figure>
+<h4 id="2-安装Perl"><a href="#2-安装Perl" class="headerlink" title="2.安装Perl"></a>2.安装Perl</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">yum install -y gcc</div><div class="line">wget http://www.cpan.org/src/5.0/perl-5.16.1.tar.gz</div><div class="line">tar -xzf perl-5.16.1.tar.gz</div><div class="line">cd perl-5.16.1</div><div class="line">./Configure -des -Dprefix=/usr/local/perl</div><div class="line">make &amp;&amp; make test &amp;&amp; make install</div><div class="line">perl -v</div><div class="line">为什么要装perl？我们整个大型电商网站的详情页系统，复杂。java+nginx+lua，需要perl。</div><div class="line">perl，是一个基础的编程语言的安装，tomcat，跑java web应用</div></pre></td></tr></table></figure>
+<h4 id="3-在4个虚拟机中安装CentOS集群"><a href="#3-在4个虚拟机中安装CentOS集群" class="headerlink" title="3.在4个虚拟机中安装CentOS集群"></a>3.在4个虚拟机中安装CentOS集群</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">（1）按照上述步骤，再安装三台一模一样环境的linux机器</div><div class="line">（2）另外三台机器的hostname分别设置为eshop-cache02，eshop-cache03，eshop-cache04</div><div class="line">（3）安装好之后，在每台机器的hosts文件里面，配置好所有的机器的ip地址到hostname的映射关系</div><div class="line"></div><div class="line">比如说，在eshop-cache01的hosts里面</div><div class="line"></div><div class="line">192.168.31.187 eshop-cache01</div><div class="line">192.168.31.xxx eshop-cache02</div><div class="line">192.168.31.xxx eshop-cache03</div><div class="line">192.168.31.xxx eshop-cache04</div></pre></td></tr></table></figure>
+<h4 id="4、配置4台CentOS为ssh免密码互相通信"><a href="#4、配置4台CentOS为ssh免密码互相通信" class="headerlink" title="4、配置4台CentOS为ssh免密码互相通信"></a>4、配置4台CentOS为ssh免密码互相通信</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">4.1 </div><div class="line">首先在三台机器上配置对本机的ssh免密码登录</div><div class="line">ssh-keygen -t rsa</div><div class="line">生成本机的公钥，过程中不断敲回车即可，ssh-keygen命令默认会将公钥放在/root/.ssh目录下</div><div class="line">cd /root/.ssh</div><div class="line">cp id_rsa.pub authorized_keys</div><div class="line">将公钥复制为authorized_keys文件，此时使用ssh连接本机就不需要输入密码了</div><div class="line"></div><div class="line">4.2</div><div class="line">接着配置三台机器互相之间的ssh免密码登录</div><div class="line">使用ssh-copy-id -i hostname命令将本机的公钥拷贝到指定机器的authorized_keys文件中</div><div class="line">java，在公司里做项目，有几个人是自己去维护linux集群的啊？？？？？</div><div class="line">几乎没有，很少很少，类似这一讲要做的事情，其实都是SRE，运维的同学，去做的</div><div class="line">但是对于课程来说，我们只能自己一步一步做，才有环境去学习啊！！！</div><div class="line"></div><div class="line">基于虚拟机的linux集群环境，都准备好了，手上有4台机器，后面玩儿各种redis、kafka、storm、tomcat、nginx，都有机器了.</div></pre></td></tr></table></figure>
+<p><strong>利其事，必先利其器！下节继续！</strong></p>
 
       
     </div>
@@ -538,7 +502,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/数据库/" rel="tag"># 数据库</a>
+            <a href="/tags/redis/" rel="tag"># redis</a>
+          
+            <a href="/tags/缓存中间件/" rel="tag"># 缓存中间件</a>
           
         </div>
       
@@ -551,8 +517,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/14/MySQL-调优/" rel="next" title="MySQL 数据库规范--调优篇(终结篇)">
-                <i class="fa fa-chevron-left"></i> MySQL 数据库规范--调优篇(终结篇)
+              <a href="/2018/05/12/nginx-ab-test/" rel="next" title="nginx－性能测试">
+                <i class="fa fa-chevron-left"></i> nginx－性能测试
               </a>
             
           </div>
@@ -560,10 +526,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/11/14/MySQL-存储过程/" rel="prev" title="存储过程">
-                存储过程 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -729,7 +691,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目录"><span class="nav-number">2.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-索引的本质与原理"><span class="nav-number">3.</span> <span class="nav-text">1.索引的本质与原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-索引的分类？"><span class="nav-number">4.</span> <span class="nav-text">2.索引的分类？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-聚簇索引-amp-非聚簇索引"><span class="nav-number">4.0.1.</span> <span class="nav-text">2.1 聚簇索引 & 非聚簇索引</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#教程大纲"><span class="nav-number">1.</span> <span class="nav-text">教程大纲</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意事项"><span class="nav-number">2.</span> <span class="nav-text">注意事项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1、在虚拟机中安装CentOS"><span class="nav-number">3.</span> <span class="nav-text">1、在虚拟机中安装CentOS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-使用课程提供的CentOS-6-5镜像即可，CentOS-6-5-i386-minimal-iso。"><span class="nav-number">3.0.1.</span> <span class="nav-text">1.使用课程提供的CentOS 6.5镜像即可，CentOS-6.5-i386-minimal.iso。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-创建虚拟机："><span class="nav-number">3.0.2.</span> <span class="nav-text">2.创建虚拟机：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-设置虚拟机网卡："><span class="nav-number">3.0.3.</span> <span class="nav-text">3.设置虚拟机网卡：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-安装虚拟机中的CentOS"><span class="nav-number">3.0.4.</span> <span class="nav-text">4.安装虚拟机中的CentOS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-Reboot"><span class="nav-number">3.0.5.</span> <span class="nav-text">5.Reboot</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-配置网络"><span class="nav-number">3.0.6.</span> <span class="nav-text">6.配置网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-配置hosts"><span class="nav-number">3.0.7.</span> <span class="nav-text">7.配置hosts</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-关闭防火墙"><span class="nav-number">3.0.8.</span> <span class="nav-text">8.关闭防火墙</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-配置yum"><span class="nav-number">3.0.9.</span> <span class="nav-text">9.配置yum</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、在每个CentOS中都安装Java和Perl"><span class="nav-number">4.</span> <span class="nav-text">2、在每个CentOS中都安装Java和Perl</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-安装JDK"><span class="nav-number">4.0.1.</span> <span class="nav-text">1.安装JDK</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-安装Perl"><span class="nav-number">4.0.2.</span> <span class="nav-text">2.安装Perl</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-在4个虚拟机中安装CentOS集群"><span class="nav-number">4.0.3.</span> <span class="nav-text">3.在4个虚拟机中安装CentOS集群</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、配置4台CentOS为ssh免密码互相通信"><span class="nav-number">4.0.4.</span> <span class="nav-text">4、配置4台CentOS为ssh免密码互相通信</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -899,9 +861,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://markfork.com/2017/11/14/MySQL-优化/';
-          this.page.identifier = '2017/11/14/MySQL-优化/';
-          this.page.title = 'MySQL 数据库索引原理与分类';
+          this.page.url = 'http://markfork.com/2018/05/12/Redis专题-伪集群安装/';
+          this.page.identifier = '2018/05/12/Redis专题-伪集群安装/';
+          this.page.title = 'redis－伪分布式集群';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://.disqus.com/embed.js';

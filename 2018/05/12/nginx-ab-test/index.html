@@ -103,20 +103,20 @@
 
 
 
-<meta name="description" content="##章节目录  nginx 性能优化的点 当前系统性能的评估 ab 压力测试工具使用">
+<meta name="description" content="章节目录 nginx 性能优化的点 当前系统性能的评估 ab 压力测试工具使用">
 <meta name="keywords" content="服务器中间件,性能压测">
 <meta property="og:type" content="article">
 <meta property="og:title" content="nginx－性能测试">
 <meta property="og:url" content="http://markfork.com/2018/05/12/nginx-ab-test/index.html">
 <meta property="og:site_name" content="鱼大坤">
-<meta property="og:description" content="##章节目录  nginx 性能优化的点 当前系统性能的评估 ab 压力测试工具使用">
+<meta property="og:description" content="章节目录 nginx 性能优化的点 当前系统性能的评估 ab 压力测试工具使用">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2836699-a4e471bff6c24af0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2836699-128588e42c3bea50.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-05-12T12:28:53.000Z">
+<meta property="og:updated_time" content="2018-05-12T12:40:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nginx－性能测试">
-<meta name="twitter:description" content="##章节目录  nginx 性能优化的点 当前系统性能的评估 ab 压力测试工具使用">
+<meta name="twitter:description" content="章节目录 nginx 性能优化的点 当前系统性能的评估 ab 压力测试工具使用">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/2836699-a4e471bff6c24af0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -362,7 +362,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-12T20:28:53+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-12T20:40:12+08:00">
                 2018-05-12
               </time>
             
@@ -438,8 +438,7 @@
       
 
       
-        <p>##章节目录</p>
-<ul>
+        <h2 id="章节目录"><a href="#章节目录" class="headerlink" title="章节目录"></a>章节目录</h2><ul>
 <li>nginx 性能优化的点</li>
 <li>当前系统性能的评估</li>
 <li>ab 压力测试工具使用<a id="more"></a>
@@ -449,13 +448,13 @@
 <p><strong>了解业务模式</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">接口业务类型、系统层次化结构 是代理、动静分离、业务服务器？</div></pre></td></tr></table></figure></p>
 <p><strong>性能与安全</strong></p>
 <p><img src="https://upload-images.jianshu.io/upload_images/2836699-a4e471bff6c24af0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="性能优化的点"></p>
-<p>####2.当前系统性能的评估<br><strong>系统监测、日志分析</strong></p>
+<h4 id="2-当前系统性能的评估"><a href="#2-当前系统性能的评估" class="headerlink" title="2.当前系统性能的评估"></a>2.当前系统性能的评估</h4><p><strong>系统监测、日志分析</strong></p>
 <p><strong>ab接口压力测试</strong></p>
 <ul>
 <li>业务量还没有大幅度增长之前，就需要对接口的响应能力做一个压测，防止业务量增加的时候出现问题。</li>
 <li>ab接口压力测试工具<br>在评估好当前业务的系统压力需求情况下面，工具检测当前的系统负载能力是否能满足对应的压力测试需求。</li>
 </ul>
-<p>####3.ab 接口压力测试工具使用<br><strong>安装</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install httpd-tools</div></pre></td></tr></table></figure></p>
+<h4 id="3-ab-接口压力测试工具使用"><a href="#3-ab-接口压力测试工具使用" class="headerlink" title="3.ab 接口压力测试工具使用"></a>3.ab 接口压力测试工具使用</h4><p><strong>安装</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install httpd-tools</div></pre></td></tr></table></figure></p>
 <p><strong>使用</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ab -n 1000 -c 100 http://www.baidu.com/</div><div class="line">-n  总的请求数</div><div class="line">-c  并发数</div><div class="line">-k 是否开启长连接</div></pre></td></tr></table></figure></p>
 <p><strong>实战演示</strong><br><strong>1.请求静态页面 <a href="http://eshop-cache04:82/test_proxy.html" target="_blank" rel="external">http://eshop-cache04:82/test_proxy.html</a></strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ab -n 1000 -c 100 http://eshop-cache04:82/test_proxy.html</div></pre></td></tr></table></figure></p>
 <p>-n 1000 总请求数1000<br>-c  100  单个时刻并发数100<br>资源： <a href="http://eshop-cache04:82/test_proxy.html" target="_blank" rel="external">http://eshop-cache04:82/test_proxy.html</a><br><strong>测验结果</strong><br><img src="https://upload-images.jianshu.io/upload_images/2836699-128588e42c3bea50.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ab压测结果"></p>
@@ -523,8 +522,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/12/28/Redis专题-伪集群安装/" rel="next" title="">
-                <i class="fa fa-chevron-left"></i> 
+              <a href="/2017/11/17/java_并发编程的艺术_读书笔记_chapter1/" rel="next" title="并发编程的挑战">
+                <i class="fa fa-chevron-left"></i> 并发编程的挑战
               </a>
             
           </div>
@@ -532,6 +531,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/12/Redis专题-伪集群安装/" rel="prev" title="redis－伪分布式集群">
+                redis－伪分布式集群 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -655,7 +658,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -697,7 +700,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-nginx-性能优化的点"><span class="nav-number">1.</span> <span class="nav-text">1.nginx 性能优化的点</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#章节目录"><span class="nav-number">1.</span> <span class="nav-text">章节目录</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-nginx-性能优化的点"><span class="nav-number">1.0.1.</span> <span class="nav-text">1.nginx 性能优化的点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-当前系统性能的评估"><span class="nav-number">1.0.2.</span> <span class="nav-text">2.当前系统性能的评估</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-ab-接口压力测试工具使用"><span class="nav-number">1.0.3.</span> <span class="nav-text">3.ab 接口压力测试工具使用</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
