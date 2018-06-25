@@ -85,7 +85,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Java并发编程的艺术,volatile 底层实现原理," />
+  <meta name="keywords" content="源码分析," />
 
 
 
@@ -103,18 +103,44 @@
 
 
 
-<meta name="description" content="章节目录 volatile的实现原理与应用  1.volatile的实现原理与应用 Java source code-&amp;gt;Java class-&amp;gt;JVM-&amp;gt;汇编指令-&amp;gt;cpu执行java中使用的并发机制依赖于JVM实现和cpu指令。">
-<meta name="keywords" content="Java并发编程的艺术,volatile 底层实现原理">
+<meta name="description" content="章节目录 Spring MVC DispatcherServlet 与 HttpServlet 关系类图 Spring MVC 源码分析Request 请求映射、执行、视图解析流程 总结-Spring MVC 运行流程图">
+<meta name="keywords" content="源码分析">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java并发机制底层实现原理-volatile">
-<meta property="og:url" content="http://markfork.com/2018/05/12/Java并发机制底层实现原理-volatile/index.html">
+<meta property="og:title" content="Spring MVC 运行流程解析(含源码分析)">
+<meta property="og:url" content="http://markfork.com/2018/06/26/Spring MVC-源码分析/index.html">
 <meta property="og:site_name" content="鱼大坤">
-<meta property="og:description" content="章节目录 volatile的实现原理与应用  1.volatile的实现原理与应用 Java source code-&amp;gt;Java class-&amp;gt;JVM-&amp;gt;汇编指令-&amp;gt;cpu执行java中使用的并发机制依赖于JVM实现和cpu指令。">
+<meta property="og:description" content="章节目录 Spring MVC DispatcherServlet 与 HttpServlet 关系类图 Spring MVC 源码分析Request 请求映射、执行、视图解析流程 总结-Spring MVC 运行流程图">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-12T13:39:09.000Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2836699-09bb6fc500b16d17.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2836699-aee36346846b9a3c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2836699-7d00b354a2308130.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2836699-e5b35c6a03673492.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2836699-ecf3866e8c4313fd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2836699-1fa0182c2fd98dd7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2836699-538f2eb72a216a36.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2836699-60b975206fcfe654.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2836699-a0e084eac8455ca7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2836699-83eaa9dd15bab6c6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2836699-3022a63e37007586.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2836699-48d5f3c6ef3e4487.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2836699-a93d48536fb045cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2836699-87715819f80177e4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2836699-5ced863bd08e2861.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2836699-43114019c1db9c58.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2836699-b33ee181a7eae235.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2836699-8de8e21e21cfa9ec.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2836699-ea3cea044e3cc983.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2836699-7a4c9cda397bd86f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2836699-097fc93537b1a7db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2836699-849d32e754d5803b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2836699-c63e5b3253f7eb28.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2836699-2c10c9f93533e809.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2836699-e62d2cd6e831f36b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-06-25T16:04:27.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java并发机制底层实现原理-volatile">
-<meta name="twitter:description" content="章节目录 volatile的实现原理与应用  1.volatile的实现原理与应用 Java source code-&amp;gt;Java class-&amp;gt;JVM-&amp;gt;汇编指令-&amp;gt;cpu执行java中使用的并发机制依赖于JVM实现和cpu指令。">
+<meta name="twitter:title" content="Spring MVC 运行流程解析(含源码分析)">
+<meta name="twitter:description" content="章节目录 Spring MVC DispatcherServlet 与 HttpServlet 关系类图 Spring MVC 源码分析Request 请求映射、执行、视图解析流程 总结-Spring MVC 运行流程图">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/2836699-09bb6fc500b16d17.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -143,13 +169,13 @@
 
 
 
-  <link rel="canonical" href="http://markfork.com/2018/05/12/Java并发机制底层实现原理-volatile/"/>
+  <link rel="canonical" href="http://markfork.com/2018/06/26/Spring MVC-源码分析/"/>
 
 
 
 
 
-  <title>Java并发机制底层实现原理-volatile | 鱼大坤</title>
+  <title>Spring MVC 运行流程解析(含源码分析) | 鱼大坤</title>
   
 
 
@@ -330,7 +356,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://markfork.com/2018/05/12/Java并发机制底层实现原理-volatile/">
+    <link itemprop="mainEntityOfPage" href="http://markfork.com/2018/06/26/Spring MVC-源码分析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="鱼大坤">
@@ -347,7 +373,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Java并发机制底层实现原理-volatile</h2>
+          <h2 class="post-title" itemprop="name headline">Spring MVC 运行流程解析(含源码分析)</h2>
         
 
         <div class="post-meta">
@@ -359,8 +385,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-12T21:39:09+08:00">
-                2018-05-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-26T00:04:27+08:00">
+                2018-06-26
               </time>
             
 
@@ -382,8 +408,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">读书笔记</span>
+                  <a href="/categories/Servlet/" itemprop="url" rel="index">
+                    <span itemprop="name">Servlet</span>
                   </a>
                 </span>
 
@@ -400,9 +426,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/05/12/Java并发机制底层实现原理-volatile/#comments" itemprop="discussionUrl">
+                <a href="/2018/06/26/Spring MVC-源码分析/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/05/12/Java并发机制底层实现原理-volatile/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/06/26/Spring MVC-源码分析/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -436,28 +462,179 @@
 
       
         <h2 id="章节目录"><a href="#章节目录" class="headerlink" title="章节目录"></a>章节目录</h2><ul>
-<li>volatile的实现原理与应用</li>
+<li>Spring MVC DispatcherServlet 与 HttpServlet 关系类图</li>
+<li>Spring MVC 源码分析Request 请求映射、执行、视图解析流程</li>
+<li>总结-Spring MVC 运行流程图<a id="more"></a>
+</li>
 </ul>
-<h3 id="1-volatile的实现原理与应用"><a href="#1-volatile的实现原理与应用" class="headerlink" title="1.volatile的实现原理与应用"></a>1.volatile的实现原理与应用</h3><blockquote>
-<p>Java source code-&gt;Java class-&gt;JVM-&gt;汇编指令-&gt;cpu执行<br>java中使用的并发机制依赖于JVM实现和cpu指令。<br><a id="more"></a></p>
+<h4 id="1-Spring-MVC-DispatcherServlet-与-HttpServlet-关系类图"><a href="#1-Spring-MVC-DispatcherServlet-与-HttpServlet-关系类图" class="headerlink" title="1.Spring MVC DispatcherServlet 与 HttpServlet 关系类图"></a>1.Spring MVC DispatcherServlet 与 HttpServlet 关系类图</h4><p><strong>1.1 什么是DispatcherServlet</strong><br>源码注释如下所示：</p>
+<blockquote>
+<p>Central dispatcher for HTTP request handlers/controllers, e.g. for web UI controllers or HTTP-based remote service exporters. Dispatches to registered handlers for processing a web request, providing convenient mapping and exception handling facilities.</p>
 </blockquote>
-<h4 id="1-1-volatile应用"><a href="#1-1-volatile应用" class="headerlink" title="1.1 volatile应用"></a>1.1 volatile应用</h4><p> <strong>volatile-保证可见性</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">volatile 是轻量级 synchronized，在多处理器并发中保证了共享变量的&quot;可见性&quot;。</div><div class="line">可见性含义：</div><div class="line">当一个线程修改共享变量-时，另一个线程能立即读到这个修改的值。</div></pre></td></tr></table></figure></p>
-<p><strong>volatile-执行成本低</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">volatile不会引起线程上下文的切换和调度。</div><div class="line">使用合适，volatile的使用代价会比synchronized小。</div></pre></td></tr></table></figure></p>
-<p><strong>volatile 如何保证可见性</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">class A&#123;</div><div class="line">   private volatile Singleton instance ;</div><div class="line">   public A()&#123;</div><div class="line">        instance = new Singleton();</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>转成汇编代码，如下：<br>movb, <strong>lock</strong> add1<br>上述对volatile共享变量instance进行写操作的时候会多出第二行汇编代码，Lock前缀的指令在多核处理器下会引发两件事情。</p>
+<p>译文如下：</p>
+<blockquote>
+<p>DispatcherServlet 是HTTP请求处理程序/控制器的中央调度程序（将请求映射到具体处理器(handler)上 ），例如用于Web UI控制器或基于HTTP的远程服务导出器（webService），调度器会将请求路由至已经注册好的具体的hadler,使得handler可以处理执行相关的web请求，提供了请求与处理器之间的映射关系功能，其实就是路由映射功能。</p>
+</blockquote>
+<p><strong>1.2 什么是HttpServlet</strong></p>
+<blockquote>
+<p>HttpServlet 是处理相关基于Http请求的处理程序，请求的相关信息被封装成 <code>HttpServletRequest</code>对象，其中Service() 方法通过获取 HttpServletRequest 中的方法名 如 <code>GET</code>、 <code>POST</code>、<code>PUT</code>等 request-method信息的获取，去invoke具体的<code>doGet()</code>、<code>doPost()</code>、<code>doPut()</code>方法，最终将执行完业务逻辑获取到的处理数据通过<code>HttpServletResponse</code>对象返回给客户端。所以最终request请求结果还是从HttpServlet中的service()返回的</p>
+</blockquote>
+<p>那么这两者之间有什么关系呢？<br>如下图所示DispatcherServlet与HttpServlet之间的类图关系：<br><img src="https://upload-images.jianshu.io/upload_images/2836699-09bb6fc500b16d17.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>其中最重要的是FrameworkServlet。<br><code>源码注释如下：</code></p>
+<blockquote>
+<p> Base servlet for Spring’s web framework. Provides integration with<br> a Spring application context, in a JavaBean-based overall solution.</p>
+</blockquote>
+<p><code>译文如下:</code></p>
+<blockquote>
+<p>Spring web 框架中的基础Servlet，将Spring 相关的ApplicationContext 集成进来。方便我们在后期使用Spring IOC 容器中注册的各种属性的类对象。</p>
+</blockquote>
+<p><code>FrameworkServlet 整合Spring WebApplicationContext 对象源码如下：</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">	/**</div><div class="line">	 * Initialize and publish the WebApplicationContext for this servlet.</div><div class="line">	 * &lt;p&gt;Delegates to &#123;@link #createWebApplicationContext&#125; for actual creation</div><div class="line">	 * of the context. Can be overridden in subclasses.</div><div class="line">	 * @return the WebApplicationContext instance</div><div class="line">	 * @see #FrameworkServlet(WebApplicationContext)</div><div class="line">	 * @see #setContextClass</div><div class="line">	 * @see #setContextConfigLocation</div><div class="line">	 */</div><div class="line">	protected WebApplicationContext initWebApplicationContext() &#123;</div><div class="line">		WebApplicationContext rootContext =</div><div class="line">				WebApplicationContextUtils.getWebApplicationContext(getServletContext());</div><div class="line">		WebApplicationContext wac = null;</div><div class="line"></div><div class="line">		if (this.webApplicationContext != null) &#123;</div><div class="line">			// A context instance was injected at construction time -&gt; use it</div><div class="line">			wac = this.webApplicationContext;</div><div class="line">			if (wac instanceof ConfigurableWebApplicationContext) &#123;</div><div class="line">				ConfigurableWebApplicationContext cwac = (ConfigurableWebApplicationContext) wac;</div><div class="line">				if (!cwac.isActive()) &#123;</div><div class="line">					// The context has not yet been refreshed -&gt; provide services such as</div><div class="line">					// setting the parent context, setting the application context id, etc</div><div class="line">					if (cwac.getParent() == null) &#123;</div><div class="line">						// The context instance was injected without an explicit parent -&gt; set</div><div class="line">						// the root application context (if any; may be null) as the parent</div><div class="line">						cwac.setParent(rootContext);</div><div class="line">					&#125;</div><div class="line">					configureAndRefreshWebApplicationContext(cwac);</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">    ...</div><div class="line"> return wac;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>其中获取web应用程序上下文的代码段为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">WebApplicationContext rootContext =</div><div class="line">WebApplicationContextUtils.getWebApplicationContext(getServletContext());</div></pre></td></tr></table></figure></p>
+<p>FrameworkServlet 对 extends 自 HttpServlet 的service()方法进行了override()<br><img src="https://upload-images.jianshu.io/upload_images/2836699-aee36346846b9a3c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="override service()"></p>
+<p><code>super.service()</code>即调用HttpServlet中的Service()方法<br>可以看到Service()方法根据request.method 去调用具体的<code>doxxx()</code>方法，这里FrameworkServlet 对 <code>doxxx()</code>方法也进行了override()。</p>
+<p>如下为FrameworkServlet 中<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">![override doGet()](https://upload-images.jianshu.io/upload_images/2836699-bb9d2dc518de145a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</div><div class="line"></div><div class="line">其中的`processRequest()`方法源码如下所示：</div></pre></td></tr></table></figure></p>
+<pre><code>/**
+ * Process this request, publishing an event regardless of the outcome.
+ * &lt;p&gt;The actual event handling is performed by the abstract
+ * {@link #doService} template method.
+ */
+protected final void processRequest(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+
+    long startTime = System.currentTimeMillis();
+    Throwable failureCause = null;
+
+    LocaleContext previousLocaleContext = LocaleContextHolder.getLocaleContext();
+    LocaleContext localeContext = buildLocaleContext(request);
+
+    RequestAttributes previousAttributes = RequestContextHolder.getRequestAttributes();
+    ServletRequestAttributes requestAttributes = buildRequestAttributes(request, response, previousAttributes);
+
+    WebAsyncManager asyncManager = WebAsyncUtils.getAsyncManager(request);
+    asyncManager.registerCallableInterceptor(FrameworkServlet.class.getName(), new RequestBindingInterceptor());
+
+    initContextHolders(request, localeContext, requestAttributes);
+
+    try {
+        doService(request, response);
+    }
+    catch (ServletException ex) {
+        failureCause = ex;
+        throw ex;
+    }
+    catch (IOException ex) {
+        failureCause = ex;
+        throw ex;
+    }
+    catch (Throwable ex) {
+        failureCause = ex;
+        throw new NestedServletException(&quot;Request processing failed&quot;, ex);
+    }
+
+    finally {
+        resetContextHolders(request, previousLocaleContext, previousAttributes);
+        if (requestAttributes != null) {
+            requestAttributes.requestCompleted();
+        }
+
+        if (logger.isDebugEnabled()) {
+            if (failureCause != null) {
+                this.logger.debug(&quot;Could not complete request&quot;, failureCause);
+            }
+            else {
+                if (asyncManager.isConcurrentHandlingStarted()) {
+                    logger.debug(&quot;Leaving response open for concurrent processing&quot;);
+                }
+                else {
+                    this.logger.debug(&quot;Successfully completed request&quot;);
+                }
+            }
+        }
+
+        publishRequestHandledEvent(request, response, startTime, failureCause);
+    }
+}
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">* 其中最重要的是doService()方法，这个doService()方法被声明为抽象方法，在DispatcherServlet 做具体实现。</div><div class="line">源码实现如下：</div></pre></td></tr></table></figure>
+<p>protected void doService(HttpServletRequest request, HttpServletResponse response) throws Exception {<br>        if (logger.isDebugEnabled()) {<br>            String resumed = WebAsyncUtils.getAsyncManager(request).hasConcurrentResult() ? “ resumed” : “”;<br>            logger.debug(“DispatcherServlet with name ‘“ + getServletName() + “‘“ + resumed +<br>                    “ processing “ + request.getMethod() + “ request for [“ + getRequestUri(request) + “]”);<br>        }</p>
+<pre><code>    // Keep a snapshot of the request attributes in case of an include,
+    // to be able to restore the original attributes after the include.
+    Map&lt;String, Object&gt; attributesSnapshot = null;
+    if (WebUtils.isIncludeRequest(request)) {
+        attributesSnapshot = new HashMap&lt;String, Object&gt;();
+        Enumeration&lt;?&gt; attrNames = request.getAttributeNames();
+        while (attrNames.hasMoreElements()) {
+            String attrName = (String) attrNames.nextElement();
+            if (this.cleanupAfterInclude || attrName.startsWith(&quot;org.springframework.web.servlet&quot;)) {
+                attributesSnapshot.put(attrName, request.getAttribute(attrName));
+            }
+        }
+    }
+            //为请求设置具体的属性。
+    // Make framework objects available to handlers and view objects.
+    request.setAttribute(WEB_APPLICATION_CONTEXT_ATTRIBUTE, getWebApplicationContext());
+    request.setAttribute(LOCALE_RESOLVER_ATTRIBUTE, this.localeResolver);
+    request.setAttribute(THEME_RESOLVER_ATTRIBUTE, this.themeResolver);
+    request.setAttribute(THEME_SOURCE_ATTRIBUTE, getThemeSource());
+
+    FlashMap inputFlashMap = this.flashMapManager.retrieveAndUpdate(request, response);
+    if (inputFlashMap != null) {
+        request.setAttribute(INPUT_FLASH_MAP_ATTRIBUTE, Collections.unmodifiableMap(inputFlashMap));
+    }
+    request.setAttribute(OUTPUT_FLASH_MAP_ATTRIBUTE, new FlashMap());
+    request.setAttribute(FLASH_MAP_MANAGER_ATTRIBUTE, this.flashMapManager);
+
+    try {
+                    //调用doDispatch()，将请求分配给具体的handler去处理。实际上第二节会具体分析doDispatch()方法
+        doDispatch(request, response);
+    }
+    finally {
+        if (!WebAsyncUtils.getAsyncManager(request).isConcurrentHandlingStarted()) {
+            // Restore the original attribute snapshot, in case of an include.
+            if (attributesSnapshot != null) {
+                restoreAttributesAfterInclude(request, attributesSnapshot);
+            }
+        }
+    }
+}
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">**1.3 Spring Web 对Request的执行流程**</div><div class="line">所以请求的整个执行流程依据之前的HttpServlet知识积累(未debug)可以大致总结如下(第二节会debug源码，用来验证我们总结的这个流程)</div><div class="line">即：</div></pre></td></tr></table></figure>
+<p>1.请求到达dispatcherServlet，(非初次请求,初次请求会涉及dispatcherServlet初始化，调用init()方法)。<br>2.dispatcherServlet 执行service()方法，因Dispatcher类继承FrameworkServlet，所以调用父类的service()方法。<br>3.service()调用FrameworkServlet 中具体的doxxx()方法<br>4.FrameworkServlet 具体的 doxxx()方法调用processRequest()方法。<br>5.processRequest()方法调用dispatcherServlet 的 doService()方法。<br>6.dispatcherServlet 的 doService()方法调用doDispatch()方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">**注意**:上述根方法-service()方法被**servlet容器** Servlet container显示调用。</div><div class="line"></div><div class="line">#### 2.Spring MVC 源码分析Request 请求映射、执行、视图解析流程</div><div class="line">&gt;简单的helloword级别的web项目,搭建方式可以略过。主要是debug开始的地方我们需要确定，因为有HttpServlet源码分析的积累，那么我们直接在DispatcherServlet中的Service方法中打断点就可以了，因为DispatcherServlet继承了FrameworkServlet，FrameworkServlet对HttpServlet中的service()方法进行了override，所以程序入口断点应该打在FrameworkServlet 中的service() 方法，接下来就是实操演示：</div><div class="line"></div><div class="line">**注意：本源码分析的是Spring 4.1版本**</div><div class="line"></div><div class="line">**2.0 debug的目的**</div></pre></td></tr></table></figure></p>
+<p>了解 request 到具体 handler 的执行流程。<br>```</p>
+<p><strong>2.1 FrameworkServlet 中 service() 打断点</strong><br><img src="https://upload-images.jianshu.io/upload_images/2836699-7d00b354a2308130.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2"></p>
+<p><strong>2.2 开启debug模式</strong><br><img src="https://upload-images.jianshu.io/upload_images/2836699-e5b35c6a03673492.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><strong>2.3 开始debug</strong><br><img src="https://upload-images.jianshu.io/upload_images/2836699-ecf3866e8c4313fd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>执行父类service()方法<br><img src="https://upload-images.jianshu.io/upload_images/2836699-1fa0182c2fd98dd7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>执行doGet()方法<br><img src="https://upload-images.jianshu.io/upload_images/2836699-538f2eb72a216a36.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>执行processRequest()方法<br><img src="https://upload-images.jianshu.io/upload_images/2836699-60b975206fcfe654.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>执行doService()方法<br><img src="https://upload-images.jianshu.io/upload_images/2836699-a0e084eac8455ca7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>执行doDispatch方法<br><img src="https://upload-images.jianshu.io/upload_images/2836699-83eaa9dd15bab6c6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>获取请求对应的handler<br><img src="https://upload-images.jianshu.io/upload_images/2836699-3022a63e37007586.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>继续debug <code>hm.getHandler(request)</code>看看这其中发生了什么？<br>通过SimpleUrlHandlerMapping, 发现并不能获取到 对应的 handler(HandlerExcutionChain对象)，<br>继续foreach<br><img src="https://upload-images.jianshu.io/upload_images/2836699-48d5f3c6ef3e4487.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>通过EndpointHandlerMapping, 发现并不能获取到 对应的 handler(HandlerExcutionChain对象)，<br>继续foreach<br><img src="https://upload-images.jianshu.io/upload_images/2836699-a93d48536fb045cb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/2836699-87715819f80177e4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>最终我们通过RequestMappingHandlerMapping对象获取到了对应的handler对象。<br>可以看下handler对象是什么东东？<br><img src="https://upload-images.jianshu.io/upload_images/2836699-5ced863bd08e2861.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>所以handlerExcutionChain 对象 包含有handler对象、interceptor对象。</p>
+<p>到此我们通过requestMappingHandlerMapping 获取到了请求对应的handler。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/2836699-43114019c1db9c58.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>接下来需要以handler为参数获取真正处理请求的handlerAdaptor<br><img src="https://upload-images.jianshu.io/upload_images/2836699-b33ee181a7eae235.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>接下来执行 handlerAdaptor 中 <code>handler()</code>方法<br><img src="https://upload-images.jianshu.io/upload_images/2836699-8de8e21e21cfa9ec.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>返回mv，需要注意的是，返回mv 其实是对Controller 中业务方法的调用其实使用到了反射。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/2836699-ea3cea044e3cc983.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/2836699-7a4c9cda397bd86f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/2836699-097fc93537b1a7db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><strong>注意</strong>在返回mv之前 通过handlerExcutionChain对象可以调用applyPreHandler 方法，可以在返回mv之前做预先处理工作。</p>
+<p>返回mv之后，可以通过handlerExcutionChain对象可以调用applyPreHandler 方法对返回的mv做修改。我们只需要实现 handlerInterceptor类并实现配置就可以了。</p>
+<p>最后一步执行视图渲染的工作，这一步是在dispatcherServlet中完成的。<br><img src="https://upload-images.jianshu.io/upload_images/2836699-849d32e754d5803b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>最终请求结果<br><img src="https://upload-images.jianshu.io/upload_images/2836699-c63e5b3253f7eb28.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>注意：由于返回结果为String 类型的value,不涉及视图解析，所以render 方法并没有执行。</p>
+<h4 id="3-总结-Spring-MVC-运行流程图"><a href="#3-总结-Spring-MVC-运行流程图" class="headerlink" title="3.总结-Spring MVC 运行流程图"></a>3.总结-Spring MVC 运行流程图</h4><p><img src="https://upload-images.jianshu.io/upload_images/2836699-2c10c9f93533e809.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/2836699-e62d2cd6e831f36b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"><br>对上述流程图的解释：</p>
 <ul>
-<li>将当前处理器缓存行的数据写回到系统内存（工作内存写入到主内存）</li>
-<li>这个写回操作，会使在其他cpu里缓存了该内存地址的数据无效。</li>
-</ul>
-<p><strong>注意:</strong>在多处理器下，为了保证各个处理器缓存是一致的，就会实现<strong>缓存一致性协议</strong><br><strong>缓存一致性协议</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">每个处理器通过嗅探在总线上传播的数据来对比检查自己缓存的值是否过期</div><div class="line">了，当处理器发现自己缓存行对应的内存地址中的值被修改，就会将当前处理</div><div class="line">器的缓存行设置为无效状态，当其他处理器对这个共享变量进行修改操作时，</div><div class="line">会重新从系统内存中把数据都到处理器缓存行当中。</div></pre></td></tr></table></figure></p>
-<p><strong>volatile两条实现原则</strong></p>
-<ul>
-<li><p>Lock前缀指令会引起处理器缓存回写到内存 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">1.锁总线+独占任何共享内存</div><div class="line">2.缓存锁定+缓存一致性协议</div></pre></td></tr></table></figure>
-</li>
-<li><p>一个处理器的缓存回写到主内存会导致其他缓存此主内存共享变量的处理器缓存无效</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">每个处理器通过嗅探在总线上传播的数据来对比检查自己缓存的值是否过期</div><div class="line">了，当处理器发现自己缓存行对应的内存地址中的值被修改，就会将当前处理</div><div class="line">器的缓存行设置为无效状态，当其他处理器对这个共享变量进行修改操作时，</div><div class="line">会重新从系统内存中把数据都到处理器缓存行当中。</div></pre></td></tr></table></figure>
-</li>
+<li>用户发起请求到前端控制器（Controller）</li>
+<li>前端控制器没有处理业务逻辑的能力，需要找到具体的模型对象处理（Handler），到处理器映射器（HandlerMapping）中查找Handler对象（Model）。</li>
+<li>HandlerMapping返回执行链，包含了2部分内容： ① Handler对象、② 拦截器数组</li>
+<li>前端处理器通过处理器适配器包装后执行Handler对象。</li>
+<li>处理业务逻辑。</li>
+<li>Handler处理完业务逻辑，返回ModelAndView对象，其中view是视图名称，不是真正的视图对象。</li>
+<li>将ModelAndView返回给前端控制器。</li>
+<li>视图解析器（ViewResolver）返回真正的视图对象（View）。</li>
+<li>(此时前端控制器中既有视图又有Model对象数据）前端控制器根据模型数据和视图对象，进行视图渲染。</li>
+<li>返回渲染后的视图（html/json/xml）返回。</li>
+<li>给用户产生响应。</li>
 </ul>
 
       
@@ -508,9 +685,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Java并发编程的艺术/" rel="tag"># Java并发编程的艺术</a>
-          
-            <a href="/tags/volatile-底层实现原理/" rel="tag"># volatile 底层实现原理</a>
+            <a href="/tags/源码分析/" rel="tag"># 源码分析</a>
           
         </div>
       
@@ -523,8 +698,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/12/nginx-常用操作命令/" rel="next" title="nginx特性-常用操作命令">
-                <i class="fa fa-chevron-left"></i> nginx特性-常用操作命令
+              <a href="/2018/06/14/Java WEB-Servlet/" rel="next" title="Java WEB-Servlet">
+                <i class="fa fa-chevron-left"></i> Java WEB-Servlet
               </a>
             
           </div>
@@ -532,10 +707,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/05/12/Java并发机制底层实现原理-synchronized/" rel="prev" title="Java并发机制底层实现原理-synchronized">
-                Java并发机制底层实现原理-synchronized <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -701,7 +872,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#章节目录"><span class="nav-number">1.</span> <span class="nav-text">章节目录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-volatile的实现原理与应用"><span class="nav-number">1.1.</span> <span class="nav-text">1.volatile的实现原理与应用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-volatile应用"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 volatile应用</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#章节目录"><span class="nav-number">1.</span> <span class="nav-text">章节目录</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Spring-MVC-DispatcherServlet-与-HttpServlet-关系类图"><span class="nav-number">1.0.1.</span> <span class="nav-text">1.Spring MVC DispatcherServlet 与 HttpServlet 关系类图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-总结-Spring-MVC-运行流程图"><span class="nav-number">1.0.2.</span> <span class="nav-text">3.总结-Spring MVC 运行流程图</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -871,9 +1042,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://markfork.com/2018/05/12/Java并发机制底层实现原理-volatile/';
-          this.page.identifier = '2018/05/12/Java并发机制底层实现原理-volatile/';
-          this.page.title = 'Java并发机制底层实现原理-volatile';
+          this.page.url = 'http://markfork.com/2018/06/26/Spring MVC-源码分析/';
+          this.page.identifier = '2018/06/26/Spring MVC-源码分析/';
+          this.page.title = 'Spring MVC 运行流程解析(含源码分析)';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://.disqus.com/embed.js';
